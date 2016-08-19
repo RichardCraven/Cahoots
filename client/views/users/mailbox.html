@@ -1,0 +1,147 @@
+     <!-- Custom CSS -->
+    <link href="stylesheets/heroic-features.css" rel="stylesheet">
+
+
+ <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div  class="container" style='margin-left: 0px'>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <!-- <div id='navbar' class="navbar-header">
+                <a id='newloginButton' class="navbar-brand" ng-click="vm.login()" href="javascript:;" >Login</a>
+            </div> -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                
+                    <span style='display:inline' id='newpic'><img style='display:inline-block' ng-src="{{vm.navpicture}}"
+                    alt=''></span>
+                
+                <div id='newname'  style='display:inline-block; color:white; font-size:3em; margin-left:10px; margin-top: 20px;'>
+                    <div> {{vm.name}}</div>
+                    <a style='font-size:12px' id='newlogoutButton' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
+                </div>
+             </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style='overflow:scroll'>
+
+        <!-- Jumbotron Header -->
+        <header class="jumbotron hero-spacer">
+            <a href="/loggedinHome" class="goBack">
+              <span class="glyphicon glyphicon-arrow-left"></span>
+            </a>
+            <h1 id='header-main-mailbox' class='text-center'>MAILBOX </h1>
+            
+
+              <div layout-gt-sm="column" >
+                <div flex-gt-sm="80">
+                  <md-content>
+                    <md-list id='mailList' style='margin-left:0px; overflow: scroll !important;' >
+                    <!-- FILM -->
+                          <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showFilm' class="md-2-line item-text-wrap filmCommentMailHeader">
+                            <div class="md-list-item-text">
+                                <div layout='row'>
+                                  <div flex-gt-sm='15' class='userPicContainer'>
+                                     <img class='userPic' ng-src="images/film3.jpg" alt="">
+                                  </div>    
+                                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                    <a  href="/filmPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.editFilmPost(post.id)">
+                                      <span class="glyphicon glyphicon-pencil "></span>
+                                    </a>
+                                    <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
+                                      <span class="glyphicon glyphicon-remove "></span>
+                                    </a>
+                                    <div ng-show='vm.hasFilmMail' class='pull-left mailButton'><span><img src="images/exclamation.png" alt=""></span>
+                                    </div>
+
+                                      <h2 style='font-weight: bold'>Film Post Mail</h2>
+                                      
+                                    </p>
+                                  </div>   
+                                </div>
+                            </div>
+                          </md-list-item>
+                          <md-list-item   ng-repeat="post in vm.filmCommentPosts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
+                            <div class="md-list-item-text">
+                                <div layout='row' ng-click="vm.show($index)">
+                                  <div flex-gt-sm='15' class='userPicContainer'>
+                                     <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                                  </div>    
+                                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                      <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.topic}}</h6>
+                                      <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
+                                  </div>          
+                                  
+                                </div>
+                            </div>
+                          </md-list-item>
+                <!-- MUSIC -->
+                    <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showMusic' class="md-2-line item-text-wrap even">
+                      <div class="md-list-item-text">
+                          <div layout='row'>
+                            <div flex-gt-sm='15' class='userPicContainer'>
+                               <img class='userPic' ng-src="images/music2.jpg" alt="">
+                            </div>    
+                            <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                              <a  href="/filmPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.editFilmPost(post.id)">
+                                <span class="glyphicon glyphicon-pencil "></span>
+                              </a>
+                              <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
+                                <span class="glyphicon glyphicon-remove "></span>
+                              </a>
+                                <h3>{{post.topic}}</h3>
+                                <h4 id='desc'>{{post.brief_description}}</h4>
+                                <p>Estimated runtime: {{post.estimated_runtime}}
+                              </p>
+                            </div>          
+                            
+                          </div>
+                      </div>
+                    </md-list-item>
+                    <!-- CODING -->
+                    <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showCoding' class="md-2-line item-text-wrap odd">
+                      <div class="md-list-item-text">
+                          <div layout='row'>
+                            <div flex-gt-sm='15' class='userPicContainer'>
+                               <img class='userPic' ng-src="images/coding3.jpg" alt="">
+                            </div>    
+                            <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                              <a  href="/filmPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.editFilmPost(post.id)">
+                                <span class="glyphicon glyphicon-pencil "></span>
+                              </a>
+                              <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
+                                <span class="glyphicon glyphicon-remove "></span>
+                              </a>
+                                <h3>{{post.topic}}</h3>
+                                <h4 id='desc'>{{post.brief_description}}</h4>
+                                <p>Estimated runtime: {{post.estimated_runtime}}
+                              </p>
+                            </div>   
+                          </div>
+                      </div>
+                    </md-list-item>
+                  </md-content>
+                </div>
+        </header>
+
+        <hr>
+
+  
+        <!-- Page Features -->
+
+
+
+        <hr id='preFooter-hr'>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div  class="col-lg-12 text-center">
+                    <p>Copyright &copy; cravenTech 2016 || the world is your oyster</p>
+                </div>
+            </div>
+        </footer>
+    <!-- /.container -->
+

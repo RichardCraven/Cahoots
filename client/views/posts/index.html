@@ -1,0 +1,7 @@
+<h1>Here are all the posts!</h1>
+
+<div class='secret-box'>
+	<span> Hi there</span>
+</div>
+
+<ng-post-show ng-repeat="post in vm.posts | orderBy: 'id'" post='post'></ng-post-show>

@@ -1,0 +1,81 @@
+	  <!-- <div class="row">
+	    <div class="col-md-6">
+	      <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
+	      <button type="button" class="btn btn-info" ng-click="randomize()">Randomize slides</button>
+	      <div class="checkbox">
+	        <label>
+	          <input type="checkbox" ng-model="noWrapSlides">
+	          Disable Slide Looping
+	        </label>
+	      </div>
+	    </div> -->
+	    <!-- <div class="col-md-6">
+	      Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
+	      <br />Enter a negative number or 0 to stop the interval.
+	    </div> -->
+
+
+
+	    .controller('CarouselDemoCtrl', function ($scope) {
+		  $scope.myInterval = 5000;
+		  $scope.noWrapSlides = false;
+		  $scope.active = 0;
+		  var slides = $scope.slides = [];
+		  var currIndex = 0;
+
+		  $scope.addSlide = function() {
+		    var newWidth = 600 + slides.length + 1;
+		    slides.push({
+		      image: 'http://lorempixel.com/' + newWidth + '/300',
+		      text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
+		      id: currIndex++
+		    });
+		  };
+
+		  $scope.randomize = function() {
+		    var indexes = generateIndexesArray();
+		    assignNewIndexesToSlides(indexes);
+		  };
+
+		  for (var i = 0; i < 4; i++) {
+		    $scope.addSlide();
+		  }
+
+		  // Randomize logic below
+
+		  function assignNewIndexesToSlides(indexes) {
+		    for (var i = 0, l = slides.length; i < l; i++) {
+		      slides[i].id = indexes.pop();
+		    }
+		  }
+
+		  function generateIndexesArray() {
+		    var indexes = [];
+		    for (var i = 0; i < currIndex; ++i) {
+		      indexes[i] = i;
+		    }
+		    return shuffle(indexes);
+		  }
+
+		  // http://stackoverflow.com/questions/962802#962890
+		  function shuffle(array) {
+		    var tmp, current, top = array.length;
+
+		    if (top) {
+		      while (--top) {
+		        current = Math.floor(Math.random() * (top + 1));
+		        tmp = array[current];
+		        array[current] = array[top];
+		        array[top] = tmp;
+		      }
+		    }
+
+		    return array;
+		  }
+		})
+
+
+
+
+		'http://www.titantalk.com/forums/attachments/off-topic-discussion/319946d1413392054-random-internet-images-1682345-slide-slide-1-biz-stone-explains-how-he-turned-91-random-photos-into-movie.jpg','http://яренскиймузей.рф/article/img/dr2.jpg','https://pbs.twimg.com/profile_images/3778366046/631957224cdaf93b24b36370e4d8486d_400x400.jpeg'],
+				    SLIDE_DIRECTION = 'uib-slideDirection'

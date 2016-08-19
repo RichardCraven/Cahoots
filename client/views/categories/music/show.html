@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	  Post #{{ vm.post.id }}
+	    <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.removePost(vm.post.id)">
+	      <span class="glyphicon glyphicon-remove "></span>
+	    </a>
+	    &nbsp;
+	    &nbsp;
+	    &nbsp;
+	    <a href="/musicPosts/{{vm.post.id}}/edit" class='pull-right' id='edit' ng-click="vm.editMusicPost(vm.post.id)">
+	      <span class="glyphicon glyphicon-pencil"></span>
+	    </a>
+	  </div>
+	  <div class="panel-body">
+	    <div class="row">
+	      <div class="col-sm-4">
+	        <img class='userPic' ng-src="{{vm.post.user_pic}}" alt="">
+	      </div>
+	      <div class="col-sm-8">
+	        <h2>{{ vm.post.genre }}</h2>
+	        <section>
+	        <p>Description: {{ vm.post.description}}</p>
+	        <p>Roles needed: {{ vm.post.roles_needed }}</p>
+	        </section>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>

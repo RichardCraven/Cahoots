@@ -1,0 +1,38 @@
+<script>
+	var colorArr = ['#181e31','#2b3249','#b6962a','#ecd350','#6b1f0f']
+	var random = Math.round(Math.random() * 100) /100;
+	console.log(random)
+	console.log(colorArr)
+</script>
+
+<div class="container">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	  Post #{{ vm.post.id }}
+	    <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.removePost(vm.post.id)">
+	      <span class="glyphicon glyphicon-remove "></span>
+	    </a>
+	    &nbsp;
+	    &nbsp;
+	    &nbsp;
+
+	    <a href="/filmPosts/{{vm.post.id}}/edit" class='pull-right'  ng-click="vm.editFilmPost(vm.post.id)" id='edit' >
+	      <span class="glyphicon glyphicon-pencil"></span>
+	    </a>
+	  </div>
+	  <div class="panel-body">
+	    <div class="row">
+	      <div class="col-sm-4">
+	        <img class='userPic' ng-src="{{vm.post.user_pic}}" alt="">
+	      </div>
+	      <div class="col-sm-8">
+	        <h2>{{ vm.post.topic }}</h2>
+	        <section>
+	        <p>Description: {{ vm.post.brief_description}}</p>
+	        <p>Estimated Runtime (in min): {{ vm.post.estimated_runtime }}</p>
+	        </section>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>

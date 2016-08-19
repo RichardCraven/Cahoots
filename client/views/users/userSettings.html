@@ -1,0 +1,64 @@
+     <!-- Custom CSS -->
+    <link href="stylesheets/heroic-features.css" rel="stylesheet">
+
+
+ <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style='height: 101px;'>
+        <div  class="container" style='margin-left: 0px'>
+            <div class="collapse navbar-collapse">
+                
+                    <span style='display:inline' class='userPic'><img style='display:inline-block' ng-src="{{vm.navpicture}}"
+                    alt=''></span>                
+                <div   style='display:inline-block; color:white; font-size:3em; margin-left:10px; margin-top: 20px;'>
+                    <div> {{vm.name}}</div>
+                    <a style='font-size:12px' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
+                </div>
+             </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container-fluid" style='overflow:scroll'>
+
+        <!-- Jumbotron Header -->
+        <header class="jumbotron hero-spacer settingsJumbo">
+            <a href="/loggedinHome" class="goBack">
+              <span class="glyphicon glyphicon-arrow-left"></span>
+            </a>
+            <h1 id='header-main-mailbox' class='text-center'>SETTINGS</h1>
+            
+            <form  name="newFilm" class='setText SETmargin' ng-submit="vm.updateUser(vm.user)" >
+            <div layout-gt-sm="row">
+            <div flex-gt-sm="50" style='margin-right: 30px' >
+              <!-- <div class="NEWspacer"></div> -->
+              <div >
+                <md-input-container style='margin-bottom: 90px' >
+                  <label style='color:black;'>Display Name</label>
+                  <input class='inputField' name="display name" md-no-asterisk ng-model="vm.user.display_name" placeholder="vm.user.display_name" autofocus required >
+                </md-input-container>
+              </div>
+              <div >
+                <md-input-container  >
+                   <label style='color:black'>Zip Code</label>
+                   <textarea class='inputField' name="zip code" md-no-asterisk ng-model="vm.user.zip_code" placeholder="vm.user.zip_code" required ></textarea>
+                </md-input-container> 
+              </div>
+            </div>
+            <div flex-gt-sm="50"  >
+              <div >
+                <md-input-container  md-no-float >
+                  <label style='color:black;'>Bio </label>
+                  <textarea  class='settingsBio' name="bio"  ng-model="vm.user.bio" placeholder=" "  ></textarea>
+                </md-input-container>
+              </div>
+            </div>
+            </div>
+
+
+              <button type="submit" class="btn btn-success NEWmargin" >Submit</button>
+            </form>
+
+
+        </header>
+    </div>

@@ -1,0 +1,68 @@
+<!-- HEADER -->
+<div layout-gt-sm="row" >
+  <div flex-gt-sm="50" style='overflow: scroll' >
+    <md-toolbar layout="row" class="md-hue-3">
+      <div class="md-toolbar-tools">
+        <a href="/home" class="goHome">
+          <span class="glyphicon glyphicon-home"></span>
+        </a>
+        <a href="/filmPosts" class="goHome">
+          <span style='margin-left:30px' class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+      </div>
+    </md-toolbar>
+    <md-content>
+      <md-list flex >
+        <md-subheader style='font-size:2em' class="md-no-sticky text-center">Post a Film Project</md-subheader> 
+      </md-list>
+    </md-content>
+
+    <form  name="newFilm" class='formText NEWmargin' ng-submit="vm.addFilmPost(vm.post)" >
+    <div layout="column" >
+      <div class="NEWspacer"></div>
+      <div >
+        <md-input-container>
+          <label style='color:white'>Topic</label>
+          <input class='inputField' name="topic" md-no-asterisk ng-model="vm.post.topic" placeholder=" " autofocus required >
+        </md-input-container>
+      </div>
+      <div >
+        <md-input-container md-no-float >
+          <label style='color:white'>Brief Description</label>
+          <textarea class='inputField' name="description" md-no-asterisk ng-model="vm.post.brief_description" placeholder=" " required ></textarea>
+        </md-input-container>
+      </div>
+      <div >
+        <md-input-container>
+           <label style='color:white'>Estimated Runtime</label>
+           <textarea class='inputField' name="runtime" md-no-asterisk ng-model="vm.post.estimated_runtime" placeholder=" " required ></textarea>
+        </md-input-container> 
+      </div>
+      <div >
+        <md-input-container>
+           <label style='color:white; '>User Pic</label>
+           <textarea style='display:none' name="runtime" md-no-asterisk ng-model="vm.post.user_pic" ></textarea>
+        
+        </md-input-container> 
+      </div>
+      <div >
+        <md-input-container>
+           <label style='color:white;'>User Id</label>
+           <textarea style='display:none' name="user_id" md-no-asterisk ng-model="vm.post.user_id" ></textarea>
+        
+        </md-input-container> 
+      </div>
+      
+    </div>
+
+
+      <button type="submit" class="btn btn-success NEWmargin" >Create Post</button>
+    </form>
+  </div>
+
+  <div flex-gt-sm="50" >
+        <video id="owlVid2"  muted autoplay >
+          <source src="images/NewOwl666.mp4" type="video/mp4">
+       </video>
+  </div>
+</div>

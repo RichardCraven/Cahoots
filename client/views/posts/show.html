@@ -1,0 +1,27 @@
+<div class="container">
+	<div class="panel panel-default">
+	  <div class="panel-heading">Post #{{ vm.post.id }}
+	    <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.removePost(vm.post.id)">
+	      <span class="glyphicon glyphicon-remove "></span>
+	    </a>
+	    &nbsp;
+	    &nbsp;
+	    &nbsp;
+	    <a href="/posts/{{vm.post.id}}/edit" class='pull-right' id='edit' ng-click="vm.editPost(vm.post.id)">
+	      <span class="glyphicon glyphicon-pencil"></span>
+	    </a>
+	  </div>
+	  <div class="panel-body">
+	    <div class="row">
+	      <div class="col-sm-4">
+	        <img ng-src="{{vm.post.image_url}}" alt="">
+	      </div>
+	      <div class="col-sm-8">
+	        <h2>{{ vm.post.name }}</h2>
+	        <p>Location: {{ vm.post.location }}</p>
+	        <p>Bio: {{ vm.post.bio }}</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>

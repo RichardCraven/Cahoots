@@ -1,0 +1,77 @@
+.box {
+  background: #79a19f;
+  width: 150px;
+  height: 150px;
+}
+
+.box:hover {
+  -webkit-transform: rotate(360deg);
+  background: #3188b8;
+  border-radius: 50%;
+}
+
+.rotate {
+  -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+
+.menuBar {
+ animation-delay:4.4s; -moz-animation-delay:4.4s; -webkit-animation-delay:4.4s;
+  }
+.fadeInLeft{
+   animation-delay:1.8s; -moz-animation-delay:1.8s; -webkit-animation-delay:1.8s;
+     -webkit-transition: all 4.8s ease-in-out;
+    -moz-transition: all 4.8s ease-in-out;
+    -o-transition: all 4.8s ease-in-out;
+    transition: all 4.8s ease-in-out;
+}
+/*font-family: 'Indie Flower', cursive;
+
+font-family: 'Open Sans', sans-serif;
+
+font-family: 'Josefin Sans', sans-serif;
+
+font-family: 'Amatic SC', cursive;
+
+font-family: 'Josefin Slab', serif;*/
+
+div #meet{
+  font-family: 'Josefin Sans';
+  font-weight:500;
+  margin-top: 90px;
+  margin-left: 20px;
+  color: black;
+  font-size: 4em;
+  animation-delay:3.7s; -moz-animation-delay:4.7s; -webkit-animation-delay:3.7s;
+}
+div #create{
+  font-family: 'Josefin Sans';
+  font-weight: 500;
+  margin-top: 30px;
+  margin-left: 60px;
+  color: black;
+  font-size: 4em;
+  animation-delay:4s; -moz-animation-delay:4s; -webkit-animation-delay:4s;
+}
+div #share{
+  font-family: 'Josefin Sans';
+  font-weight: 500;
+  margin-top: 30px;
+  margin-left: 105px;
+  color: black;
+  font-size: 4em;
+  animation-delay:4.3s; -moz-animation-delay:4.3s; -webkit-animation-delay:4.3s;
+}
+
+
+
+
+/*.rotate:hover {
+  -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}*/
