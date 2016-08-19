@@ -3,6 +3,16 @@ module.exports = {
     client: 'pg',
     connection: {
       database: 'cahoots_db'
+
+    }
+  },
+  production: {
+  	client: 'pg',
+    connection: {
+      database: 'cahoots_db',
+      host: 'cahootsdb.cnusdpqarpmx.us-west-2.rds.amazonaws.com',
+      user: 'GavanizeComp',
+      password: 'yogsoth30'
     }
   }
 }
