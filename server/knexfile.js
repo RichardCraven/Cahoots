@@ -11,7 +11,7 @@ module.exports = {
     connection: {
       database: 'cahoots_db',
       host: 'cahootsdb.cnusdpqarpmx.us-west-2.rds.amazonaws.com',
-      user: 'GavanizeComp',
+      user: 'GalvanizeComp',
       password: 'yogsoth30'
     }
   }
