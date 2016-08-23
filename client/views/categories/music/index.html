@@ -15,72 +15,94 @@
 <ng-music-post-show ng-repeat="post in vm.posts track by $index" post='post'></ng-music-post-show> -->
 
 <div layout-gt-sm="row" >
-    <div flex-gt-sm="50" style='overflow: scroll' >
+    <div flex-gt-sm="50" id='musicContent'>
       <md-toolbar layout="row" class="md-hue-3">
         <div class="md-toolbar-tools">
-          <a href="/" class="goHome">
-          	<span class="glyphicon glyphicon-home"></span>
+          <a href="javascript:void(0)" ng-click="vm.goBack()" class="goHome">
+            <span class="glyphicon glyphicon-home"></span>
           </a>
         </div>
       </md-toolbar>
 
-
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <md-content>
 
-        <md-list flex >
+        <md-list style='margin-left:0px;'>
           <md-subheader  class="md-no-sticky">MUSIC POSTS   
-          		<div class='pull-right' id='addButton'>
-          		<a href="/musicPosts/new" id='add-musicPost'  > 
-          <!-- style='padding: 0px; font-size:2em; margin-bottom: 90px' -->
-				<span  class="glyphicon glyphicon-plus"></span>
+          	<div class='pull-right' id='addButton'>
+          		<a href="/musicPosts/new" id='add-musicPost' ng-show='vm.loggedIn'> 
+				        <span  class="glyphicon glyphicon-plus"></span>
           		</a> 
           			
           		</div>
           </md-subheader>
           <!-- <div class="container"> -->
-	          <md-list-item  style='margin-left:0px' class="md-2-line item-text-wrap" ng-repeat="post in vm.posts track by $index" ng-class-odd="'odd'" ng-class-even="'even'" ng-click="null">
-		            <!-- <span > -->
-		                <!-- <div layout="row" class='item-text-wrap'> -->
-		                  <div>
-					        <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-		                  </div>
-		                  <!-- <div> -->
-					            <div class="md-list-item-text">
-					            <a href="/musicPosts/{{post.id}}/edit" id='edit' class='pull-right' ng-click="vm.editMusicPost(post.id)">
+	          <md-list-item  
+            style='margin-left:0px' 
+            class="md-2-line item-text-wrap" ng-repeat="post in vm.posts track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+					    <div class="md-list-item-text">
+                <div layout='row' ng-click="vm.show($index)">
+                  <div flex-gt-sm='15' class='userPicContainer'>
+                     <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                     <!-- <p>{{post.display_name}}</p> -->
+                  </div>
+                <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+
+					        <a  href="/musicPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right'>
+                 <!-- ng-click="vm.editMusicPost(post.id)" VERIFY THIS IS NOT NEEDED, THEN DELETE-->
 					              <span class="glyphicon glyphicon-pencil "></span>
 					            </a>
-					            <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.removePost(post.id)">
-					              <span class="glyphicon glyphicon-remove "></span>
-					            </a>
+  		            <a href="javascript:void(0)" id='new' class='pull-right' ng-show='vm.checkId(post)'>
+  		              <span class="glyphicon glyphicon-remove "></span>
+  		            </a>
 					              <h3>{{post.genre}}</h3>
-					              <h4 id='descrip'>{{post.description}}</h4>
+					              <h4 class='descrip'>{{post.description}}</h4>
 					              <p>Roles Needed: {{post.roles_needed}}</p>
 					            </div>
-		                  <!-- </div> -->
-					    <!-- </div> -->
-		            <!-- </span> -->
-	          </md-list-item>
-          <!-- </div> -->
+		            </div>
+                <!-- end row   -->
+                <div layout='row'>
+                  <div ng-show='vm.showText' class='postTextArea'>
+                    <form class='commentForm' action="" 
+                    ng-submit='vm.addMusicPostComment(post.id,vm.comment)'
+                    >
+                    <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
+                      <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
 
+                      <button type="submit" class="btn btn-success" >Submit</button>
+                    </form>
+                  </div>
+                </div>
+                <!-- end row -->
+              </div>
+              <!-- end list-item-text -->
+	          </md-list-item>
       </md-content>
     </div>
+    <!-- end flex-50 div -->
 
+
+    <!-- ~~~~~~~~~~~~~~~~~~~MAP~~~~~~~~~~~~~~~~~~ -->
 
     <md-divider></md-divider>
-    <div flex-gt-sm="50" >
-      <md-toolbar layout="row" class="md-hue-1">
+    <div ng-show='vm.showMap' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
+      <md-toolbar layout="row" class="md-hue-1" >
         <div class="md-toolbar-tools">
-          <span>MAP GOES HERE</span>
+          <span>Everyone Loves a Good Map.</span>
         </div>
       </md-toolbar>
-<!--       <div map-lazy-load="https://maps.google.com/maps/api/js">
-        <ng-map center="41,-87" zoom="3"></ng-map>
-      </div> -->
-        <!-- <div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{vm.googleMapsUrl}}"> -->
           <ng-map id='map' center="37.7749,-122.4194" zoom="15">
             <marker position="37.7749,-122.4194" title="Hello World!"></marker>
-          </ng-map>
-        <!-- </div> -->
+      </ng-map>   
     </div>
+
+    <div ng-show='vm.showVid' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
+          <video id="owlVid2"  muted autoplay >
+            <source src="images/NewOwl666.mp4" type="video/mp4">
+         </video>
+    </div>
+</div>
+<!-- end master-layout div -->
+
 
   </div>

@@ -1,24 +1,20 @@
 (function() {
 	angular 
 		.module('collaboApp')
-		.controller('PostsController', PostsController) 
-		.controller('NewPostController', NewPostController)
-		.controller('ShowPostController', ShowPostController)
-		.controller('EditPostController', EditPostController)
+		.controller('CodePostsController', CodePostsController) 
+		.controller('NewCodePostController', NewCodePostController)
+		.controller('EditCodePostController', EditCodePostController)
 
 		.controller('FilmPostsController', FilmPostsController) 
 		.controller('NewFilmPostController', NewFilmPostController)
-		.controller('ShowFilmPostController', ShowFilmPostController)
 		.controller('EditFilmPostController', EditFilmPostController)
 
 		.controller('MusicPostsController', MusicPostsController) 
 		.controller('NewMusicPostController', NewMusicPostController)
-		.controller('ShowMusicPostController', ShowMusicPostController)
 		.controller('EditMusicPostController', EditMusicPostController)
 		
 		.controller('UsersController', UsersController)
 		// .controller('NewUserController', NewUserController)
-		.controller('ShowUserController', ShowUserController)
 		.controller('EditUserController', EditUserController)
 
 		.controller('UibCarouselController', UibCarouselController)
@@ -28,7 +24,9 @@
 		.controller('MailCtrl', MailCtrl)
 		.controller('SettingsCtrl', SettingsCtrl)
 		.controller('LandingCtrl', LandingCtrl)
-		function LandingCtrl($timeout,$location){
+		function LandingCtrl($timeout,$location,auth){
+			var vm=this;
+			vm.auth = auth
 		  	function fadeOut(){
 		  		if(localStorage.length>0){
 		  		$location.path('/loggedinHome');
@@ -39,29 +37,46 @@
 		  	};
 			var windowFade = $timeout(fadeOut,6900)
 		};
-		function MailCtrl(mail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService){
+		function MailCtrl(filmMail,musicMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService){
 			var vm=this;
 			vm.auth = auth;
+			// for(var property in mail.data) {
+			//     console.log(property + "=" + mail[property]);
+			// }
+			console.log('musicMail is: '+musicMail)
 
 			vm.name = JSON.parse(localStorage.profile).given_name
 			vm.navpicture = JSON.parse(localStorage.profile).picture
-			console.log(mail)
 			vm.filmCommentPosts = []
+			vm.musicPostComments = []
 			
-			for(var i = 0; i<mail.data.length; i++){
+			for(var i = 0; i<filmMail.data.length; i++){
 				// if (JSON.parse(localStorage.profile).user_id === mail.data[i].user_id){
-					console.log(mail.data[i])
-					vm.filmCommentPosts.push(mail.data[i])
+					console.log(filmMail.data[i])
+					vm.filmCommentPosts.push(filmMail.data[i])
 				// }
 				// vm.picture = FilmPostService.getPosts
 			}
+			// for(var i = 0; i<musicMail.data.length; i++){
+			// 	// if (JSON.parse(localStorage.profile).user_id === mail.data[i].user_id){
+			// 		// console.log(musicMail.data[i])
+			// 		vm.musicPostComments.push(musicMail.data[i])
+			// 	// }
+			// 	// vm.picture = FilmPostService.getPosts
+			// }
 			console.log('array after compiling: '+vm.filmCommentPosts)
 			console.log(vm.userMail)
+
 			vm.hasFilmMail = false
 
-
-			vm.showFilm = true
+			vm.showFilm = false
+			if(vm.filmCommentPosts.length>0){
+				vm.showFilm = true	
+			}
 			vm.showMusic = false
+			if(vm.musicPostComments.length>0){
+				vm.showMusic=true
+			}
 			vm.showCoding = false
 
 			vm.logout = function(){
@@ -131,7 +146,8 @@
 				}, false);
 			}
 			vm.login = function (){
-				
+				alert('login function ran'+auth)
+				debugger
 				auth.signin({popup: true}, function(profile,token){
 					store.set('profile',profile);
 					store.set('token',token);
@@ -142,6 +158,7 @@
 			vm.logout = function(){
 				store.remove('profile')
 				store.remove('token')
+				localStorage.clear()
 			}
 		};
 		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope, UsersService,mail,FilmPostCommentsService){
@@ -173,8 +190,8 @@
 
 
 			vm.logout = function(){
-				store.remove('profile')
-				store.remove('token')
+				localStorage.clear()
+				// alert('local storage is: '+localStorage)
 				document.getElementById('newloginButton').style.display = 'inline';
 				document.getElementById('newlogoutButton').style.display = 'none';
 				document.getElementById('newpic').style.display = 'none';
@@ -228,17 +245,6 @@
 		  		})
 		  	}	
 		}
-
-		function ShowUserController(UsersService, $route){
-			var vm = this;
-
-			vm.removePost = function(id){
-				UsersService.deleteUser(id).then(function(){
-					$route.reload();
-				})
-			}
-
-		}
 		function EditUserController(UsersService, $location,auth,store,user){ 
 			console.log('reached edit user controller')
 			// console.log('user is: '+user.data)
@@ -281,38 +287,26 @@
 
 
 
-//~~~~~~POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		function PostsController(posts){
+//~~~~~~CODE POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		function CodePostsController(CodePostService,CodePostCommentsService,posts,$location,$route, NgMap,store,$rootScope){
 			var vm = this;
 			vm.posts = posts.data;
 		}
-		function NewPostController(PostService,$location){
+		function NewCodePostController(PostService,$location){
 			var vm = this;
 			vm.post = {};
 
 			vm.addPost = function(newPost){
 				var req = {post: newPost};
-				
 				PostService.createPost(req).then(function(res){
 					$location.path('/posts');
 				})
 			}
 		}
-		function ShowPostController(PostService, $route){
-			var vm = this;
-
-			vm.removePost = function(id){
-				PostService.deletePost(id).then(function(){
-					$route.reload();
-				})
-			}
-
-		}
-		function EditPostController(PostService, post, $location){ //$routeParams is  Angular's version of req.params in express
+		function EditCodePostController(PostService, post, $location){ //$routeParams is  Angular's version of req.params in express
 			var vm = this;
 				vm.post = post.data
 				if(!vm.post) {$location.path('/posts')}
-
 			vm.updatePost = function(post){
 				var req = {post: post}
 				PostService.updatePost(req).then(function(res){					
@@ -321,22 +315,97 @@
 			}
 		}
 //~~~~~~MUSICposts conroller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
-		function MusicPostsController(MusicPostService,posts,$location,$route, NgMap){
+		function MusicPostsController(MusicPostService, MusicPostCommentsService,posts,$location,$route, NgMap){
 			var vm = this;
 			vm.posts = posts.data;
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
+
+		  	vm.goBack =function(){
+		  		if(localStorage.length === 0){
+		  			console.log('length is zero')
+		  		$location.path('/home')
+		  		}
+
+		  		else if (localStorage.length>0){
+		  			console.log('length is greater than zero')
+		  		$location.path('/loggedinHome')	
+		  		}
+		  	}
+		  	vm.showMap = false
+		  	vm.showVid = true
+		  	vm.toggleView = false
+		  	vm.showText = false
+		  	vm.show = function(idx){
+		  		vm.toggleView = !vm.toggleView
+		  		vm.showText = !vm.showText
+		  		vm.showMap = !vm.showMap
+		  		vm.showVid = !vm.showVid
+		  		if(vm.toggleView === true){
+		  		var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  		
+		  		var others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)		  		
+		  		others.forEach(function(i){i.style.display = 'none'})
+
+		  		selected[0].classList.add('focus')
+		  		}
+		  		if(vm.toggleView === false){
+		  			var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  			
+		  			var others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)
+
+		  			others.forEach(function(i){i.style.display = 'block'})
+
+		  			selected[0].classList.remove('focus')
+		  			// VERIFY THAT YOU DON'T NEED THIS! (I THINK THIS WAS REPLACED BY AN NG-SHOW FOR THE TEXTBOX) var el = document.querySelector(".textBox")
+		  			// var parent = document.getElementById('musicContent')
+		  			// parent.removeChild(el)
+		  		}
+		  	}
+
 		  	vm.removePost = function(id){
 		  		MusicPostService.deletePost(id).then(function(){
 		  			$route.reload();
 		  		})
+		  	}
+		  	vm.loggedIn = false
+		  	if(localStorage.length > 0){
+		  		vm.loggedIn = true
+		  	}
+		  	vm.checkId = function(post={'user_id':'dummyData'}){
+	  		  	if(localStorage.length > 0){
+				  if(post.user_id === JSON.parse(localStorage.profile).user_id){
+				  	return true		  			
+				  }
+				  else{
+				  	return false
+				  }	
+	  		  	}
+	  		  	else {
+	  		  		return false
+	  		  	}
+		  	}
+		  	vm.addMusicPostComment = function(id,newMusicPostComment){
+		  		// alert('reached comment control')
+		  		console.log('comment control')
+		  		console.log(id+'_'+newMusicPostComment.comment)
+		  		
+		  		vm.comment.user_pic = JSON.parse(localStorage.profile).picture
+		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
+		  		vm.comment.post_id = id
+		  		var req = {post: newMusicPostComment};
+		  		console.log(req.post.comment)
+		  		MusicPostCommentsService.createPost(req).then(function(res){
+		  			// $location.path('/filmPosts');
+		  		})
 		  	}	
 		}
 
-		function NewMusicPostController(MusicPostService,$location){
+		function NewMusicPostController(MusicPostService,$location,store){
 			var vm = this;
 			vm.post = {};
+
+			vm.post.user_pic = JSON.parse(localStorage.profile).picture
+			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 
 			vm.addMusicPost = function(newMusicPost){
 				var req = {post: newMusicPost};
@@ -345,17 +414,6 @@
 					$location.path('/musicPosts');
 				})
 			}
-		}
-
-		function ShowMusicPostController(MusicPostService, $route){
-			var vm = this;
-
-			vm.removePost = function(id){
-				MusicPostService.deletePost(id).then(function(){
-					$route.reload();
-				})
-			}
-
 		}
 		function EditMusicPostController(MusicPostService, post, $location){ 
 			var vm = this;
@@ -379,7 +437,7 @@
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
-		  	vm.goBack =function(){
+		  	vm.goBack = function(){
 		  		if(localStorage.length === 0){
 		  		$location.path('/home')
 		  		}
@@ -389,14 +447,22 @@
 		  	}
 		  	vm.profile = store.get('profile')
 
-		  	vm.checkId = function(post){
+
+		  	vm.loggedIn = false
+		  	if(localStorage.length > 0){
+		  		vm.loggedIn = true
+		  	}
+		  	vm.checkId = function(post={'user_id':'dummyData'}){
 	  		  	if(localStorage.length > 0){
-				  if(post.user_id !== JSON.parse(localStorage.profile).user_id){
-				  			return false		  			
+				  if(post.user_id === JSON.parse(localStorage.profile).user_id){
+				  	return true		  			
 				  }
 				  else{
-				  	return true
+				  	return false
 				  }	
+	  		  	}
+	  		  	else {
+	  		  		return false
 	  		  	}
 		  	}
 		  	vm.toggleView = false
@@ -419,10 +485,11 @@
 
 		  			others.forEach(function(i){i.style.display = 'block'})
 
-		  			selected[0].classList.remove('focus')
-		  			var el = document.querySelector(".textBox")
-		  			var parent = document.getElementById('filmContent')
-		  			parent.removeChild(el)
+		  			// selected[0].classList.remove('focus')
+		  			// VERIFY THAT YOU DON'T NEED THIS! (I THINK THIS WAS REPLACED BY AN NG-SHOW FOR THE TEXTBOX)
+		  			// var el = document.querySelector(".textBox")
+		  			// var parent = document.getElementById('filmContent')
+		  			// parent.removeChild(el)
 		  		}
 		  	}
 			vm.removePost = function(id){
@@ -452,7 +519,7 @@
 			vm.post = {};
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
-			var currentUserId = store.get('profile')
+			// var currentUserId = store.get('profile')
 			vm.addFilmPost = function(newFilmPost){
 				var req = {post: newFilmPost};
 				// , user: currentUserId
@@ -460,9 +527,6 @@
 					$location.path('/filmPosts');
 				})
 			}
-		}
-		function ShowFilmPostController(FilmPostService, $route, store,$rootScope){
-			var vm = this;
 		}
 		function EditFilmPostController(FilmPostService, post, $location){ 
 			var vm = this;
@@ -478,19 +542,17 @@
 				})
 			}
 		}
-		PostsController.$inject = ['posts'];
-		NewPostController.$inject = ['PostService','$location'] 
-		ShowPostController.$inject = ['PostService', '$route']
-		EditPostController.$inject = ['PostService', 'post', '$location']
+		CodePostsController.$inject = ['CodePostService','CodePostCommentsService','posts','$location','$route', 'NgMap','store'];
+		NewCodePostController.$inject = ['CodePostService','$location','store'] 
+		EditCodePostController.$inject = ['PostService', 'post', '$location']
 
-		FilmPostsController.$inject = ['FilmPostService','FilmPostCommentsService','posts','$location','$route', 'NgMap','store','$rootScope'];
+		FilmPostsController.$inject = ['FilmPostService','FilmPostCommentsService','posts','$location','$route', 'NgMap','store'];
+		//  ^removed $rootScopt, cause I don't think it's needed
 		NewFilmPostController.$inject = ['FilmPostService','$location','store'] 
-		ShowFilmPostController.$inject = ['FilmPostService', '$route','store','$rootScope']
 		EditFilmPostController.$inject = ['FilmPostService', 'post', '$location']
 
-		MusicPostsController.$inject = ['MusicPostService','posts','$location','$route', 'NgMap'];
-		NewMusicPostController.$inject = ['MusicPostService','$location'] 
-		ShowMusicPostController.$inject = ['MusicPostService', '$route']
+		MusicPostsController.$inject = ['MusicPostService','MusicPostCommentsService','posts','$location','$route', 'NgMap'];
+		NewMusicPostController.$inject = ['MusicPostService','$location','store'] 
 		EditMusicPostController.$inject = ['MusicPostService', 'post', '$location']
 
 		LandingCtrl.$inject = ['$timeout','$location']
@@ -499,7 +561,7 @@
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope', 'UsersService','mail']
-		MailCtrl.$inject = ['mail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService']
+		MailCtrl.$inject = ['filmMail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService']
 		SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
 

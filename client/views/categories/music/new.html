@@ -1,25 +1,3 @@
-<!-- <h1>Post A Music Project</h1>
-<form ng-submit="vm.addMusicPost(vm.post)">
-  <div class="form-group">
-    <label for="genre">Genre</label>
-    <input type="text" class="form-control" id="genre" placeholder="Genre: " ng-model="vm.post.genre">
-  </div>
-  <div class="form-group">
-    <label for="description">Description</label>
-    <input type="text" class="form-control" id="description" placeholder="Brief description: " ng-model="vm.post.description">
-  </div>
-  <div class="form-group">
-    <label for="roles_needed">Roles Needed</label>
-    <input type="text" class="form-control" id="runtime" placeholder="Roles that need filling: " ng-model="vm.post.roles_needed">
-  </div>
-  <div class="form-group">
-    <label for="user_pic">User Pic</label>
-    <input type="text" class="form-control" id="user_pic" placeholder="User Pic" ng-model="vm.post.user_pic">
-  </div>
-  <button type="submit" class="btn btn-success">Create Post</button>
-  <a href="/musicPosts" class="btn btn-danger">Back</a>
-</form> -->
-
 <!-- HEADER -->
 <div layout-gt-sm="row" >
   <div flex-gt-sm="50" style='overflow: scroll' >
@@ -38,44 +16,56 @@
         <md-subheader style='font-size:2em' class="md-no-sticky text-center">Post a Music Project</md-subheader> 
       </md-list>
     </md-content>
+
+
+
+
+    <form class='formText NEWmargin' name="newFilm" ng-submit="vm.addMusicPost(vm.post)" >
+    <div layout="column" >
+      <div class="NEWspacer"></div>
+      <div flex>
+        <md-input-container>
+          <label style='color:white'>Genre</label>
+          <input name="genre" md-no-asterisk ng-model="vm.post.genre" placeholder=" " autofocus required >
+        </md-input-container>
+      </div>
+      <div flex>
+        <md-input-container md-no-float >
+          <label style='color:white'>Brief Description</label>
+          <textarea  name="description" md-no-asterisk ng-model="vm.post.description" placeholder=" " required ></textarea>
+        </md-input-container>
+      </div>
+      <div flex>
+        <md-input-container>
+           <label style='color:white'>Roles Needed</label>
+           <textarea name="roles" md-no-asterisk ng-model="vm.post.roles_needed" placeholder=" " required ></textarea>
+        </md-input-container> 
+      </div>
+      <!-- VERIFY THAT I DONT NEED THIS! I THINK THIS IS HANDLED IN THE CONTROLER! -->
+      <!-- <div flex>
+        <md-input-container>
+           <label style='color:white'>User Pic</label>
+           <textarea name="user pic" md-no-asterisk ng-model="vm.post.user_pic" placeholder=" " ></textarea>
+        </md-input-container> 
+      </div>
+      <div >
+        <md-input-container>
+           <label style='color:white;'>User Id</label>
+           <textarea style='display:none' name="user_id" md-no-asterisk ng-model="vm.post.user_id" ></textarea>
+        
+        </md-input-container> 
+      </div> -->
+      
+    </div>
+      <button type="submit" class="btn btn-success NEWmargin" >Create Post</button>
+      
+    </form>
+
+  </div>
+
+  <div flex-gt-sm="50" >
+        <video id="owlVid2"  muted autoplay >
+          <source src="images/NewOwl666.mp4" type="video/mp4">
+       </video>
   </div>
 </div>
-
-
-
-
-<form class='formText NEWmargin' name="newFilm" ng-submit="vm.addMusicPost(vm.post)" >
-<div layout="column" >
-  <div class="NEWspacer"></div>
-  <div flex>
-    <md-input-container>
-      <label style='color:white'>Genre</label>
-      <input name="genre" md-no-asterisk ng-model="vm.post.genre" placeholder=" " autofocus required >
-    </md-input-container>
-  </div>
-  <div flex>
-    <md-input-container md-no-float >
-      <label style='color:white'>Brief Description</label>
-      <textarea  name="description" md-no-asterisk ng-model="vm.post.description" placeholder=" " required ></textarea>
-    </md-input-container>
-  </div>
-  <div flex>
-    <md-input-container>
-       <label style='color:white'>Roles Needed</label>
-       <textarea name="roles" md-no-asterisk ng-model="vm.post.roles_needed" placeholder=" " required ></textarea>
-    </md-input-container> 
-  </div>
-  <div flex>
-    <md-input-container>
-       <label style='color:white'>User Pic</label>
-       <textarea name="user pic" md-no-asterisk ng-model="vm.post.user_pic" placeholder=" " ></textarea>
-    </md-input-container> 
-  </div>
-  
-</div>
-
-
-  <button type="submit" class="btn btn-success NEWmargin" >Create Post</button>
-</form>
-
-

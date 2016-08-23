@@ -28,7 +28,7 @@
 					controller: 'LoginHomeCtrl',
 					controllerAs: 'vm',
 					resolve: {
-						mail: getAllMail
+						mail: getAllFilmMail
 					}	
 				})
 				.when('/mailbox', {
@@ -36,7 +36,8 @@
 				  controller: 'MailCtrl',
 				  controllerAs: 'vm',
 				  resolve: {
-				  	mail: getAllMail
+				  	filmMail: getAllFilmMail,
+				  	musicMail: getAllMusicMail,
 				  }
 				})
 				.when('/:id/userSettings',{
@@ -134,7 +135,9 @@
 
 	function runFunction($rootScope, auth, store, jwtHelper, $location,UsersService){
   	  // Wrapper function to handle profile and toke storage
-	  var saveUserInfo = function(profile, token) {
+  	  alert('run Function run')
+	  var saveUserInfo = function(profile,token) {
+	  	alert('saveUserInfo run')
 	    store.set('profile', profile);
 	    store.set('token', token);
 	    $rootScope.watch = true;
@@ -151,7 +154,7 @@
     	var req = {user: newUser};
     	
     	UsersService.createUser(req).then(function(res){
-    		// alert('successfully logged in')
+    		alert('successfully logged in')
     		$location.path('/loggedinHome');
     		console.log(res)
     	})
@@ -184,7 +187,8 @@
 	    // console.log(authResult);
 
 
-	    auth.getProfile(authResult.idToken).then(function (profile) {
+	  auth.getProfile(authResult.idToken).then(function (profile) {
+	    	alert('auth.getProfile run')
 	    	// debugger
 	      // console.log(profile);
 	      // Save user info to local storage
@@ -231,6 +235,8 @@
 		  function($location, profilePromise, idToken, store, $rootScope) {
 		    // Successfully log in
 		    // Access to user profile and token
+		    alert('authProvider.on(loginSuccess)')
+
 		    profilePromise.then(function(profile){
 		      // profile
 		      // debugger
@@ -248,7 +254,6 @@
 		});
 	}
 	function getAllPosts(PostService){
-		console.log('getAllPosts')
 		return PostService.getPosts();
 	}
 	function getPostById(PostService,$route){
@@ -256,7 +261,6 @@
 	}
 
 	function getAllFilmPosts(FilmPostService){
-		console.log('getAllFilmPosts')
 		return FilmPostService.getPosts();
 	}
 	function getFilmPostById(FilmPostService,$route){
@@ -270,13 +274,15 @@
 		return UsersService.getUser($route.current.params.id);
 	}
 	function getAllMusicPosts(MusicPostService){
-		console.log('getAllMusicPosts')
 		return MusicPostService.getPosts();
 	}
-	function getAllMail(FilmPostCommentsService){
-		console.log(FilmPostCommentsService)
+	function getAllFilmMail(FilmPostCommentsService){
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return FilmPostCommentsService.getMail(user_id);
+	}
+	function getAllMusicMail(MusicPostCommentsService){
+		var user_id = JSON.parse(localStorage.profile).user_id
+		return MusicPostCommentsService.getMail(user_id);
 	}
 
 

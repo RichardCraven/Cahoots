@@ -12,33 +12,12 @@ knex('film_post_comments').where('user_id',req.body)
 		res.send(post)
 	})
 })
-
-// router.get('/:id', function(req,res){
-// 	knex('film_posts').where('user_id',req.params.id)
-// 	.then(function(posts){
-// 		console.log('HELLO?')
-// 		posts.forEach(function(post) {
-// 			knex('film_post_comments').where('post_id',post.id)
-// 			.then(function(mail){
-// 				post.comments = mail
-// 				console.log('MAIL IS: '+mail)
-// 			})
-// 		});
-// 		res.send(posts)
-// 		var post_id = post.id
-// 		knex('film_post_comments').where('post_id',post_id)
-// 		.then(function(mail){
-// 			res.send(mail)
-// 		})
-// 	 eval(require ('locus'))
-// 	})
-	
-// })
 router.get('/:id', function(req,res){
 	knex.select(['c.comment','c.user_pic','topic']).from('film_posts as f')
 	.join('film_post_comments as c', 'f.id', '=', 'c.post_id')
 	.where('f.user_id',req.params.id)
 	.then(function(mail){
+		console.log('mail is: '+mail)
 	// eval(require('locus'))
 		res.send(mail)
 	})

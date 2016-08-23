@@ -56,14 +56,13 @@
                                     <div ng-show='vm.hasFilmMail' class='pull-left mailButton'><span><img src="images/exclamation.png" alt=""></span>
                                     </div>
 
-                                      <h2 style='font-weight: bold'>Film Post Mail</h2>
-                                      
-                                    </p>
+                                    <h2 style='font-weight: bold'>Film Mail</h2>
+                                     
                                   </div>   
                                 </div>
                             </div>
                           </md-list-item>
-                          <md-list-item   ng-repeat="post in vm.filmCommentPosts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
+                          <md-list-item ng-show='vm.showFilm'  ng-repeat="post in vm.filmCommentPosts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
                             <div class="md-list-item-text">
                                 <div layout='row' ng-click="vm.show($index)">
                                   <div flex-gt-sm='15' class='userPicContainer'>
@@ -78,28 +77,23 @@
                             </div>
                           </md-list-item>
                 <!-- MUSIC -->
-                    <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showMusic' class="md-2-line item-text-wrap even">
-                      <div class="md-list-item-text">
-                          <div layout='row'>
-                            <div flex-gt-sm='15' class='userPicContainer'>
-                               <img class='userPic' ng-src="images/music2.jpg" alt="">
-                            </div>    
-                            <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                              <a  href="/filmPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.editFilmPost(post.id)">
-                                <span class="glyphicon glyphicon-pencil "></span>
-                              </a>
-                              <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
-                                <span class="glyphicon glyphicon-remove "></span>
-                              </a>
-                                <h3>{{post.topic}}</h3>
-                                <h4 id='desc'>{{post.brief_description}}</h4>
-                                <p>Estimated runtime: {{post.estimated_runtime}}
-                              </p>
-                            </div>          
-                            
-                          </div>
-                      </div>
-                    </md-list-item>
+                    <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showMusic' class="md-2-line item-text-wrap filmCommentMailHeader">
+                            <div class="md-list-item-text">
+                                <div layout='row'>
+                                  <div flex-gt-sm='15' class='userPicContainer'>
+                                     <img class='userPic' ng-src="images/music3.jpg" alt="">
+                                  </div>    
+                                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                    
+                                    <div ng-show='vm.hasMusicMail' class='pull-left mailButton'><span><img src="images/exclamation.png" alt=""></span>
+                                    </div>
+
+                                    <h2 style='font-weight: bold'>Music Mail</h2>
+                                     
+                                  </div>   
+                                </div>
+                            </div>
+                          </md-list-item>
                     <!-- CODING -->
                     <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showCoding' class="md-2-line item-text-wrap odd">
                       <div class="md-list-item-text">

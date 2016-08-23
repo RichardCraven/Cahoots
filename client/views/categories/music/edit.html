@@ -1,26 +1,3 @@
-<!-- <h1>Edit post #{{vm.post.id}}!</h1>
-<form ng-submit="vm.updatePost(vm.post)">
-  <div class="form-group">
-    <label for="name">Topic</label>
-    <input type="text" class="form-control" id="topic" ng-model="vm.post.topic">
-  </div>
-  <div class="form-group">
-    <label for="brief_description">Brief Description</label>
-    <input type="text" class="form-control" id="description" ng-model="vm.post.brief_description">
-  </div>
-  <div class="form-group">
-    <label for="estimated_runtime">Estimated Runtime</label>
-    <input type="text" class="form-control" id="estimated_runtime"  ng-model="vm.post.estimated_runtime">
-  </div>
-  <div class="form-group">
-    <label for="user_pic">User Pic</label>
-    <input type="text" class="form-control" id="user_pic"  ng-model="vm.post.user_pic">
-  </div>
-  <button type="submit" class="btn btn-success">Update!</button>
-  <a href="/" class="btn btn-danger">Never mind, go back</a>
-</form> -->
-
-
 <!-- HEADER -->
 <div layout-gt-sm="row" >
   <div flex-gt-sm="50" style='overflow: scroll' >
@@ -41,7 +18,6 @@
     </md-content>
   </div>
 </div>
-
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~still need to figure out who changing the topic field changes the subheader~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <form class='formText NEWmargin' name="newMusic" ng-submit="vm.updatePost(vm.post)" >
 <div layout="column" >
@@ -61,41 +37,9 @@
   <div flex>
     <md-input-container>
        <label>Roles Needed</label>
-       <textarea name="runtime" md-no-asterisk ng-model="vm.post.roles_needed" placeholder=" " required ></textarea>
+       <textarea name="runtime" md-no-asterisk ng-model="vm.post.roles_needed" placeholder=" "  ></textarea>
     </md-input-container> 
   </div>
-  <div flex>
-    <md-input-container>
-       <label>User Pic</label>
-       <textarea name="user_pic" md-no-asterisk ng-model="vm.post.user_pic" placeholder=" " ></textarea>
-    </md-input-container> 
-  </div>
-  
 </div>
-
-
   <button type="submit" class="btn btn-success NEWmargin" >Edit Post</button>
 </form>
-
-
-<!-- <h1>Edit post #{{vm.post.id}}!</h1>
-<form ng-submit="vm.updatePost(vm.post)">
-  <div class="form-group">
-    <label for="name">Genre</label>
-    <input type="text" class="form-control" id="genre" ng-model="vm.post.genre">
-  </div>
-  <div class="form-group">
-    <label for="description">Brief Description</label>
-    <input type="text" class="form-control" id="description" ng-model="vm.post.description">
-  </div>
-  <div class="form-group">
-    <label for="roles_needed">Roles Needed</label>
-    <input type="text" class="form-control" id="roles_needed"  ng-model="vm.post.roles_needed">
-  </div>
-  <div class="form-group">
-    <label for="user_pic">User Pic</label>
-    <input type="text" class="form-control" id="user_pic"  ng-model="vm.post.user_pic">
-  </div>
-  <button type="submit" class="btn btn-success">Update!</button>
-  <a href="/" class="btn btn-danger">Never mind, go back</a>
-</form> -->

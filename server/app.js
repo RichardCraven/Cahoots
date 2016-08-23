@@ -1,10 +1,7 @@
 //TODO:
 
-//1. geT DATABSE WORKING, FIGURE OUT ROUTING TO COMMUNICATE TO DB AND PERFORM CRUD
-//2.Wire up Angular and connect view for showing pirates
-//3.Handle creation of pirate
-//4.Hnadle deletion
-//5.Handle update
+//1. Do ROUTING TO COMMUNICATE TO DB AND PERFORM CRUD
+//2.Wire up Angular and connect view
 //6.Refactor
 
 const express = require('express')
@@ -19,6 +16,7 @@ const bodyParser = require('body-parser')
 const users = require('./routes/users')
 const posts = require('./routes/posts')
 const musicPosts = require('./routes/musicPosts')
+const musicPostComments = require('./routes/musicPostComments')
 const filmPosts = require('./routes/filmPosts')
 const filmPostComments = require('./routes/filmPostComments')
 const codingPosts = require('./routes/codingPosts')
@@ -37,6 +35,7 @@ app.use('/api/posts', posts)
 app.use('/api/film', filmPosts) 
 app.use('/api/filmPostComments', filmPostComments)
 app.use('/api/music', musicPosts)
+app.use('/api/musicPostComments', musicPostComments)
 app.use('/api/users', users)
 //the path here ('/api/film') corresponds to the service that uses it ex: const BASE_URL = '/api/film')
 

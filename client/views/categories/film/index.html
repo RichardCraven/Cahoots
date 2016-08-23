@@ -1,22 +1,7 @@
-<!-- <div class="container">
-  <div class="row" style='overflow: scroll'>
-    
-  </div>
-</div> -->
-
-
-
-
-
   <div layout-gt-sm="row" >
     <div flex-gt-sm="50" id='filmContent'  >
       <md-toolbar layout="row" class="md-hue-3">
         <div class="md-toolbar-tools">
-
-          <!-- <a href="/" class="goHome">
-          	<span class="glyphicon glyphicon-home"></span>
-          </a> -->
-
           <a href="javascript:void(0)" ng-click="vm.goBack()" class="goHome">
             <span class="glyphicon glyphicon-home"></span>
           </a>
@@ -29,11 +14,9 @@
         <md-list style='margin-left:0px;' >
           <md-subheader  class="md-no-sticky">FILM POSTS   
           		<div class='pull-right' id='addButton'>
-          		<a href="/filmPosts/new" id='add-filmPost'  > 
-          
-				    <span class="glyphicon glyphicon-plus"></span>
-          		</a> 
-          			
+            		<a href="/filmPosts/new" id='add-filmPost' ng-show='vm.loggedIn' > 
+  				        <span class="glyphicon glyphicon-plus"></span>
+            		</a> 
           		</div>
 
               
@@ -41,29 +24,29 @@
           </md-subheader>
           <!-- <div class="container"> -->
 	          <md-list-item    ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd'" ng-class-even="'even'" >
-		            <!-- <span > -->
-		                <!-- <div layout="row" class='item-text-wrap'> -->
-              
-              <!-- <div> -->
-              
 	            <div class="md-list-item-text">
                 <div layout='row' ng-click="vm.show($index)">
                   <div flex-gt-sm='15' class='userPicContainer'>
                      <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                  </div>    
+                     <!-- <p>{{post.display_name}}</p> -->
+                  </div>   
+
                   <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-      	            <a  href="/filmPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.editFilmPost(post.id)">
+
+      	            <a  href="/filmPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right' 
+                    >
+                    <!-- ng-click="vm.editFilmPost(post.id)"  VERIFY THIS IS NOT NEEDED, THEN DELETE -->
       	              <span class="glyphicon glyphicon-pencil "></span>
       	            </a>
       	            <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
       	              <span class="glyphicon glyphicon-remove "></span>
       	            </a>
       	              <h3>{{post.topic}}</h3>
-      	              <h4 id='desc'>{{post.brief_description}}</h4>
+      	              <h4 class='descrip'>{{post.brief_description}}</h4>
       	              <p>Estimated runtime: {{post.estimated_runtime}}</p>
-                  </div>          
-                  
+                  </div>  
                 </div>
+                <!-- end row  -->
                 <div layout='row'>
                   <div ng-show='vm.showText' class='postTextArea'>
                     <form class='commentForm' action="" 
@@ -76,16 +59,13 @@
                     </form>
                   </div>
                 </div>
+                <!-- end row -->
 	            </div>
-
-		                  <!-- </div> -->
-					    <!-- </div> -->
-		            <!-- </span> -->
+              <!-- end list-item-text -->
 	          </md-list-item>
-          <!-- </div> -->
-
       </md-content>
     </div>
+    <!-- end flex-50 div -->
 
 
 <!-- ~~~~~~~~~~~~~~~~~~~MAP~~~~~~~~~~~~~~~~~~ -->
@@ -107,7 +87,7 @@
             <source src="images/NewOwl666.mp4" type="video/mp4">
          </video>
     </div>
-
 </div>
+<!-- end master-layout div -->
 
 

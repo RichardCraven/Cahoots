@@ -194,6 +194,9 @@ img{
 #add-filmPost{
 	color: #496cb6; 
 }
+#add-musicPost{
+	color: #496cb6; 
+}
 .odd{
 	background-color: 	#cce7ff;
 	padding:0px;
@@ -225,7 +228,7 @@ img{
 	height: 60px;
 	margin-left:40px;
 }
-#desc{
+.descrip{
 	white-space: inherit;
 }
 
