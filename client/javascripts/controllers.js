@@ -24,18 +24,20 @@
 		.controller('MailCtrl', MailCtrl)
 		.controller('SettingsCtrl', SettingsCtrl)
 		.controller('LandingCtrl', LandingCtrl)
-		function LandingCtrl($timeout,$location,auth){
+		function LandingCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 			var vm=this;
 			vm.auth = auth
-		  	function fadeOut(){
-		  		if(localStorage.length>0){
+			if(localStorage.length>0){
 		  		$location.path('/loggedinHome');
-		  		}
-		  		else {
+		  	}
+	  		else {
+	  		var windowFade = $timeout(fadeOut,6900)
+	  		}
+		  	function fadeOut(){
+		  		
 		  		$location.path('/home');
-		  		}
+		  		
 		  	};
-			var windowFade = $timeout(fadeOut,6900)
 		};
 		function MailCtrl(filmMail,musicMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService){
 			var vm=this;
@@ -114,6 +116,7 @@
 		};
 
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
+			// alert('homeCtrl loaded')
 			var vm=this;
 			vm.auth = auth;
 
@@ -146,9 +149,11 @@
 				}, false);
 			}
 			vm.login = function (){
-				alert('login function ran'+auth)
-				debugger
+				// debugger
+
 				auth.signin({popup: true}, function(profile,token){
+					alert('login function run')
+
 					store.set('profile',profile);
 					store.set('token',token);
 					vm.username = profile['name']
@@ -161,7 +166,7 @@
 				localStorage.clear()
 			}
 		};
-		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope, UsersService,mail,FilmPostCommentsService){
+		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,mail){
 			var vm=this;
 			vm.auth = auth;
 			console.log('@ loginHomeCtrl')
@@ -555,13 +560,13 @@
 		NewMusicPostController.$inject = ['MusicPostService','$location','store'] 
 		EditMusicPostController.$inject = ['MusicPostService', 'post', '$location']
 
-		LandingCtrl.$inject = ['$timeout','$location']
+		LandingCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 
 		LogoutCtrl.$inject = ['$location','auth','store']
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
-		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope', 'UsersService','mail']
-		MailCtrl.$inject = ['filmMail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService']
+		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','mail']
+		MailCtrl.$inject = ['filmMail','musicMail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService']
 		SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
 

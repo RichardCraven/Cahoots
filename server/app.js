@@ -31,7 +31,7 @@ app.use('/stylesheets', express.static(__dirname + '/../client/stylesheets'))
 app.use('/images', express.static(__dirname + '/../client/images'))
 app.use('/views', express.static(__dirname + '/../client/views'))
 
-app.use('/api/posts', posts)
+// app.use('/api/posts', posts)
 app.use('/api/film', filmPosts) 
 app.use('/api/filmPostComments', filmPostComments)
 app.use('/api/music', musicPosts)

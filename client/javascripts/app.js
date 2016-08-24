@@ -135,9 +135,9 @@
 
 	function runFunction($rootScope, auth, store, jwtHelper, $location,UsersService){
   	  // Wrapper function to handle profile and toke storage
-  	  alert('run Function run')
+  	  // alert('run Function run')
 	  var saveUserInfo = function(profile,token) {
-	  	alert('saveUserInfo run')
+	  	// alert('saveUserInfo run')
 	    store.set('profile', profile);
 	    store.set('token', token);
 	    $rootScope.watch = true;
@@ -148,20 +148,17 @@
 	    var newUser = {name : JSON.parse(localStorage.profile).given_name,
 	    user_pic : JSON.parse(localStorage.profile).picture, third_party_user_id : JSON.parse(localStorage.profile).user_id, first_time:true,has_mail:false }
 	    
-	  
-    	console.log(newUser)
-    	
     	var req = {user: newUser};
     	
     	UsersService.createUser(req).then(function(res){
-    		alert('successfully logged in')
+    		// alert('successfully logged in')
     		$location.path('/loggedinHome');
-    		console.log(res)
     	})
 	    if(localStorage.length>0){
-	    document.getElementById('newloginButton').style.display = 'none';
-	    document.getElementById('newlogoutButton').style.display = 'inline';
-	    
+	     if(document.getElementById('newloginButton')){	
+		    document.getElementById('newloginButton').style.display = 'none';
+		    document.getElementById('newlogoutButton').style.display = 'inline';
+	     }
 	    }
 	    else if (localStorage.length === 0){
 	    document.getElementById('loginButton').style.display = 'none';
@@ -186,9 +183,9 @@
 	  auth.lockOn("authenticated", function(authResult) {
 	    // console.log(authResult);
 
-
+	  // alert(authResult)
 	  auth.getProfile(authResult.idToken).then(function (profile) {
-	    	alert('auth.getProfile run')
+	    	// alert('auth.getProfile run')
 	    	// debugger
 	      // console.log(profile);
 	      // Save user info to local storage
@@ -235,7 +232,7 @@
 		  function($location, profilePromise, idToken, store, $rootScope) {
 		    // Successfully log in
 		    // Access to user profile and token
-		    alert('authProvider.on(loginSuccess)')
+		    // alert('authProvider.on(loginSuccess)')
 
 		    profilePromise.then(function(profile){
 		      // profile
