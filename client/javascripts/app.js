@@ -121,7 +121,33 @@
 					resolve: {
 					 post: getMusicPostById
 					}
-				})				
+				})
+//~~~~~~~~~~~~~~ CODING POSTS ROUTING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				.when('/codingPosts', {
+					templateUrl: '../views/categories/coding/index.html',
+					controller: 'CodingPostsController',
+					controllerAs: 'vm',
+					resolve: {
+						// document.getElementById('map').style.height = '100%'  <---- how can I do this?
+						posts: getAllCodingPosts
+					//^resolve waits for the promise to get resolved and stores it as posts, then injects it into the controller
+					}
+				})
+				.when('/codingPosts/new', {
+					templateUrl: '../views/categories/coding/new.html',
+					controller: 'NewCodingPostController',
+					controllerAs: 'vm'
+				})
+				.when('/codingPosts/:id/edit', {
+					templateUrl: '../views/categories/coding/edit.html',
+					controller: 'EditCodingPostController',
+					controllerAs: 'vm',
+					resolve: {
+					 post: getCodingPostById
+					}
+				})
+
+
 				.otherwise({redirectTo: '/'})
 				$locationProvider.html5Mode(true)
 
@@ -262,6 +288,12 @@
 	}
 	function getFilmPostById(FilmPostService,$route){
 		return FilmPostService.getPost($route.current.params.id);
+	}
+	function getAllCodingPosts(CodingPostService){
+		return CodingPostService.getPosts();
+	}
+	function getCodingPostById(CodingPostService,$route){
+		return CodingPostService.getPost($route.current.params.id);
 	}
 
 	function getMusicPostById(MusicPostService,$route){

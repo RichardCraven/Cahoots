@@ -25,19 +25,23 @@
 		.controller('SettingsCtrl', SettingsCtrl)
 		.controller('LandingCtrl', LandingCtrl)
 		function LandingCtrl($location,auth, store,$timeout,$rootScope, UsersService){
+					  	// alert('youv reached landing control')
+
 			var vm=this;
 			vm.auth = auth
+		  	var fadeOut = function(){
+		  		
+		  		$location.path('/home');
+		  		
+		  	};
 			if(localStorage.length>0){
 		  		$location.path('/loggedinHome');
 		  	}
 	  		else {
 	  		var windowFade = $timeout(fadeOut,6900)
+	  		// fadeOut()
 	  		}
-		  	function fadeOut(){
-		  		
-		  		$location.path('/home');
-		  		
-		  	};
+		  	alert('you have reached landing control')
 		};
 		function MailCtrl(filmMail,musicMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService){
 			var vm=this;
@@ -117,19 +121,27 @@
 
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 			// alert('homeCtrl loaded')
+			console.log('youve reached the home controller!')
+			// location.reload()
 			var vm=this;
 			vm.auth = auth;
+			
 
-		  	$rootScope.$watch('watch',function(newValue,oldValue){
-	            if($rootScope.watch){
-	            }
-	        })
-		  	if(localStorage.length === 0){
-		  		document.getElementById('pic').style.display = 'none';
-		  		document.getElementById('name').style.display = 'none';
-		  		document.getElementById('loginButton').style.display = 'inline';
-				document.getElementById('logoutButton').style.display = 'none';
+			if(localStorage.length>0){
+		  		$location.path('/loggedinHome');
 		  	}
+
+			// if(localStorage.length === 0){
+		  		
+		 //  	}
+
+
+
+		  	// $rootScope.$watch('watch',function(newValue,oldValue){
+	    //         if($rootScope.watch){
+	    //         }
+	    //     })
+		  	
 		  	if(localStorage.length>0){
 		  		vm.name = JSON.parse(localStorage.profile).given_name
 		  		vm.picture = JSON.parse(localStorage.profile).picture
@@ -167,6 +179,8 @@
 			}
 		};
 		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,mail){
+						console.log('youve reached the logged in home controller!')
+
 			var vm=this;
 			vm.auth = auth;
 			console.log('@ loginHomeCtrl')

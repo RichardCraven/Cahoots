@@ -14,12 +14,13 @@ const bodyParser = require('body-parser')
 
 
 const users = require('./routes/users')
-const posts = require('./routes/posts')
+// const posts = require('./routes/posts')
 const musicPosts = require('./routes/musicPosts')
 const musicPostComments = require('./routes/musicPostComments')
 const filmPosts = require('./routes/filmPosts')
 const filmPostComments = require('./routes/filmPostComments')
 const codingPosts = require('./routes/codingPosts')
+const codingPostComments = require('./routes/codingPostComments')
 const cleanupPosts = require('./routes/cleanupPosts')
 
 app.use(bodyParser.json())
@@ -36,6 +37,8 @@ app.use('/api/film', filmPosts)
 app.use('/api/filmPostComments', filmPostComments)
 app.use('/api/music', musicPosts)
 app.use('/api/musicPostComments', musicPostComments)
+app.use('/api/coding', codingPosts)
+app.use('/api/codingPostComments', codingPostComments)
 app.use('/api/users', users)
 //the path here ('/api/film') corresponds to the service that uses it ex: const BASE_URL = '/api/film')
 

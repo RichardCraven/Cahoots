@@ -10,6 +10,8 @@
 		.service('MusicPostCommentsService', MusicPostCommentsService)
 		.service('FilmPostService', FilmPostService)
 		.service('FilmPostCommentsService', FilmPostCommentsService)
+		.service('CodingPostService', CodingPostService)
+		.service('CodingPostCommentsService', CodingPostCommentsService)
 		.service('UsersService', UsersService)
 
 		function PostService($http){
@@ -134,6 +136,48 @@
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
 			}
 		}
+		function CodingPostService($http){
+		 	const BASE_URL = '/api/coding'
+
+			this.getPosts = function(){
+				console.log('codingPostservice GET POSTS')
+				return $http.get(BASE_URL)
+			}
+
+			this.createPost = function(newPost){
+				return $http.post(BASE_URL, newPost); //on server req.body.post
+			}
+
+			this.getPost = function(id){
+				return $http.get(BASE_URL + '/' + id)
+			}
+
+			this.deletePost = function(id){
+				return $http.delete(BASE_URL + '/' + id)
+			}
+
+			this.updatePost = function(data){
+				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
+			}
+		}
+		function CodingPostCommentsService($http){
+		 	const BASE_URL = '/api/codingPostComments'
+
+			this.getMail = function(user_id){
+				return $http.get(BASE_URL+'/'+user_id)
+			}
+
+			this.createPost = function(newPost){
+				return $http.post(BASE_URL, newPost); //on server req.body.post
+			}
+			this.deletePost = function(id){
+				return $http.delete(BASE_URL + '/' + id)
+			}
+
+			this.updatePost = function(data){
+				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
+			}
+		}
 		function UsersService($http){
 		 	const BASE_URL = '/api/users'
 		 	
@@ -160,4 +204,6 @@
 		MusicPostCommentsService.$inject = ['$http']
 		FilmPostService.$inject = ['$http']
 		FilmPostCommentsService.$inject = ['$http']
+		CodingPostService.$inject = ['$http']
+		CodingPostCommentsService.$inject = ['$http']
 })()
