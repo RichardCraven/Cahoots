@@ -194,6 +194,9 @@ img{
 #add-filmPost{
 	color: #496cb6; 
 }
+#add-codingPost{
+	color: #496cb6; 
+}
 #add-musicPost{
 	color: #496cb6; 
 }
@@ -331,6 +334,28 @@ body{
 	margin-left: 50px;
 }
 .filmCommentMailEven{
+	background-color: #F0FFF0;
+	margin-left: 50px;
+}
+.musicCommentMailHeader{
+	background-color: #bfd9bf;
+}
+.musicCommentMailOdd{
+	background-color: #F5F5F5;
+	margin-left: 50px;
+}
+.musicCommentMailEven{
+	background-color: #F0FFF0;
+	margin-left: 50px;
+}
+.codingCommentMailHeader{
+	background-color: #bfd9bf;
+}
+.codingCommentMailOdd{
+	background-color: #F5F5F5;
+	margin-left: 50px;
+}
+.codingCommentMailEven{
 	background-color: #F0FFF0;
 	margin-left: 50px;
 }

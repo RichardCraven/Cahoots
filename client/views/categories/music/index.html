@@ -52,7 +52,7 @@
                  <!-- ng-click="vm.editMusicPost(post.id)" VERIFY THIS IS NOT NEEDED, THEN DELETE-->
 					              <span class="glyphicon glyphicon-pencil "></span>
 					            </a>
-  		            <a href="javascript:void(0)" id='new' class='pull-right' ng-show='vm.checkId(post)'>
+  		            <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.removePost(post.id)" ng-show='vm.checkId(post)'>
   		              <span class="glyphicon glyphicon-remove "></span>
   		            </a>
 					              <h3>{{post.genre}}</h3>

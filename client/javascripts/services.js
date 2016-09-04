@@ -162,7 +162,7 @@
 		}
 		function CodingPostCommentsService($http){
 		 	const BASE_URL = '/api/codingPostComments'
-
+		 	console.log('got to coding comments service')
 			this.getMail = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
 			}

@@ -1,0 +1,94 @@
+  <!-- CODING INDEX -->
+
+  <div layout-gt-sm="row" >
+    <div flex-gt-sm="50" id='codingContent'  >
+      <md-toolbar layout="row" class="md-hue-3">
+        <div class="md-toolbar-tools">
+          <a href="javascript:void(0)" ng-click="vm.goBack()" class="goHome">
+            <span class="glyphicon glyphicon-home"></span>
+          </a>
+        </div>
+      </md-toolbar>
+
+
+      <md-content>
+
+        <md-list style='margin-left:0px;' >
+          <md-subheader  class="md-no-sticky">CODING POSTS   
+          		<div class='pull-right' id='addButton'>
+            		<a href="/codingPosts/new" id='add-codingPost' ng-show='vm.loggedIn' > 
+  				        <span class="glyphicon glyphicon-plus"></span>
+            		</a> 
+          		</div>
+
+              
+
+          </md-subheader>
+          <!-- <div class="container"> -->
+	          <md-list-item    ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd'" ng-class-even="'even'" >
+	            <div class="md-list-item-text">
+                <div layout='row' ng-click="vm.show($index)">
+                  <div flex-gt-sm='15' class='userPicContainer'>
+                     <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                     <!-- <p>{{post.display_name}}</p> -->
+                  </div>   
+
+                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+
+      	            <a  href="/codingPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right' 
+                    >
+                    <!-- ng-click="vm.editFilmPost(post.id)"  VERIFY THIS IS NOT NEEDED, THEN DELETE -->
+      	              <span class="glyphicon glyphicon-pencil "></span>
+      	            </a>
+      	            <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
+      	              <span class="glyphicon glyphicon-remove "></span>
+      	            </a>
+      	              <h3>{{post.scripting_language}} (framework)</h3>
+      	              <h4 class='descrip'>{{post.description}}</h4>
+                  </div>  
+                </div>
+                <!-- end row  -->
+                <div layout='row'>
+                  <div ng-show='vm.showText' class='postTextArea'>
+                    <form class='commentForm' action="" 
+                    ng-submit='vm.addCodingPostComment(post.id,vm.comment)'
+                    >
+                    <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
+                      <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+
+                      <button type="submit" class="btn btn-success" >Submit</button>
+                    </form>
+                  </div>
+                </div>
+                <!-- end row -->
+	            </div>
+              <!-- end list-item-text -->
+	          </md-list-item>
+      </md-content>
+    </div>
+    <!-- end flex-50 div -->
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~MAP~~~~~~~~~~~~~~~~~~ -->
+
+    <md-divider></md-divider>
+    <div ng-show='vm.showMap' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
+      <md-toolbar layout="row" class="md-hue-1" >
+        <div class="md-toolbar-tools">
+          <span>Everyone Loves a Good Map.</span>
+        </div>
+      </md-toolbar>
+	        <ng-map id='map' center="37.7749,-122.4194" zoom="15">
+	        	<marker position="37.7749,-122.4194" title="Hello World!"></marker>
+	    </ng-map>   
+    </div>
+
+    <div ng-show='vm.showVid' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
+          <video id="owlVid2"  muted autoplay >
+            <source src="images/NewOwl666.mp4" type="video/mp4">
+         </video>
+    </div>
+</div>
+<!-- end master-layout div -->
+
+

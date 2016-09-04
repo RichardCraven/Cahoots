@@ -13,7 +13,7 @@ knex('coding_post_comments').where('user_id',req.body)
 	})
 })
 router.get('/:id', function(req,res){
-	knex.select(['c.comment','c.user_pic','topic']).from('coding_posts as f')
+	knex.select(['c.comment','c.user_pic','scripting_language']).from('coding_posts as f')
 	.join('coding_post_comments as c', 'f.id', '=', 'c.post_id')
 	.where('f.user_id',req.params.id)
 	.then(function(mail){

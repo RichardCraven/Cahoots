@@ -38,6 +38,7 @@
 				  resolve: {
 				  	filmMail: getAllFilmMail,
 				  	musicMail: getAllMusicMail,
+				  	codingMail: getAllCodingMail
 				  }
 				})
 				.when('/:id/userSettings',{
@@ -52,6 +53,11 @@
 				  controller: 'LogoutCtrl',
 				  controllerAs: 'vm',
 				  templateUrl: '../views/logout/logout.html'
+				})
+				.when( '/misc', {
+				  controller: 'MiscCtrl',
+				  controllerAs: 'vm',
+				  templateUrl: '../views/categories/misc/index.html'
 				})
 				.when('/posts', {
 					templateUrl: '../views/posts/index.html',
@@ -160,42 +166,17 @@
 		};
 
 	function runFunction($rootScope, auth, store, jwtHelper, $location,UsersService){
-  	  // Wrapper function to handle profile and toke storage
-  	  // alert('run Function run')
 	  var saveUserInfo = function(profile,token) {
-	  	// alert('saveUserInfo run')
+	  	console.log('saveUserInfo run')
 	    store.set('profile', profile);
 	    store.set('token', token);
-	    $rootScope.watch = true;
-
-	    // var name = JSON.parse(localStorage.profile).given_name
-	    // var picture = JSON.parse(localStorage.profile).picture
-
 	    var newUser = {name : JSON.parse(localStorage.profile).given_name,
 	    user_pic : JSON.parse(localStorage.profile).picture, third_party_user_id : JSON.parse(localStorage.profile).user_id, first_time:true,has_mail:false }
-	    
     	var req = {user: newUser};
-    	
+
     	UsersService.createUser(req).then(function(res){
-    		// alert('successfully logged in')
     		$location.path('/loggedinHome');
     	})
-	    if(localStorage.length>0){
-	     if(document.getElementById('newloginButton')){	
-		    document.getElementById('newloginButton').style.display = 'none';
-		    document.getElementById('newlogoutButton').style.display = 'inline';
-	     }
-	    }
-	    else if (localStorage.length === 0){
-	    document.getElementById('loginButton').style.display = 'none';
-	    document.getElementById('logoutButton').style.display = 'inline';
-	    }
-
-	    // console.log('profile: '+profile+', token: '+token)
-	    // console.log('name:'+profile.name)
-	    // console.log(document.getElementById('nameSpan'))
-	    // alert('Welcome to Cahoots, '+profile.name+'!')	
-	     // document.getElementById('name')	
 	  };
 	  // Called when lock shows
 	  auth.lockOn('show', function () {
@@ -313,6 +294,11 @@
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return MusicPostCommentsService.getMail(user_id);
 	}
+	function getAllCodingMail(CodingPostCommentsService){
+		console.log('trying to get all coding mail')
+		var user_id = JSON.parse(localStorage.profile).user_id
+		return CodingPostCommentsService.getMail(user_id);
+	}
 
 
 
@@ -331,7 +317,10 @@
 	getMusicPostById.$inject = ['MusicPostService','$route']
 
 	getUserById.$inject = ['UsersService','$route']
-	// getAllMail.$inject = ['FilmPostCommentsService']
+
+	// getAllFilmMail.$inject = ['FilmPostCommentsService']
+	// getAllMusicMail.$inject = ['MusicPostCommentsService']
+	// getAllCodingMail.$inject = ['CodingPostCommentsService']
 
 	auth0.$inject = ['authProvider']
 
