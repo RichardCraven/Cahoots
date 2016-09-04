@@ -65,9 +65,23 @@
                                      <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                                   </div>    
                                   <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                      <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.genre}}</h6>
-                                      <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
-                                  </div>          
+                                      <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.topic}}</h6>
+                                      <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; max-height:800px; margin-top:15px; margin-left:20px; overflow:scroll'>{{post.comment}}</h3>
+                                  </div>  
+                                  <!-- end row  -->
+                                  <div layout='row'>
+                                    <div ng-show='vm.showText' class='postTextArea'>
+                                      <form class='commentForm' action="" 
+                                      ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
+                                      >
+                                      <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
+                                        <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+
+                                        <button type="submit" class="btn btn-success" >Submit</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                  <!-- end row -->        
                                   
                                 </div>
                             </div>

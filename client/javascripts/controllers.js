@@ -539,6 +539,7 @@
 		  	vm.profile = store.get('profile')
 
 
+
 		  	vm.loggedIn = false
 		  	if(localStorage.length > 0){
 		  		vm.loggedIn = true
@@ -602,6 +603,7 @@
 		function NewFilmPostController(FilmPostService,$location, store){
 			var vm = this;
 			vm.post = {};
+			// NEED TO ADD USER_NAME TO POSTS!
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 			// var currentUserId = store.get('profile')

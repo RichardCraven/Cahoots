@@ -159,6 +159,7 @@ img{
 	/*margin-right: 10px;*/
 }
 .postContentContainer{
+	overflow: scroll;
 	margin-left: 15px;
 	width: 100%;
 }
@@ -330,10 +331,12 @@ body{
 	background-color: #bfd9bf;
 }
 .filmCommentMailOdd{
+	overflow: scroll;
 	background-color: #F5F5F5;
 	margin-left: 50px;
 }
-.filmCommentMailEven{
+.filmCommentMailEven{\
+	overflow: scroll;
 	background-color: #F0FFF0;
 	margin-left: 50px;
 }
