@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                           </md-list-item>
-                          <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
+                          <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index" ng-click='vm.respond()' class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
                             <div class="md-list-item-text">
                                 <div layout='row' ng-click="vm.show($index)">
                                   <div flex-gt-sm='15' class='userPicContainer'>
@@ -70,6 +70,18 @@
                                   </div>          
                                   
                                 </div>
+                            </div>
+                            <div layout='row'>
+                              <div ng-show='vm.showText' class='postTextArea'>
+                                <form class='commentForm' action="" 
+                                ng-submit='vm.addFilmPostCommentResponse(post.id,vm.comment)'
+                                >
+                                <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
+                                  <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+
+                                  <button type="submit" class="btn btn-success" >Submit</button>
+                                </form>
+                              </div>
                             </div>
                           </md-list-item>
 
@@ -92,7 +104,7 @@
                                 </div>
                             </div>
                     </md-list-item>
-                    <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
+                    <md-list-item ng-show='vm.showMusicMail' ng-click='vm.respond()' ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
                       <div class="md-list-item-text">
                           <div layout='row'>
                             <div flex-gt-sm='15' class='userPicContainer'>
@@ -126,7 +138,7 @@
                           </div>
                       </div>
                     </md-list-item>
-                    <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
+                    <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" ng-click='vm.respond()' md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
                       <div class="md-list-item-text">
                           <div layout='row'>
                             <div flex-gt-sm='15' class='userPicContainer'>

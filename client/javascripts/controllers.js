@@ -58,13 +58,13 @@
 			
 			for(var i = 0; i<filmMail.data.length; i++){
 				// if (JSON.parse(localStorage.profile).user_id === mail.data[i].user_id){
-					console.log(filmMail.data[i])
+					// console.log(filmMail.data[i])
 					vm.filmCommentPosts.push(filmMail.data[i])
 				// }
 				// vm.picture = FilmPostService.getPosts
 			}
 			for(var i = 0; i<musicMail.data.length; i++){
-					console.log(musicMail.data[i])
+					// console.log(musicMail.data[i])
 					vm.musicPostComments.push(musicMail.data[i])
 			}
 			for(var i = 0; i<codingMail.data.length; i++){
@@ -107,6 +107,10 @@
 				document.getElementById('newpic').style.display = 'inline';
 				document.getElementById('newpic').style.height = "100px !important" 
 				document.getElementById('newpic').style.width = '100px !important'
+			}
+
+			vm.respond = function(){
+				console.log('respond')
 			}
 		};
 		function SettingsCtrl($location,auth,store){
