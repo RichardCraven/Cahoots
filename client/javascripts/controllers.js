@@ -394,7 +394,12 @@
 				var req = {post: newCodingPost};
 				var id = vm.post.user_id
 				UsersService.getUser(id).then(function(user){
-					req.post.display_name = user.data.display_name
+					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
+						req.post.display_name = user.data.name
+					}
+					else {
+						req.post.display_name = user.data.display_name
+					}
 					CodingPostService.createPost(req).then(function(res){
 						$location.path('/codingPosts');
 					})
@@ -504,7 +509,12 @@
 				var req = {post: newMusicPost};
 				var id = vm.post.user_id
 				UsersService.getUser(id).then(function(user){
-					req.post.display_name = user.data.display_name
+					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
+						req.post.display_name = user.data.name
+					}
+					else {
+						req.post.display_name = user.data.display_name
+					}
 					MusicPostService.createPost(req).then(function(res){
 						$location.path('/musicPosts');
 					})
@@ -617,8 +627,12 @@
 				var req = {post: newFilmPost};
 				var id = vm.post.user_id
 					UsersService.getUser(id).then(function(user){
-						req.post.display_name = user.data.display_name
-						console.log(req.post)
+						if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
+							req.post.display_name = user.data.name
+						}
+						else {
+							req.post.display_name = user.data.display_name
+						}
 						FilmPostService.createPost(req).then(function(res){
 							$location.path('/filmPosts');
 					})
