@@ -19,10 +19,18 @@ router.get('/:id', function(req,res){
 
 router.post('/',function(req,res){
 	// debugger
-	knex('film_posts').insert(req.body.post, '*')
-	.then(function(post){
-		res.send(post)
-	})
+	console.log('ATTENTION! req.body = '+req.body)
+	console.log('req.body.post.data is: '+req.body.post.data)
+	// knex.select('u.display_name').from('users as u')
+	// .then(function(display){
+		// req.body.post.display_name = display[0].display_name
+		// eval(require('locus'))
+		knex('film_posts').insert(req.body.post, '*')
+		.then(function(post){
+
+			res.send(post)
+		})
+	// })
 })
 
 

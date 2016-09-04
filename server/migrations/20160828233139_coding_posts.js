@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
   	table.text('description')
   	table.text('user_pic')
   	table.text('user_id')
+  	table.text('display_name')
   })
 };
 

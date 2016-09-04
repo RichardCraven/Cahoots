@@ -314,6 +314,13 @@ header .jumbotron, .hero-spacer{
 	max-height: 80vh;
 
 }
+.displayName{
+	font-weight: bold !important;
+	font-size:1.8em !important;
+	letter-spacing: 5px !important;
+	color:crimson !important;
+	font-family: 'Indie Flower';
+}
 body{
 	max-height: 100vh;
 }

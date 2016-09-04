@@ -17,11 +17,8 @@ router.get('/:id', function(req,res){
 	.join('film_post_comments as c', 'f.id', '=', 'c.post_id')
 	.where('f.user_id',req.params.id)
 	.then(function(mail){
-		console.log('mail is: '+mail)
-	// eval(require('locus'))
 		res.send(mail)
 	})
-	
 })
 
 router.post('/',function(req,res){

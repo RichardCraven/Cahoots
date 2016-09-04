@@ -383,7 +383,7 @@
 		  		})
 		  	}
 		}
-		function NewCodingPostController(CodingPostService,$location,store){
+		function NewCodingPostController(CodingPostService,UsersService,$location,store){
 			var vm = this;
 			vm.post = {};
 
@@ -391,11 +391,13 @@
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 
 			vm.addCodingPost = function(newCodingPost){
-				console.log('attempting to add coding post')
 				var req = {post: newCodingPost};
-				
-				CodingPostService.createPost(req).then(function(res){
-					$location.path('/codingPosts');
+				var id = vm.post.user_id
+				UsersService.getUser(id).then(function(user){
+					req.post.display_name = user.data.display_name
+					CodingPostService.createPost(req).then(function(res){
+						$location.path('/codingPosts');
+					})
 				})
 			}
 		}
@@ -491,7 +493,7 @@
 		  	}	
 		}
 
-		function NewMusicPostController(MusicPostService,$location,store){
+		function NewMusicPostController(MusicPostService,UsersService,$location,store){
 			var vm = this;
 			vm.post = {};
 
@@ -500,9 +502,12 @@
 
 			vm.addMusicPost = function(newMusicPost){
 				var req = {post: newMusicPost};
-				
-				MusicPostService.createPost(req).then(function(res){
-					$location.path('/musicPosts');
+				var id = vm.post.user_id
+				UsersService.getUser(id).then(function(user){
+					req.post.display_name = user.data.display_name
+					MusicPostService.createPost(req).then(function(res){
+						$location.path('/musicPosts');
+					})
 				})
 			}
 		}
@@ -600,18 +605,24 @@
 			}
 		}
 
-		function NewFilmPostController(FilmPostService,$location, store){
+		function NewFilmPostController(FilmPostService,UsersService,$location, store){
 			var vm = this;
 			vm.post = {};
 			// NEED TO ADD USER_NAME TO POSTS!
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
+			// vm.post.user_name = JSON.parse(localStorage.profile).user
 			// var currentUserId = store.get('profile')
 			vm.addFilmPost = function(newFilmPost){
 				var req = {post: newFilmPost};
-				// , user: currentUserId
-				FilmPostService.createPost(req).then(function(res){
-					$location.path('/filmPosts');
+				var id = vm.post.user_id
+					UsersService.getUser(id).then(function(user){
+						req.post.display_name = user.data.display_name
+						console.log(req.post)
+						FilmPostService.createPost(req).then(function(res){
+							$location.path('/filmPosts');
+					})
+
 				})
 			}
 		}
@@ -630,16 +641,16 @@
 			}
 		}
 		CodingPostsController.$inject = ['CodingPostService','CodingPostCommentsService','posts','$location','$route', 'NgMap','store'];
-		NewCodingPostController.$inject = ['CodingPostService','$location','store'] 
+		NewCodingPostController.$inject = ['CodingPostService','UsersService','$location','store'] 
 		EditCodingPostController.$inject = ['CodingPostService', 'post', '$location']
 
 		FilmPostsController.$inject = ['FilmPostService','FilmPostCommentsService','posts','$location','$route', 'NgMap','store'];
 		//  ^removed $rootScopt, cause I don't think it's needed
-		NewFilmPostController.$inject = ['FilmPostService','$location','store'] 
+		NewFilmPostController.$inject = ['FilmPostService','UsersService','$location','store'] 
 		EditFilmPostController.$inject = ['FilmPostService', 'post', '$location']
 
 		MusicPostsController.$inject = ['MusicPostService','MusicPostCommentsService','posts','$location','$route', 'NgMap'];
-		NewMusicPostController.$inject = ['MusicPostService','$location','store'] 
+		NewMusicPostController.$inject = ['MusicPostService','UsersService','$location','store'] 
 		EditMusicPostController.$inject = ['MusicPostService', 'post', '$location']
 
 		LandingCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']

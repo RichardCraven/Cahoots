@@ -91,7 +91,7 @@
 		 	const BASE_URL = '/api/film'
 
 			this.getPosts = function(){
-				console.log('filmPostservice GET POSTS')
+				// console.log('filmPostservice GET POSTS')
 				// $http.get(BASE_URL).then(function(data){
 				// console.log(data)
 				// })
@@ -99,12 +99,14 @@
 			}
 
 			this.createPost = function(newPost){
+				console.log(newPost)
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			}
 
 			// this.createPostComment = function(comment){
 			// 	return $http.post(BASE_URL, comment);
 			// }
+			
 
 			this.getPost = function(id){
 				return $http.get(BASE_URL + '/' + id)
