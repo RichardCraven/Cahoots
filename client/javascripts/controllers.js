@@ -79,6 +79,7 @@
 			vm.showFilmMail = false
 			vm.showMusicMail = false
 			vm.showCodingMail = false
+			vm.showResponseField = false
 
 			if(vm.filmCommentPosts.length>0){
 				vm.showFilmMail = true	
@@ -108,9 +109,31 @@
 				document.getElementById('newpic').style.height = "100px !important" 
 				document.getElementById('newpic').style.width = '100px !important'
 			}
-
-			vm.respond = function(){
+			// vm.show($index)
+			// vm.showFilmField($index)
+			vm.respondFilm = function(idx){
 				console.log('respond')
+				vm.showResponseField = !vm.showResponseField
+				console.log(idx)
+			}
+			vm.respondFilm = function(idx){
+				vm.showResponseField = !vm.showResponseField
+				vm.showText = !vm.showText
+				if(vm.showResponseField === true){
+				var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  		
+				var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)		  		
+				others.forEach(function(i){i.style.display = 'none'})
+
+				// selected[0].classList.add('focus')
+				}
+				if(vm.showResponseField === false){
+					var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  			
+					var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)
+
+					others.forEach(function(i){i.style.display = 'block'})
+
+					// selected[0].classList.remove('focus')
+				}
 			}
 		};
 		function SettingsCtrl($location,auth,store){
@@ -492,6 +515,7 @@
 		  		vm.comment.post_id = id
 		  		var req = {post: newMusicPostComment};
 		  		console.log(req.post.comment)
+		  		req.post.display_name = ''
 		  		MusicPostCommentsService.createPost(req).then(function(res){
 		  			// $location.path('/filmPosts');
 		  		})
@@ -607,8 +631,16 @@
 				vm.comment.user_pic = JSON.parse(localStorage.profile).picture
 				vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 				vm.comment.post_id = id
+				var userID = vm.comment.user_id
+
 				var req = {post: newFilmPostComment};
-				
+				UsersService.getUser(userID).then(function(user){
+					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
+						req.post.display_name = user.data.name
+					}
+					else {
+						req.post.display_name = user.data.display_name
+					}
 				FilmPostCommentsService.createPost(req).then(function(res){
 					// $location.path('/filmPosts');
 				})

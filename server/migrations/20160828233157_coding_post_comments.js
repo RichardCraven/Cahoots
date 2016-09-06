@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
   	table.increments();
   	table.text('comment')
   	table.text('user_pic')
+  	table.text('display_name')
   	table.text('user_id').unsigned().index().references('users.third_party_user_id').onDelete('cascade');
   	table.integer('post_id').unsigned().index().references('coding_posts.id').onDelete('cascade');
   })

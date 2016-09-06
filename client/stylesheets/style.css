@@ -456,6 +456,16 @@ md-input-container{
 	background-color: #F0F8FF;
 	/*z-index: 2;	*/
 }
+.postResponseArea{
+	height: 33vh;
+	width: 100%;
+	border-radius: 20%;
+	/*background-color: blue;*/
+/*	background-color: #F0F8FF;
+*/}
+.responseField{
+	background-color: green;
+}
 .postTextField{
 	padding:20px;
 	border-radius: 9%;

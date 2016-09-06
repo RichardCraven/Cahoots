@@ -58,9 +58,9 @@
                                 </div>
                             </div>
                           </md-list-item>
-                          <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index" ng-click='vm.respond()' class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
+                          <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
                             <div class="md-list-item-text">
-                                <div layout='row' ng-click="vm.show($index)">
+                                <div layout='row' ng-click='vm.respondFilm($index)' >
                                   <div flex-gt-sm='15' class='userPicContainer'>
                                      <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                                   </div>    
@@ -69,33 +69,21 @@
                                       <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; max-height:800px; margin-top:15px; margin-left:20px; overflow:scroll'>{{post.comment}}</h3>
                                   </div>  
                                   <!-- end row  -->
-                                  <div layout='row'>
-                                    <div ng-show='vm.showText' class='postTextArea'>
-                                      <form class='commentForm' action="" 
-                                      ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
-                                      >
-                                      <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
-                                        <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+                                </div>
+                                <div ng-show='vm.showResponseField' layout='row' class='responseField'>
+                                  <div  class='postResponseArea'>
+                                    <form class='commentForm' action="" 
+                                    ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
+                                    >
+                                    <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
+                                      <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
 
-                                        <button type="submit" class="btn btn-success" >Submit</button>
-                                      </form>
-                                    </div>
+                                      <button type="submit" class="btn btn-success" >Submit</button>
+                                    </form>
                                   </div>
+                                </div>
                                   <!-- end row -->        
                                   
-                                </div>
-                            </div>
-                            <div layout='row'>
-                              <div ng-show='vm.showText' class='postTextArea'>
-                                <form class='commentForm' action="" 
-                                ng-submit='vm.addFilmPostCommentResponse(post.id,vm.comment)'
-                                >
-                                <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
-                                  <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
-
-                                  <button type="submit" class="btn btn-success" >Submit</button>
-                                </form>
-                              </div>
                             </div>
                           </md-list-item>
 
