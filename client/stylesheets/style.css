@@ -146,6 +146,14 @@ img{
 .goHome{
 	margin-left: 50px;
 }
+.smallGobackHomeArrow{
+	color:#58157e !important;
+	font-size:2em;
+}
+.smallGobackHomeArrow:hover {
+	color:#b60b0b !important;
+	font-size:2em;
+}
 .goBack{
 	font-size:6em;
 }

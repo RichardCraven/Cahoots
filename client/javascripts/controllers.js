@@ -333,6 +333,10 @@
 			vm.toggleView = false
 		  	vm.showText = false
 			vm.posts = posts.data;
+			vm.backHome = '/home'
+			if(localStorage.length>0){
+				vm.backHome = '/loggedinHome'
+			}
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
@@ -408,7 +412,10 @@
 		function NewCodingPostController(CodingPostService,UsersService,$location,store){
 			var vm = this;
 			vm.post = {};
-
+			vm.backHome = '/home'
+			if(localStorage.length>0){
+				vm.backHome = '/loggedinHome'
+			}
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 
@@ -443,6 +450,10 @@
 		function MusicPostsController(MusicPostService, MusicPostCommentsService,UsersService,posts,$location,$route, NgMap){
 			var vm = this;
 			vm.posts = posts.data;
+			vm.backHome = '/home'
+			if(localStorage.length>0){
+				vm.backHome = '/loggedinHome'
+			}
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
@@ -528,7 +539,8 @@
 		function NewMusicPostController(MusicPostService,UsersService,$location,store){
 			var vm = this;
 			vm.post = {};
-
+			vm.backHome = '/loggedinhome'
+			
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 
@@ -571,7 +583,10 @@
 			var vm = this;
 			vm.showMap = false
 			vm.showVid = true
-
+			vm.backHome = '/home'
+			if(localStorage.length>0){
+				vm.backHome = '/loggedinHome'
+			}
 			// Array.fromforeach (p in posts.data){
 			// 	console.log('p')
 			// }
