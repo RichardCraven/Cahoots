@@ -182,10 +182,21 @@ img{
 	height: 80vh;
 	width: 49vw;
 }
-
+.glyphicon-home{
+	margin-left: 120% !important;
+	color:red !important;
+	font-size: 2.5em !important;
+}
 #homeButton{
+	height: 200px;
+	width: 200px;
 	margin-left: 220px;
 	font-size:2em;
+}
+.homeButton{
+	margin-left: 400px
+	height: 200px;
+	width: 200px;
 }
 #addButton{
 	font-size:1.8em;

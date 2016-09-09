@@ -571,11 +571,23 @@
 			var vm = this;
 			vm.showMap = false
 			vm.showVid = true
+
+			// Array.fromforeach (p in posts.data){
+			// 	console.log('p')
+			// }
+			// console.log('length is: '+ posts.data)
+			// console.log('type of ' + posts.data + 'is :' + typeof(posts.data[0]))
 			vm.posts = posts.data;
-			console.log(posts.data)
+
+			// for(var i = 0; i < posts.data.length; i++){
+			// console.log('posts.data is '+vm.posts.data.data[i])
+				
+			// }
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
+		  	// vm.showRuntime = false
+		  	// (console.log)
 		  	vm.goBack = function(){
 		  		if(localStorage.length === 0){
 		  		$location.path('/home')
@@ -585,7 +597,13 @@
 		  		}
 		  	}
 		  	vm.profile = store.get('profile')
-
+		  	// console.log('post.estimated runtime is :'+ vm.post.estimated_runtime)
+		  	
+		  	console.log()
+		  	// if(vm.post.estimated_runtime == null){
+		  		console.log('NULL')
+			// vm.showRuntime = false				
+			// }
 
 
 		  	vm.loggedIn = false
@@ -612,6 +630,9 @@
 		  		vm.showText = !vm.showText
 		  		vm.showMap = !vm.showMap
 		  		vm.showVid = !vm.showVid
+
+		  		// if()
+
 		  		if(vm.toggleView === true){
 		  		var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  		
 		  		var others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)		  		
@@ -664,6 +685,7 @@
 			// NEED TO ADD USER_NAME TO POSTS!
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
+			
 			// vm.post.user_name = JSON.parse(localStorage.profile).user
 			// var currentUserId = store.get('profile')
 			vm.addFilmPost = function(newFilmPost){
@@ -671,11 +693,7 @@
 				var req = {post: newFilmPost};
 				console.log(req)
 				var id = vm.post.user_id
-				console.log(id+'usersErvice: '+UsersService)
-				console.log('about to do UsersService')
 				UsersService.getUser(id).then(function(user){
-					alert(user)
-					alert(user.data.name)
 					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
 						req.post.display_name = user.data.name
 					}

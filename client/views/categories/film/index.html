@@ -2,8 +2,8 @@
     <div flex-gt-sm="50" id='filmContent'  >
       <md-toolbar layout="row" class="md-hue-3">
         <div class="md-toolbar-tools">
-          <a href="javascript:void(0)" ng-click="vm.goBack()" class="goHome">
-            <span class="glyphicon glyphicon-home"></span>
+          <a href="javascript:void(0)" ng-click="vm.goBack()" >
+            <span class="glyphicon glyphicon-home homeButton" ></span>
           </a>
         </div>
       </md-toolbar>
@@ -43,7 +43,7 @@
       	            </a>
       	              <h3>{{post.topic}}</h3>
       	              <h4 class='descrip'>{{post.brief_description}}</h4>
-      	              <p>Estimated runtime: {{post.estimated_runtime}}</p>
+      	              <!-- <p ng-show='vm.showRuntime'>Estimated runtime: {{post.estimated_runtime}}</p> -->
                   </div>  
                 </div>
                 <!-- end row  -->
