@@ -11,6 +11,9 @@ router.get('/', function (req,res){
 })
 
 router.get('/:id', function(req,res){
+	//THIS IS WHERE YOU NEED TO DO A JOIN WITH USERS
+	knex.select(['u.display_name','u.user_pic','topic','brief_description','estimated_runtime']).from('film_posts as m')
+	.join('users as u', 'u.id', '=', 'f.user_id')
 	knex('film_posts').where('id',req.params.id).first()
 	.then(function(post){
 		res.send(post)

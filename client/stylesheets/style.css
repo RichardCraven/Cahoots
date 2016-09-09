@@ -318,7 +318,7 @@ header .jumbotron, .hero-spacer{
 	font-weight: bold !important;
 	font-size:1.8em !important;
 	letter-spacing: 5px !important;
-	color:crimson !important;
+	color:#58157e !important;
 	font-family: 'Indie Flower';
 }
 body{
@@ -393,8 +393,12 @@ div .mailButton{
 	width: 70px !important;
 }
 div .settingsButton{
-	height: 70px !important;
-	width: 80px !important;
+	/*margin-top:12px;*/
+	/*margin-top:1%;*/
+	/*height: 70px !important;
+	width: 80px !important;*/
+	height: 100px !important;
+	width: 110px !important;
 }
 div .owlButton{
 	margin-left:45%;

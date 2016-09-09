@@ -23,7 +23,7 @@
 		.controller('LoginHomeCtrl', LoginHomeCtrl)
 		.controller('LogoutCtrl', LogoutCtrl)
 		.controller('MailCtrl', MailCtrl)
-		.controller('SettingsCtrl', SettingsCtrl)
+		// .controller('SettingsCtrl', SettingsCtrl)
 		.controller('LandingCtrl', LandingCtrl)
 		function LandingCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 
@@ -137,20 +137,20 @@
 				}
 			}
 		};
-		function SettingsCtrl($location,auth,store){
-			var vm=this;
-			vm.auth = auth;
+		// function SettingsCtrl($location,auth,store){
+		// 	var vm=this;
+		// 	vm.auth = auth;
 
-			vm.navpicture = JSON.parse(localStorage.profile).picture
+		// 	vm.navpicture = JSON.parse(localStorage.profile).picture
 
-			vm.name = JSON.parse(localStorage.profile).given_name
+		// 	vm.name = JSON.parse(localStorage.profile).given_name
 
-			vm.logout = function(){
-				store.remove('profile')
-				store.remove('token')
-				$location.path('/home')
-			}
-		};
+		// 	vm.logout = function(){
+		// 		store.remove('profile')
+		// 		store.remove('token')
+		// 		$location.path('/home')
+		// 	}
+		// };
 
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 			// alert('homeCtrl loaded')
@@ -287,6 +287,7 @@
 		}
 		function EditUserController(UsersService, $location,auth,store,user){ 
 			console.log('reached edit user controller. user is: '+user.data.name)
+			console.log(user.data)
 			var vm = this;
 			vm.user = user.data
 			console.log(vm.user.zip_code+' pumpkin...'+vm.user.bio)
@@ -315,9 +316,7 @@
 			}
 
 			vm.updateUser = function(user){
-				console.log('begin updateUser function')
 				var req = {user: user}
-				console.log('if this req works, req.user.id is: '+req.user.id)
 				UsersService.updateUser(req).then(function(res){					
 				$location.path('/loggedinHome');
 				})
@@ -539,10 +538,15 @@
 				UsersService.getUser(id).then(function(user){
 					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
 						req.post.display_name = user.data.name
+						console.log('dislay name not yet set')
+						console.log(user.data.name)
+
 					}
 					else {
 						req.post.display_name = user.data.display_name
+						console.log('display name exists')
 					}
+					console.log(req.post.display_name)
 					MusicPostService.createPost(req).then(function(res){
 						$location.path('/musicPosts');
 					})
@@ -563,11 +567,12 @@
 		}
 //~~~~~~FILMposts conroller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
 		function FilmPostsController(FilmPostService,FilmPostCommentsService,UsersService,posts,$location,$route, NgMap,store,$rootScope){
-
+			// console.log(user.data)
 			var vm = this;
 			vm.showMap = false
 			vm.showVid = true
 			vm.posts = posts.data;
+			console.log(posts.data)
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
@@ -720,7 +725,7 @@
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','mail']
 		MailCtrl.$inject = ['filmMail','musicMail','codingMail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService']
-		SettingsCtrl.$inject = ['$location','auth', 'store']
+		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
 
 })()

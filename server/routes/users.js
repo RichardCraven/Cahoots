@@ -37,6 +37,7 @@ router.delete('/:id', (req,res) => {
 })
 
 router.put('/:id', (req,res) => {
+	req.body.user.zip_code = +req.body.user.zip_code || null ;
 	knex('users')
 		.where('id', req.params.id)
 		.update(req.body.user)

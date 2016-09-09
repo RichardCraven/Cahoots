@@ -173,6 +173,7 @@
 	    var newUser = {name : JSON.parse(localStorage.profile).given_name,
 	    user_pic : JSON.parse(localStorage.profile).picture, third_party_user_id : JSON.parse(localStorage.profile).user_id, first_time:true,has_mail:false }
     	var req = {user: newUser};
+    	req.user.zip_code = null
 
     	UsersService.createUser(req).then(function(res){
     		$location.path('/loggedinHome');
