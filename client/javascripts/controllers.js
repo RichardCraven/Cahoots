@@ -412,9 +412,8 @@
 		function NewCodingPostController(CodingPostService,UsersService,$location,store){
 			var vm = this;
 			vm.post = {};
-			vm.backHome = '/home'
-			if(localStorage.length>0){
-				vm.backHome = '/loggedinHome'
+			vm.goBackToCodingIndex = function(){
+				$location.path('/codingPosts')
 			}
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
@@ -540,9 +539,13 @@
 			var vm = this;
 			vm.post = {};
 			vm.backHome = '/loggedinhome'
-			
+
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
+
+			vm.goBackToMusicIndex = function(){
+				$location.path('/musicPosts')
+			}
 
 			vm.addMusicPost = function(newMusicPost){
 				var req = {post: newMusicPost};
@@ -701,8 +704,9 @@
 			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 			
-			// vm.post.user_name = JSON.parse(localStorage.profile).user
-			// var currentUserId = store.get('profile')
+			vm.goBackToFilmIndex = function(){
+				$location.path('/filmPosts')
+			}
 			vm.addFilmPost = function(newFilmPost){
 				console.log('triggered addFilmPost. newFIlmPost is: '+newFilmPost)
 				var req = {post: newFilmPost};

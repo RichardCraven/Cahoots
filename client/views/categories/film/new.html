@@ -3,17 +3,17 @@
   <div flex-gt-sm="50" style='overflow: scroll' >
     <md-toolbar layout="row" class="md-hue-3">
       <div class="md-toolbar-tools">
-        <a href="/home" class="goHome">
+        <!-- <a href="/home" class="goHome">
           <span class="glyphicon glyphicon-home"></span>
-        </a>
-        <a href="/filmPosts" class="goHome">
-          <span style='margin-left:30px' class="glyphicon glyphicon-arrow-left"></span>
+        </a> -->
+        <a ng-click='vm.goBackToFilmIndex()' class="smallGobackHomeArrow">
+          <span style='margin-left:10px' class="glyphicon glyphicon-arrow-left"></span>
         </a>
       </div>
     </md-toolbar>
     <md-content>
       <md-list flex >
-        <md-subheader style='font-size:2em' class="md-no-sticky text-center">Post a Film Project</md-subheader> 
+        <md-subheader style='font-size:2em' class="md-no-sticky text-center">POST AN IDEA</md-subheader> 
       </md-list>
     </md-content>
 
