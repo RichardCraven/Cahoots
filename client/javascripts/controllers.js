@@ -14,7 +14,6 @@
 		.controller('EditMusicPostController', EditMusicPostController)
 		
 		.controller('UsersController', UsersController)
-		// .controller('NewUserController', NewUserController)
 		.controller('EditUserController', EditUserController)
 
 		.controller('MiscCtrl',MiscCtrl)
@@ -23,7 +22,6 @@
 		.controller('LoginHomeCtrl', LoginHomeCtrl)
 		.controller('LogoutCtrl', LogoutCtrl)
 		.controller('MailCtrl', MailCtrl)
-		// .controller('SettingsCtrl', SettingsCtrl)
 		.controller('LandingCtrl', LandingCtrl)
 		function LandingCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 
@@ -32,7 +30,6 @@
 		  	var fadeOut = function(){
 		  		
 		  		location.href = '/home';
-		  		// $location.path('/home')
 		  		
 		  	};
 			if(localStorage.profile){
@@ -46,10 +43,6 @@
 		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService){
 			var vm=this;
 			vm.auth = auth;
-			// for(var property in mail.data) {
-			//     console.log(property + "=" + mail[property]);
-			// }
-			console.log('musicMail is: '+musicMail)
 
 			vm.name = JSON.parse(localStorage.profile).given_name
 			vm.navpicture = JSON.parse(localStorage.profile).picture
@@ -58,21 +51,14 @@
 			vm.codingPostComments = []
 			
 			for(var i = 0; i<filmMail.data.length; i++){
-				// if (JSON.parse(localStorage.profile).user_id === mail.data[i].user_id){
-					// console.log(filmMail.data[i])
 					vm.filmCommentPosts.push(filmMail.data[i])
-				// }
-				// vm.picture = FilmPostService.getPosts
 			}
 			for(var i = 0; i<musicMail.data.length; i++){
-					// console.log(musicMail.data[i])
 					vm.musicPostComments.push(musicMail.data[i])
 			}
 			for(var i = 0; i<codingMail.data.length; i++){
 					vm.codingPostComments.push(codingMail.data[i])
 			}
-			console.log('array after compiling: '+vm.filmCommentPosts)
-			// console.log(vm.userMail)
 
 			vm.hasNewFilmMail = false
 			vm.hasNewMusicMail = false
@@ -110,12 +96,8 @@
 				document.getElementById('newpic').style.height = "100px !important" 
 				document.getElementById('newpic').style.width = '100px !important'
 			}
-			// vm.show($index)
-			// vm.showFilmField($index)
 			vm.respondFilm = function(idx){
-				console.log('respond')
 				vm.showResponseField = !vm.showResponseField
-				console.log(idx)
 			}
 			vm.respondFilm = function(idx){
 				vm.showResponseField = !vm.showResponseField
@@ -125,7 +107,6 @@
 				var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)		  		
 				others.forEach(function(i){i.style.display = 'none'})
 
-				// selected[0].classList.add('focus')
 				}
 				if(vm.showResponseField === false){
 					var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  			
@@ -133,29 +114,12 @@
 
 					others.forEach(function(i){i.style.display = 'block'})
 
-					// selected[0].classList.remove('focus')
 				}
 			}
 		};
-		// function SettingsCtrl($location,auth,store){
-		// 	var vm=this;
-		// 	vm.auth = auth;
-
-		// 	vm.navpicture = JSON.parse(localStorage.profile).picture
-
-		// 	vm.name = JSON.parse(localStorage.profile).given_name
-
-		// 	vm.logout = function(){
-		// 		store.remove('profile')
-		// 		store.remove('token')
-		// 		$location.path('/home')
-		// 	}
-		// };
 
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
-			// alert('homeCtrl loaded')
-			console.log('youve reached the home controller!')
-			// location.reload()
+			console.log('HomeCtrl')
 
 
 			var vm=this;
@@ -188,7 +152,6 @@
 			}
 		};
 		function MiscCtrl($location){
-			console.log('got to misc ctrl')
 			var vm=this;
 			vm.goBack = function(){
 				if(localStorage.length === 0){
@@ -200,42 +163,32 @@
 			}
 		}
 		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,UsersService){
-			console.log('youve reached the logged in home controller!')
+			console.log('loginHomeCtr')
 
 			var vm=this;
 			vm.auth = auth;
 			var userName;
 			vm.welcome = 'Hey, beautiful'
 			var getUser = function(id){
-				console.log('WTF. id is: '+id)
 				UsersService.getUser(id).then(function(user){
-					console.log(user)
-					console.log('HAAAAY!!!! '+user.display_name)
-					// debugger
 					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
 						vm.welcome = 'Hey, beautiful'
 					}
 					else {
-						console.log('hmm')
-						console.log(user.data.display_name)
 						userName = user.data.display_name
 						vm.welcome = ('Welcome '+user.data.display_name)
 					}
 				})
 			}
 			var id = JSON.parse(localStorage.profile).user_id
-			// console.log(id)
+			
 			getUser(id)
-			// console.log('userName is: '+user.data.display_name)
 			
 
-			console.log('@ loginHomeCtrl')
 			vm.go = function ( path ) {
 			    $location.path( path );
 			  };
-			// console.log(JSON.parse(localStorage.profile).user_id)  
 			vm.user_id = JSON.parse(localStorage.profile).user_id
-			// console.log(vm.user_id)
 			vm.hasMail = false
 			if(localStorage.length>0){
 				vm.hasMail = true
@@ -251,12 +204,10 @@
 				document.getElementById('newloginButton').style.display = 'none';
 				document.getElementById('newlogoutButton').style.display = 'inline';
 			}
-			// console.log(vm.name)
 
 
 			vm.logout = function(){
 				localStorage.clear()
-				// alert('local storage is: '+localStorage)
 				document.getElementById('newloginButton').style.display = 'inline';
 				document.getElementById('newlogoutButton').style.display = 'none';
 				document.getElementById('newpic').style.display = 'none';
@@ -273,7 +224,6 @@
 			  };
 
 			vm.logout = function(){
-				console.log('logoutbuttonClicked')
 				store.remove('profile')
 				store.remove('token')
 				$location.path('/home')
@@ -311,21 +261,15 @@
 		  	}	
 		}
 		function EditUserController(UsersService, $location,auth,store,user){ 
-			console.log('reached edit user controller. user is: '+user.data.name)
-			console.log(user.data)
 			var vm = this;
 			vm.user = user.data
-			console.log(vm.user.zip_code+' pumpkin...'+vm.user.bio)
 			if(vm.user.display_name==null||vm.user.display_name==undefined){
-				console.log('display_name is null')
 				vm.user.display_name = ''
 			}
 			if(vm.user.zip_code==null){
-				console.log('zip_code is null')
 				vm.user.zip_code = ' '
 			}
 			if(vm.user.bio===null){
-				console.log('bio is null')
 				vm.user.bio = ' '
 			}
 			vm.auth = auth;
@@ -474,6 +418,7 @@
 		function MusicPostsController(MusicPostService, MusicPostCommentsService,UsersService,posts,$location,$route, NgMap){
 			var vm = this;
 			vm.posts = posts.data;
+			console.log(posts.data)
 			vm.backHome = '/home'
 			if(localStorage.length>0){
 				vm.backHome = '/loggedinHome'
@@ -578,15 +523,11 @@
 				UsersService.getUser(id).then(function(user){
 					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
 						req.post.display_name = user.data.name
-						console.log('dislay name not yet set')
-						console.log(user.data.name)
 
 					}
 					else {
 						req.post.display_name = user.data.display_name
-						console.log('display name exists')
 					}
-					console.log(req.post.display_name)
 					MusicPostService.createPost(req).then(function(res){
 						$location.path('/musicPosts');
 					})
@@ -607,7 +548,6 @@
 		}
 //~~~~~~FILMposts conroller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
 		function FilmPostsController(FilmPostService,FilmPostCommentsService,UsersService,posts,$location,$route, NgMap,store,$rootScope){
-			console.log('film controller'+posts)
 			var vm = this;
 			vm.showMap = false
 			vm.showVid = true
@@ -615,17 +555,7 @@
 			if(localStorage.length>0){
 				vm.backHome = '/loggedinHome'
 			}
-			// Array.fromforeach (p in posts.data){
-			// 	console.log('p')
-			// }
-			// console.log('length is: '+ posts.data)
-			// console.log('type of ' + posts.data + 'is :' + typeof(posts.data[0]))
 			vm.posts = posts.data;
-
-			// for(var i = 0; i < posts.data.length; i++){
-			// console.log('posts.data is '+vm.posts.data.data[i])
-				
-			// }
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
@@ -712,7 +642,6 @@
 		}
 
 		function NewFilmPostController(FilmPostService,UsersService,$location, store){
-			console.log('@ newFilmPost controller')
 			var vm = this;
 			vm.post = {};
 			// NEED TO ADD USER_NAME TO POSTS!
@@ -723,9 +652,7 @@
 				$location.path('/filmPosts')
 			}
 			vm.addFilmPost = function(newFilmPost){
-				console.log('triggered addFilmPost. newFIlmPost is: '+newFilmPost)
 				var req = {post: newFilmPost};
-				console.log(req)
 				var id = vm.post.user_id
 				UsersService.getUser(id).then(function(user){
 					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){

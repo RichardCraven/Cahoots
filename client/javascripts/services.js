@@ -18,7 +18,6 @@
 		 	const BASE_URL = '/api/posts'
 
 			this.getPosts = function(){
-				console.log('postservice')
 				return $http.get(BASE_URL)
 			}
 
@@ -65,18 +64,10 @@
 		 	const BASE_URL = '/api/musicPostComments'
 
 			this.getMail = function(user_id){
-				// user_id = {user_id: user_id}
-				console.log(user_id)
-				console.log('musicPostCommentsService GET MAIL')
-				// $http.get(BASE_URL).then(function(data){
-				// console.log(data)
-				// })
 				return $http.get(BASE_URL+'/'+user_id)
 			}
 
 			this.createPost = function(newPost){
-				console.log('newPost.post: '+newPost.post)
-				console.log('newPost.post.post_id is: '+newPost.post.post_id)
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			}
 			this.deletePost = function(id){
@@ -91,15 +82,10 @@
 		 	const BASE_URL = '/api/film'
 
 			this.getPosts = function(){
-				// console.log('filmPostservice GET POSTS')
-				// $http.get(BASE_URL).then(function(data){
-				// console.log(data)
-				// })
 				return $http.get(BASE_URL)
 			}
 
 			this.createPost = function(newPost){
-				console.log(newPost)
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			}
 
@@ -142,7 +128,6 @@
 		 	const BASE_URL = '/api/coding'
 
 			this.getPosts = function(){
-				console.log('codingPostservice GET POSTS')
 				return $http.get(BASE_URL)
 			}
 
@@ -164,7 +149,6 @@
 		}
 		function CodingPostCommentsService($http){
 		 	const BASE_URL = '/api/codingPostComments'
-		 	console.log('got to coding comments service')
 			this.getMail = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
 			}
@@ -184,12 +168,10 @@
 		 	const BASE_URL = '/api/users'
 		 	
 			this.createUser = function(newPost){
-				console.log('creatUser service run')
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			}
 
 			this.getUser = function(id){
-				// console.log('atGETUSER... id is' +id)
 				return $http.get(BASE_URL + '/' + id)
 			}
 
