@@ -204,13 +204,13 @@
 
 			var vm=this;
 			vm.auth = auth;
-			var id = JSON.parse(localStorage.profile).user_id
-			console.log(id)
 			var userName;
 			vm.welcome = 'Hey, beautiful'
 			var getUser = function(id){
+				console.log('WTF. id is: '+id)
 				UsersService.getUser(id).then(function(user){
-					console.log('HAAAAY!!!! '+user.data)
+					console.log(user)
+					console.log('HAAAAY!!!! '+user.display_name)
 					// debugger
 					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
 						vm.welcome = 'Hey, beautiful'
@@ -223,6 +223,8 @@
 					}
 				})
 			}
+			var id = JSON.parse(localStorage.profile).user_id
+			// console.log(id)
 			getUser(id)
 			// console.log('userName is: '+user.data.display_name)
 			
@@ -231,9 +233,9 @@
 			vm.go = function ( path ) {
 			    $location.path( path );
 			  };
-			console.log(JSON.parse(localStorage.profile).user_id)  
+			// console.log(JSON.parse(localStorage.profile).user_id)  
 			vm.user_id = JSON.parse(localStorage.profile).user_id
-			console.log(vm.user_id)
+			// console.log(vm.user_id)
 			vm.hasMail = false
 			if(localStorage.length>0){
 				vm.hasMail = true
@@ -249,7 +251,7 @@
 				document.getElementById('newloginButton').style.display = 'none';
 				document.getElementById('newlogoutButton').style.display = 'inline';
 			}
-			console.log(vm.name)
+			// console.log(vm.name)
 
 
 			vm.logout = function(){

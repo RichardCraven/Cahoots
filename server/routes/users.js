@@ -13,7 +13,8 @@ router.get('/', function (req,res){
 router.get('/:id', function(req,res){
 	knex('users').where('third_party_user_id',req.params.id).first()
 	.then(function(user){
-		// console.log(user)
+		console.log(user)
+		//WTF IS GOING ON HERE
 		// eval(locus)
 		res.send(user)
 	})

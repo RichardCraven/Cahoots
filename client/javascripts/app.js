@@ -26,10 +26,10 @@
 				.when('/loggedinHome', {
 					templateUrl: '../views/loggedinHome.html',
 					controller: 'LoginHomeCtrl',
-					controllerAs: 'vm',
-					resolve: {
-						user: getUserById
-					}	
+					controllerAs: 'vm'
+					// resolve: {
+					// 	user: getUserAtHomePage
+					// }	
 				})
 				.when('/mailbox', {
 				  templateUrl: '../views/users/mailbox.html',

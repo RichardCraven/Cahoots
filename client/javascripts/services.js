@@ -189,6 +189,7 @@
 			}
 
 			this.getUser = function(id){
+				// console.log('atGETUSER... id is' +id)
 				return $http.get(BASE_URL + '/' + id)
 			}
 
