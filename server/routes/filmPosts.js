@@ -3,18 +3,23 @@ const router = express.Router();
 const knex = require('../db/knex')
 
 router.get('/', function (req,res){
-	knex('film_posts').then(function(filmPosts){
-		res.send(filmPosts);		
-	}).catch(function(err){
+	// knex('film_posts').then(function(filmPosts){
+	// 	res.send(filmPosts);
+	knex.select(['u.display_name','u.user_pic','topic','brief_description']).from('film_posts as f')
+	.join('users as u', 'u.third_party_user_id', '=', 'f.user_id')
+		.then(function(filmPosts){
+		res.send(filmPosts);
+		})
+	.catch(function(err){
 		res.send(err);
-	});
+	});		
+	
 })
 
 router.get('/:id', function(req,res){
-	//THIS IS WHERE YOU NEED TO DO A JOIN WITH USERS
-	knex.select(['u.display_name','u.user_pic','topic','brief_description','estimated_runtime']).from('film_posts as m')
-	.join('users as u', 'u.id', '=', 'f.user_id')
-	knex('film_posts').where('id',req.params.id).first()
+	knex.select(['u.display_name','u.user_pic','topic','brief_description']).from('film_posts as f')
+	.join('users as u', 'u.third_party_user_id', '=', 'f.user_id')
+	knex('film_posts').where('u.third_party_user_id',req.params.id).first()
 	.then(function(post){
 		res.send(post)
 	})

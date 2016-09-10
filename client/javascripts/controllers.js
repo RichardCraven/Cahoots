@@ -35,7 +35,7 @@
 		  		// $location.path('/home')
 		  		
 		  	};
-			if(localStorage.length>0){
+			if(localStorage.profile){
 		  		location.href = '/loggedinHome';
 		  	}
 	  		else {
@@ -162,7 +162,7 @@
 			vm.auth = auth;
 			
 
-			if(localStorage.length>0){
+			if(localStorage.profile){
 		  		$location.path('/loggedinHome');
 		  	}
 
@@ -199,11 +199,34 @@
 				}
 			}
 		}
-		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,mail){
+		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,UsersService){
 			console.log('youve reached the logged in home controller!')
 
 			var vm=this;
 			vm.auth = auth;
+			var id = JSON.parse(localStorage.profile).user_id
+			console.log(id)
+			var userName;
+			vm.welcome = 'Hey, beautiful'
+			var getUser = function(id){
+				UsersService.getUser(id).then(function(user){
+					console.log('HAAAAY!!!! '+user.data)
+					// debugger
+					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
+						vm.welcome = 'Hey, beautiful'
+					}
+					else {
+						console.log('hmm')
+						console.log(user.data.display_name)
+						userName = user.data.display_name
+						vm.welcome = ('Welcome '+user.data.display_name)
+					}
+				})
+			}
+			getUser(id)
+			// console.log('userName is: '+user.data.display_name)
+			
+
 			console.log('@ loginHomeCtrl')
 			vm.go = function ( path ) {
 			    $location.path( path );
@@ -582,7 +605,7 @@
 		}
 //~~~~~~FILMposts conroller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
 		function FilmPostsController(FilmPostService,FilmPostCommentsService,UsersService,posts,$location,$route, NgMap,store,$rootScope){
-			// console.log(user.data)
+			console.log('film controller'+posts)
 			var vm = this;
 			vm.showMap = false
 			vm.showVid = true
@@ -604,8 +627,6 @@
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
-		  	// vm.showRuntime = false
-		  	// (console.log)
 		  	vm.goBack = function(){
 		  		if(localStorage.length === 0){
 		  		$location.path('/home')
@@ -615,14 +636,6 @@
 		  		}
 		  	}
 		  	vm.profile = store.get('profile')
-		  	// console.log('post.estimated runtime is :'+ vm.post.estimated_runtime)
-		  	
-		  	console.log()
-		  	// if(vm.post.estimated_runtime == null){
-		  		console.log('NULL')
-			// vm.showRuntime = false				
-			// }
-
 
 		  	vm.loggedIn = false
 		  	if(localStorage.length > 0){
@@ -760,7 +773,7 @@
 		MiscCtrl.$inject = ['$location']
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
-		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','mail']
+		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','UsersService']
 		MailCtrl.$inject = ['filmMail','musicMail','codingMail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']

@@ -28,7 +28,7 @@
 					controller: 'LoginHomeCtrl',
 					controllerAs: 'vm',
 					resolve: {
-						mail: getAllFilmMail
+						user: getUserById
 					}	
 				})
 				.when('/mailbox', {
@@ -284,6 +284,12 @@
 	function getUserById(UsersService,$route){
 		return UsersService.getUser($route.current.params.id);
 	}
+	function getUserAtHomePage(UsersService){
+		var id = JSON.parse(localStorage.profile).user_id
+		console.log ('getUserByID at home page. id = '+id)
+		return UsersService.getUser(id)
+
+	}
 	function getAllMusicPosts(MusicPostService){
 		return MusicPostService.getPosts();
 	}
@@ -318,6 +324,8 @@
 	getMusicPostById.$inject = ['MusicPostService','$route']
 
 	getUserById.$inject = ['UsersService','$route']
+
+	getUserAtHomePage.$inject = ['UsersService']
 
 	// getAllFilmMail.$inject = ['FilmPostCommentsService']
 	// getAllMusicMail.$inject = ['MusicPostCommentsService']

@@ -8,7 +8,7 @@ const express = require('express')
 const app = express();
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
-// const locus = require('locus')
+const locus = require('locus')
 // const apiRoutes = require('./routes')
 
 

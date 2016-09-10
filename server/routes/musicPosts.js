@@ -3,11 +3,19 @@ const router = express.Router();
 const knex = require('../db/knex')
 
 router.get('/', function (req,res){
-	knex('music_posts').then(function(musicPosts){
-		res.send(musicPosts);		
-	}).catch(function(err){
+	// knex('music_posts').then(function(musicPosts){
+	// 	res.send(musicPosts);		
+	// }).catch(function(err){
+	// 	res.send(err);
+	// });
+	knex.select(['u.display_name','u.user_pic','genre','description','roles_needed']).from('music_posts as m')
+	.join('users as u', 'u.third_party_user_id', '=', 'm.user_id')
+		.then(function(musicPosts){
+		res.send(musicPosts);
+		})
+	.catch(function(err){
 		res.send(err);
-	});
+	});	
 })
 
 router.get('/:id', function(req,res){
