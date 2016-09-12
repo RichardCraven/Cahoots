@@ -13,8 +13,8 @@
 
       <md-content>
 
-        <md-list style='margin-left:10px;' >
-          <md-subheader  class="md-no-sticky">CODING POSTS   
+        <md-list>
+          <md-subheader  class="md-no-sticky text-center">CODING POSTS   
           		<div class='pull-right' id='addButton'>
             		<a href="/codingPosts/new" id='add-codingPost' ng-show='vm.loggedIn' > 
   				        <span class="glyphicon glyphicon-plus"></span>
@@ -43,8 +43,11 @@
       	            <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
       	              <span class="glyphicon glyphicon-remove "></span>
       	            </a>
-      	              <h3>{{post.scripting_language}} (framework)</h3>
-      	              <h4 class='descrip'>{{post.description}}</h4>
+                      <div class='postStyle'>
+        	              <h3><span class='topic'>Framework: </span><span class='topicText'>{{post.framework}}</span></h3>
+                        <hr class='postLine'>
+        	              <h4 class='descrip'><span class='postText'>{{post.description}}</span></h4>
+                      </div>
                   </div>  
                 </div>
                 <!-- end row  -->

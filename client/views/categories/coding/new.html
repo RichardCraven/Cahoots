@@ -15,12 +15,12 @@
     </md-content>
 
     <form  name="newCodingProject" class='formText NEWmargin' ng-submit="vm.addCodingPost(vm.post)" >
-    <div layout="column" >
+    <div layout="column" class='inputfieldForNewPost' >
       <div class="NEWspacer"></div>
       <div >
         <md-input-container>
           <label style='color:white'>Framework</label>
-          <input class='inputField' name="topic" md-no-asterisk ng-model="vm.post.scripting_language" placeholder=" " autofocus required >
+          <input class='inputField' name="topic" md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus required >
         </md-input-container>
       </div>
       <div >

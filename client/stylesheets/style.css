@@ -17,6 +17,29 @@ body{
 .navbar-fixed-bottom, .navbar-fixed-top{
 	position: static ;
 }
+.topic{
+	color:maroon;
+}
+.postStyle{
+	/*margin-left:2px;*/
+	font-family: 'Raleway', sans-serif;
+}
+.topicText{
+	color:midnightblue;
+}
+.inputfieldForNewPost{
+	margin-left: -14%;
+}
+.postLine{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 0.5px solid #EEE8AA;
+}
+.postText{
+	color:black;
+	line-height: 5px;
+	font-size:1.4em;
+}
 img{
 	width: 100%;
 	max-height: 475px;
@@ -253,6 +276,8 @@ img{
 }
 .descrip{
 	white-space: inherit;
+	line-height: 25px !important;
+	max-height: 50px !important;
 }
 
 /*.md-list-item-text h4 {

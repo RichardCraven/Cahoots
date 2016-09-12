@@ -3,7 +3,7 @@ const router = express.Router();
 const knex = require('../db/knex')
 
 router.get('/', function (req,res){
-	knex.select(['u.display_name','u.user_pic','description','scripting_language']).from('coding_posts as c')
+	knex.select(['u.display_name','u.user_pic','u.third_party_user_id','c.id','description','framework']).from('coding_posts as c')
 	.join('users as u', 'u.third_party_user_id', '=', 'c.user_id')
 		.then(function(codingPosts){
 		res.send(codingPosts);

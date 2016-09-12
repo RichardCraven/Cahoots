@@ -13,11 +13,13 @@ knex('music_post_comments').where('user_id',req.body)
 	})
 })
 router.get('/:id', function(req,res){
-	knex.select(['c.comment','c.user_pic','genre']).from('music_posts as m')
-	.join('music_post_comments as c', 'm.id', '=', 'c.post_id')
-	.where('m.user_id',req.params.id)
+	knex.select(['c.comment','mp.genre','u.user_pic','u.display_name']).from('music_posts as mp')
+	.join('music_post_comments as c', 'c.post_id', '=', 'mp.id')
+	.join('users as u', 'u.third_party_user_id','=','c.user_id')
+	.where('mp.user_id',req.params.id)
 	.then(function(mail){
 	// eval(require('locus'))
+		console.log('music mail is: '+mail.data)
 		res.send(mail)
 	})
 	

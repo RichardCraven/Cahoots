@@ -1,13 +1,13 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('coding_posts', table => {
+  return knex.schema.createTable('festival_things', table => {
   	table.increments();
-  	table.text('framework')
+  	table.text('skill_level')
   	table.text('description')
   	table.text('user_id')
   })
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('coding_posts');
+  return knex.schema.dropTable('festival_things');
 };
 

@@ -8,7 +8,7 @@ router.get('/', function (req,res){
 	// }).catch(function(err){
 	// 	res.send(err);
 	// });
-	knex.select(['u.display_name','u.user_pic','genre','description','roles_needed']).from('music_posts as m')
+	knex.select(['u.display_name','u.user_pic','u.third_party_user_id','m.id','genre','description','roles_needed']).from('music_posts as m')
 	.join('users as u', 'u.third_party_user_id', '=', 'm.user_id')
 		.then(function(musicPosts){
 		res.send(musicPosts);

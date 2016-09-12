@@ -44,6 +44,9 @@
 			var vm=this;
 			vm.auth = auth;
 
+
+			console.log('filmmail is: '+filmMail+'. musicMail is: '+musicMail+'. codingMail is: '+codingMail)
+
 			vm.name = JSON.parse(localStorage.profile).given_name
 			vm.navpicture = JSON.parse(localStorage.profile).picture
 			vm.filmCommentPosts = []
@@ -81,7 +84,7 @@
 			vm.logout = function(){
 				store.remove('profile')
 				store.remove('token')
-				$location.path('/home')
+				location.href = '/home';c
 			}
 
 
@@ -212,7 +215,7 @@
 				document.getElementById('newlogoutButton').style.display = 'none';
 				document.getElementById('newpic').style.display = 'none';
 				document.getElementById('newname').style.display = 'none';
-				$location.path('/home')
+				location.href = '/home';
 			}
 		}
 		function LogoutCtrl($location,auth,store){
@@ -226,7 +229,7 @@
 			vm.logout = function(){
 				store.remove('profile')
 				store.remove('token')
-				$location.path('/home')
+				location.href = '/home';
 			}
 		}
 
@@ -302,6 +305,7 @@
 			vm.toggleView = false
 		  	vm.showText = false
 			vm.posts = posts.data;
+			console.log(vm.posts)
 			vm.backHome = '/home'
 			if(localStorage.length>0){
 				vm.backHome = '/loggedinHome'
@@ -361,14 +365,13 @@
   				  }	
   	  		  	}
   	  		  	else {
-  	  		  		return false
+  	  		  		return true
   	  		  	}
   		  	}
 
 
 		  	vm.comment = {}
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
-		  		vm.comment.user_pic = JSON.parse(localStorage.profile).picture
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
 		  		var req = {post: newCodingPostComment};
@@ -384,22 +387,13 @@
 			vm.goBackToCodingIndex = function(){
 				$location.path('/codingPosts')
 			}
-			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 
 			vm.addCodingPost = function(newCodingPost){
 				var req = {post: newCodingPost};
-				var id = vm.post.user_id
-				UsersService.getUser(id).then(function(user){
-					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
-						req.post.display_name = user.data.name
-					}
-					else {
-						req.post.display_name = user.data.display_name
-					}
-					CodingPostService.createPost(req).then(function(res){
-						$location.path('/codingPosts');
-					})
+				// var id = vm.post.user_id
+				CodingPostService.createPost(req).then(function(res){
+					$location.path('/codingPosts');
 				})
 			}
 		}
@@ -417,8 +411,15 @@
 //~~~~~~MUSICposts conroller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
 		function MusicPostsController(MusicPostService, MusicPostCommentsService,UsersService,posts,$location,$route, NgMap){
 			var vm = this;
+			vm.showMap = true
+			vm.showVid = true
 			vm.posts = posts.data;
-			console.log(posts.data)
+			for(var i = 0; i < vm.posts.length; i++){
+				if(!vm.posts[i].display_name){
+					vm.posts[i].display_name = JSON.parse(localStorage.profile).given_name
+				}
+			}
+			// console.log(posts.data)
 			vm.backHome = '/home'
 			if(localStorage.length>0){
 				vm.backHome = '/loggedinHome'
@@ -485,20 +486,9 @@
 	  		  	}
 		  	}
 		  	vm.addMusicPostComment = function(id,newMusicPostComment){
-
-		  		vm.comment.user_pic = JSON.parse(localStorage.profile).picture
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
-		  		var userID = vm.comment.user_id
 		  		var req = {post: newMusicPostComment};
-		  		UsersService.getUser(userID).then(function(user){
-		  			if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
-		  				req.post.display_name = user.data.name
-		  			}
-		  			else {
-		  				req.post.display_name = user.data.display_name
-		  			}
-		  		})
 		  		MusicPostCommentsService.createPost(req).then(function(res){
 		  			// $location.path('/filmPosts');
 		  		})
@@ -508,9 +498,6 @@
 		function NewMusicPostController(MusicPostService,UsersService,$location,store){
 			var vm = this;
 			vm.post = {};
-			vm.backHome = '/loggedinhome'
-
-			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 
 			vm.goBackToMusicIndex = function(){
@@ -519,19 +506,12 @@
 
 			vm.addMusicPost = function(newMusicPost){
 				var req = {post: newMusicPost};
-				var id = vm.post.user_id
-				UsersService.getUser(id).then(function(user){
-					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
-						req.post.display_name = user.data.name
-
-					}
-					else {
-						req.post.display_name = user.data.display_name
-					}
-					MusicPostService.createPost(req).then(function(res){
-						$location.path('/musicPosts');
-					})
+				// var id = vm.post.user_id
+					
+				MusicPostService.createPost(req).then(function(res){
+					$location.path('/musicPosts');
 				})
+				
 			}
 		}
 		function EditMusicPostController(MusicPostService, post, $location){ 
@@ -556,6 +536,14 @@
 				vm.backHome = '/loggedinHome'
 			}
 			vm.posts = posts.data;
+			for(var i = 0; i < vm.posts.length; i++){
+				if(!vm.posts[i].display_name){
+					vm.posts[i].display_name = JSON.parse(localStorage.profile).given_name
+				}
+			}
+
+
+
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
@@ -573,18 +561,17 @@
 		  	if(localStorage.length > 0){
 		  		vm.loggedIn = true
 		  	}
-		  	vm.checkId = function(post={'user_id':'dummyData'}){
+		  	console.log(vm.posts)
+		  	vm.checkId = function(post){
 	  		  	if(localStorage.length > 0){
-				  if(post.user_id === JSON.parse(localStorage.profile).user_id){
+				  if(post.third_party_user_id === JSON.parse(localStorage.profile).user_id){
 				  	return true		  			
 				  }
 				  else{
 				  	return false
 				  }	
 	  		  	}
-	  		  	else {
-	  		  		return false
-	  		  	}
+	  		  	return false
 		  	}
 		  	vm.toggleView = false
 		  	vm.showText = false
@@ -621,7 +608,6 @@
 			
 			vm.comment = {}
 			vm.addFilmPostComment = function(id,newFilmPostComment){
-				vm.comment.user_pic = JSON.parse(localStorage.profile).picture
 				vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 				vm.comment.post_id = id
 				var userID = vm.comment.user_id
@@ -644,32 +630,24 @@
 		function NewFilmPostController(FilmPostService,UsersService,$location, store){
 			var vm = this;
 			vm.post = {};
-			// NEED TO ADD USER_NAME TO POSTS!
-			vm.post.user_pic = JSON.parse(localStorage.profile).picture
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 			
 			vm.goBackToFilmIndex = function(){
 				$location.path('/filmPosts')
 			}
 			vm.addFilmPost = function(newFilmPost){
-				var req = {post: newFilmPost};
-				var id = vm.post.user_id
-				UsersService.getUser(id).then(function(user){
-					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
-						req.post.display_name = user.data.name
-					}
-					else {
-						req.post.display_name = user.data.display_name
-					}
-					FilmPostService.createPost(req).then(function(res){
-						$location.path('/filmPosts');
-				})
+				console.log(newFilmPost)
 
+				var req = {post: newFilmPost};
+				// var id = vm.post.user_id
+				FilmPostService.createPost(req).then(function(res){
+						location.href ='/filmPosts';
 				})
 			}
 		}
 		function EditFilmPostController(FilmPostService, post, $location){ 
 			var vm = this;
+			alert('got to edit contrler')
 				vm.post = post.data
 				if(!vm.post) {
 					$location.path('/filmPosts')

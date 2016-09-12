@@ -27,8 +27,8 @@
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <md-content>
 
-        <md-list style='margin-left:10px;'>
-          <md-subheader  class="md-no-sticky">MUSIC POSTS   
+        <md-list>
+          <md-subheader  class="md-no-sticky text-center">MUSIC POSTS   
           	<div class='pull-right' id='addButton'>
           		<a href="/musicPosts/new" id='add-musicPost' ng-show='vm.loggedIn'> 
 				        <span  class="glyphicon glyphicon-plus"></span>
@@ -46,20 +46,24 @@
                      <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                      <p class='displayName'>{{post.display_name}}</p>
                   </div>
-                <div flex-gt-sm='85' class='postContentContainer' layout-padding>
 
-					        <a  href="/musicPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right'>
-                 <!-- ng-click="vm.editMusicPost(post.id)" VERIFY THIS IS NOT NEEDED, THEN DELETE-->
-					              <span class="glyphicon glyphicon-pencil "></span>
-					            </a>
-  		            <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.removePost(post.id)" ng-show='vm.checkId(post)'>
-  		              <span class="glyphicon glyphicon-remove "></span>
-  		            </a>
-					              <h3>{{post.genre}}</h3>
-					              <h4 class='descrip'>{{post.description}}</h4>
-					              <p>Roles Needed: {{post.roles_needed}}</p>
-					            </div>
-		            </div>
+                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+
+  					        <a  href="/musicPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right'>
+                   <!-- ng-click="vm.editMusicPost(post.id)" VERIFY THIS IS NOT NEEDED, THEN DELETE-->
+  					              <span class="glyphicon glyphicon-pencil "></span>
+  					            </a>
+    		            <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.removePost(post.id)" ng-show='vm.checkId(post)'>
+    		              <span class="glyphicon glyphicon-remove "></span>
+    		            </a>
+                      <div class='postStyle'>
+  					              <h3><span class='topic'>Genre: </span><span class='topicText'>{{post.genre}}</span></h3>
+                          <p><span class='topic'>Roles Needed: </span><span class='topicText'>{{post.roles_needed}}</span></p>
+                          <hr class='postLine'>
+                          <h4 class='descrip'><span class='postText'>{{post.description}}</span></h4>
+  					          </div>
+  		            </div>
+                </div>
                 <!-- end row   -->
                 <div layout='row'>
                   <div ng-show='vm.showText' class='postTextArea'>
@@ -83,7 +87,6 @@
 
 
     <!-- ~~~~~~~~~~~~~~~~~~~MAP~~~~~~~~~~~~~~~~~~ -->
-
     <md-divider></md-divider>
     <div ng-show='vm.showMap' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
       <md-toolbar layout="row" class="md-hue-1" >

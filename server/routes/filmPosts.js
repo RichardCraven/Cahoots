@@ -5,7 +5,7 @@ const knex = require('../db/knex')
 router.get('/', function (req,res){
 	// knex('film_posts').then(function(filmPosts){
 	// 	res.send(filmPosts);
-	knex.select(['u.display_name','u.user_pic','topic','brief_description']).from('film_posts as f')
+	knex.select(['u.display_name','u.user_pic','u.third_party_user_id','f.id','topic','brief_description']).from('film_posts as f')
 	.join('users as u', 'u.third_party_user_id', '=', 'f.user_id')
 		.then(function(filmPosts){
 		res.send(filmPosts);
@@ -28,7 +28,7 @@ router.get('/:id', function(req,res){
 router.post('/',function(req,res){
 	// debugger
 	console.log('ATTENTION! req.body = '+req.body)
-	console.log('req.body.post.data is: '+req.body.post.data)
+	console.log('req.body.post.data is: '+req.body.post[0])
 	// knex.select('u.display_name').from('users as u')
 	// .then(function(display){
 		// req.body.post.display_name = display[0].display_name
