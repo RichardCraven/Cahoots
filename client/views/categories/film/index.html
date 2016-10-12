@@ -38,7 +38,7 @@
                   </div>   
                   <div flex-gt-sm='85' class='postContentContainer' layout-padding>
 
-      	            <a  href="/filmPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right' 
+      	            <a ng-click="vm.editPost(post.id)" id='edit' ng-show='vm.checkId(post)' class='pull-right' 
                     >
                     <!-- ng-click="vm.editFilmPost(post.id)"  VERIFY THIS IS NOT NEEDED, THEN DELETE -->
       	              <span class="glyphicon glyphicon-pencil "></span>

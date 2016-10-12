@@ -379,20 +379,22 @@ body{
 	max-height: 65vh;
 }
 .filmCommentMailHeader{
-	background-color: #bfd9bf;
+	/*background-color: #bfd9bf;*/
+	background-color: #fb9744;
 }
 .filmCommentMailOdd{
 	overflow: scroll;
 	background-color: #F5F5F5;
 	margin-left: 50px;
 }
-.filmCommentMailEven{\
+.filmCommentMailEven{
 	overflow: scroll;
 	background-color: #F0FFF0;
 	margin-left: 50px;
 }
 .musicCommentMailHeader{
-	background-color: #bfd9bf;
+	/*background-color: #bfd9bf;*/
+	background-color: #a6e7c5;
 }
 .musicCommentMailOdd{
 	background-color: #F5F5F5;
@@ -403,7 +405,8 @@ body{
 	margin-left: 50px;
 }
 .codingCommentMailHeader{
-	background-color: #bfd9bf;
+	background-color: #d63e3e;
+	/*background-color: #cce7ff;*/
 }
 .codingCommentMailOdd{
 	background-color: #F5F5F5;

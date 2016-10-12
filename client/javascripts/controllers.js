@@ -357,7 +357,8 @@
 		  	
   		  	vm.checkId = function(post={'user_id':'dummyData'}){
   	  		  	if(localStorage.length > 0){
-  				  if(post.user_id === JSON.parse(localStorage.profile).user_id){
+  				  if(post.third_party_user_id === JSON.parse(localStorage.profile).user_id){
+  				  	'hello user!'
   				  	return true		  			
   				  }
   				  else{
@@ -365,7 +366,7 @@
   				  }	
   	  		  	}
   	  		  	else {
-  	  		  		return true
+  	  		  		return false
   	  		  	}
   		  	}
 
@@ -472,19 +473,21 @@
 		  	if(localStorage.length > 0){
 		  		vm.loggedIn = true
 		  	}
-		  	vm.checkId = function(post={'user_id':'dummyData'}){
+		  	vm.checkId = function(post){
 	  		  	if(localStorage.length > 0){
-				  if(post.user_id === JSON.parse(localStorage.profile).user_id){
+				  if(post.third_party_user_id === JSON.parse(localStorage.profile).user_id){
+				  	console.log('why is this repeating 12 times??')
 				  	return true		  			
 				  }
-				  else{
-				  	return false
-				  }	
 	  		  	}
-	  		  	else {
+	  		  	else{
 	  		  		return false
 	  		  	}
 		  	}
+
+		  	vm.editPost = null
+		  	href="/filmPosts/{{post.id}}/edit"
+
 		  	vm.addMusicPostComment = function(id,newMusicPostComment){
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
@@ -536,9 +539,21 @@
 				vm.backHome = '/loggedinHome'
 			}
 			vm.posts = posts.data;
+			console.log(vm.posts.length)
 			for(var i = 0; i < vm.posts.length; i++){
+							console.log(1)
 				if(!vm.posts[i].display_name){
-					vm.posts[i].display_name = JSON.parse(localStorage.profile).given_name
+					var userId = vm.posts[i].user_id
+					console.log(vm.posts[i])
+					UsersService.getUser(userId).then(function(user){
+						if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
+							// vm.posts[i].display_name = user.data.name
+							console.log('vm.posts[i]')
+						}
+						else {
+							vm.posts[i].display_name = user.data.display_name
+						}
+					})
 				}
 			}
 
@@ -561,7 +576,6 @@
 		  	if(localStorage.length > 0){
 		  		vm.loggedIn = true
 		  	}
-		  	console.log(vm.posts)
 		  	vm.checkId = function(post){
 	  		  	if(localStorage.length > 0){
 				  if(post.third_party_user_id === JSON.parse(localStorage.profile).user_id){
