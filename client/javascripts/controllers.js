@@ -120,7 +120,7 @@
 				}
 			}
 		};
-
+		//testing
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 			console.log('HomeCtrl')
 
