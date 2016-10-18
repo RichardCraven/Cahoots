@@ -1,4 +1,5 @@
-	wth is this  
+	wth is this 
+	new entry for today 
 
 
 	  <!-- <div class="row">
