@@ -1,6 +1,6 @@
 	wth is this 
 	new entry for today 
-	fixing summerline issue
+	fixing summerlines issue
 
 	  <!-- <div class="row">
 	    <div class="col-md-6">
