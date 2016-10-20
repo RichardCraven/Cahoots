@@ -2,6 +2,7 @@
 	new entry for today 
 	fixing summerlines issue
 	maxed out traichs
+	secondory oligarchs
 
 	  <!-- <div class="row">
 	    <div class="col-md-6">
