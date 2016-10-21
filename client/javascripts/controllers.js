@@ -70,6 +70,7 @@
 			vm.showMusicMail = false
 			vm.showCodingMail = false
 			vm.showResponseField = false
+			var responseAutoFocus = false
 
 			if(vm.filmCommentPosts.length>0){
 				vm.showFilmMail = true	
@@ -99,16 +100,48 @@
 				document.getElementById('newpic').style.height = "100px !important" 
 				document.getElementById('newpic').style.width = '100px !important'
 			}
-			vm.respondFilm = function(idx){
-				vm.showResponseField = !vm.showResponseField
+			// vm.respondFilm = function(idx){
+			// 	vm.showResponseField = !vm.showResponseField
+			// 	responseAutoFocus = !responseAutoFocus
+			// 	$('.responseField').autofocus = responseAutoFocus
+			// 	console.log(responseAutoFocus)
+			// }
+			console.log('got here')
+
+			vm.addFilmCommentResponse = function(postId,comment){
+				null
 			}
+
+
+			var bool = true
 			vm.respondFilm = function(idx){
+				console.log($('.postTextField'))
+
+				console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
+
+				$('.postTextField')[0].form[0].autofocus = bool
+				bool = !bool
+
+				console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
+
+
+
+
+
+				console.log('before: '+responseAutoFocus)
 				vm.showResponseField = !vm.showResponseField
 				vm.showText = !vm.showText
+
+				// responseAutoFocus = !responseAutoFocus
+				// $('.postTextField').autofocus = responseAutoFocus
+				// console.log('xxx: '+$('.postTextField').autofocus)
+				// console.log('after: '+responseAutoFocus)
 				if(vm.showResponseField === true){
 				var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  		
 				var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)		  		
 				others.forEach(function(i){i.style.display = 'none'})
+
+				
 
 				}
 				if(vm.showResponseField === false){

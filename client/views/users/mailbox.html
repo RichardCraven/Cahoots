@@ -72,11 +72,11 @@
                                 </div>
                                 <div ng-show='vm.showResponseField' layout='row' class='responseField'>
                                   <div  class='postResponseArea'>
-                                    <form class='commentForm' action="" 
+                                    <form autofocus class='commentForm' action="" 
                                     ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
                                     >
                                     <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
-                                      <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+                                      <textarea  ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
 
                                       <button type="submit" class="btn btn-success">Submit</button>
                                     </form>
