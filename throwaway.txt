@@ -4,7 +4,7 @@
 	maxed out traichs
 	secondory oligarchs
 	style.css
-
+	new repo!!
 	  <!-- <div class="row">
 	    <div class="col-md-6">
 	      <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
