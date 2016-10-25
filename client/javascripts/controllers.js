@@ -40,7 +40,7 @@
 	  		}
 
 		};
-		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService){
+		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService,ConvoRepoService){
 			var vm=this;
 			vm.auth = auth;
 
@@ -728,7 +728,7 @@
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','UsersService']
-		MailCtrl.$inject = ['filmMail','musicMail','codingMail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService']
+		MailCtrl.$inject = ['filmMail','musicMail','codingMail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService','ConvoRepoService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
 

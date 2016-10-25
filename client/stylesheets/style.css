@@ -380,7 +380,7 @@ body{
 }
 .filmCommentMailHeader{
 	/*background-color: #bfd9bf;*/
-	background-color: #fb9744;
+	background-color: #f9dace;
 }
 .filmCommentMailOdd{
 	overflow: scroll;
@@ -405,7 +405,7 @@ body{
 	margin-left: 50px;
 }
 .codingCommentMailHeader{
-	background-color: #d63e3e;
+	background-color: #c7aeff;
 	/*background-color: #cce7ff;*/
 }
 .codingCommentMailOdd{
