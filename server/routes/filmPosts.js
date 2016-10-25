@@ -33,11 +33,11 @@ router.post('/',function(req,res){
 	// .then(function(display){
 		// req.body.post.display_name = display[0].display_name
 		// eval(require('locus'))
-		knex('film_posts').insert(req.body.post, '*')
-		.then(function(post){
+	knex('film_posts').insert(req.body.post, '*')
+	.then(function(post){
 
-			res.send(post)
-		})
+		res.send(post)
+	})
 	// })
 })
 

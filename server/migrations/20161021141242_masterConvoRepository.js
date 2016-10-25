@@ -2,6 +2,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('convo_repository', table => {
   	table.increments();
+  	table.text('category')
+  	table.text('')
   	table.text('responses')
   	table.text('display_name')
   	table.text('user_id').unsigned().index().references('users.third_party_user_id').onDelete('cascade');

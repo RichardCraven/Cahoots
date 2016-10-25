@@ -6,6 +6,7 @@
 	style.css
 	new repo!!
 	haloweens coming. this is my halloween commit
+	still fixing migrations
 	  <!-- <div class="row">
 	    <div class="col-md-6">
 	      <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
