@@ -42,23 +42,6 @@
                     <md-tabs md-dynamic-height md-border-bottom>
                           <md-tab label="FILM">
                             <md-content class="md-padding">
-                              
-                              <!-- <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showFilmMail' class="md-2-line item-text-wrap filmCommentMailHeader">
-                                <div class="md-list-item-text">
-                                    <div layout='row'>
-                                      <div flex-gt-sm='15' class='userPicContainer'>
-                                         <img class='userPic' ng-src="images/film3.jpg" alt="">
-                                      </div>    
-                                      <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                        <div ng-show='vm.hasFilmMail' class='pull-left mailButton'><span><img src="images/exclamation.png" alt=""></span>
-                                        </div>
-
-                                        <h2 style='font-weight: bold'>Film Mail</h2>
-                                         
-                                      </div>   
-                                    </div>
-                                </div>
-                              </md-list-item> -->
                               <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
                                 <div class="md-list-item-text">
                                     <div layout='row' ng-click='vm.respondFilm($index)' >
@@ -82,39 +65,100 @@
                                         </form>
                                       </div>
                                     </div>
-                                        
-                                      
                                 </div>
                               </md-list-item>
-
-
-
-
-
                             </md-content>
+
                           </md-tab>
                           <md-tab label="MUSIC">
                             <md-content class="md-padding">
-                              <h1 class="md-display-2">Tab Two</h1>
-                              <p>here we goooo!!!</p>
+                              <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
+
+                                <div class="md-list-item-text">
+                                    <div layout='row' ng-click='vm.respondFilm($index)'>
+                                      <div flex-gt-sm='15' class='userPicContainer'>
+                                         <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                                      </div>    
+                                      <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                          <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.genre}}</h6>
+                                          <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
+                                      </div>          
+                                      
+                                    </div>
+
+                                    <div ng-show='vm.showMusicResponseField' layout='row' class='responseField'>
+                                      <div  class='postResponseArea'>
+                                        <form autofocus class='commentForm' action="" 
+                                        ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
+                                        >
+                                          <textarea  ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+
+                                          <button type="submit" class="btn btn-success">Submit</button>
+                                        </form>
+                                      </div>
+                                    </div>
+
+                                </div>
+                              </md-list-item>
+
                             </md-content>
                           </md-tab>
+
+
+
+
+
+
+
+
+
                           <md-tab label="CODING">
                             <md-content class="md-padding">
                               <h1 class="md-display-2">Tab Three</h1>
                               <p>wtf yo</p>
                             </md-content>
                           </md-tab>
-                          <md-tab label="Dog Mingling">
+                          <md-tab label="Dogs">
                             <md-content class="md-padding">
-                              <h1 class="md-display-2">Tab Three</h1>
-                              <p>Game time</p>
+
+                              <md-tabs md-dynamic-height md-border-bottom>
+                              
+                                <md-tab label="Dog Mingling">
+                                  <md-content class="md-padding">
+                                    <h1 class="md-display-2">Mingle!</h1>
+                                    <p>Get your pup on</p>
+                                  </md-content>
+                                </md-tab>
+
+                                <md-tab label="Dog Adoption">
+                                  <md-content class="md-padding">
+                                    <h1 class="md-display-2">Adopt some pups!</h1>
+                                    <p>Adopt!</p>
+                                  </md-content>
+                                </md-tab>
+
+                              </md-tabs>
+                                    <!-- <md-select style='font-size:3em;' ng-model="dogs" placeholder="Dog Mingling" class="md-no-underline">
+                                      <md-option value="Mingling">Dog Mingling</md-option>
+                                      <md-option value="Adoption">Dog Adoption</md-option>
+                                    </md-select> -->
+
+                              <!-- <h1 class="md-display-2">Tab Three</h1>
+                              <p>Game time</p> -->
+                            </md-content>
+                          </md-tab>
+
+
+                          <md-tab label="Dog Adoption">
+                            <md-content class="md-padding">
+                              <h1 class="md-display-2">Shelter #1</h1>
+                              <p>These is Steve. He pees on things</p>
                             </md-content>
                           </md-tab>
                           <md-tab label="Jobs">
                             <md-content class="md-padding">
                               <h1 class="md-display-2">Tab Three</h1>
-                              <p>Game time</p>
+                              <p>Jawbs!/p>
                             </md-content>
                           </md-tab>
                         </md-tabs>
@@ -251,6 +295,7 @@
                           </div>
                       </div>
                     </md-list-item> -->
+                    </md-tabs>
                   </md-content>
                 </div>
 

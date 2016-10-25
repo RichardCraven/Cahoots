@@ -123,11 +123,6 @@
 				bool = !bool
 
 				console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
-
-
-
-
-
 				console.log('before: '+responseAutoFocus)
 				vm.showResponseField = !vm.showResponseField
 				vm.showText = !vm.showText
@@ -149,7 +144,38 @@
 					var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)
 
 					others.forEach(function(i){i.style.display = 'block'})
+				}
+			}
+			vm.respondMusic = function(idx){
+				// console.log($('.postTextField'))
 
+				// console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
+
+				// $('.postTextField')[0].form[0].autofocus = bool
+				// bool = !bool
+
+				console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
+				console.log('before: '+responseAutoFocus)
+				vm.showResponseField = !vm.showResponseField
+				vm.showText = !vm.showText
+
+				// responseAutoFocus = !responseAutoFocus
+				// $('.postTextField').autofocus = responseAutoFocus
+				// console.log('xxx: '+$('.postTextField').autofocus)
+				// console.log('after: '+responseAutoFocus)
+				if(vm.showResponseField === true){
+				var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  		
+				var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)		  		
+				others.forEach(function(i){i.style.display = 'none'})
+
+				
+
+				}
+				if(vm.showResponseField === false){
+					var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  			
+					var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)
+
+					others.forEach(function(i){i.style.display = 'block'})
 				}
 			}
 		};

@@ -406,12 +406,12 @@ div.md-list-item-text{
 	background-color: #a6e7c5;
 }
 .musicCommentMailOdd{
-	background-color: #F5F5F5;
-	margin-left: 50px;
+	overflow: scroll;
+	background-color: #d1ffd9;
 }
 .musicCommentMailEven{
-	background-color: #F0FFF0;
-	margin-left: 50px;
+	overflow: scroll;
+	background-color: #fffdd3;
 }
 .codingCommentMailHeader{
 	background-color: #c7aeff;
