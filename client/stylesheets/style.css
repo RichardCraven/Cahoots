@@ -178,7 +178,11 @@ img{
 	font-size:2em;
 }
 .goBack{
-	font-size:6em;
+	font-size:3.5em;
+}
+.md-tab{
+	font-size:40px;
+	font-weight: 700;
 }
 .userPic{
 	height: 100px;
@@ -355,7 +359,7 @@ header .jumbotron,.hero-spacer{
 header .jumbotron, .hero-spacer{
 	font-weight: bold;
 	font-family: 'Amatic SC';
-	max-height: 80vh;
+	/*max-height: 80vh;*/
 
 }
 .displayName{
@@ -365,14 +369,16 @@ header .jumbotron, .hero-spacer{
 	color:#58157e !important;
 	font-family: 'Indie Flower';
 }
-body{
-	max-height: 100vh;
+body, html{
+	/*max-height: 500vh;*/
+	overflow-y: scroll !important;
 }
 #header-main{
 	color: #610000;
 }
 #header-main-mailbox{
-	margin-top: -88px;
+	margin-top: -80px;
+	/*margin-top: -134px;*/
 	color: #610000;
 }
 #mailList{
@@ -384,13 +390,16 @@ body{
 }
 .filmCommentMailOdd{
 	overflow: scroll;
-	background-color: #F5F5F5;
-	margin-left: 50px;
+	background-color: #d1ffd9;
+	/*margin-left: 50px;*/
 }
 .filmCommentMailEven{
 	overflow: scroll;
-	background-color: #F0FFF0;
-	margin-left: 50px;
+	background-color: #fffdd3;
+	/*margin-left: 50px;*/
+}
+div.md-list-item-text{
+	width: 100%;
 }
 .musicCommentMailHeader{
 	/*background-color: #bfd9bf;*/

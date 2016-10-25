@@ -28,6 +28,7 @@
     <div class="container-fluid" style='overflow:scroll'>
 
         <!-- Jumbotron Header -->
+
         <header class="jumbotron hero-spacer">
             <a href="/loggedinHome" class="goBack">
               <span class="glyphicon glyphicon-arrow-left"></span>
@@ -38,11 +39,108 @@
               <div layout-gt-sm="column" >
                 <div flex-gt-sm="80">
                   <md-content>
-                    <md-list id='mailList' style='margin-left:0px; overflow: scroll !important;' >
+                    <md-tabs md-dynamic-height md-border-bottom>
+                          <md-tab label="FILM">
+                            <md-content class="md-padding">
+                              
+                              <!-- <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showFilmMail' class="md-2-line item-text-wrap filmCommentMailHeader">
+                                <div class="md-list-item-text">
+                                    <div layout='row'>
+                                      <div flex-gt-sm='15' class='userPicContainer'>
+                                         <img class='userPic' ng-src="images/film3.jpg" alt="">
+                                      </div>    
+                                      <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                        <div ng-show='vm.hasFilmMail' class='pull-left mailButton'><span><img src="images/exclamation.png" alt=""></span>
+                                        </div>
+
+                                        <h2 style='font-weight: bold'>Film Mail</h2>
+                                         
+                                      </div>   
+                                    </div>
+                                </div>
+                              </md-list-item> -->
+                              <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
+                                <div class="md-list-item-text">
+                                    <div layout='row' ng-click='vm.respondFilm($index)' >
+                                      <div flex-gt-sm='15' class='userPicContainer'>
+                                         <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                                      </div>    
+                                      <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                          <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.topic}}</h6>
+                                          <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; max-height:800px; margin-top:15px; margin-left:20px; overflow:scroll'>{{post.comment}}</h3>
+                                      </div>  
+
+                                    </div>
+                                    <div ng-show='vm.showResponseField' layout='row' class='responseField'>
+                                      <div  class='postResponseArea'>
+                                        <form autofocus class='commentForm' action="" 
+                                        ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
+                                        >
+                                          <textarea  ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+
+                                          <button type="submit" class="btn btn-success">Submit</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                        
+                                      
+                                </div>
+                              </md-list-item>
+
+
+
+
+
+                            </md-content>
+                          </md-tab>
+                          <md-tab label="MUSIC">
+                            <md-content class="md-padding">
+                              <h1 class="md-display-2">Tab Two</h1>
+                              <p>here we goooo!!!</p>
+                            </md-content>
+                          </md-tab>
+                          <md-tab label="CODING">
+                            <md-content class="md-padding">
+                              <h1 class="md-display-2">Tab Three</h1>
+                              <p>wtf yo</p>
+                            </md-content>
+                          </md-tab>
+                          <md-tab label="Dog Mingling">
+                            <md-content class="md-padding">
+                              <h1 class="md-display-2">Tab Three</h1>
+                              <p>Game time</p>
+                            </md-content>
+                          </md-tab>
+                          <md-tab label="Jobs">
+                            <md-content class="md-padding">
+                              <h1 class="md-display-2">Tab Three</h1>
+                              <p>Game time</p>
+                            </md-content>
+                          </md-tab>
+                        </md-tabs>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- <md-list id='mailList' style='margin-left:0px; overflow: scroll !important;' > -->
 
                     <!--_____________________________FILM MAIL______________________________-->
-
-                          <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showFilmMail' class="md-2-line item-text-wrap filmCommentMailHeader">
+                  
+                          <!-- <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showFilmMail' class="md-2-line item-text-wrap filmCommentMailHeader">
                             <div class="md-list-item-text">
                                 <div layout='row'>
                                   <div flex-gt-sm='15' class='userPicContainer'>
@@ -68,28 +166,27 @@
                                       <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.topic}}</h6>
                                       <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; max-height:800px; margin-top:15px; margin-left:20px; overflow:scroll'>{{post.comment}}</h3>
                                   </div>  
-                                  <!-- end row  -->
+
                                 </div>
                                 <div ng-show='vm.showResponseField' layout='row' class='responseField'>
                                   <div  class='postResponseArea'>
                                     <form autofocus class='commentForm' action="" 
                                     ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
                                     >
-                                    <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
                                       <textarea  ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
 
                                       <button type="submit" class="btn btn-success">Submit</button>
                                     </form>
                                   </div>
                                 </div>
-                                  <!-- end row -->        
+                                    
                                   
                             </div>
-                          </md-list-item>
+                          </md-list-item> -->
 
                 <!-- ____________________________MUSIC MAIL___________________________-->
 
-                    <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showMusicMail' class="md-2-line item-text-wrap musicCommentMailHeader">
+                    <!-- <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showMusicMail' class="md-2-line item-text-wrap musicCommentMailHeader">
                             <div class="md-list-item-text">
                                 <div layout='row'>
                                   <div flex-gt-sm='15' class='userPicContainer'>
@@ -119,11 +216,11 @@
                             
                           </div>
                       </div>
-                    </md-list-item>
+                    </md-list-item> -->
 
                     <!--______________________________CODING MAIL____________________________-->
 
-                    <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showCodingMail' class="md-2-line item-text-wrap codingCommentMailHeader">
+                    <!-- <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showCodingMail' class="md-2-line item-text-wrap codingCommentMailHeader">
                       <div class="md-list-item-text">
                           <div layout='row'>
                             <div flex-gt-sm='15' class='userPicContainer'>
@@ -153,9 +250,10 @@
                             
                           </div>
                       </div>
-                    </md-list-item>
+                    </md-list-item> -->
                   </md-content>
                 </div>
+
         </header>
 
         <hr>
