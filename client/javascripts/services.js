@@ -13,6 +13,7 @@
 		.service('CodingPostService', CodingPostService)
 		.service('CodingPostCommentsService', CodingPostCommentsService)
 		.service('UsersService', UsersService)
+		.service('ConvoRepoService', ConvoRepoService)
 
 		function PostService($http){
 		 	const BASE_URL = '/api/posts'
@@ -183,6 +184,24 @@
 				return $http.put(BASE_URL + '/' + data.user.id, data) //on server req.body.post
 			}
 		}
+		function ConvoRepoService($http){
+		 	const BASE_URL = '/api/masterConvoRepository'
+
+			this.getMessages = function(user_id,post_id){
+				return $http.get(BASE_URL+'/'+user_id)
+			}
+
+			this.createMessage = function(newPost){
+				return $http.post(BASE_URL, newPost); //on server req.body.post
+			}
+			this.deleteMessage = function(id){
+				return $http.delete(BASE_URL + '/' + id)
+			}
+
+			// this.updatePost = function(data){
+			// 	return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
+			// }
+		}
 		UsersService.$inject = ['$http']
 		PostService.$inject = ['$http']
 		MusicPostService.$inject = ['$http']
@@ -191,4 +210,5 @@
 		FilmPostCommentsService.$inject = ['$http']
 		CodingPostService.$inject = ['$http']
 		CodingPostCommentsService.$inject = ['$http']
+		ConvoRepoService.$inject = ['$http']
 })()
