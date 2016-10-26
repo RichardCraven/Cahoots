@@ -7,11 +7,11 @@ router.get('/', function (req,res){
 console.log(req.body)
 console.log(req.body.user_id)	
 
-knex('convo_repository').where('user_id',req.body)
-	.then(function(post){
-		res.send(post)
-	})
-})
+// knex('convo_repository').where('user_id',req.body)
+// 	.then(function(post){
+// 		res.send(post)
+// 	})
+// })
 router.get('/:id', function(req,res){
 	knex.select(['c.comment','fp.topic','u.user_pic','u.display_name']).from('film_posts as fp')
 	.join('convo_repository as c', 'c.post_id', '=', 'fp.id')
@@ -23,14 +23,14 @@ router.get('/:id', function(req,res){
 	})
 })
 
-router.post('/',function(req,res){
+router.post('/film',function(req,res){
 	console.log('ATTENTION! req.body = '+req.body)
-	console.log('req.body.post is: '+req.body.post)
+	console.log('req.body.post is: '+req.body.comment)
 	
-	knex('convo_repository').insert(req.body.post, '*')
-	.then(function(post){
-		res.send(post)
-	})
+	knex('convo_repository').insert(req.body.comment, '*')
+	// .then(function(post){
+	// 	res.send(post)
+	// })
 })
 
 

@@ -11,5 +11,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  	return knex.schema.dropTable('film_post_comment_responses');
+  	return knex.schema.dropTable('convo_repository');
 };

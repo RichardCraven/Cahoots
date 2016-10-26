@@ -185,13 +185,18 @@
 			}
 		}
 		function ConvoRepoService($http){
-		 	const BASE_URL = '/api/masterConvoRepository'
+		 	const BASE_URL = '/api/convoRepository'
 
-			this.getFilmMessages = function(user_id,post_id){
-				return $http.get(BASE_URL+'/film/'+user_id)
+			this.getFilmMessages = function(post_id){
+				return $http.get(BASE_URL+'/film/'+post_id)
 			}
 
-			this.createMessage = function(newPost){
+			this.createFilmMessage = function(post_id,comment){
+				console.log(comment)
+				debugger
+				return $http.post(BASE_URL+'/film', comment); //on server req.body.post
+			}
+			this.createPost = function(newPost){
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			}
 			this.deleteMessage = function(id){

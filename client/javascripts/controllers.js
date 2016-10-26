@@ -109,8 +109,18 @@
 			console.log('got here')
 
 			vm.addFilmCommentResponse = function(postId,comment){
-				console.log('postID is: '+postId+'. comment is: '+comment)
-				alert('postID is: '+postId+'. comment is: '+comment)
+				// console.log('postID is: '+postId+'. comment is: '+comment)
+				// console.log(comment)
+				// debugger
+				// alert(comment)
+				// var req = {post: comment};
+				// debugger
+				ConvoRepoService.createFilmMessage(postId,comment)
+				// var req = {post: newCodingPost};
+				// CodingPostService.createPost(req).then(function(res){
+				// 	$location.path('/codingPosts');
+				// })
+
 			}
 
 

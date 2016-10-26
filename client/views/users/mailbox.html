@@ -56,12 +56,15 @@
                                     </div>
                                     <div ng-show='vm.showResponseField' layout='row' class='responseField'>
                                       <div  class='postResponseArea'>
+
+                                        <form action="" ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'>
                                         <md-input-container class="md-block">
                                               <!-- Use floating placeholder instead of label -->
                                           <!-- <md-icon md-svg-src="images/owl_clipped.png" class="email"></md-icon> -->
-                                          <input autofocus='true' ng-model="vm.comment.comment" type="comment" placeholder="Message:" ng-required="true">
+                                          <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
                                         </md-input-container>
-
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        </form>
                                         <!-- <form autofocus='true' class='commentForm' action="" 
                                         ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
                                         >
