@@ -187,8 +187,8 @@
 		function ConvoRepoService($http){
 		 	const BASE_URL = '/api/masterConvoRepository'
 
-			this.getMessages = function(user_id,post_id){
-				return $http.get(BASE_URL+'/'+user_id)
+			this.getFilmMessages = function(user_id,post_id){
+				return $http.get(BASE_URL+'/film/'+user_id)
 			}
 
 			this.createMessage = function(newPost){

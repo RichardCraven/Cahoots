@@ -43,7 +43,7 @@
 		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService,ConvoRepoService){
 			var vm=this;
 			vm.auth = auth;
-
+			console.log(filmMail)
 
 			console.log('filmmail is: '+filmMail+'. musicMail is: '+musicMail+'. codingMail is: '+codingMail)
 
@@ -109,23 +109,24 @@
 			console.log('got here')
 
 			vm.addFilmCommentResponse = function(postId,comment){
-				alert(postId,comment)
+				console.log('postID is: '+postId+'. comment is: '+comment)
+				alert('postID is: '+postId+'. comment is: '+comment)
 			}
 
 
 			var bool = true
 			vm.respondFilm = function(idx){
-				console.log($('.postTextField'))
+				// console.log($('.postTextField'))
 
 				// alert('shit')
 
-				console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
+				// console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
 
-				$('.postTextField')[0].form[0].autofocus = bool
-				bool = !bool
+				// $('.postTextField')[0].form[0].autofocus = bool
+				// bool = !bool
 
-				console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
-				console.log('before: '+responseAutoFocus)
+				// console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
+				// console.log('before: '+responseAutoFocus)
 				vm.showResponseField = !vm.showResponseField
 				vm.showText = !vm.showText
 

@@ -391,6 +391,7 @@ body, html{
 .filmCommentMailOdd{
 	overflow: scroll;
 	background-color:#e6c8ff;
+	/*padding-bottom:15px;*/
 }
 .filmCommentMailEven{
 	overflow: scroll;
@@ -446,6 +447,12 @@ md-list-item.codingCommentMailOdd:hover{
 }
 md-list-item.codingCommentMailEven:hover{
 	background-color: #BCE5C3;
+}
+md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple{
+	font-size:5em;
+}
+md-pagination-wrapper{
+	width: 100% !important;
 }
 
 
@@ -530,6 +537,7 @@ md-input-container{
     margin-left: auto;
     }
 .postTextArea{
+	margin-bottom:5px;
 	height: 68vh;
 	width: 100%;
 	background-color: #F0F8FF;
@@ -539,16 +547,27 @@ md-input-container{
 	height: 33vh;
 	width: 100%;
 	border-radius: 20%;
+	padding-top:6%;
 	/*background-color: blue;*/
 /*	background-color: #F0F8FF;
 */}
+	md-input-container.md-default-theme label, 
+	 md-input-container.md-default-theme .md-placeholder{
+	    color:white !important;
+	}
+	md-input-container.md-default-theme.md-input{
+		font-color:white;
+		border-color:white;
+	}
+
 .responseField{
-	background-color: green;
+	/*background-color: green;*/
 }
 .postTextField{
 	padding:20px;
 	border-radius: 9%;
-	margin:10px;
+	margin-left:5%;
+	margin-top:7%;
 	height: 65%;
 	width: 90%;
 	font-size:2em;
@@ -556,6 +575,7 @@ md-input-container{
 }
 .commentForm{
 	height: 35vh;
+	background-color: #fffdd3;
 }
 .settingsBio{
 	font-size: 0.8em;
