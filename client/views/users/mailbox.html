@@ -42,9 +42,9 @@
                     <md-tabs md-dynamic-height md-border-bottom>
                           <md-tab label="FILM">
                             <md-content class="md-padding">
-                              <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
-                                <div class="md-list-item-text">
-                                    <div layout='row' ng-click='vm.respondFilm($index)' >
+                              <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'"  >
+                                <div class="md-list-item-text" >
+                                    <div layout='row' ng-click='vm.respondFilm($index)'>
                                       <div flex-gt-sm='15' class='userPicContainer'>
                                          <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                                       </div>    
@@ -56,7 +56,7 @@
                                     </div>
                                     <div ng-show='vm.showResponseField' layout='row' class='responseField'>
                                       <div  class='postResponseArea'>
-                                        <form autofocus class='commentForm' action="" 
+                                        <form autofocus='true' class='commentForm' action="" 
                                         ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
                                         >
                                           <textarea  ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
@@ -72,7 +72,7 @@
                           </md-tab>
                           <md-tab label="MUSIC">
                             <md-content class="md-padding">
-                              <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
+                              <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap" ng-click='vm.respond()' md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
 
                                 <div class="md-list-item-text">
                                     <div layout='row' ng-click='vm.respondFilm($index)'>
@@ -86,7 +86,7 @@
                                       
                                     </div>
 
-                                    <div ng-show='vm.showMusicResponseField' layout='row' class='responseField'>
+                                    <!-- <div ng-show='vm.showMusicResponseField' layout='row' class='responseField'>
                                       <div  class='postResponseArea'>
                                         <form autofocus class='commentForm' action="" 
                                         ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
@@ -96,7 +96,7 @@
                                           <button type="submit" class="btn btn-success">Submit</button>
                                         </form>
                                       </div>
-                                    </div>
+                                    </div> -->
 
                                 </div>
                               </md-list-item>
@@ -114,53 +114,56 @@
 
                           <md-tab label="CODING">
                             <md-content class="md-padding">
-                              <h1 class="md-display-2">Tab Three</h1>
-                              <p>wtf yo</p>
+                              <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" ng-click='vm.respond()' md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
+                                <div class="md-list-item-text">
+                                    <div layout='row'>
+                                      <div flex-gt-sm='15' class='userPicContainer'>
+                                         <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                                      </div>    
+                                      <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                          <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.scripting_language}}</h6>
+                                          <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
+                                      </div>          
+                                      
+                                    </div>
+                                </div>
+                              </md-list-item>
                             </md-content>
                           </md-tab>
+
+
+
+
+
                           <md-tab label="Dogs">
                             <md-content class="md-padding">
 
                               <md-tabs md-dynamic-height md-border-bottom>
-                              
                                 <md-tab label="Dog Mingling">
                                   <md-content class="md-padding">
                                     <h1 class="md-display-2">Mingle!</h1>
                                     <p>Get your pup on</p>
                                   </md-content>
                                 </md-tab>
-
                                 <md-tab label="Dog Adoption">
                                   <md-content class="md-padding">
                                     <h1 class="md-display-2">Adopt some pups!</h1>
                                     <p>Adopt!</p>
                                   </md-content>
                                 </md-tab>
-
                               </md-tabs>
-                                    <!-- <md-select style='font-size:3em;' ng-model="dogs" placeholder="Dog Mingling" class="md-no-underline">
-                                      <md-option value="Mingling">Dog Mingling</md-option>
-                                      <md-option value="Adoption">Dog Adoption</md-option>
-                                    </md-select> -->
 
-                              <!-- <h1 class="md-display-2">Tab Three</h1>
-                              <p>Game time</p> -->
                             </md-content>
                           </md-tab>
 
-
-                          <md-tab label="Dog Adoption">
+                          <md-tab label="JOBS">
                             <md-content class="md-padding">
-                              <h1 class="md-display-2">Shelter #1</h1>
-                              <p>These is Steve. He pees on things</p>
+                              <h1 class="md-display-2">Get a job, my man!</h1>
+                              <p>wtf yo</p>
                             </md-content>
                           </md-tab>
-                          <md-tab label="Jobs">
-                            <md-content class="md-padding">
-                              <h1 class="md-display-2">Tab Three</h1>
-                              <p>Jawbs!/p>
-                            </md-content>
-                          </md-tab>
+
+
                         </md-tabs>
 
 
@@ -295,7 +298,7 @@
                           </div>
                       </div>
                     </md-list-item> -->
-                    </md-tabs>
+                    
                   </md-content>
                 </div>
 

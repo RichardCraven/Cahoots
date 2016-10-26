@@ -109,13 +109,15 @@
 			console.log('got here')
 
 			vm.addFilmCommentResponse = function(postId,comment){
-				null
+				alert(postId,comment)
 			}
 
 
 			var bool = true
 			vm.respondFilm = function(idx){
 				console.log($('.postTextField'))
+
+				// alert('shit')
 
 				console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
 

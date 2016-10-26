@@ -390,13 +390,11 @@ body, html{
 }
 .filmCommentMailOdd{
 	overflow: scroll;
-	background-color: #d1ffd9;
-	/*margin-left: 50px;*/
+	background-color:#e6c8ff;
 }
 .filmCommentMailEven{
 	overflow: scroll;
-	background-color: #fffdd3;
-	/*margin-left: 50px;*/
+	background-color: #d1ffd9;
 }
 div.md-list-item-text{
 	width: 100%;
@@ -407,28 +405,49 @@ div.md-list-item-text{
 }
 .musicCommentMailOdd{
 	overflow: scroll;
-	background-color: #d1ffd9;
+	background-color:#e6c8ff;
 }
 .musicCommentMailEven{
 	overflow: scroll;
-	background-color: #fffdd3;
+	background-color: #d1ffd9;
 }
 .codingCommentMailHeader{
 	background-color: #c7aeff;
-	/*background-color: #cce7ff;*/
 }
 .codingCommentMailOdd{
-	background-color: #F5F5F5;
-	margin-left: 50px;
+	overflow: scroll;
+	background-color:#e6c8ff;
 }
 .codingCommentMailEven{
-	background-color: #F0FFF0;
-	margin-left: 50px;
+	overflow: scroll;
+	background-color: #d1ffd9;
 }
 md-list {
 	background-color: #F0F8FF;
 	/*max-height: 80vh;*/
 }
+/*a:hover {
+    background-color: yellow;
+}*/
+md-list-item.filmCommentMailOdd:hover{
+	background-color: #CFB4E5;
+}
+md-list-item.filmCommentMailEven:hover{
+	background-color: #BCE5C3;
+}
+md-list-item.musicCommentMailOdd:hover{
+	background-color: #CFB4E5;
+}
+md-list-item.musicCommentMailEven:hover{
+	background-color: #BCE5C3;
+}
+md-list-item.codingCommentMailOdd:hover{
+	background-color: #CFB4E5;
+}
+md-list-item.codingCommentMailEven:hover{
+	background-color: #BCE5C3;
+}
+
 
 header p{
 	font-family: 'Open Sans'
