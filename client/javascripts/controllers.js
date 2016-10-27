@@ -113,9 +113,9 @@
 				// console.log(comment)
 				// debugger
 				// alert(comment)
-				// var req = {post: comment};
+				var req = {post: comment};
 				// debugger
-				ConvoRepoService.createFilmMessage(postId,comment)
+				ConvoRepoService.createFilmMessage(postId,req)
 				// var req = {post: newCodingPost};
 				// CodingPostService.createPost(req).then(function(res){
 				// 	$location.path('/codingPosts');
@@ -465,6 +465,7 @@
 			vm.addCodingPost = function(newCodingPost){
 				var req = {post: newCodingPost};
 				// var id = vm.post.user_id
+				console.log('going to codingPostService')
 				CodingPostService.createPost(req).then(function(res){
 					$location.path('/codingPosts');
 				})

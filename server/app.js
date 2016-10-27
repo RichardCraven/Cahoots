@@ -22,6 +22,8 @@ const filmPostComments = require('./routes/filmPostComments')
 const codingPosts = require('./routes/codingPosts')
 const codingPostComments = require('./routes/codingPostComments')
 const cleanupPosts = require('./routes/cleanupPosts')
+const convoRepository = require('./routes/convoRepository')
+
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({encoded:false}))
@@ -40,9 +42,10 @@ app.use('/api/musicPostComments', musicPostComments)
 app.use('/api/coding', codingPosts)
 app.use('/api/codingPostComments', codingPostComments)
 app.use('/api/users', users)
+app.use('/api/convoRepository', convoRepository)
 //the path here ('/api/film') corresponds to the service that uses it ex: const BASE_URL = '/api/film')
-
-
+console.log(convoRepository)
+// eval(require('locus'))
 
 app.get('*',function(req,res){
 	console.log(__dirname)

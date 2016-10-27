@@ -23,14 +23,17 @@ router.get('/:id', function(req,res){
 	})
 })
 
-router.post('/film',function(req,res){
+router.post('/',function(req,res){
+	
+	console.log('YOOOOOOOOOOOOOOOOOO')
 	console.log('ATTENTION! req.body = '+req.body)
 	console.log('req.body.post is: '+req.body.comment)
-	
+	eval(locus)
+	console.log(req)
 	knex('convo_repository').insert(req.body.comment, '*')
 	// .then(function(post){
 	// 	res.send(post)
-	// })
+	})
 })
 
 
