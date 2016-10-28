@@ -520,6 +520,7 @@ md-input-container{
 .inputField{
 	height: 50px !important;
 	overflow: scroll !important;
+	font-size:0.7em;
 }
 
 #preFooter-hr{
@@ -550,6 +551,12 @@ md-input-container{
 	padding-top:6%;
 }
 .postMusicResponseArea{
+	height: 33vh;
+	width: 100%;
+	border-radius: 20%;
+	padding-top:6%;
+}
+.postCodingResponseArea{
 	height: 33vh;
 	width: 100%;
 	border-radius: 20%;

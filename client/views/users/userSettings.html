@@ -33,15 +33,16 @@
             <div flex-gt-sm="50" style='margin-right: 30px' >
               <!-- <div class="NEWspacer"></div> -->
               <div >
-                <md-input-container style='margin-bottom: 90px' >
+                <md-input-container style='margin-bottom: 90px' class="md-block" >
                   <label style='color:black;'>Display Name</label>
                   <input class='inputField' name="display name" md-no-asterisk ng-model="vm.user.display_name" placeholder="{{vm.user.display_name}}" autofocus  >
                 </md-input-container>
               </div>
               <div >
-                <md-input-container  >
+                <md-input-container class="md-block" >
                    <label style='color:black'>Zip Code</label>
-                   <textarea class='inputField' name="zip code" md-no-asterisk ng-model="vm.user.zip_code" placeholder="vm.user.zip_code" ></textarea>
+                   <input class='inputField' autofocus='false' ng-model="vm.user.zip_code" type="comment" placeholder="vm.user.zip_code">
+                  <!--  <textarea class='inputField' name="zip code" md-no-asterisk ng-model="vm.user.zip_code" placeholder="vm.user.zip_code" ></textarea> -->
                 </md-input-container> 
               </div>
             </div>
@@ -49,7 +50,8 @@
               <div >
                 <md-input-container  md-no-float >
                   <label style='color:black;'>Bio </label>
-                  <textarea  class='settingsBio' name="bio"  ng-model="vm.user.bio" placeholder=" "  ></textarea>
+                  <input class='inputField' autofocus='false' ng-model="vm.user.bio" type="comment" placeholder="vm.user.bio">
+                 <!--  <textarea  class='settingsBio' name="bio"  ng-model="vm.user.bio" placeholder=" "  ></textarea> -->
                 </md-input-container>
               </div>
             </div>

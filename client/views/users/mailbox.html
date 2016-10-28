@@ -114,9 +114,9 @@
 
                           <md-tab label="CODING">
                             <md-content class="md-padding">
-                              <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" ng-click='vm.respond()' md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
+                              <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
                                 <div class="md-list-item-text">
-                                    <div layout='row'>
+                                    <div layout='row' ng-click='vm.respondCoding($index)'>
                                       <div flex-gt-sm='15' class='userPicContainer'>
                                          <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                                       </div>    
@@ -125,6 +125,17 @@
                                           <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
                                       </div>          
                                       
+                                    </div>
+                                    <div ng-show='vm.showCodingResponseField' layout='row' class='responseField'>
+                                      <div  class='postCodingResponseArea'>
+
+                                        <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
+                                        <md-input-container class="md-block">
+                                          <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
+                                        </md-input-container>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        </form>
+                                      </div>
                                     </div>
                                 </div>
                               </md-list-item>

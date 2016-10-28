@@ -72,7 +72,7 @@
 			vm.showCodingMail = false
 
 			vm.showFilmResponseField = false
-			vm.showMusicResponseField = true
+			vm.showMusicResponseField = false
 			vm.showCodingResponseField = false
 
 			var responseAutoFocus = false
@@ -120,15 +120,14 @@
 			var bool = true
 			vm.respondFilm = function(idx){
 				vm.showFilmResponseField = !vm.showFilmResponseField
-				vm.showText = !vm.showText
 				if(vm.showFilmResponseField === true){
-				var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  		
-				var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)		  		
+				var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx)		  		
+				var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx)		  		
 				others.forEach(function(i){i.style.display = 'none'})
 				}
 				if(vm.showFilmResponseField === false){
-					var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  			
-					var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)
+					var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx)		  			
+					var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx)
 
 					others.forEach(function(i){i.style.display = 'block'})
 				}
@@ -138,15 +137,28 @@
 				// console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
 				// console.log('before: '+responseAutoFocus)
 				vm.showMusicResponseField = !vm.showMusicResponseField
-				vm.showText = !vm.showText
 				if(vm.showMusicResponseField === true){
-				var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  		
-				var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)		  		
+				var selected = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i == idx)		  		
+				var others = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i !== idx)		  		
 				others.forEach(function(i){i.style.display = 'none'})
 				}
 				if(vm.showMusicResponseField === false){
-					var selected = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i == idx)		  			
-					var others = Array.from(document.querySelectorAll('.postResponseArea')).filter((v,i) => i !== idx)
+					var selected = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i == idx)		  			
+					var others = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i !== idx)
+
+					others.forEach(function(i){i.style.display = 'block'})
+				}
+			}
+			vm.respondCoding = function(idx){
+				vm.showCodingResponseField = !vm.showCodingResponseField
+				if(vm.showCodingResponseField === true){
+				var selected = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i == idx)		  		
+				var others = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i !== idx)		  		
+				others.forEach(function(i){i.style.display = 'none'})
+				}
+				if(vm.showCodingResponseField === false){
+					var selected = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i == idx)		  			
+					var others = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i !== idx)
 
 					others.forEach(function(i){i.style.display = 'block'})
 				}
