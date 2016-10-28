@@ -54,8 +54,8 @@
                                       </div>  
 
                                     </div>
-                                    <div ng-show='vm.showResponseField' layout='row' class='responseField'>
-                                      <div  class='postResponseArea'>
+                                    <div ng-show='vm.showFilmResponseField' layout='row' class='responseField'>
+                                      <div  class='postFilmResponseArea'>
 
                                         <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
                                         <md-input-container class="md-block">
@@ -75,7 +75,7 @@
                               <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap"  md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
 
                                 <div class="md-list-item-text">
-                                    <div layout='row' ng-click='vm.respondFilm($index)'>
+                                    <div layout='row' ng-click='vm.respondMusic($index)'>
                                       <div flex-gt-sm='15' class='userPicContainer'>
                                          <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                                       </div>    
@@ -86,8 +86,8 @@
                                       
                                     </div>
 
-                                    <div ng-show='vm.showResponseField' layout='row' class='responseField'>
-                                      <div  class='postResponseArea'>
+                                    <div ng-show='vm.showMusicResponseField' layout='row' class='responseField'>
+                                      <div  class='postMusicResponseArea'>
 
                                         <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
                                         <md-input-container class="md-block">
