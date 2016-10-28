@@ -191,13 +191,8 @@
 				return $http.get(BASE_URL+'/film/'+post_id)
 			}
 
-			this.createFilmMessage = function(post_id,comment){
-				console.log('comment is: ')
-				console.log(comment)
-				console.log(BASE_URL)
-				debugger
-
-				return $http.post(BASE_URL+ '/', comment); //on server req.body.post
+			this.createMessage = function(newCommentObj){
+				return $http.post(BASE_URL+ '/', newCommentObj); //on server req.body.post
 			}
 			this.createPost = function(newPost){
 				return $http.post(BASE_URL, newPost); //on server req.body.post

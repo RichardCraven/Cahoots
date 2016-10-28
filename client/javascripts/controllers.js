@@ -108,19 +108,15 @@
 			// }
 			console.log('got here')
 
-			vm.addFilmCommentResponse = function(postId,comment){
-				// console.log('postID is: '+postId+'. comment is: '+comment)
-				// console.log(comment)
-				// debugger
-				// alert(comment)
-				var req = {post: comment};
-				// debugger
-				ConvoRepoService.createFilmMessage(postId,req)
-				// var req = {post: newCodingPost};
-				// CodingPostService.createPost(req).then(function(res){
-				// 	$location.path('/codingPosts');
-				// })
-
+			vm.newMessage = function(postId,message,category){
+				vm.post = {}
+				vm.post.category = category
+				vm.post.message = message
+				vm.post.original_comment_id = postId
+				vm.post.user_id = JSON.parse(localStorage.profile).user_id
+				var req = {post: vm.post};
+				
+				ConvoRepoService.createMessage(req)
 			}
 
 
@@ -602,7 +598,7 @@
 				})
 			}
 		}
-//~~~~~~FILMposts conroller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
+//~~~~~~FILMposts controller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
 		function FilmPostsController(FilmPostService,FilmPostCommentsService,UsersService,posts,$location,$route, NgMap,store,$rootScope){
 			var vm = this;
 			vm.showMap = false
@@ -724,9 +720,7 @@
 			}
 			vm.addFilmPost = function(newFilmPost){
 				console.log(newFilmPost)
-
 				var req = {post: newFilmPost};
-				// var id = vm.post.user_id
 				FilmPostService.createPost(req).then(function(res){
 						location.href ='/filmPosts';
 				})

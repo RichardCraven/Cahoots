@@ -57,21 +57,12 @@
                                     <div ng-show='vm.showResponseField' layout='row' class='responseField'>
                                       <div  class='postResponseArea'>
 
-                                        <form action="" ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'>
+                                        <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
                                         <md-input-container class="md-block">
-                                              <!-- Use floating placeholder instead of label -->
-                                          <!-- <md-icon md-svg-src="images/owl_clipped.png" class="email"></md-icon> -->
                                           <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
                                         </md-input-container>
                                         <button type="submit" class="btn btn-success">Submit</button>
                                         </form>
-                                        <!-- <form autofocus='true' class='commentForm' action="" 
-                                        ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
-                                        >
-                                          <textarea  ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
-
-                                          <button type="submit" class="btn btn-success">Submit</button>
-                                        </form> -->
                                       </div>
                                     </div>
                                 </div>
@@ -81,7 +72,7 @@
                           </md-tab>
                           <md-tab label="MUSIC">
                             <md-content class="md-padding">
-                              <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap" ng-click='vm.respond()' md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
+                              <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap"  md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
 
                                 <div class="md-list-item-text">
                                     <div layout='row' ng-click='vm.respondFilm($index)'>
@@ -95,17 +86,17 @@
                                       
                                     </div>
 
-                                    <!-- <div ng-show='vm.showMusicResponseField' layout='row' class='responseField'>
+                                    <div ng-show='vm.showResponseField' layout='row' class='responseField'>
                                       <div  class='postResponseArea'>
-                                        <form autofocus class='commentForm' action="" 
-                                        ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
-                                        >
-                                          <textarea  ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
 
-                                          <button type="submit" class="btn btn-success">Submit</button>
+                                        <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
+                                        <md-input-container class="md-block">
+                                          <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
+                                        </md-input-container>
+                                        <button type="submit" class="btn btn-success">Submit</button>
                                         </form>
                                       </div>
-                                    </div> -->
+                                    </div>
 
                                 </div>
                               </md-list-item>
