@@ -53,9 +53,10 @@
 			vm.musicPostComments = []
 			vm.codingPostComments = []
 			// vm.messages=[{user:'Steve',message:'Hey hows it going'},{user:'Paulie',message:'Im doing okay'},{user:'Barnaby',message:'Hey guys, are we real?'},{user:'Terry G',message:'yo man, what...what are you talking about?'},{user:'Barnaby',message:'like, are we real people? or do we just exist in some kind of'},{user:'Paulie',message:'you shutup'}]
-			vm.messages = []
+			// vm.messages = []
 			
 			for(var i = 0; i<filmMail.data.length; i++){
+					// console.log(filmMail.data[i])
 					vm.filmCommentPosts.push(filmMail.data[i])
 			}
 			for(var i = 0; i<musicMail.data.length; i++){
@@ -123,6 +124,19 @@
 
 			var bool = true
 			vm.respondFilm = function(idx){
+				// console.log(idx)
+				vm.messages = []
+				var eyedee = vm.filmCommentPosts[idx].id
+				ConvoRepoService.getMessages('film',eyedee).then(function(res){
+					console.log(res.data)
+					res.data.forEach(function(e){
+						console.log(e.display_name+': '+e.message)
+						vm.messages.push({user:e.display_name,message:e.message})
+		  				// vm.messages.push({e.display_name,e.message})
+					})
+		  			console.log(vm.messages)
+		  		})
+
 				vm.showFilmResponseField = !vm.showFilmResponseField
 				if(vm.showFilmResponseField === true){
 				// vm.messages.push('Hi there','Mamaia','Woopsies')
@@ -177,6 +191,7 @@
 					others.forEach(function(i){i.style.display = 'block'})
 				}
 			}
+
 		};
 		//testing
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){

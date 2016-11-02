@@ -17,6 +17,10 @@ body{
 .navbar-fixed-bottom, .navbar-fixed-top{
 	position: static ;
 }
+#postRow:focus{
+	outline:0;
+}
+
 .topic{
 	color:maroon;
 }

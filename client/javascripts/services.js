@@ -188,6 +188,7 @@
 		 	const BASE_URL = '/api/convoRepository'
 
 			this.getMessages = function(category,post_id){
+				console.log('got to the convoRepo service'+post_id)
 				return $http.get(BASE_URL+'/'+category+'/'+post_id)
 			}
 

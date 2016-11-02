@@ -12,27 +12,23 @@ console.log(req.body.user_id)
 // 		res.send(post)
 })
 
-router.get('/:id', function(req,res){
-	knex.select(['c.comment','fp.topic','u.user_pic','u.display_name']).from('film_posts as fp')
-	.join('convo_repository as c', 'c.post_id', '=', 'fp.id')
-	.join('users as u', 'u.third_party_user_id','=','c.user_id')
-	.where('fp.user_id',req.params.id)
-	.then(function(mail){
-		console.log('film mail is: '+mail)
-		res.send(mail)
+router.get('/:category/:id', function(req,res){
+	knex.select(['c.message','u.display_name','u.user_pic']).from('convo_repository as c')
+	.join('users as u', 'c.user_id', '=', 'u.third_party_user_id')
+	.where('c.category',req.params.category)
+	.where('c.original_comment_id',req.params.id)
+	// .where({req.params.category:"c.category","c.original_comment_id":req.params.id})
+	.then(function(messages){
+		console.log('messages are: '+messages)
+		console.log(req.params.category)
+		res.send(messages)
 	})
+	.catch(function(err){
+		res.send(err);
+	});	
 })
 
 router.post('/',function(req,res){
-
-	// console.log('YOOOOOOOOOOOOOOOOOO')
-	// console.log(req)
-	// console.log(req.body.post)
-	// console.log('ATTENTION! req.body = '+ req.body)
-	// console.log('req.body.post is: '+ req.body.comment)
-	// console.log(req.body.post)
-	// console.log(req)
-	// eval(locus)
 	knex('convo_repository').insert(req.body.post, '*')
 	.then(function(post){
 		res.send(post)
