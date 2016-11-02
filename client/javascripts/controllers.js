@@ -52,6 +52,8 @@
 			vm.filmCommentPosts = []
 			vm.musicPostComments = []
 			vm.codingPostComments = []
+			// vm.messages=[{user:'Steve',message:'Hey hows it going'},{user:'Paulie',message:'Im doing okay'},{user:'Barnaby',message:'Hey guys, are we real?'},{user:'Terry G',message:'yo man, what...what are you talking about?'},{user:'Barnaby',message:'like, are we real people? or do we just exist in some kind of'},{user:'Paulie',message:'you shutup'}]
+			vm.messages = []
 			
 			for(var i = 0; i<filmMail.data.length; i++){
 					vm.filmCommentPosts.push(filmMail.data[i])
@@ -62,6 +64,7 @@
 			for(var i = 0; i<codingMail.data.length; i++){
 					vm.codingPostComments.push(codingMail.data[i])
 			}
+			console.log(vm.filmCommentPosts)
 
 			vm.hasNewFilmMail = false
 			vm.hasNewMusicMail = false
@@ -117,20 +120,31 @@
 			}
 
 
+
 			var bool = true
 			vm.respondFilm = function(idx){
 				vm.showFilmResponseField = !vm.showFilmResponseField
 				if(vm.showFilmResponseField === true){
-				var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx)		  		
+				// vm.messages.push('Hi there','Mamaia','Woopsies')
+
+
+				var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx)
+				var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx)	
+		  		console.log(selectedChatbox[0])
 				var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx)		  		
 				others.forEach(function(i){i.style.display = 'none'})
+				selectedChatbox[0].style.display = 'block'
+
 				}
 				if(vm.showFilmResponseField === false){
 					var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx)		  			
+					var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx)	
 					var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx)
-
+					selectedChatbox[0].style.display = 'none'
 					others.forEach(function(i){i.style.display = 'block'})
+
 				}
+				console.log(vm.messages)
 			}
 			vm.respondMusic = function(idx){
 				console.log(vm.showMusicResponseField)

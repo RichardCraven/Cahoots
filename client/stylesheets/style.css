@@ -593,6 +593,11 @@ md-input-container.md-default-theme.md-input{
 	height: 280px !important;
 	overflow: scroll !important;
 }
+.chatbox{
+	border: 1px solid black;
+	height: 100%;
+	display:none;
+}
 /*font-family: 'Indie Flower', cursive;
 
 font-family: 'Open Sans', sans-serif;
