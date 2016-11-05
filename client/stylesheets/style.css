@@ -13,6 +13,7 @@ body{
 	   -o-background-size: cover;
 	   background-size: cover;*/
 	   /*overflow: scroll;*/
+	   /*ahyes*/
 }
 .navbar-fixed-bottom, .navbar-fixed-top{
 	position: static ;
@@ -20,6 +21,7 @@ body{
 #postRow:focus{
 	outline:0;
 }
+.postContentContainer h3,h6
 
 .topic{
 	color:maroon;
