@@ -52,11 +52,14 @@
 			vm.filmCommentPosts = []
 			vm.musicPostComments = []
 			vm.codingPostComments = []
-			// vm.messages=[{user:'Steve',message:'Hey hows it going'},{user:'Paulie',message:'Im doing okay'},{user:'Barnaby',message:'Hey guys, are we real?'},{user:'Terry G',message:'yo man, what...what are you talking about?'},{user:'Barnaby',message:'like, are we real people? or do we just exist in some kind of'},{user:'Paulie',message:'you shutup'}]
-			// vm.messages = []
 			
 			for(var i = 0; i<filmMail.data.length; i++){
-					// console.log(filmMail.data[i])
+					console.log(filmMail.data[i])
+					var id = filmMail.data[i].post_id
+					console.log(id)
+					FilmPostService.getPost(id).then(function(res){
+						console.log(res)
+					})
 					vm.filmCommentPosts.push(filmMail.data[i])
 			}
 			for(var i = 0; i<musicMail.data.length; i++){

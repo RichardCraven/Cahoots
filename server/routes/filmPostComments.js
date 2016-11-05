@@ -13,7 +13,7 @@ knex('film_post_comments').where('user_id',req.body)
 	})
 })
 router.get('/:id', function(req,res){
-	knex.select(['c.comment','fp.topic','u.user_pic','u.display_name','c.id']).from('film_posts as fp')
+	knex.select(['c.comment','fp.topic','u.user_pic','u.display_name','c.id','c.post_id']).from('film_posts as fp')
 	.join('film_post_comments as c', 'c.post_id', '=', 'fp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('fp.user_id',req.params.id)
