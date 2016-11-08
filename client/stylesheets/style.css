@@ -18,17 +18,36 @@ body{
 .navbar-fixed-bottom, .navbar-fixed-top{
 	position: static ;
 }
+.glyphicon-arrow-right:before {
+	content: "\e092";
+	color: CadetBlue !important;
+}
+.you{
+	color:blue;
+}
+.recipient{
+	color:blue;
+}
 #postRow:focus{
 	outline:0;
 }
-.postContentContainer h3,h6
-
-.topic{
+.postContentContainer h3,h6 .topic{
 	color:maroon;
 }
 .postStyle{
 	/*margin-left:2px;*/
 	font-family: 'Raleway', sans-serif;
+}
+.chatbox md-list-item{
+	font-family: "Josefin Sans";
+	color: maroon;
+	font-size:3em;
+}
+.cornflowerBlue{
+background-color:CornflowerBlue 	
+}
+.cadet{
+background-color:CadetBlue;
 }
 .topicText{
 	color:midnightblue;

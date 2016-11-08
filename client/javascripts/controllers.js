@@ -52,16 +52,27 @@
 			vm.filmCommentPosts = []
 			vm.musicPostComments = []
 			vm.codingPostComments = []
+			var myDisplayName
+
+			var currentId = JSON.parse(localStorage.profile).user_id
+			UsersService.getUser(currentId).then(function(res){
+				myDisplayName = res.data.display_name
+			})
 			
-			for(var i = 0; i<filmMail.data.length; i++){
-					console.log(filmMail.data[i])
+			for(let i = 0; i<filmMail.data.length; i++){
 					var id = filmMail.data[i].post_id
-					console.log(id)
+					// console.log(id)
 					FilmPostService.getPost(id).then(function(res){
-						console.log(res)
+						// console.log(res.data.display_name)
+					filmMail.data[i].recipient = res.data.display_name
+						if(res.data.display_name===myDisplayName){
+							filmMail.data[i].recipient = 'You'
+						}
 					})
+					// console.log(filmMail.data[i])
 					vm.filmCommentPosts.push(filmMail.data[i])
 			}
+			console.log(vm.filmCommentPosts)
 			for(var i = 0; i<musicMail.data.length; i++){
 					vm.musicPostComments.push(musicMail.data[i])
 			}

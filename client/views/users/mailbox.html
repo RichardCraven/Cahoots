@@ -49,7 +49,7 @@
                                          <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                                       </div>    
                                       <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                          <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'>Message from: {{post.display_name}} to {{post.recipient}} &nbsp;  &nbsp; &nbsp;  Topic: {{post.topic}}</h6>
+                                          <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'>Message from: <span class='you'>{{post.display_name}}</span> <span class="glyphicon glyphicon-arrow-right"></span> <span class='recipient'>{{post.recipient}} </span> &nbsp;  &nbsp; &nbsp;  Responding to: {{post.topic}}</h6>
                                           <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; max-height:800px; margin-top:10px; overflow:scroll'>{{post.comment}}</h3>
                                       </div>  
 
@@ -69,7 +69,7 @@
                                       </div>
                                       <div flex='50'  >
                                         <div class='chatbox' flex>
-                                          <md-list-item ng-repeat="message in vm.messages track by $index" style='font-size:3em'>
+                                          <md-list-item ng-repeat="message in vm.messages track by $index" ng-class-odd="'cadet'" ng-class-even="'cornflowerBlue'">
                                             {{message.user}}: {{message.message}}
                                           </md-list-item>
                                         </div>

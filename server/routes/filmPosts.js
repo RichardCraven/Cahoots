@@ -19,11 +19,20 @@ router.get('/', function (req,res){
 router.get('/:id', function(req,res){
 	knex.select(['u.display_name','u.user_pic','topic','brief_description']).from('film_posts as f')
 	.join('users as u', 'u.third_party_user_id', '=', 'f.user_id')
-	knex('film_posts').where('f.third_party_user_id',req.params.id).first()
+	.where('f.id',req.params.id).first()
 	.then(function(post){
 		res.send(post)
 	})
 })
+//PREVIOUS VERSION: 
+// router.get('/:id', function(req,res){
+// 	knex.select(['u.display_name','u.user_pic','topic','brief_description']).from('film_posts as f')
+// 	.join('users as u', 'u.third_party_user_id', '=', 'f.user_id')
+// 	knex('film_posts').where('u.third_party_user_id',req.params.id).first()
+// 	.then(function(post){
+// 		res.send(post)
+// 	})
+// })
 
 router.post('/',function(req,res){
 	// debugger
