@@ -143,7 +143,8 @@
 				vm.messages = []
 				var eyedee = vm.filmCommentPosts[idx].id
 				ConvoRepoService.getMessages('film',eyedee).then(function(res){
-					console.log(res.data)
+					console.log(res)
+					// console.log(res.data)
 					res.data.forEach(function(e){
 						console.log(e.display_name+': '+e.message)
 						vm.messages.push({user:e.display_name,message:e.message})
