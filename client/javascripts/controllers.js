@@ -142,6 +142,7 @@
 				// console.log(idx)
 				vm.messages = []
 				var eyedee = vm.filmCommentPosts[idx].id
+				console.log(ConvoRepoService)
 				ConvoRepoService.getMessages('film',eyedee).then(function(res){
 					console.log(res)
 					// console.log(res.data)
