@@ -1,13 +1,4 @@
-	wth is this 
-	new entry for today 
-	fixing summerlines issue
-	maxed out traichs
-	secondory oligarchs
-	style.css
-	new repo!!
-	haloweens coming. this is my halloween commit
-	still fixing migrations
-	ok here we go
+	turkeys make me gassy
 	  <!-- <div class="row">
 	    <div class="col-md-6">
 	      <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>

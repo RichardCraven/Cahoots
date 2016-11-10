@@ -143,6 +143,7 @@
 				vm.messages = []
 				var eyedee = vm.filmCommentPosts[idx].id
 				console.log(ConvoRepoService)
+				console.log(eyedee)
 				ConvoRepoService.getMessages('film',eyedee).then(function(res){
 					console.log(res)
 					// console.log(res.data)
@@ -161,7 +162,7 @@
 
 				var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx)
 				var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx)	
-		  		console.log(selectedChatbox[0])
+		  		// console.log(selectedChatbox[0])
 				var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx)		  		
 				others.forEach(function(i){i.style.display = 'none'})
 				selectedChatbox[0].style.display = 'block'
