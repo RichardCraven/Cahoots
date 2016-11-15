@@ -1,4 +1,4 @@
-	turkeys make me gassy
+	no more module
 	  <!-- <div class="row">
 	    <div class="col-md-6">
 	      <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
