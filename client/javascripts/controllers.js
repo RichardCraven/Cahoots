@@ -69,8 +69,6 @@
 							filmMail.data[i].recipient = 'You'
 						}
 					})
-					// console.log(filmMail.data[i])
-					// console.log('in film mail data loop') 
 					vm.filmCommentPosts.push(filmMail.data[i])
 			}
 			console.log(vm.filmCommentPosts)

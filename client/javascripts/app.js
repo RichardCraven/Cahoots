@@ -219,7 +219,7 @@
 	        }
 	      } else {
 	        // Show the login page
-	        $location.path('/logout');
+	        $location.path('/home');
 	      }
 	    }
 
