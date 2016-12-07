@@ -1,5 +1,5 @@
 	no more module
-	lifesux
+	working
 	  <!-- <div class="row">
 	    <div class="col-md-6">
 	      <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
