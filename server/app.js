@@ -9,9 +9,10 @@ const app = express();
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const locus = require('locus')
+const favicon = require('serve-favicon')
 // const apiRoutes = require('./routes')
 
-
+const faviconPath = __dirname + '/public/faviconPath'
 
 const users = require('./routes/users')
 // const posts = require('./routes/posts')
@@ -44,7 +45,7 @@ app.use('/api/codingPostComments', codingPostComments)
 app.use('/api/users', users)
 app.use('/api/convoRepository', convoRepository)
 //the path here ('/api/film') corresponds to the service that uses it ex: const BASE_URL = '/api/film')
-
+app.use(favicon(faviconPath))
 
 app.get('*',function(req,res){
 	console.log(__dirname)
