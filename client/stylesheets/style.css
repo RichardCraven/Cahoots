@@ -623,6 +623,28 @@ md-input-container.md-default-theme.md-input{
 	height: 100%;
 	display:none;
 }
+.arrowRight{
+	/*content:''; */   
+	width: 20px;
+    height: 20px;
+	/*position:absolute;*/
+	margin:auto;
+	top:35px;
+	right:0;
+	left: -15px;
+	 -webkit-animation:3s arrow infinite ease; 
+	animation: 3s arrow infinite ease;
+	margin-left: -1%;
+	border-right:2px solid #FFF;
+	border-bottom:2px solid #FFF;
+	-ms-transform:rotate(-45deg);
+	-webkit-transform:rotate(-45deg);
+	transform:rotate(-45deg);
+}
+.flexbox{
+	display:flex;
+}
+	
 /*font-family: 'Indie Flower', cursive;
 
 font-family: 'Open Sans', sans-serif;

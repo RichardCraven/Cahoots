@@ -123,14 +123,16 @@
 			}
 
 			vm.newMessage = function(postId,message,category){
+				console.log('ng-submitted')
 				vm.post = {}
 				vm.post.category = category
 				vm.post.message = message
 				vm.post.original_comment_id = postId
 				vm.post.user_id = JSON.parse(localStorage.profile).user_id
 				var req = {post: vm.post};
-				
+				// event.preventDefault();
 				ConvoRepoService.createMessage(req)
+				$scope.$apply();
 			}
 
 

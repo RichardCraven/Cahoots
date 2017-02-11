@@ -49,8 +49,27 @@
                                          <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                                       </div>    
                                       <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                          <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'>Message from: <span class='you'>{{post.display_name}}</span> <span class="glyphicon glyphicon-arrow-right"></span> <span class='recipient'>{{post.recipient}} </span> &nbsp;  &nbsp; &nbsp;  Responding to: {{post.topic}}</h6>
-                                          <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; max-height:800px; margin-top:10px; overflow:scroll'>{{post.comment}}</h3>
+                                          <div layout='row' class="postContentHeader">
+                                            <div flex='30'>
+                                              <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'> <span class='you'>{{post.display_name}}</span> 
+                                              <!-- <span class="glyphicon glyphicon-arrow-right"></span>  -->
+                                              </h6>
+                                            </div>
+                                            <div  class="arrowRight"></div>
+                                            <div flex='15'>
+                                              <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px; margin-left: 35%; white-space: nowrap;'>
+                                                <span class='recipient'>{{post.recipient}} </span> 
+                                              </h6>
+                                            </div>
+                                            <div flex='60'>
+                                              <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px; max-height: 30px; overflow:hidden; white-space: nowrap; text-overflow:ellipsis;'> Context: {{post.topic}}
+                                              </h6>
+                                            </div>
+                                          </div>
+                                          <div layout='row'>
+                                            <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; max-height:200px; margin-top:10px; overflow-y: scroll;'>{{post.comment}}
+                                            </h3>
+                                          </div>
                                       </div>  
 
                                     </div>
@@ -60,7 +79,7 @@
 
                                       <div flex="50" class='postFilmResponseArea'>
 
-                                        <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
+                                        <form  ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
                                         <md-input-container class="md-block">
                                           <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
                                         </md-input-container>

@@ -193,6 +193,7 @@
 			}
 
 			this.createMessage = function(newCommentObj){
+				// $scope.$apply();
 				return $http.post(BASE_URL+ '/', newCommentObj); //on server req.body.post
 			}
 			this.createPost = function(newPost){

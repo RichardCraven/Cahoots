@@ -1,4 +1,4 @@
-	<h2>man i need some dough tho</h2>
+	<h2>welp. that didn't last long</h2>
 	  <!-- <div class="row">
 	    <div class="col-md-6">
 	      <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>

@@ -45,7 +45,7 @@ app.use('/api/codingPostComments', codingPostComments)
 app.use('/api/users', users)
 app.use('/api/convoRepository', convoRepository)
 //the path here ('/api/film') corresponds to the service that uses it ex: const BASE_URL = '/api/film')
-app.use(favicon(faviconPath))
+// app.use(favicon(faviconPath))
 
 app.get('*',function(req,res){
 	console.log(__dirname)
