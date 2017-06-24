@@ -43,16 +43,16 @@
 		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService,ConvoRepoService){
 			var vm=this;
 			vm.auth = auth;
-			console.log(filmMail)
+			// console.log(filmMail)
 
-			console.log('filmmail is: '+filmMail+'. musicMail is: '+musicMail+'. codingMail is: '+codingMail)
+			// console.log('filmmail is: '+filmMail+'. musicMail is: '+musicMail+'. codingMail is: '+codingMail)
 
 			vm.name = JSON.parse(localStorage.profile).given_name
 			vm.navpicture = JSON.parse(localStorage.profile).picture
 			vm.filmCommentPosts = []
 			vm.musicPostComments = []
 			vm.codingPostComments = []
-			var myDisplayName
+			var myDisplayName;
 
 			var currentId = JSON.parse(localStorage.profile).user_id
 			UsersService.getUser(currentId).then(function(res){
@@ -71,14 +71,14 @@
 					})
 					vm.filmCommentPosts.push(filmMail.data[i])
 			}
-			console.log(vm.filmCommentPosts)
+			// console.log(vm.filmCommentPosts)
 			for(var i = 0; i<musicMail.data.length; i++){
 					vm.musicPostComments.push(musicMail.data[i])
 			}
 			for(var i = 0; i<codingMail.data.length; i++){
 					vm.codingPostComments.push(codingMail.data[i])
 			}
-			console.log(vm.filmCommentPosts)
+			// console.log(vm.filmCommentPosts)
 
 			vm.hasNewFilmMail = false
 			vm.hasNewMusicMail = false
@@ -132,9 +132,12 @@
 				var req = {post: vm.post};
 				// event.preventDefault();
 				ConvoRepoService.createMessage(req)
-				$scope.$apply();
+				// $scope.$apply();
 			}
 
+			vm.deleteConvo = function(postId, comment, category){
+				console.log('testies testies YAAAAAAAAAAAAAAAAAA')
+			};
 
 
 			var bool = true

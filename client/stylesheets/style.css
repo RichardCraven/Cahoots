@@ -205,6 +205,16 @@ img{
 .goBack{
 	font-size:3.5em;
 }
+.delete{
+	font-size:1.5em;
+	margin-left: 75%;
+}
+.testies{
+	height: 100%;
+}
+.testies button{
+	margin-top:200%;
+};
 .md-tab{
 	font-size:40px;
 	font-weight: 700;
@@ -547,6 +557,10 @@ md-input-container{
 	overflow: scroll !important;
 	font-size:0.7em;
 }
+.bottom-button{
+	position: absolute;
+ 	bottom: 7px;
+}
 
 #preFooter-hr{
 	color: black !important;
@@ -570,7 +584,7 @@ md-input-container{
 	/*z-index: 2;	*/
 }
 .postFilmResponseArea{
-	height: 33vh;
+	/*height: 33vh;*/
 	width: 100%;
 	border-radius: 20%;
 	padding-top:6%;

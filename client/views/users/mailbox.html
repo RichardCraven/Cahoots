@@ -33,7 +33,7 @@
             <a href="/loggedinHome" class="goBack">
               <span class="glyphicon glyphicon-arrow-left"></span>
             </a>
-            <h1 id='header-main-mailbox' class='text-center'>MAILBOX </h1>
+            <h1 id='header-main-mailbox' class='text-center'>MAILBOX</h1>
             
 
               <div layout-gt-sm="column" >
@@ -61,9 +61,18 @@
                                                 <span class='recipient'>{{post.recipient}} </span> 
                                               </h6>
                                             </div>
-                                            <div flex='60'>
+                                            <div flex='30'>
                                               <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px; max-height: 30px; overflow:hidden; white-space: nowrap; text-overflow:ellipsis;'> Context: {{post.topic}}
                                               </h6>
+                                            </div>
+                                            <div flex='30'>
+                                              <!-- <a href="/loggedinHome" class="delete">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                              </a> -->
+                                              <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.testies"
+                                              >
+                                                <span class="glyphicon glyphicon-remove "></span>
+                                              </a>
                                             </div>
                                           </div>
                                           <div layout='row'>
@@ -78,13 +87,24 @@
                                     <!-- class='responseField'> -->
 
                                       <div flex="50" class='postFilmResponseArea'>
-
-                                        <form  ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
-                                        <md-input-container class="md-block">
-                                          <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
-                                        </md-input-container>
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                        </form>
+                                        <div layout='column' style='height: 100%'>
+                                          <div flex="80">
+                                            <form  ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
+                                              <md-input-container class="md-block">
+                                                <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
+                                              </md-input-container>
+                                              <button type="submit" class="btn btn-success">Submit</button>
+                                            </form>
+                                          </div>
+                                          <div flex="20">
+                                            <button ng-click='vm.deleteConvo(post.id, vm.comment, "film")' class="btn btn-danger">Delete Conversation</button>
+                                          </div>
+                                        </div>
+                                      <!--   <div layout='row'>
+                                          <form ng-submit='vm.testies()' class='testies'>
+                                          <button type="submit" class="btn btn-danger">Delete</button>
+                                          </form>
+                                        </div> -->
                                       </div>
                                       <div flex='50'  >
                                         <div class='chatbox' flex>
