@@ -1,7 +1,7 @@
   <!-- CODING INDEX -->
 
   <div layout-gt-sm="row" >
-    <div flex-gt-sm="50" id='codingContent'  >
+    <div flex-gt-sm="100" id='codingContent'  >
       <md-toolbar layout="row" class="md-hue-3">
         <div class="md-toolbar-tools">
           <a ng-click='vm.goBack()' class="smallGobackHomeArrow">
@@ -43,25 +43,68 @@
       	            <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
       	              <span class="glyphicon glyphicon-remove "></span>
       	            </a>
-                      <div class='postStyle'>
-        	              <h3><span class='topic'>Framework: </span><span class='topicText'>{{post.framework}}</span></h3>
-                        <hr class='postLine'>
-        	              <h4 class='descrip'><span class='postText'>{{post.description}}</span></h4>
-                      </div>
+                    <div class='postStyle'>
+      	              <h3><span class='topic'>Framework: </span><span class='topicText'>{{post.framework}}</span></h3>
+                      <hr class='postLine'>
+      	              <h4 class='descrip'><span class='postText'>{{post.description}}</span></h4>
+                    </div>
                   </div>  
                 </div>
                 <!-- end row  -->
-                <div layout='row'>
-                  <div ng-show='vm.showText' class='postTextArea'>
-                    <form class='commentForm' action="" 
-                    ng-submit='vm.addCodingPostComment(post.id,vm.comment)'
-                    >
-                    <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
-                      <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+                <div layout='row'  ng-if='vm.showText' class='postTextArea'>
+                      <div flex-gt-sm="50" class='postChatLeft animated slideInLeft' >
+                        <h2 class="md-display-1">CONNECT</h2>
+                        <div flex layout-gt-sm="column" style='height:80%'>
+                          <div flex-gt-sm="80">
+                            <md-content class='height100 backgroundTransparent'>
+                              <form  name="newCodingProject" ng-submit="vm.addCodingPostComment(post.id,vm.comment)"  >
+                              <!-- <h1 class="md-display-3">CONNECT</h1> -->
+                              <!-- <h3 class="md-headline">Headline</h3>
+                              <h4 class="md-headline">Headline</h4> -->
+                              <!-- <h5 class="md-headline">  </h5> -->
 
-                      <button type="submit" class="btn btn-success" >Submit</button>
-                    </form>
-                  </div>
+                                <div flex >
+                                  <md-input-container class='width70' style='margin-top:50px'>
+                                    <!-- <label style='color:black' class='arial' >Brief Description</label> -->
+                                    <!-- <div md-no-asterisk ng-model="vm.post.description" placeholder=" " contenteditable required ></div> -->
+                                    <div class="expandingArea">
+                                      <pre><span id='fakespan'></span><span class='blinking-cursor'>|</span><br></pre>
+
+                                      <!-- <textarea></textarea> -->
+                                      <textarea class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder="message" rows="10" required style='color:white; word-wrap: break-word; white-space: pre-wrap; height:1px; margin-top:-20px; font-size: 1px; cursor: pointer;' spellcheck="false"></textarea>
+                                    </div>
+                                  </md-input-container>
+                                </div>
+
+                              <button type="submit" class="btn btn-7 btn-7h hidden" id="submit-form"> <i class="material-icons md-48" >add</i> Comment</button>
+
+                              </form>
+                            </md-content>
+                          </div>
+                        </div>
+                        <div flex-gt-sm="20">
+                          <md-content flex class='backgroundTransparent'>
+                            <label for='submit-form' style='padding: 0px;' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i></label>
+                          </md-content>
+                        </div>
+                      </div>
+                    
+
+                   
+                      <div flex-gt-sm="50"  class='postChatRight animated slideInRight' >
+                        <!-- <h1 class="md-display-3">Headline</h1> -->
+                        <h2 class="md-display-1">PROXIMITY</h2>
+                        <ng-map id='map' center="37.7749,-122.4194" zoom="15" trigger-resize="true">
+                            <marker position="37.7749,-122.4194" title="Hello World!"></marker>
+                        </ng-map> 
+                        <!-- <h3 class="md-headline">Headline</h3> -->
+                      </div>
+                
+                    <!-- <form class='commentForm' action="" ng-submit='vm.addCodingPostComment(post.id,vm.comment)'>
+                      <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
+                      <button type="submit" class="btn btn-success">Submit</button>
+                    </form> -->
+                 
                 </div>
                 <!-- end row -->
 	            </div>
@@ -74,7 +117,7 @@
 
 <!-- ~~~~~~~~~~~~~~~~~~~MAP~~~~~~~~~~~~~~~~~~ -->
 
-    <md-divider></md-divider>
+    <!-- <md-divider></md-divider>
     <div ng-show='vm.showMap' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
       <md-toolbar layout="row" class="md-hue-1" >
         <div class="md-toolbar-tools">
@@ -90,7 +133,7 @@
           <video id="owlVid2"  muted autoplay >
             <source src="images/NewOwl666.mp4" type="video/mp4">
          </video>
-    </div>
+    </div> -->
 </div>
 <!-- end master-layout div -->
 

@@ -7,6 +7,9 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 
+    <!-- buttons CSS-->
+
+
 	<!-- Bootstrap Core CSS -->
     <!-- <link href="/stylesheets/bootstrap.min.css" rel="stylesheet"> -->
 
@@ -29,9 +32,11 @@
 	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
 
-
+	<link href='https://fonts.googleapis.com/css?family=Limelight' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Limelight' rel='stylesheet' type='text/css'>
 
     <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" type='text/css' >
 	<link href='https://fonts.googleapis.com/css?family=Limelight' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Indie+Flower|Open+Sans:300|Josefin+Sans:100|Amatic+SC|Josefin+Slab:100' rel='stylesheet' type='text/css'>
@@ -93,7 +98,14 @@
 
 	<!-- ~~~~~~~~~~~~~~custom animateCSS~~~~~~~~~~ -->
 	<link rel="stylesheet" href="/stylesheets/cssAnimations.css">
+
+	<!-- ~~~~~~~~~~~~~~ buttons ~~~~~~~~~~ -->
+	<link rel="stylesheet" href="/stylesheets/buttonsDefault.css">
+	<link rel="stylesheet" href="/stylesheets/buttonsComponent.css">
 	
+	<!-- ~~~~~~~~~~~~~~ Material Icons ~~~~~~~~~~ -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 
 	<!-- Custom CSS -->
 	<link href="/stylesheets/heroic-features.css" rel="stylesheet">
@@ -151,7 +163,43 @@
 	
 	<!-- jQuery -->
 	<!-- <script src="js/jquery.js"></script> -->
+	
+	<!-- CreativeButtons script -->
+	<script src="javascripts/modernizr.custom.js"></script>
+	<!-- <script src="js/classie.js"></script> -->
+	<script>
+		var buttons7Click = Array.prototype.slice.call( document.querySelectorAll( '#btn-click button' ) ),
+			buttons9Click = Array.prototype.slice.call( document.querySelectorAll( 'button.btn-8g' ) ),
+			totalButtons7Click = buttons7Click.length,
+			totalButtons9Click = buttons9Click.length;
 
+		// buttons7Click.forEach( function( el, i ) { el.addEventListener( 'click', activate, false ); } );
+		// buttons9Click.forEach( function( el, i ) { el.addEventListener( 'click', activate, false ); } );
+
+		function activate() {
+			var self = this, activatedClass = 'btn-activated';
+
+			if( classie.has( this, 'btn-7h' ) ) {
+				// if it is the first of the two btn-7h then activatedClass = 'btn-error';
+				// if it is the second then activatedClass = 'btn-success'
+				activatedClass = buttons7Click.indexOf( this ) === totalButtons7Click-2 ? 'btn-error' : 'btn-success';
+			}
+			else if( classie.has( this, 'btn-8g' ) ) {
+				// if it is the first of the two btn-8g then activatedClass = 'btn-success3d';
+				// if it is the second then activatedClass = 'btn-error3d'
+				activatedClass = buttons9Click.indexOf( this ) === totalButtons9Click-2 ? 'btn-success3d' : 'btn-error3d';
+			}
+
+			if( !classie.has( this, activatedClass ) ) {
+				classie.add( this, activatedClass );
+				setTimeout( function() { classie.remove( self, activatedClass ) }, 1000 );
+			}
+		}
+
+		// document.querySelector( '.btn-7i' ).addEventListener( 'click', function() {
+		// 	classie.add( document.querySelector( '#trash-effect' ), 'trash-effect-active' );
+		// }, false );
+	</script>
 	<!-- Bootstrap Core JavaScript -->
 	<!-- <script src="js/bootstrap.min.js"></script> -->
 

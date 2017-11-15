@@ -88,7 +88,9 @@
 					controllerAs: 'vm',
 					resolve: {
 						// document.getElementById('map').style.height = '100%'  <---- how can I do this?
-						posts: getAllFilmPosts
+						posts: getAllFilmPosts,
+						filmMail: getAllFilmMail
+						// filmMail: getAllFilmMail
 					//^resolve waits for the promise to get resolved and stores it as posts, then injects it into the controller
 					}
 				})
@@ -135,7 +137,8 @@
 					controllerAs: 'vm',
 					resolve: {
 						// document.getElementById('map').style.height = '100%'  <---- how can I do this?
-						posts: getAllCodingPosts
+						posts: getAllCodingPosts,
+						codingMail: getAllCodingMail
 					//^resolve waits for the promise to get resolved and stores it as posts, then injects it into the controller
 					}
 				})
@@ -294,7 +297,9 @@
 		return MusicPostService.getPosts();
 	}
 	function getAllFilmMail(FilmPostCommentsService){
+		console.log('ok this is getAllFilmMail in app.js')
 		var user_id = JSON.parse(localStorage.profile).user_id
+		console.log('HOOOOOOOMAMAMAMAMAMAMA', FilmPostCommentsService.getMail(user_id))
 		return FilmPostCommentsService.getMail(user_id);
 	}
 	function getAllMusicMail(MusicPostCommentsService){

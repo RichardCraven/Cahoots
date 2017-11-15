@@ -1,6 +1,6 @@
 <!-- HEADER -->
 <div layout-gt-sm="row" >
-  <div flex-gt-sm="50" style='overflow: scroll' >
+  <div flex-gt-sm="50" style='overflow: hidden; height: 100vh; object-fit: inherit' >
     <md-toolbar layout="row" class="md-hue-3">
       <div class="md-toolbar-tools">
         <a ng-click="vm.goBackToCodingIndex()" class="smallGobackHomeArrow">
@@ -8,33 +8,54 @@
         </a>
       </div>
     </md-toolbar>
-    <md-content>
+    <md-content style='height:100%;'>
       <md-list flex >
         <md-subheader style='font-size:2em' class="md-no-sticky text-center">POST AN IDEA</md-subheader> 
       </md-list>
-    </md-content>
+      <div flex layout-gt-sm="column" style='height:83%'>
+        <div flex-gt-sm="80">
+          <md-content class='height100'>
+            <form  name="newCodingProject" ng-submit="vm.addCodingPost(vm.post)" style='height: 100%' >
+            <!-- <div layout="column" class='inputfieldForNewPost' > -->
+              <div layout="column" class='height100'>
+                <!-- <div class="NEWspacer"></div> -->
+                <div flex style='margin-bottom: 40px;'>
+                  <md-input-container class='width70'>
+                    <label style='position: static' class='arial'>Framework</label>
+                    <!-- <input class='inputField' name="topic" md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus required> -->
+                    <input autocomplete="off" name="topic" class= 'newPostTopicArea' md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus required style="height: 50px">
+                  </md-input-container>
+                </div>
+                <div flex >
+                  <md-input-container class='width70'>
+                    <label style='color:black' class='arial' >Brief Description</label>
+                    <!-- <div md-no-asterisk ng-model="vm.post.description" placeholder=" " contenteditable required ></div> -->
+                    <div class="expandingArea">
+                      <pre><span id='fakespan'></span><span class='blinking-cursor'>|</span><br></pre>
 
-    <form  name="newCodingProject" class='formText NEWmargin' ng-submit="vm.addCodingPost(vm.post)" >
-    <div layout="column" class='inputfieldForNewPost' >
-      <div class="NEWspacer"></div>
-      <div >
-        <md-input-container>
-          <label style='color:white'>Framework</label>
-          <input class='inputField' name="topic" md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus required >
-        </md-input-container>
+                      <!-- <textarea></textarea> -->
+                      <textarea class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.post.description" placeholder=" " rows="10" required style='color:white; word-wrap: break-word; white-space: pre-wrap; height:1px; margin-top:-20px; font-size: 1px' spellcheck="false"></textarea>
+                    </div>
+                  </md-input-container>
+                </div>
+                <div flex >
+                  
+                  <button type="submit" class="btn btn-7 btn-7h hidden" id="submit-form"> <i class="material-icons md-48" >add</i> Create Post</button>
+                </div>
+              </div>
+            </form>
+          </md-content>
+        </div>
+        <div flex-gt-sm="20">
+          <md-content flex>
+            <label for='submit-form' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i> Create Post</label>
+          </md-content>
+        </div>
       </div>
-      <div >
-        <md-input-container md-no-float >
-          <label style='color:white'>Brief Description</label>
-          <textarea class='inputField' name="description" md-no-asterisk ng-model="vm.post.description" placeholder=" " required ></textarea>
-        </md-input-container>
-      </div>
+
+      <!-- <form  name="newCodingProject" class='formText NEWmargin' ng-submit="vm.addCodingPost(vm.post)" > -->
     </div>
-
-
-      <button type="submit" class="btn btn-success NEWmargin" >Create Post</button>
-    </form>
-  </div>
+    </md-content>
 
   <div flex-gt-sm="50" >
         <video id="owlVid2"  muted autoplay >

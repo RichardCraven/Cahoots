@@ -110,7 +110,9 @@
 		function FilmPostCommentsService($http){
 		 	const BASE_URL = '/api/filmPostComments'
 
+
 			this.getMail = function(user_id){
+		 	console.log('in FilmPostCommentsService GET function')
 				return $http.get(BASE_URL+'/'+user_id)
 			}
 

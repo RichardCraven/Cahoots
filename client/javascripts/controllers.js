@@ -43,8 +43,8 @@
 		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService,ConvoRepoService){
 			var vm=this;
 			vm.auth = auth;
-			// console.log(filmMail)
-
+			// console.log('filmMail is', filmMail, 'FilmPostCommentsService is ', FilmPostCommentsService)
+			console.log('[index] codingMail is ', codingMail)
 			// console.log('filmmail is: '+filmMail+'. musicMail is: '+musicMail+'. codingMail is: '+codingMail)
 
 			vm.name = JSON.parse(localStorage.profile).given_name
@@ -284,7 +284,8 @@
 
 			vm.go = function ( path ) {
 			    $location.path( path );
-			  };
+			};
+
 			vm.user_id = JSON.parse(localStorage.profile).user_id
 			vm.hasMail = false
 			if(localStorage.length>0){
@@ -392,14 +393,18 @@
 
 
 //~~~~~~CODING POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap,store,$rootScope){
-			var vm = this;
+		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, $timeout, $rootScope){
+			var vm = this, span, area, cursor;
+
 			vm.showMap = false
 			vm.showVid = true
 			vm.toggleView = false
 		  	vm.showText = false
 			vm.posts = posts.data;
-			console.log(vm.posts)
+			vm.backButton = 'home'
+			vm.tempIndex = null;
+
+			console.log('[index] codingMail is ', codingMail)
 			vm.backHome = '/home'
 			if(localStorage.length>0){
 				vm.backHome = '/loggedinHome'
@@ -409,35 +414,144 @@
 		  	};
 		  	vm.goBack = function(){
 		  		if(localStorage.length === 0){
-		  		$location.path('/home')
+		  			$location.path('/home')
 		  		}
-		  		else if (localStorage.length>0){
-		  		$location.path('/loggedinHome')	
+		  		else if (localStorage.length>0 && vm.backButton === 'home'){
+		  			$location.path('/loggedinHome')	
+		  		}else if (localStorage.length>0 && vm.backButton === 'codingIndex'){
+		  			vm.show(vm.tempIndex)
+
+		  			vm.backButton = 'home'	
 		  		}
 		  	}
+
 		  	vm.loggedIn = false
 		  	if(localStorage.length > 0){
 		  		vm.loggedIn = true
 		  	}
+
 		  	vm.show = function(idx){
-		  		vm.toggleView = !vm.toggleView
-		  		vm.showText = !vm.showText
-		  		vm.showMap = !vm.showMap
-		  		vm.showVid = !vm.showVid
-		  		if(vm.toggleView === true){
-		  		var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  		
-		  		var others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)		  		
-		  		others.forEach(function(i){i.style.display = 'none'})
+		  	 var selected, others;
+		  	 vm.tempIndex = idx;
+	  		 vm.toggleView = !vm.toggleView
+	  		 vm.showText = !vm.showText
+	  		 vm.showMap = !vm.showMap
+	  		 vm.showVid = !vm.showVid
 
-		  		selected[0].classList.add('focus')
-		  		}
-		  		if(vm.toggleView === false){
-		  			var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  			
-		  			var others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)
 
-		  			others.forEach(function(i){i.style.display = 'block'})
+		  		 if(vm.toggleView === true){
+		  		 	console.log('ok toggleview is ', vm.toggleView)
 
-		  			selected[0].classList.remove('focus')
+		  		  vm.backButton = 'codingIndex'
+
+		  		  selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  		
+		  		  others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)		  		
+		  		  others.forEach(function(i){i.style.display = 'none'})
+
+		  		  selected[0].classList.add('focus')
+	  		 		// var inputContainer = document.querySelectorAll('.width70').forEach();
+
+	  		 		var myNodeList = document.querySelectorAll('md-input-container');
+	  		 		var myArrayFromNodeList = []; 
+	  		 		for (var i = 0; i < myNodeList.length; i++) {
+	  		 		  myArrayFromNodeList.push(myNodeList[i]); 
+	  		 		}
+	  		 		myArrayFromNodeList.forEach(function (e){
+	  		 			e.classList.remove('md-input-invalid')
+	  		 			e.classList.remove('md-input-focused')
+	  		 			e.classList.remove('md-input-has-value')
+	  		 		})
+
+
+	  		 		// console.log('input container ', inputContainer)
+	  		 		// inputContainer.classList.remove("md-input-has-value", "md-input-invalid");
+	  		 		// console.log('classlist post: ',inputContainer.classList)
+
+		  		 	function makeExpandingArea(container) {
+		  		 	 var area = container.querySelector('textarea');
+		  		 	 var span = container.querySelector('#fakespan');
+		  		 	 var cursor = container.querySelector('.blinking-cursor');
+
+		  		 	 if(area.addEventListener) {
+		  		 	   area.addEventListener('focus', function(){
+		  		 	     cursor.style.visibility = 'visible'
+		  		 	   })
+		  		 	   area.addEventListener('focusout', function(){
+		  		 	     cursor.style.visibility = 'hidden'
+		  		 	   })
+
+		  		 	   area.addEventListener('input', function() {
+		  		 	     span.textContent = area.value;
+		  		 	   }, false);
+		  		 	   span.textContent = area.value;
+		  		 	 } else if (area.attachEvent) {
+		  		 	   // IE8 compatibility
+		  		 	   area.attachEvent('onpropertychange', function() {
+		  		 	     span.innerText = area.value;
+		  		 	   });
+		  		 	   span.innerText = area.value;
+		  		 	 }
+		  		 	// Enable extra CSS
+		  		 		container.className += "active";
+		  		 	}
+		  		 	var areas = document.querySelectorAll('.expandingArea');
+		  		 	var l = areas.length;while (l--) {
+		  		 		console.log(areas[l])
+		  		 	 makeExpandingArea(areas[l]);
+		  		 	}
+		  		 	// console.log(NgMap)
+		  		 	// google.maps.event.trigger(map, 'resize')
+
+		  		 	// console.log($timeout)
+		  		 	// $timeout(function() {
+		  		 	// 	console.log('inside')
+		  		 	// 	NgMap.getMap('map').then(function(response) {
+		  		 	// 		console.log('about to resize')
+		  		 	// 		google.maps.event.trigger(response, 'resize');
+		  		 	// 	});
+		  		 	// }, 500);
+		  		 	// NgMap.control.refresh()
+		  		 	// var map;
+		  		 	// vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
+		  		 	// x = NgMap.getMap('map');
+		  		 }
+
+		  		 if(vm.toggleView === false){
+		  		 	var myNodeList2 = document.querySelectorAll('.expandingAreaactive');
+		  		 	var myArrayFromNodeList2 = []; 
+		  		 	for (var i = 0; i < myNodeList2.length; i++) {
+		  		 	  myArrayFromNodeList2.push(myNodeList2[i]); 
+		  		 	}
+		  		 	myArrayFromNodeList2.forEach(function (e){
+		  		 		e.className = "expandingArea"
+		  		 	})
+
+		  		 	var myNodeList3 = document.querySelectorAll('#fakespan');
+		  		 	var myArrayFromNodeList3 = []; 
+		  		 	for (var i = 0; i < myNodeList3.length; i++) {
+		  		 	  myArrayFromNodeList3.push(myNodeList3[i]); 
+		  		 	}
+		  		 	myArrayFromNodeList3.forEach(function (e){
+		  		 		e.textContent = ""
+		  		 	})
+
+		  		 	var myNodeList4 = document.querySelectorAll('textarea');
+		  		 	var myArrayFromNodeList4 = []; 
+		  		 	for (var i = 0; i < myNodeList4.length; i++) {
+		  		 	  myArrayFromNodeList4.push(myNodeList4[i]); 
+		  		 	}
+		  		 	myArrayFromNodeList4.forEach(function (e){
+		  		 		e.value = ""
+		  		 	})
+
+		  		 	vm.backButton = 'home'
+
+		  		  var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  			
+		  		  var others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)
+
+		  		  others.forEach(function(i){i.style.display = 'block'})
+
+		  		  selected[0].classList.remove('focus')
 		  		}
 		  	}
 		  	vm.removePost = function(id){
@@ -445,6 +559,7 @@
 		  			$route.reload();
 		  		})
 		  	}
+
 		  	var map;
 		  	vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
 		  	x = NgMap.getMap('map');
@@ -467,6 +582,9 @@
 
 		  	vm.comment = {}
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
+
+		  		console.log('in CODING POST COMMENT, id is ', id, 'comment is ', newCodingPostComment)
+
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
 		  		var req = {post: newCodingPostComment};
@@ -483,6 +601,60 @@
 				$location.path('/codingPosts')
 			}
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
+
+			function makeExpandingArea(container) {
+			console.log(container)			
+			 var area = container.querySelector('textarea');
+			 var span = container.querySelector('#fakespan');
+			 var cursor = container.querySelector('.blinking-cursor');
+			 span.addEventListener('onactivate', function(){
+			   console.log('span ITS ACTIVE')
+
+			 })
+
+			 if (area.addEventListener) {
+			   area.addEventListener('focus', function(){
+			     cursor.style.visibility = 'visible'
+			   })
+			   area.addEventListener('focusout', function(){
+			     cursor.style.visibility = 'hidden'
+			   })
+			   area.addEventListener('input', function(e) {
+			   	if(span.offsetWidth > area.offsetWidth){
+			   		var carriage = document.createElement("input");
+			   		carriage.setAttribute('inputType', 'insertLineBreak');
+			   		span.appendChild(carriage)
+			   		// console.log(e)
+			   		// e.inputType = "insertLineBreak";
+			   		// e.data = 'hey whats going on fattie';
+			   		// e.isDefaultPrevented = true;
+			   		// console.log(e)
+			   		// area.value = '/r' + area.value
+			   		// return
+			   	}
+			   		// console.log(e.inputType)
+			     span.textContent = area.value;
+			     // console.log('area.width vs span width is ', area.offsetWidth, span.offsetWidth)
+			   }, false);
+			   span.textContent = area.value;
+			 } else if (area.attachEvent) {
+			   // IE8 compatibility
+			   area.attachEvent('onpropertychange', function() {
+			     span.innerText = area.value;
+			     console.log('here2')
+			   });
+			   span.innerText = area.value;
+			 }
+			// Enable extra CSS
+				container.className += "active";
+			}var areas = document.querySelectorAll('.expandingArea');
+			var l = areas.length;while (l--) {
+			 makeExpandingArea(areas[l]);
+			}
+			// makeExpandingArea(document)
+
+
+
 
 			vm.addCodingPost = function(newCodingPost){
 				var req = {post: newCodingPost};
@@ -505,7 +677,7 @@
 			}
 		}
 //~~~~~~MUSICposts conroller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
-		function MusicPostsController(MusicPostService, MusicPostCommentsService,UsersService,posts,$location,$route, NgMap){
+		function MusicPostsController(MusicPostService, MusicPostCommentsService,UsersService,posts,$location,$route, NgMap, musicMail){
 			var vm = this;
 			vm.showMap = true
 			vm.showVid = true
@@ -625,11 +797,13 @@
 			}
 		}
 //~~~~~~FILMposts controller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
-		function FilmPostsController(FilmPostService,FilmPostCommentsService,UsersService,posts,$location,$route, NgMap,store,$rootScope){
+		function FilmPostsController(FilmPostService,FilmPostCommentsService,UsersService,posts,$location,$route, NgMap, filmMail, $rootScope){
 			var vm = this;
 			vm.showMap = false
 			vm.showVid = true
 			vm.backHome = '/home'
+
+			console.log('IN FILM POSTS CONTROLLER, filmMail is ', filmMail, 'FilmPostCommentsService is ',  FilmPostCommentsService)
 			if(localStorage.length>0){
 				vm.backHome = '/loggedinHome'
 			}
@@ -665,7 +839,6 @@
 		  		$location.path('/loggedinHome')	
 		  		}
 		  	}
-		  	vm.profile = store.get('profile')
 
 		  	vm.loggedIn = false
 		  	if(localStorage.length > 0){
@@ -767,16 +940,17 @@
 				})
 			}
 		}
-		CodingPostsController.$inject = ['CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap','store'];
+		// var spoon = 'fid'
+		CodingPostsController.$inject = ['CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'codingMail', '$timeout'];
 		NewCodingPostController.$inject = ['CodingPostService','UsersService','$location','store'] 
 		EditCodingPostController.$inject = ['CodingPostService', 'post', '$location']
 
-		FilmPostsController.$inject = ['FilmPostService','FilmPostCommentsService','UsersService','posts','$location','$route', 'NgMap','store'];
+		FilmPostsController.$inject = ['FilmPostService','FilmPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'filmMail'];
 		//  ^removed $rootScopt, cause I don't think it's needed
 		NewFilmPostController.$inject = ['FilmPostService','UsersService','$location','store'] 
 		EditFilmPostController.$inject = ['FilmPostService', 'post', '$location']
 
-		MusicPostsController.$inject = ['MusicPostService','MusicPostCommentsService','UsersService','posts','$location','$route', 'NgMap'];
+		MusicPostsController.$inject = ['MusicPostService','MusicPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'musicMail'];
 		NewMusicPostController.$inject = ['MusicPostService','UsersService','$location','store'] 
 		EditMusicPostController.$inject = ['MusicPostService', 'post', '$location']
 

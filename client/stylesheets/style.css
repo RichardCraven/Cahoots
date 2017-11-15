@@ -58,17 +58,22 @@ background-color:CadetBlue;
 .postLine{
 	margin-top: 5px;
 	margin-bottom: 5px;
-	border: 0.5px solid #EEE8AA;
+	border: 0.5px solid rgb(140,158,255);
 }
 .postText{
+	white-space: normal;
 	color:black;
 	line-height: 5px;
-	font-size:1.4em;
+	font-size:1em;
 }
 img{
 	width: 100%;
 	max-height: 475px;
 }
+.backgroundTransparent {
+	background: transparent;
+}
+
 #newpic img {
 	width: 100px;
 	height: 100px;
@@ -314,7 +319,7 @@ img{
 	margin-left:40px;
 }
 .descrip{
-	white-space: inherit;
+	white-space: normal;
 	line-height: 25px !important;
 	max-height: 50px !important;
 }
@@ -344,6 +349,7 @@ img{
 }
 #map{
 	height: 100vh;
+    overflow:visible;
 }
 .cahoots{
 	font-size:8em;
@@ -399,8 +405,7 @@ header .jumbotron, .hero-spacer{
 }
 .displayName{
 	font-weight: bold !important;
-	font-size:1.8em !important;
-	letter-spacing: 5px !important;
+	font-size:1.1em !important;
 	color:#58157e !important;
 	font-family: 'Indie Flower';
 }
@@ -657,6 +662,225 @@ md-input-container.md-default-theme.md-input{
 }
 .flexbox{
 	display:flex;
+}
+
+.md-button {
+  color : currentColor;
+}
+
+.md-button:not([disabled]):hover {
+  background-color: rgba(158, 158, 158, 0.2);
+}
+
+.md-button[disabled] {
+  color : rgba(0, 0, 0, 0.26);
+  background-color: transparent;
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+.postChatLeft{
+	border-right: 1px solid black;
+	/*border-left: 2px solid black;*/
+	/*border-top: 2px solid black;*/
+	/*border-bottom: : 2px solid black;*/
+}
+.postChatRight{
+  /*border-right: 2px solid black;
+  border-top: 2px solid black;*/
+  border-left: 1px solid black;
+  /*border-bottom: : 2px solid black;*/
+}
+.postChatLeft h2, .postChatRight h2{
+	background-color: darkblue;
+	color: white;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.btn-7{
+	font-size: 0px;
+}
+label.btn.btn-7.btn-7h{
+	padding: 15px 40px 15px 20px;
+}
+
+div.flex md-input-container{
+	margin: 18px 0px 18px 1pc;
+}
+
+.height100{
+	height: 100%;
+}
+
+.width70{
+	width: 70%;
+}
+
+/*textarea.newPostTextArea{
+	width: 100%;
+	height: 5vh;
+	line-height: 40px;
+}*/
+
+.arial{
+	font-weight: 100;
+	font-family: arial;
+	color: black;
+	letter-spacing: 3px;
+}
+
+textarea, 
+pre {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  background:transparent;
+  font-size: 0.6em;
+  font: helvetica;
+}
+
+input.newPostTopicArea{
+	font-size: 0.60em;
+	    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+
+.expandingArea {
+  position: relative;
+  border: 1px solid #888;
+  /*background: #fff;*/
+}
+
+#fakespan{
+	/*display: inline-block;*/
+	overflow-wrap: break-word;
+	white-space: pre-wrap;
+	/*word-wrap: normal !important;*/
+	word-break: keep-all;
+}
+
+.expandingArea > textarea,
+.expandingArea > pre {
+  padding: 5px;
+  background: white !important;
+  font: 400 13px/16px helvetica, arial, sans-serif;
+  /* Make the text soft-wrap */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+ background:white;
+  width: 100%;
+  height: 5vh;
+  line-height: 40px;
+  font-size: 0.65em;
+}
+
+
+.expandingArea > textarea {
+  /* The border-box box model is used to allow
+   * padding whilst still keeping the overall width
+   * at exactly that of the containing element.
+   */
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  /* This height is used when JS is disabled */
+  height: 100px;
+  background:white;
+}
+
+.expandingArea.active > textarea {
+  /* Hide any scrollbars */
+  /*background-color:green;*/
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  /* Remove WebKit user-resize widget */
+  resize: none;
+   background:white;
+}
+
+.newPostTextArea{
+	background:transparent !important; 
+}
+
+.expandingArea > pre {
+  display: none;
+}
+.expandingArea.active > pre {
+  display: block;
+  visibility: hidden;
+}
+  /* Hide the text; just using it for sizing */
+
+
+.blinking-cursor {
+  font-weight: 100;
+  /*font-size: 30px;*/
+  color: grey;
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+  font-family: arial;
+  font-size: 20px;
+  padding-left: 5px;
+  visibility: hidden;
+  padding-top: -5px;
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
 }
 	
 /*font-family: 'Indie Flower', cursive;
