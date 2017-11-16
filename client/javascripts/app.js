@@ -248,6 +248,7 @@
 		    profilePromise.then(function(profile){
 		      // profile
 		      // debugger
+		      console.log('IN APP.JS, STORING PROFILE PIC. PROFILE IS ', profile)
 		      store.set('profile', profile);
 		      store.set('token', idToken);
 		      $rootScope.watch = true;

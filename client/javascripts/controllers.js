@@ -396,6 +396,22 @@
 		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, $timeout, $rootScope){
 			var vm = this, span, area, cursor;
 
+
+			// console.log('this is ', this)
+
+			// console.log(posts)
+			posts.data.forEach(function(i){
+				var facebook = /^(facebook)/,
+					numberPattern = /\d+/g,
+					fbUserId;
+				if(facebook.test(i.third_party_user_id)){
+					fbUserId = i.third_party_user_id.match(numberPattern)[0];
+					i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+					
+				}
+			})
+			// if(posts)
+
 			vm.showMap = false
 			vm.showVid = true
 			vm.toggleView = false
@@ -403,8 +419,9 @@
 			vm.posts = posts.data;
 			vm.backButton = 'home'
 			vm.tempIndex = null;
+			vm.test = false;
 
-			console.log('[index] codingMail is ', codingMail)
+			// console.log('[index] codingMail is ', codingMail)
 			vm.backHome = '/home'
 			if(localStorage.length>0){
 				vm.backHome = '/loggedinHome'
@@ -430,17 +447,60 @@
 		  		vm.loggedIn = true
 		  	}
 
+
+		  	// function makeExpandingArea(container) {
+		  	//  var area = container.querySelector('textarea');
+		  	//  var span = container.querySelector('#fakespan');
+		  	//  var cursor = container.querySelector('.blinking-cursor');
+
+		  	//  if(area.addEventListener) {
+		  	//    area.addEventListener('focus', function(){
+		  	//      cursor.style.visibility = 'visible'
+		  	//    })
+		  	//    area.addEventListener('focusout', function(){
+		  	//      cursor.style.visibility = 'hidden'
+		  	//    })
+
+		  	//    area.addEventListener('input', function() {
+		  	//      span.textContent = area.value;
+		  	//    }, false);
+		  	//    span.textContent = area.value;
+		  	//  } else if (area.attachEvent) {
+		  	//    // IE8 compatibility
+		  	//    area.attachEvent('onpropertychange', function() {
+		  	//      span.innerText = area.value;
+		  	//    });
+		  	//    span.innerText = area.value;
+		  	//  }
+		  	// // Enable extra CSS
+		  	// 	container.className += "active";
+		  	// }
+		  	// var areas = document.querySelectorAll('.expandingArea');
+		  	// var l = areas.length;while (l--) {
+		  	// 	// console.log(areas[l])
+		  	//  makeExpandingArea(areas[l]);
+		  	// }
+
+
 		  	vm.show = function(idx){
 		  	 var selected, others;
 		  	 vm.tempIndex = idx;
+		  	 
+	  		 if(!vm.test){
+	  		 	vm.test = true;
+	  		 }
+
 	  		 vm.toggleView = !vm.toggleView
 	  		 vm.showText = !vm.showText
-	  		 vm.showMap = !vm.showMap
+	  		 // vm.showMap = !vm.showMap
 	  		 vm.showVid = !vm.showVid
 
 
+	  		 // console.log('this is ', this, 'vm is ', vm)
+
 		  		 if(vm.toggleView === true){
-		  		 	console.log('ok toggleview is ', vm.toggleView)
+		  		 	console.log('toggleView ', vm.toggleView)
+
 
 		  		  vm.backButton = 'codingIndex'
 
@@ -451,6 +511,24 @@
 		  		  selected[0].classList.add('focus')
 	  		 		// var inputContainer = document.querySelectorAll('.width70').forEach();
 
+  		 		 $timeout(function() {
+		  		 		// console.log('inside')
+		  		 		
+		  		 		// var myNodeList = document.querySelectorAll('md-input-container');
+		  		 		// var myArrayFromNodeList = []; 
+		  		 		// for (var i = 0; i < myNodeList.length; i++) {
+		  		 		//   myArrayFromNodeList.push(myNodeList[i]); 
+		  		 		// }
+		  		 		// myArrayFromNodeList.forEach(function (e){
+		  		 		// 	e.classList.remove('md-input-invalid')
+		  		 		// 	e.classList.remove('md-input-focused')
+		  		 		// 	e.classList.remove('md-input-has-value')
+		  		 		// })
+
+		  		 		// console.log(myArrayFromNodeList)
+
+
+
 	  		 		var myNodeList = document.querySelectorAll('md-input-container');
 	  		 		var myArrayFromNodeList = []; 
 	  		 		for (var i = 0; i < myNodeList.length; i++) {
@@ -460,7 +538,9 @@
 	  		 			e.classList.remove('md-input-invalid')
 	  		 			e.classList.remove('md-input-focused')
 	  		 			e.classList.remove('md-input-has-value')
+	  		 			// e.innerText = 'message'
 	  		 		})
+	  		 			console.log('nodelist is ', myArrayFromNodeList[0].innerText)
 
 
 	  		 		// console.log('input container ', inputContainer)
@@ -468,37 +548,50 @@
 	  		 		// console.log('classlist post: ',inputContainer.classList)
 
 		  		 	function makeExpandingArea(container) {
+
+		  		 	console.log('container is ', container)
 		  		 	 var area = container.querySelector('textarea');
 		  		 	 var span = container.querySelector('#fakespan');
 		  		 	 var cursor = container.querySelector('.blinking-cursor');
 
+		  		 	 console.log('area: ', area.value, 'span: ', span.textContent, 'cursor : ', cursor, 'container: ', container)
+
 		  		 	 if(area.addEventListener) {
 		  		 	   area.addEventListener('focus', function(){
+		  		 	   	console.log('FOCUS ON TRIGGERED')
 		  		 	     cursor.style.visibility = 'visible'
 		  		 	   })
 		  		 	   area.addEventListener('focusout', function(){
+		  		 	   	console.log('FOCUS OUT TRIGGERED')
 		  		 	     cursor.style.visibility = 'hidden'
 		  		 	   })
 
 		  		 	   area.addEventListener('input', function() {
 		  		 	     span.textContent = area.value;
-		  		 	   }, false);
+		  		 	   });
+		  		 	   // console.log('okay area is ', area)
+		  		 	   // span.textContent = area.value;
 		  		 	   span.textContent = area.value;
 		  		 	 } else if (area.attachEvent) {
 		  		 	   // IE8 compatibility
 		  		 	   area.attachEvent('onpropertychange', function() {
-		  		 	     span.innerText = area.value;
+		  		 	     // span.innerText = area.value;
 		  		 	   });
-		  		 	   span.innerText = area.value;
+		  		 	   // span.innerText = area.value;
 		  		 	 }
 		  		 	// Enable extra CSS
 		  		 		container.className += "active";
 		  		 	}
 		  		 	var areas = document.querySelectorAll('.expandingArea');
-		  		 	var l = areas.length;while (l--) {
-		  		 		console.log(areas[l])
-		  		 	 makeExpandingArea(areas[l]);
-		  		 	}
+		  		 	// console.log('areas.length is ', areas.length)
+		  		 	makeExpandingArea(areas[idx])
+
+
+		  		 	vm.showMap = true;
+		  		 	// var l = areas.length;while (l--) {
+		  		 	// 	console.log('area ', l, 'is ', areas[l], 'idx is ', idx)
+		  		 	//  makeExpandingArea(areas[l]);
+		  		 	// }
 		  		 	// console.log(NgMap)
 		  		 	// google.maps.event.trigger(map, 'resize')
 
@@ -514,37 +607,73 @@
 		  		 	// var map;
 		  		 	// vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
 		  		 	// x = NgMap.getMap('map');
+	  		 		}, 500);
 		  		 }
 
 		  		 if(vm.toggleView === false){
-		  		 	var myNodeList2 = document.querySelectorAll('.expandingAreaactive');
-		  		 	var myArrayFromNodeList2 = []; 
-		  		 	for (var i = 0; i < myNodeList2.length; i++) {
-		  		 	  myArrayFromNodeList2.push(myNodeList2[i]); 
-		  		 	}
-		  		 	myArrayFromNodeList2.forEach(function (e){
-		  		 		e.className = "expandingArea"
-		  		 	})
+		  		 	console.log('off')
 
-		  		 	var myNodeList3 = document.querySelectorAll('#fakespan');
-		  		 	var myArrayFromNodeList3 = []; 
-		  		 	for (var i = 0; i < myNodeList3.length; i++) {
-		  		 	  myArrayFromNodeList3.push(myNodeList3[i]); 
-		  		 	}
-		  		 	myArrayFromNodeList3.forEach(function (e){
-		  		 		e.textContent = ""
-		  		 	})
+		  		 		vm.showMap = false;
+  		 		 	// $timeout(function() {
+		  		 		// console.log('inside OFF')
 
-		  		 	var myNodeList4 = document.querySelectorAll('textarea');
-		  		 	var myArrayFromNodeList4 = []; 
-		  		 	for (var i = 0; i < myNodeList4.length; i++) {
-		  		 	  myArrayFromNodeList4.push(myNodeList4[i]); 
-		  		 	}
-		  		 	myArrayFromNodeList4.forEach(function (e){
-		  		 		e.value = ""
-		  		 	})
+		  		 		var myNodeList = document.querySelectorAll('md-input-container');
+		  		 		var myArrayFromNodeList = []; 
+		  		 		for (var i = 0; i < myNodeList.length; i++) {
+		  		 		  myArrayFromNodeList.push(myNodeList[i]); 
+		  		 		}
+		  		 		myArrayFromNodeList.forEach(function (e){
+		  		 			e.classList.remove('md-input-invalid')
+		  		 			e.classList.remove('md-input-focused')
+		  		 			e.classList.remove('md-input-has-value')
+		  		 		})
+		  		 			console.log('SECONDARY  nodelist is ', myArrayFromNodeList)
+
+
+
+		  		 		
+			  		 	var myNodeList2 = document.querySelectorAll('.expandingAreaactive');
+			  		 	var myArrayFromNodeList2 = []; 
+			  		 	for (var i = 0; i < myNodeList2.length; i++) {
+			  		 	  myArrayFromNodeList2.push(myNodeList2[i]); 
+			  		 	}
+			  		 	myArrayFromNodeList2.forEach(function (e){
+			  		 		e.className = "expandingArea"
+			  		 	})
+
+			  		 	console.log(myArrayFromNodeList2)
+
+			  		 	var myNodeList3 = document.querySelectorAll('#fakespan');
+			  		 	var myArrayFromNodeList3 = []; 
+			  		 	for (var i = 0; i < myNodeList3.length; i++) {
+			  		 	  myArrayFromNodeList3.push(myNodeList3[i]); 
+			  		 	}
+			  		 	myArrayFromNodeList3.forEach(function (e){
+			  		 		// console.log(e)
+			  		 		e.textContent = ''
+			  		 		// e.getParentNode().removeChild(e);
+			  		 	})
+
+			  		 	// console.log(myArrayFromNodeList3)
+
+			  		 	var myNodeList4 = document.querySelectorAll('textarea');
+			  		 	var myArrayFromNodeList4 = []; 
+			  		 	for (var i = 0; i < myNodeList4.length; i++) {
+			  		 	  myArrayFromNodeList4.push(myNodeList4[i]); 
+			  		 	}
+			  		 	// console.log('area elements are ', myArrayFromNodeList4)
+			  		 	myArrayFromNodeList4.forEach(function (e){
+			  		 		e.value = ''
+			  		 		// console.log('area is ', e)
+			  		 		// e.getParentNode().removeChild(e);
+			  		 	})
+
+	  		 		// }, 1500);
+
+	  		 		vm.test = false;
 
 		  		 	vm.backButton = 'home'
+
 
 		  		  var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  			
 		  		  var others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)
@@ -557,6 +686,8 @@
 		  	vm.removePost = function(id){
 		  		CodingPostService.deletePost(id).then(function(){
 		  			$route.reload();
+
+		  			
 		  		})
 		  	}
 
@@ -583,15 +714,20 @@
 		  	vm.comment = {}
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
 
-		  		console.log('in CODING POST COMMENT, id is ', id, 'comment is ', newCodingPostComment)
+		  		console.log('in CODING POST COMMENT, id is ', id, 'comment is ', newCodingPostComment, this)
 
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
 		  		var req = {post: newCodingPostComment};
 		  		
+		  		// this.toggleView = false
+		  			console.log('vm.toggleview is ', this.toggleView)
+
 		  		CodingPostCommentsService.createPost(req).then(function(res){
 		  			// $location.path('/filmPosts');
-		  		})
+		  			vm.show(vm.tempIndex)
+		  			// vm.goBack();
+		  		}, vm)
 		  	}
 		}
 		function NewCodingPostController(CodingPostService,UsersService,$location,store){

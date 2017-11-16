@@ -51,7 +51,7 @@
                   </div>  
                 </div>
                 <!-- end row  -->
-                <div layout='row'  ng-if='vm.showText' class='postTextArea'>
+                <div layout='row'  ng-show='vm.test' class='postTextArea'>
                       <div flex-gt-sm="50" class='postChatLeft animated slideInLeft' >
                         <h2 class="md-display-1">CONNECT</h2>
                         <div flex layout-gt-sm="column" style='height:80%'>
@@ -94,7 +94,7 @@
                       <div flex-gt-sm="50"  class='postChatRight animated slideInRight' >
                         <!-- <h1 class="md-display-3">Headline</h1> -->
                         <h2 class="md-display-1">PROXIMITY</h2>
-                        <ng-map id='map' center="37.7749,-122.4194" zoom="15" trigger-resize="true">
+                        <ng-map  ng-if= 'vm.showMap' id='map' center="37.7749,-122.4194" zoom="15" trigger-resize="true">
                             <marker position="37.7749,-122.4194" title="Hello World!"></marker>
                         </ng-map> 
                         <!-- <h3 class="md-headline">Headline</h3> -->
