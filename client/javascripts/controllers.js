@@ -230,6 +230,7 @@
 		  	vm.go = function ( path ) {
 			    $location.path( path );
 			  };
+
 			var doThisOnce = true
 			if(document.getElementById('video-background')&&doThisOnce){  
 			  	document.getElementById('video-background').addEventListener('loadedmetadata', function() {
@@ -396,10 +397,32 @@
 		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, $timeout, $rootScope){
 			var vm = this, span, area, cursor;
 
+			vm.showMap = false
+			vm.showVid = true
+			vm.toggleView = false
+		  	vm.showText = false;
+		  	vm.showCommentInput = true;
+		  	vm.showResponses = false;
+			vm.posts = posts.data;
+			vm.backButton = 'home'
+			vm.tempIndex = null;
+			vm.test = false;
+			vm.currentUser = null;
+			vm.leftPanel = 'CONNECT'
+			vm.loggedIn = false;
+			vm.responses; 
 
-			// console.log('this is ', this)
+			console.log('POSTS ARE ', posts)
 
-			// console.log(posts)
+			if(localStorage.length > 0){
+				vm.loggedIn = true
+			};
+
+			vm.myTrackingFunction = function(post){
+				//some code to put the logged-in user's posts at the top
+			}
+
+			//this gets around the issue of facebook profile pic URLs expiring
 			posts.data.forEach(function(i){
 				var facebook = /^(facebook)/,
 					numberPattern = /\d+/g,
@@ -407,321 +430,169 @@
 				if(facebook.test(i.third_party_user_id)){
 					fbUserId = i.third_party_user_id.match(numberPattern)[0];
 					i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
-					
 				}
 			})
-			// if(posts)
 
-			vm.showMap = false
-			vm.showVid = true
-			vm.toggleView = false
-		  	vm.showText = false
-			vm.posts = posts.data;
-			vm.backButton = 'home'
-			vm.tempIndex = null;
-			vm.test = false;
-
-			// console.log('[index] codingMail is ', codingMail)
-			vm.backHome = '/home'
-			if(localStorage.length>0){
-				vm.backHome = '/loggedinHome'
-			}
-			vm.go = function ( path ) {
-		    	$location.path( path );
-		  	};
+			//handles the back button
 		  	vm.goBack = function(){
-		  		if(localStorage.length === 0){
-		  			$location.path('/home')
-		  		}
-		  		else if (localStorage.length>0 && vm.backButton === 'home'){
-		  			$location.path('/loggedinHome')	
-		  		}else if (localStorage.length>0 && vm.backButton === 'codingIndex'){
-		  			vm.show(vm.tempIndex)
+	  		 if(localStorage.length === 0){
+	  			$location.path('/home')
+	  		 }
+	  		 else if (localStorage.length>0 && vm.backButton === 'home'){
+	  			$location.path('/loggedinHome')	
+	  		 } else if (localStorage.length>0 && vm.backButton === 'codingIndex'){
+	  			vm.show(vm.tempIndex)
+	  			vm.backButton = 'home'	
+	  		 };
+		  	};
 
-		  			vm.backButton = 'home'	
-		  		}
-		  	}
+		  	vm.show = function(idx, post){
 
-		  	vm.loggedIn = false
-		  	if(localStorage.length > 0){
-		  		vm.loggedIn = true
-		  	}
-
-
-		  	// function makeExpandingArea(container) {
-		  	//  var area = container.querySelector('textarea');
-		  	//  var span = container.querySelector('#fakespan');
-		  	//  var cursor = container.querySelector('.blinking-cursor');
-
-		  	//  if(area.addEventListener) {
-		  	//    area.addEventListener('focus', function(){
-		  	//      cursor.style.visibility = 'visible'
-		  	//    })
-		  	//    area.addEventListener('focusout', function(){
-		  	//      cursor.style.visibility = 'hidden'
-		  	//    })
-
-		  	//    area.addEventListener('input', function() {
-		  	//      span.textContent = area.value;
-		  	//    }, false);
-		  	//    span.textContent = area.value;
-		  	//  } else if (area.attachEvent) {
-		  	//    // IE8 compatibility
-		  	//    area.attachEvent('onpropertychange', function() {
-		  	//      span.innerText = area.value;
-		  	//    });
-		  	//    span.innerText = area.value;
-		  	//  }
-		  	// // Enable extra CSS
-		  	// 	container.className += "active";
-		  	// }
-		  	// var areas = document.querySelectorAll('.expandingArea');
-		  	// var l = areas.length;while (l--) {
-		  	// 	// console.log(areas[l])
-		  	//  makeExpandingArea(areas[l]);
-		  	// }
-
-
-		  	vm.show = function(idx){
 		  	 var selected, others;
 		  	 vm.tempIndex = idx;
-		  	 
-	  		 if(!vm.test){
-	  		 	vm.test = true;
-	  		 }
-
 	  		 vm.toggleView = !vm.toggleView
 	  		 vm.showText = !vm.showText
-	  		 // vm.showMap = !vm.showMap
 	  		 vm.showVid = !vm.showVid
 
-
-	  		 // console.log('this is ', this, 'vm is ', vm)
-
-		  		 if(vm.toggleView === true){
-		  		 	console.log('toggleView ', vm.toggleView)
-
-
-		  		  vm.backButton = 'codingIndex'
+		  		if(vm.toggleView === true){
+		  		  
+				  vm.backButton = 'codingIndex';
 
 		  		  selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  		
+		  		  selected[0].classList.add('focus')
 		  		  others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)		  		
 		  		  others.forEach(function(i){i.style.display = 'none'})
 
-		  		  selected[0].classList.add('focus')
-	  		 		// var inputContainer = document.querySelectorAll('.width70').forEach();
+    		  	  if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
+  			  	    vm.showResponses = true;
+  			  	    vm.showCommentInput = false;
+  			  	    vm.leftPanel = 'RESPONSES'
 
-  		 		 $timeout(function() {
-		  		 		// console.log('inside')
-		  		 		
-		  		 		// var myNodeList = document.querySelectorAll('md-input-container');
-		  		 		// var myArrayFromNodeList = []; 
-		  		 		// for (var i = 0; i < myNodeList.length; i++) {
-		  		 		//   myArrayFromNodeList.push(myNodeList[i]); 
-		  		 		// }
-		  		 		// myArrayFromNodeList.forEach(function (e){
-		  		 		// 	e.classList.remove('md-input-invalid')
-		  		 		// 	e.classList.remove('md-input-focused')
-		  		 		// 	e.classList.remove('md-input-has-value')
-		  		 		// })
+  			  	    console.log('CODING MAIL IS ', codingMail.data)
 
-		  		 		// console.log(myArrayFromNodeList)
+  			  	    // codingMail.forEach
 
+  			  	    vm.responses = codingMail.data.filter((v,i) => codingMail.data[i].framework === posts.data[idx].framework);
+  			  	    console.log(vm.responses)
 
+  			  	    vm.responses.forEach(function(i){
+  			  	    	var facebook = /^(facebook)/,
+  			  	    		numberPattern = /\d+/g,
+  			  	    		fbUserId;
+  			  	    	if(facebook.test(i.user_id)){
+  			  	    		fbUserId = i.user_id.match(numberPattern)[0];
+  			  	    		i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+  			  	    	}
+  			  	    })
+  			  	    	// console.log('response data is ', vm.responses.data)
 
-	  		 		var myNodeList = document.querySelectorAll('md-input-container');
-	  		 		var myArrayFromNodeList = []; 
-	  		 		for (var i = 0; i < myNodeList.length; i++) {
-	  		 		  myArrayFromNodeList.push(myNodeList[i]); 
-	  		 		}
+  			  	    	
+  			  	    	// console.log(i.framework)
+  			  	    	// console.log(posts.data[idx].framework)
+  			  	    	// if(i.framework !== posts.data[idx].framework){
+  			  	    	// 	i.style.display = 'none'
+  			  	    	// }
+
+  			  	    containers = Array.from(document.querySelectorAll('.messageContainer'))		  		
+  			  	    // containers.forEach(function(i){i.style.height = '100%'})
+  			  	    // containers.forEach(function(i){i.style.overflow = visible})
+
+    		  	  };
+
+  		 		  $timeout(function() {
+	  		 		vm.showMap = true;
+
+	  		 		myArrayFromNodeList = Array.from(document.querySelectorAll('md-input-container'))
 	  		 		myArrayFromNodeList.forEach(function (e){
 	  		 			e.classList.remove('md-input-invalid')
 	  		 			e.classList.remove('md-input-focused')
 	  		 			e.classList.remove('md-input-has-value')
-	  		 			// e.innerText = 'message'
-	  		 		})
-	  		 			console.log('nodelist is ', myArrayFromNodeList[0].innerText)
-
-
-	  		 		// console.log('input container ', inputContainer)
-	  		 		// inputContainer.classList.remove("md-input-has-value", "md-input-invalid");
-	  		 		// console.log('classlist post: ',inputContainer.classList)
+	  		 		});
 
 		  		 	function makeExpandingArea(container) {
-
-		  		 	console.log('container is ', container)
-		  		 	 var area = container.querySelector('textarea');
-		  		 	 var span = container.querySelector('#fakespan');
-		  		 	 var cursor = container.querySelector('.blinking-cursor');
-
-		  		 	 console.log('area: ', area.value, 'span: ', span.textContent, 'cursor : ', cursor, 'container: ', container)
+		  		 	 var area = container.querySelector('textarea'),
+		  		 	 	 span = container.querySelector('#fakespan'),
+		  		 	     cursor = container.querySelector('.blinking-cursor'), areas;
 
 		  		 	 if(area.addEventListener) {
 		  		 	   area.addEventListener('focus', function(){
-		  		 	   	console.log('FOCUS ON TRIGGERED')
 		  		 	     cursor.style.visibility = 'visible'
 		  		 	   })
 		  		 	   area.addEventListener('focusout', function(){
-		  		 	   	console.log('FOCUS OUT TRIGGERED')
 		  		 	     cursor.style.visibility = 'hidden'
 		  		 	   })
 
 		  		 	   area.addEventListener('input', function() {
 		  		 	     span.textContent = area.value;
 		  		 	   });
-		  		 	   // console.log('okay area is ', area)
-		  		 	   // span.textContent = area.value;
 		  		 	   span.textContent = area.value;
 		  		 	 } else if (area.attachEvent) {
 		  		 	   // IE8 compatibility
 		  		 	   area.attachEvent('onpropertychange', function() {
-		  		 	     // span.innerText = area.value;
+		  		 	     span.innerText = area.value;
 		  		 	   });
-		  		 	   // span.innerText = area.value;
+		  		 	   span.innerText = area.value;
 		  		 	 }
-		  		 	// Enable extra CSS
+		  		 	   // Enable extra CSS
 		  		 		container.className += "active";
 		  		 	}
-		  		 	var areas = document.querySelectorAll('.expandingArea');
-		  		 	// console.log('areas.length is ', areas.length)
+
+		  		 	areas = document.querySelectorAll('.expandingArea');
 		  		 	makeExpandingArea(areas[idx])
-
-
-		  		 	vm.showMap = true;
-		  		 	// var l = areas.length;while (l--) {
-		  		 	// 	console.log('area ', l, 'is ', areas[l], 'idx is ', idx)
-		  		 	//  makeExpandingArea(areas[l]);
-		  		 	// }
-		  		 	// console.log(NgMap)
-		  		 	// google.maps.event.trigger(map, 'resize')
-
-		  		 	// console.log($timeout)
-		  		 	// $timeout(function() {
-		  		 	// 	console.log('inside')
-		  		 	// 	NgMap.getMap('map').then(function(response) {
-		  		 	// 		console.log('about to resize')
-		  		 	// 		google.maps.event.trigger(response, 'resize');
-		  		 	// 	});
-		  		 	// }, 500);
-		  		 	// NgMap.control.refresh()
-		  		 	// var map;
-		  		 	// vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
-		  		 	// x = NgMap.getMap('map');
-	  		 		}, 500);
-		  		 }
-
-		  		 if(vm.toggleView === false){
-		  		 	console.log('off')
-
-		  		 		vm.showMap = false;
-  		 		 	// $timeout(function() {
-		  		 		// console.log('inside OFF')
-
-		  		 		var myNodeList = document.querySelectorAll('md-input-container');
-		  		 		var myArrayFromNodeList = []; 
-		  		 		for (var i = 0; i < myNodeList.length; i++) {
-		  		 		  myArrayFromNodeList.push(myNodeList[i]); 
-		  		 		}
-		  		 		myArrayFromNodeList.forEach(function (e){
-		  		 			e.classList.remove('md-input-invalid')
-		  		 			e.classList.remove('md-input-focused')
-		  		 			e.classList.remove('md-input-has-value')
-		  		 		})
-		  		 			console.log('SECONDARY  nodelist is ', myArrayFromNodeList)
-
-
-
-		  		 		
-			  		 	var myNodeList2 = document.querySelectorAll('.expandingAreaactive');
-			  		 	var myArrayFromNodeList2 = []; 
-			  		 	for (var i = 0; i < myNodeList2.length; i++) {
-			  		 	  myArrayFromNodeList2.push(myNodeList2[i]); 
-			  		 	}
-			  		 	myArrayFromNodeList2.forEach(function (e){
-			  		 		e.className = "expandingArea"
-			  		 	})
-
-			  		 	console.log(myArrayFromNodeList2)
-
-			  		 	var myNodeList3 = document.querySelectorAll('#fakespan');
-			  		 	var myArrayFromNodeList3 = []; 
-			  		 	for (var i = 0; i < myNodeList3.length; i++) {
-			  		 	  myArrayFromNodeList3.push(myNodeList3[i]); 
-			  		 	}
-			  		 	myArrayFromNodeList3.forEach(function (e){
-			  		 		// console.log(e)
-			  		 		e.textContent = ''
-			  		 		// e.getParentNode().removeChild(e);
-			  		 	})
-
-			  		 	// console.log(myArrayFromNodeList3)
-
-			  		 	var myNodeList4 = document.querySelectorAll('textarea');
-			  		 	var myArrayFromNodeList4 = []; 
-			  		 	for (var i = 0; i < myNodeList4.length; i++) {
-			  		 	  myArrayFromNodeList4.push(myNodeList4[i]); 
-			  		 	}
-			  		 	// console.log('area elements are ', myArrayFromNodeList4)
-			  		 	myArrayFromNodeList4.forEach(function (e){
-			  		 		e.value = ''
-			  		 		// console.log('area is ', e)
-			  		 		// e.getParentNode().removeChild(e);
-			  		 	})
-
-	  		 		// }, 1500);
-
-	  		 		vm.test = false;
-
-		  		 	vm.backButton = 'home'
-
-
-		  		  var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  			
-		  		  var others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)
-
-		  		  others.forEach(function(i){i.style.display = 'block'})
-
-		  		  selected[0].classList.remove('focus')
+	  		 	  }, 500);
 		  		}
-		  	}
-		  	vm.removePost = function(id){
-		  		CodingPostService.deletePost(id).then(function(){
-		  			$route.reload();
 
-		  			
-		  		})
+		  		if(vm.toggleView === false){
+		  			vm.showCommentInput = true;
+		  			vm.showResponses = false;
+		  			vm.leftPanel = 'CONNECT';
+		  		 	vm.showMap = false;
+		  		 	vm.backButton = 'home';
+
+		  			var expandingNodes = Array.from(document.querySelectorAll('.expandingAreaactive')),
+		  				fakeSpans = Array.from(document.querySelectorAll('#fakespan')),
+		  				textAreas = Array.from(document.querySelectorAll('textarea')),
+		  				selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
+		  				others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
+		  				containers = Array.from(document.querySelectorAll('.messageContainer'));		  		
+		  				
+		  			containers.forEach(function(i){i.style.height = '75%'})
+		  			others.forEach(function(i){i.style.display = 'block'});
+		  			selected[0].classList.remove('focus');	
+
+		  			expandingNodes.forEach(function (e){e.className = "expandingArea"});
+		  		 	fakeSpans.forEach(function (e){e.textContent = ''});
+		  		 	textAreas.forEach(function (e){e.value = ''});
+		  		};
+		  	}
+
+		  	vm.removePost = function(id){
+	  		 CodingPostService.deletePost(id).then(function(){
+	  			$route.reload();
+	  		 });
+		  	}
+
+  		  	vm.checkId = function(post){
+	  		  return localStorage.length > 0 && post.third_party_user_id === JSON.parse(localStorage.profile).user_id ? true : false
 		  	}
 
 		  	var map;
 		  	vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
 		  	x = NgMap.getMap('map');
 		  	
-  		  	vm.checkId = function(post={'user_id':'dummyData'}){
-  	  		  	if(localStorage.length > 0){
-  				  if(post.third_party_user_id === JSON.parse(localStorage.profile).user_id){
-  				  	'hello user!'
-  				  	return true		  			
-  				  }
-  				  else{
-  				  	return false
-  				  }	
-  	  		  	}
-  	  		  	else {
-  	  		  		return false
-  	  		  	}
-  		  	}
+  		  	
 
 
 		  	vm.comment = {}
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
 
-		  		console.log('in CODING POST COMMENT, id is ', id, 'comment is ', newCodingPostComment, this)
+		  		// console.log('in CODING POST COMMENT, id is ', id, 'comment is ', newCodingPostComment)
 
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
 		  		var req = {post: newCodingPostComment};
 		  		
 		  		// this.toggleView = false
-		  			console.log('vm.toggleview is ', this.toggleView)
 
 		  		CodingPostCommentsService.createPost(req).then(function(res){
 		  			// $location.path('/filmPosts');
@@ -823,11 +694,7 @@
 					vm.posts[i].display_name = JSON.parse(localStorage.profile).given_name
 				}
 			}
-			// console.log(posts.data)
-			vm.backHome = '/home'
-			if(localStorage.length>0){
-				vm.backHome = '/loggedinHome'
-			}
+
 			vm.go = function ( path ) {
 		    	$location.path( path );
 		  	};
@@ -876,17 +743,19 @@
 		  	if(localStorage.length > 0){
 		  		vm.loggedIn = true
 		  	}
-		  	vm.checkId = function(post){
-	  		  	if(localStorage.length > 0){
-				  if(post.third_party_user_id === JSON.parse(localStorage.profile).user_id){
-				  	console.log('why is this repeating 12 times??')
-				  	return true		  			
-				  }
-	  		  	}
-	  		  	else{
-	  		  		return false
-	  		  	}
-		  	}
+		  	// vm.checkId = function(post){
+	  		//   	if(localStorage.length > 0){
+				 //  if(post.third_party_user_id === JSON.parse(localStorage.profile).user_id){
+				 //  	return true		  			
+				 //  }
+	  		//   	}
+	  		//   	else{
+	  		//   		return false
+	  		//   	}
+		  	// }
+  		  	vm.checkId = function(post){
+  	  		  return localStorage.length > 0 && post.third_party_user_id === JSON.parse(localStorage.profile).user_id ? true : false
+  		  	}
 
 		  	vm.editPost = null
 		  	href="/filmPosts/{{post.id}}/edit"
@@ -935,14 +804,11 @@
 //~~~~~~FILMposts controller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
 		function FilmPostsController(FilmPostService,FilmPostCommentsService,UsersService,posts,$location,$route, NgMap, filmMail, $rootScope){
 			var vm = this;
-			vm.showMap = false
-			vm.showVid = true
-			vm.backHome = '/home'
+			vm.showMap = false;
+			vm.showVid = true;
 
 			console.log('IN FILM POSTS CONTROLLER, filmMail is ', filmMail, 'FilmPostCommentsService is ',  FilmPostCommentsService)
-			if(localStorage.length>0){
-				vm.backHome = '/loggedinHome'
-			}
+
 			vm.posts = posts.data;
 			console.log(vm.posts.length)
 			for(var i = 0; i < vm.posts.length; i++){
@@ -981,15 +847,7 @@
 		  		vm.loggedIn = true
 		  	}
 		  	vm.checkId = function(post){
-	  		  	if(localStorage.length > 0){
-				  if(post.third_party_user_id === JSON.parse(localStorage.profile).user_id){
-				  	return true		  			
-				  }
-				  else{
-				  	return false
-				  }	
-	  		  	}
-	  		  	return false
+	  		  return localStorage.length > 0 && post.third_party_user_id === JSON.parse(localStorage.profile).user_id ? true : false
 		  	}
 		  	vm.toggleView = false
 		  	vm.showText = false

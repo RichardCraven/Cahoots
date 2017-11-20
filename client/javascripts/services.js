@@ -153,6 +153,7 @@
 		function CodingPostCommentsService($http){
 		 	const BASE_URL = '/api/codingPostComments'
 			this.getMail = function(user_id){
+				console.log('in comments mail service, user id is ', user_id)
 				return $http.get(BASE_URL+'/'+user_id)
 			}
 

@@ -13,12 +13,15 @@ knex('coding_post_comments').where('user_id',req.body)
 	})
 })
 router.get('/:id', function(req,res){
-	knex.select(['c.comment','cp.framework','u.user_pic','u.display_name']).from('coding_posts as cp')
+	knex.select(['c.comment','cp.framework','u.user_pic','u.display_name', 'c.user_id']).from('coding_posts as cp')
 	.join('coding_post_comments as c', 'c.post_id', '=', 'cp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('cp.user_id',req.params.id)
 	.then(function(mail){
-		console.log('coding mail is: '+mail)
+		for(var a in mail[0]){
+			console.log('a 666666 is ',a)
+		}
+		// console.log('coding mail is: '+   mail[0])
 		res.send(mail)
 	})
 	

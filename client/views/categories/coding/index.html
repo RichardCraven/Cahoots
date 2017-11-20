@@ -25,9 +25,10 @@
 
           </md-subheader>
           <!-- <div class="container"> -->
+          <!-- "post in vm.posts track by vm.myTrackingFunction(post)" -->
 	          <md-list-item    ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd animated bounceInRight'" ng-class-even="'even animated bounceInLeft'" >
 	            <div class="md-list-item-text">
-                <div layout='row' ng-click="vm.show($index)">
+                <div layout='row' ng-click="vm.show($index, post)">
                   <div flex-gt-sm='15' class='userPicContainer'>
                      <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                      <p class='displayName'>{{post.display_name}}</p>
@@ -51,40 +52,51 @@
                   </div>  
                 </div>
                 <!-- end row  -->
-                <div layout='row'  ng-show='vm.test' class='postTextArea'>
+                <div layout='row'  ng-show='vm.showText' class='postTextArea'>
                       <div flex-gt-sm="50" class='postChatLeft animated slideInLeft' >
-                        <h2 class="md-display-1">CONNECT</h2>
-                        <div flex layout-gt-sm="column" style='height:80%'>
+                        <h2 class="md-display-1" id='connect'>{{vm.leftPanel}}</h2>
+                        <div flex layout-gt-sm="column" class='messageContainer' >
                           <div flex-gt-sm="80">
-                            <md-content class='height100 backgroundTransparent'>
-                              <form  name="newCodingProject" ng-submit="vm.addCodingPostComment(post.id,vm.comment)"  >
-                              <!-- <h1 class="md-display-3">CONNECT</h1> -->
-                              <!-- <h3 class="md-headline">Headline</h3>
-                              <h4 class="md-headline">Headline</h4> -->
-                              <!-- <h5 class="md-headline">  </h5> -->
-
-                                <div flex >
+                            <md-content class='backgroundTransparent' ng-click='vm.postTest(post)'>
+                              <form  ng-show = 'vm.showCommentInput' name="newCodingProject" ng-submit="vm.addCodingPostComment(post.id,vm.comment)">
+                                <div flex>
                                   <md-input-container class='width70' style='margin-top:50px'>
                                     <!-- <label style='color:black' class='arial' >Brief Description</label> -->
                                     <!-- <div md-no-asterisk ng-model="vm.post.description" placeholder=" " contenteditable required ></div> -->
                                     <div class="expandingArea">
                                       <pre><span id='fakespan'></span><span class='blinking-cursor'>|</span><br></pre>
-
-                                      <!-- <textarea></textarea> -->
                                       <textarea class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder="message" rows="10" required style='color:white; word-wrap: break-word; white-space: pre-wrap; height:1px; margin-top:-20px; font-size: 1px; cursor: pointer;' spellcheck="false"></textarea>
                                     </div>
                                   </md-input-container>
                                 </div>
 
-                              <button type="submit" class="btn btn-7 btn-7h hidden" id="submit-form"> <i class="material-icons md-48" >add</i> Comment</button>
-
+                                <button type="submit" class="btn btn-7 btn-7h hidden" id='submit-form{{$index}}'> <i class="material-icons md-48" >add</i> Comment</button>
                               </form>
+                                <!--  -->
+                              <div  ng-show='vm.showResponses'  ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd2 animated bounceInRight'" ng-class-even="'even2 animated bounceInLeft'" >
+                                <div ng-show='vm.showResponses' class='md-list-item-text H100px'>
+                                <!-- ng-click="vm.show($index, post)" -->
+                                  <div layout='row' class='height100'>
+                                    <div flex-gt-sm='15' class='userPicContainer'>
+                                       <img class='userPic' ng-src="{{response.user_pic}}" alt="">
+                                       <p class='displayName'>{{response.display_name}}</p>
+                                    </div>   
+
+                                    <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                      <div class='commentStyle'>
+                                        <h4 class='descrip'><span class='postText'>{{response.comment}}</span></h4>
+                                      </div>
+                                    </div>  
+                                  </div>
+                                </div>
+                              </div>
                             </md-content>
                           </div>
                         </div>
+
                         <div flex-gt-sm="20">
                           <md-content flex class='backgroundTransparent'>
-                            <label for='submit-form' style='padding: 0px;' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i></label>
+                            <label ng-show='vm.showCommentInput' for='submit-form{{$index}}' style='padding: 0px;' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i></label>
                           </md-content>
                         </div>
                       </div>
