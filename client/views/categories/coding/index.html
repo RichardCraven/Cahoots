@@ -28,7 +28,7 @@
           <!-- "post in vm.posts track by vm.myTrackingFunction(post)" -->
 	          <md-list-item    ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd animated bounceInRight'" ng-class-even="'even animated bounceInLeft'" >
 	            <div class="md-list-item-text">
-                <div layout='row' ng-click="vm.show($index, post)">
+                <div layout='row' ng-click="vm.show($index)">
                   <div flex-gt-sm='15' class='userPicContainer'>
                      <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                      <p class='displayName'>{{post.display_name}}</p>
@@ -55,7 +55,7 @@
                 <div layout='row'  ng-show='vm.showText' class='postTextArea'>
                       <div flex-gt-sm="50" class='postChatLeft animated slideInLeft' >
                         <h2 class="md-display-1" id='connect'>{{vm.leftPanel}}</h2>
-                        <div flex layout-gt-sm="column" class='messageContainer' >
+                        <div flex layout-gt-sm="column" data-parentidx = '{{$index}}' class='messageContainer' >
                           <div flex-gt-sm="80">
                             <md-content class='backgroundTransparent' ng-click='vm.postTest(post)'>
                               <form  ng-show = 'vm.showCommentInput' name="newCodingProject" ng-submit="vm.addCodingPostComment(post.id,vm.comment)">
@@ -74,9 +74,10 @@
                               </form>
                                 <!--  -->
                               <div  ng-show='vm.showResponses'  ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd2 animated bounceInRight'" ng-class-even="'even2 animated bounceInLeft'" >
-                                <div ng-show='vm.showResponses' class='md-list-item-text H100px'>
+                                <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='{{response.id}}'  class='md-list-item-text responses H100px'>
                                 <!-- ng-click="vm.show($index, post)" -->
-                                  <div layout='row' class='height100'>
+
+                                  <div layout='row' ng-click="vm.showResponse($index, response)"  class='height100'>
                                     <div flex-gt-sm='15' class='userPicContainer'>
                                        <img class='userPic' ng-src="{{response.user_pic}}" alt="">
                                        <p class='displayName'>{{response.display_name}}</p>
@@ -89,11 +90,12 @@
                                     </div>  
                                   </div>
                                 </div>
+                                <div flex   ng-show='vm.convo == $index' class='wtf md-list-item-text' data-index= {{vm.tempIndex}} style=' background:red' >
+                                </div>
                               </div>
                             </md-content>
                           </div>
                         </div>
-
                         <div flex-gt-sm="20">
                           <md-content flex class='backgroundTransparent'>
                             <label ng-show='vm.showCommentInput' for='submit-form{{$index}}' style='padding: 0px;' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i></label>

@@ -1,3 +1,4 @@
+
 (function() {
 	angular 
 		.module('collaboApp')
@@ -394,12 +395,14 @@
 
 
 //~~~~~~CODING POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, $timeout, $rootScope){
+		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, $timeout, $rootScope, $scope){
 			var vm = this, span, area, cursor;
+			console.log('wtf! how is $scope undefined??', $scope)
 
 			vm.showMap = false
 			vm.showVid = true
 			vm.toggleView = false
+			vm.toggleResponseView = false
 		  	vm.showText = false;
 		  	vm.showCommentInput = true;
 		  	vm.showResponses = false;
@@ -410,7 +413,9 @@
 			vm.currentUser = null;
 			vm.leftPanel = 'CONNECT'
 			vm.loggedIn = false;
+			vm.responsesNeedCleanup = false;
 			vm.responses; 
+			vm.convo = null;
 
 			console.log('POSTS ARE ', posts)
 
@@ -446,34 +451,26 @@
 	  		 };
 		  	};
 
-		  	vm.show = function(idx, post){
-
-		  	 var selected, others;
+		  	vm.show = function(idx){
 		  	 vm.tempIndex = idx;
 	  		 vm.toggleView = !vm.toggleView
 	  		 vm.showText = !vm.showText
 	  		 vm.showVid = !vm.showVid
+	  		 var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
+	  		 	 others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
 
 		  		if(vm.toggleView === true){
 		  		  
 				  vm.backButton = 'codingIndex';
-
-		  		  selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  		
-		  		  selected[0].classList.add('focus')
-		  		  others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx)		  		
+	  		
+		  		  selected[0].classList.add('focus')	  		
 		  		  others.forEach(function(i){i.style.display = 'none'})
 
     		  	  if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
   			  	    vm.showResponses = true;
   			  	    vm.showCommentInput = false;
   			  	    vm.leftPanel = 'RESPONSES'
-
-  			  	    console.log('CODING MAIL IS ', codingMail.data)
-
-  			  	    // codingMail.forEach
-
   			  	    vm.responses = codingMail.data.filter((v,i) => codingMail.data[i].framework === posts.data[idx].framework);
-  			  	    console.log(vm.responses)
 
   			  	    vm.responses.forEach(function(i){
   			  	    	var facebook = /^(facebook)/,
@@ -484,19 +481,38 @@
   			  	    		i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
   			  	    	}
   			  	    })
-  			  	    	// console.log('response data is ', vm.responses.data)
 
-  			  	    	
-  			  	    	// console.log(i.framework)
-  			  	    	// console.log(posts.data[idx].framework)
-  			  	    	// if(i.framework !== posts.data[idx].framework){
-  			  	    	// 	i.style.display = 'none'
-  			  	    	// }
+  			  	    vm.showResponse = function(index, response){
+  			  	    	console.log('IDX IS ', idx)
+  			  	    	vm.responsesNeedCleanup = true;
+  			  	    	vm.toggleResponseView = !vm.toggleResponseView;
+  			  	    	var selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
+  			  	    		nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment);
+  			  	    	var p = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString())
+  			  	    	console.log('the message container is ', p[0])
+  			  	    	// p[0].style.clientHeight = '500px'
+  			  	    	// console.log(document.querySelectorAll('.messageContainer'))
+  			  	    	if(vm.toggleResponseView){
+  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'})
+  			  	    		vm.convo = index;
+  			  	    		// console.log($scope)
+  			  	    		// $scope.$apply()
+  			  	    	// console.log(document.querySelectorAll('.wtf'))
+  			  	    	console.log(p[0].clientHeight)
+  			  	    	var q = Array.from(document.querySelectorAll('.wtf')).filter((v, i) => v.dataset.index === idx.toString()) 
+  			  	    	var scrotum = p[0].clientHeight - 100
+  			  	    	q.forEach(function(i){
+  			  	    		i.style.height = scrotum + 'px'
+  			  	    		i.style.background = 'green'
+  			  	    	})
+  			  	    	// q[0].style.background = 'green'
 
-  			  	    containers = Array.from(document.querySelectorAll('.messageContainer'))		  		
-  			  	    // containers.forEach(function(i){i.style.height = '100%'})
-  			  	    // containers.forEach(function(i){i.style.overflow = visible})
-
+  			  	    	// console.log(document.querySelectorAll('.whatf'))
+  			  	    	} else {
+  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'block'})
+  			  	    		vm.convo = null;
+  			  	    	}
+  			  	    }
     		  	  };
 
   		 		  $timeout(function() {
@@ -552,12 +568,16 @@
 		  			var expandingNodes = Array.from(document.querySelectorAll('.expandingAreaactive')),
 		  				fakeSpans = Array.from(document.querySelectorAll('#fakespan')),
 		  				textAreas = Array.from(document.querySelectorAll('textarea')),
-		  				selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
-		  				others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
 		  				containers = Array.from(document.querySelectorAll('.messageContainer'));		  		
 		  				
 		  			containers.forEach(function(i){i.style.height = '75%'})
 		  			others.forEach(function(i){i.style.display = 'block'});
+		  			if(vm.responsesNeedCleanup){
+		  				Array.from(document.querySelectorAll('.responses')).forEach(function(i){i.style.display = 'block'})
+		  				vm.responsesNeedCleanup = false;
+		  				vm.toggleResponseView = false;
+		  				vm.convo = null;
+		  			}
 		  			selected[0].classList.remove('focus');	
 
 		  			expandingNodes.forEach(function (e){e.className = "expandingArea"});
@@ -935,7 +955,7 @@
 			}
 		}
 		// var spoon = 'fid'
-		CodingPostsController.$inject = ['CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'codingMail', '$timeout'];
+		CodingPostsController.$inject = ['CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'codingMail', '$timeout', '$scope'];
 		NewCodingPostController.$inject = ['CodingPostService','UsersService','$location','store'] 
 		EditCodingPostController.$inject = ['CodingPostService', 'post', '$location']
 

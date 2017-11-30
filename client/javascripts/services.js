@@ -158,6 +158,9 @@
 			}
 
 			this.createPost = function(newPost){
+
+				console.log('in create post scomment service, comment is ', newPost)
+
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			}
 			this.deletePost = function(id){
