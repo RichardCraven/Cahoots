@@ -486,25 +486,24 @@
   			  	    	console.log('IDX IS ', idx)
   			  	    	vm.responsesNeedCleanup = true;
   			  	    	vm.toggleResponseView = !vm.toggleResponseView;
-  			  	    	var selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
-  			  	    		nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment);
-  			  	    	var p = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString())
-  			  	    	console.log('the message container is ', p[0])
-  			  	    	// p[0].style.clientHeight = '500px'
-  			  	    	// console.log(document.querySelectorAll('.messageContainer'))
+  			  	    	var responseContainer = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString()),
+  			  	    		selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
+  			  	    		nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment),
+  			  	    		responseHeader = selectedResponse[idx].parentElement.children[0],
+  			  	    		conversationArea = selectedResponse[idx].parentElement.children[1];
+
   			  	    	if(vm.toggleResponseView){
   			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'})
   			  	    		vm.convo = index;
-  			  	    		// console.log($scope)
-  			  	    		// $scope.$apply()
-  			  	    	// console.log(document.querySelectorAll('.wtf'))
-  			  	    	console.log(p[0].clientHeight)
-  			  	    	var q = Array.from(document.querySelectorAll('.wtf')).filter((v, i) => v.dataset.index === idx.toString()) 
-  			  	    	var scrotum = p[0].clientHeight - 100
-  			  	    	q.forEach(function(i){
-  			  	    		i.style.height = scrotum + 'px'
-  			  	    		i.style.background = 'green'
-  			  	    	})
+
+  			  	    		conversationArea.style.height = responseContainer[0].clientHeight + 'px'
+
+  			  	    		if(selectedResponse[idx].parentElement.classList.contains('odd2')){
+  			  	    			conversationArea.style.background = '#ccceff'
+  			  	    		} else {
+  			  	    			conversationArea.style.background = '#E6FFCC'
+  			  	    		}
+  			  	    		
   			  	    	// q[0].style.background = 'green'
 
   			  	    	// console.log(document.querySelectorAll('.whatf'))

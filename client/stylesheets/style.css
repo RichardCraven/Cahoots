@@ -61,11 +61,7 @@ background-color:CadetBlue;
 .inputfieldForNewPost{
 	margin-left: -14%;
 }
-.postLine{
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border: 0.5px solid rgb(140,158,255);
-}
+
 .postText{
 	white-space: normal;
 	color:black;
@@ -291,18 +287,37 @@ img{
 #add-musicPost{
 	color: #496cb6; 
 }
+
+.postLine{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 0.5px solid rgb(140,158,255);
+}
+
 .odd{
-	background-color: 	#cce7ff;
+	background-color: #cce7ff;
 	padding:0px;
 	display: block;
 }
+.odd:hover{
+	background-color: #99ADBF;
+}
+.odd:hover hr{
+    border: 0.5px solid #F2F2FE;
+} 
 
 .even{
-	background-color: #F0F8FF;
+	background-color: #cccdff;
 	padding:0px;
 	display:block;
 	/*border : 5px solid black;*/
 }
+
+.even:hover{
+	background-color: #9999BF;
+}
+
+
 .odd2{
 	background-color: #ccceff;
 	padding:0px;
@@ -317,14 +332,17 @@ img{
     border-color: blue !important;*/
 }
 .even2{
-	background-color: #ccfffe;
+	/*background-color: #ccfffe;*/
+	background-color: #E6FFCC;
+
 	padding:0px;
 	display:block;
 
 }
 .even2:hover{
-	background-color: 	#99fffd
+	background-color: #b8d39a;
 	/*border: 5px solid black;*/
+	/*background-color: red;*/
 }
  md-list-item._md-button-wrap.item-text-wrap>div.md-button:first-child{
 	display:block;

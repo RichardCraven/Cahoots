@@ -74,7 +74,7 @@
                               </form>
                                 <!--  -->
                               <div  ng-show='vm.showResponses'  ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd2 animated bounceInRight'" ng-class-even="'even2 animated bounceInLeft'" >
-                                <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='{{response.id}}'  class='md-list-item-text responses H100px'>
+                                <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='    {{response.id}}'  class='md-list-item-text responses H100px'>
                                 <!-- ng-click="vm.show($index, post)" -->
 
                                   <div layout='row' ng-click="vm.showResponse($index, response)"  class='height100'>
@@ -90,7 +90,10 @@
                                     </div>  
                                   </div>
                                 </div>
-                                <div flex   ng-show='vm.convo == $index' class='wtf md-list-item-text' data-index= {{vm.tempIndex}} style=' background:red' >
+                                <div flex   ng-show='vm.convo == $index' class='conversationArea md-list-item-text' data-index= {{vm.tempIndex}}>
+                                  <li>YOYOYO  ]</li>
+                                  <li>WASSUP DOC</li>
+                                  <li>BEEEEEJUSS</li>
                                 </div>
                               </div>
                             </md-content>
