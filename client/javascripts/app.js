@@ -136,9 +136,10 @@
 					controller: 'CodingPostsController',
 					controllerAs: 'vm',
 					resolve: {
-						// document.getElementById('map').style.height = '100%'  <---- how can I do this?
 						posts: getAllCodingPosts,
-						codingMail: getAllCodingMail
+						codingMail: getAllCodingMail,
+						codingHistory: getAllCodingCommentHistory,
+						codingConvos: getAllCodingConvos
 					//^resolve waits for the promise to get resolved and stores it as posts, then injects it into the controller
 					}
 				})
@@ -308,10 +309,21 @@
 		return MusicPostCommentsService.getMail(user_id);
 	}
 	function getAllCodingMail(CodingPostCommentsService){
-		console.log('trying to get all coding mail')
+		console.log('in codingPostCommentsService via app.js, codingpostconvos is ', CodingPostCommentsService)
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return CodingPostCommentsService.getMail(user_id);
 	}
+	function getAllCodingCommentHistory(CodingPostCommentsService){
+		var user_id = JSON.parse(localStorage.profile).user_id
+		return CodingPostCommentsService.getHistory(user_id);
+	}
+	function getAllCodingConvos(CodingPostConversationsService){
+		console.log('trying to get all coding convos')
+		// console.log(CodingPostCommentsService)
+		var user_id = JSON.parse(localStorage.profile).user_id
+		return 'hi_mom'
+	}
+		// return CodingPostConversationsService.getConvos(user_id);
 
 
 
@@ -322,6 +334,8 @@
 
 	getAllPosts.$inject = ['PostService']
 	getPostById.$inject = ['PostService','$route']
+
+	// getAllCodingConvos.$inject = ['CodingPostConversationsService']
 
 	getAllFilmPosts.$inject = ['FilmPostService']
 	getFilmPostById.$inject = ['FilmPostService','$route']

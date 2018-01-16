@@ -299,23 +299,23 @@ img{
 	padding:0px;
 	display: block;
 }
-.odd:hover{
+.odd:hover, .even:hover{
 	background-color: #99ADBF;
 }
-.odd:hover hr{
+.odd:hover hr, .even:hover hr{
     border: 0.5px solid #F2F2FE;
 } 
 
 .even{
-	background-color: #cccdff;
+	background-color: #2;
 	padding:0px;
 	display:block;
 	/*border : 5px solid black;*/
 }
 
-.even:hover{
+/*.even:hover{
 	background-color: #9999BF;
-}
+}*/
 
 
 .odd2{
@@ -691,7 +691,7 @@ md-input-container.md-default-theme.md-input{
 .chatbox{
 	border: 1px solid black;
 	height: 100%;
-	display:none;
+	/*display:none;*/
 }
 .arrowRight{
 	/*content:''; */   
@@ -746,13 +746,26 @@ md-input-container.md-default-theme.md-input{
   border-left: 1px solid black;
   /*border-bottom: : 2px solid black;*/
 }
-.postChatLeft h2, .postChatRight h2{
+.postChatLeft > h2, .postChatRight > h2{
 	background-color: darkblue;
 	color: white;
 	text-align: center;
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+
+.waitingResponse{
+	padding: 10px;
+	height: 100px;
+	background: rgb(204, 205, 255);
+}
+/*.waitingResponse h3{
+	margin: 0;
+}*/
+.waitingResponse > h3:nth-child(2){
+	margin-top:20px !important;
+}
+
 
 .btn-7{
 	font-size: 0px;
@@ -944,6 +957,91 @@ input.newPostTopicArea{
     color: black;
   }
 }
+
+.conversationArea{
+	padding : 15px;
+}
+
+/*************************************/
+
+#wrapper{
+    margin:0 auto;
+    padding-bottom:25px;
+    background:#EBF4FB;
+    border:1px solid #ACD8F0; 
+}
+
+#wrapper > form{
+	margin: 0 auto;
+	width: 80%;
+}
+
+.chatbox {
+    text-align:left;
+    margin:0 auto;
+    margin-bottom:25px;
+    padding:10px;
+    background:#fff;
+    height:270px;
+    width:80%;
+    border:1px solid #ACD8F0;
+    overflow:auto; }
+ .chatbox ul{
+ 	list-style-type: none;
+ } 
+
+/* textarea:focus, input:focus{
+    outline: none;
+}*/
+
+
+#usermsg {
+    width:84%;
+    border:1px solid #ACD8F0; 
+    border-radius : 20px;
+    text-indent: 10px;
+}
+#usermsg:focus {
+	outline: none;
+}
+
+
+  
+#submit { width: 60px; }
+  
+.error { color: #ff0000; }
+  
+#menu { padding:12.5px 25px 12.5px 25px; }
+  
+.welcome { float:left; }
+  
+.logout { float:right; }
+  
+.msgln { margin:0 0 2px 0; }
+
+
+.messagePitch{
+	padding-left: 10px
+}
+
+.messageLabel{
+	font-weight: 300;
+}
+
+.commentInputContainer label{
+	font-weight: 300;
+}
+
+/*#beginConvoButton {
+	width: 100%;
+	background-color : #beed90;
+	margin: 5px;
+	height: 60px;
+	text-align: center;
+	padding-top: 15px;
+	margin-left: 55px;
+	margin-right: 55px;
+}*/
 	
 /*font-family: 'Indie Flower', cursive;
 

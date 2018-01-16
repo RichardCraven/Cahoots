@@ -12,6 +12,7 @@
 		.service('FilmPostCommentsService', FilmPostCommentsService)
 		.service('CodingPostService', CodingPostService)
 		.service('CodingPostCommentsService', CodingPostCommentsService)
+		.service('CodingPostConversationsService', CodingPostConversationsService)
 		.service('UsersService', UsersService)
 		.service('ConvoRepoService', ConvoRepoService)
 
@@ -112,7 +113,6 @@
 
 
 			this.getMail = function(user_id){
-		 	console.log('in FilmPostCommentsService GET function')
 				return $http.get(BASE_URL+'/'+user_id)
 			}
 
@@ -153,15 +153,41 @@
 		function CodingPostCommentsService($http){
 		 	const BASE_URL = '/api/codingPostComments'
 			this.getMail = function(user_id){
-				console.log('in comments mail service, user id is ', user_id)
 				return $http.get(BASE_URL+'/'+user_id)
 			}
 
+			this.getHistory = function(user_id){
+				return $http.get(BASE_URL+'/history/'+user_id)
+			}
+
+
 			this.createPost = function(newPost){
 
-				console.log('in create post scomment service, comment is ', newPost)
-
 				return $http.post(BASE_URL, newPost); //on server req.body.post
+			}
+			this.deletePost = function(id){
+				return $http.delete(BASE_URL + '/' + id)
+			}
+
+			this.updatePost = function(data){
+				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
+			}
+		}
+		function CodingPostConversationsService($http){
+				
+		 	const BASE_URL = '/api/codingPostConversations'
+			this.getConvos = function(first_comment_id){
+				console.log('in convos service!!! comment id is ', first_comment_id)
+				return $http.get(BASE_URL+'/'+first_comment_id)
+			};
+			// this.checkResponses = function(first_comment_id){
+			// 	return $http.get(BASE_URL+'/'+first_comment_id)
+			// };
+			this.createMessage = function(message){
+
+				console.log('in create convo  service, convo message is ', message)
+
+				return $http.post(BASE_URL, message); //on server req.body.post
 			}
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
@@ -220,6 +246,7 @@
 		FilmPostService.$inject = ['$http']
 		FilmPostCommentsService.$inject = ['$http']
 		CodingPostService.$inject = ['$http']
+		CodingPostConversationsService.$inject = ['$http']
 		CodingPostCommentsService.$inject = ['$http']
 		ConvoRepoService.$inject = ['$http']
 })()

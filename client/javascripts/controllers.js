@@ -33,10 +33,11 @@
 		  		location.href = '/home';
 		  		
 		  	};
-			if(localStorage.profile){
+			if(localStorage.length > 0){
 		  		location.href = '/loggedinHome';
 		  	}
 	  		else {
+	  			localStorage.clear()
 	  			var fadeOut = $timeout(fadeOut,6900)
 	  		}
 
@@ -44,9 +45,6 @@
 		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService,ConvoRepoService){
 			var vm=this;
 			vm.auth = auth;
-			// console.log('filmMail is', filmMail, 'FilmPostCommentsService is ', FilmPostCommentsService)
-			console.log('[index] codingMail is ', codingMail)
-			// console.log('filmmail is: '+filmMail+'. musicMail is: '+musicMail+'. codingMail is: '+codingMail)
 
 			vm.name = JSON.parse(localStorage.profile).given_name
 			vm.navpicture = JSON.parse(localStorage.profile).picture
@@ -62,9 +60,7 @@
 			
 			for(let i = 0; i<filmMail.data.length; i++){
 					var id = filmMail.data[i].post_id
-					// console.log(id)
 					FilmPostService.getPost(id).then(function(res){
-						// console.log(res.data.display_name)
 					filmMail.data[i].recipient = res.data.display_name
 						if(res.data.display_name===myDisplayName){
 							filmMail.data[i].recipient = 'You'
@@ -72,15 +68,12 @@
 					})
 					vm.filmCommentPosts.push(filmMail.data[i])
 			}
-			// console.log(vm.filmCommentPosts)
 			for(var i = 0; i<musicMail.data.length; i++){
 					vm.musicPostComments.push(musicMail.data[i])
 			}
 			for(var i = 0; i<codingMail.data.length; i++){
 					vm.codingPostComments.push(codingMail.data[i])
 			}
-			// console.log(vm.filmCommentPosts)
-
 			vm.hasNewFilmMail = false
 			vm.hasNewMusicMail = false
 			vm.hasNewCodingMail = false
@@ -124,50 +117,36 @@
 			}
 
 			vm.newMessage = function(postId,message,category){
-				console.log('ng-submitted')
 				vm.post = {}
 				vm.post.category = category
 				vm.post.message = message
 				vm.post.original_comment_id = postId
 				vm.post.user_id = JSON.parse(localStorage.profile).user_id
 				var req = {post: vm.post};
-				// event.preventDefault();
-				ConvoRepoService.createMessage(req)
-				// $scope.$apply();
+				ConvoRepoService.createMessage(req);
 			}
 
 			vm.deleteConvo = function(postId, comment, category){
-				console.log('testies testies YAAAAAAAAAAAAAAAAAA')
 			};
 
 
 			var bool = true
 			vm.respondFilm = function(idx){
-				// console.log(idx)
 				vm.messages = []
 				var eyedee = vm.filmCommentPosts[idx].id
-				console.log(ConvoRepoService)
-				console.log(eyedee)
 				ConvoRepoService.getMessages('film',eyedee).then(function(res){
-					console.log(res)
-					// console.log(res.data)
 					res.data.forEach(function(e){
-						console.log(e.display_name+': '+e.message)
 						vm.messages.push({user:e.display_name,message:e.message})
-		  				// vm.messages.push({e.display_name,e.message})
 					})
-		  			console.log(vm.messages)
 		  		})
 
 				vm.showFilmResponseField = !vm.showFilmResponseField
 				if(vm.showFilmResponseField === true){
-				// vm.messages.push('Hi there','Mamaia','Woopsies')
 
 
-				var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx)
-				var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx)	
-		  		// console.log(selectedChatbox[0])
-				var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx)		  		
+				var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx);
+				var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx);
+				var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx);		  		
 				others.forEach(function(i){i.style.display = 'none'})
 				selectedChatbox[0].style.display = 'block'
 
@@ -179,13 +158,9 @@
 					selectedChatbox[0].style.display = 'none'
 					others.forEach(function(i){i.style.display = 'block'})
 
-				}
-				console.log(vm.messages)
+				};
 			}
 			vm.respondMusic = function(idx){
-				console.log(vm.showMusicResponseField)
-				// console.log('autofocus = '+ $('.postTextField')[0].form[0].autofocus)
-				// console.log('before: '+responseAutoFocus)
 				vm.showMusicResponseField = !vm.showMusicResponseField
 				if(vm.showMusicResponseField === true){
 				var selected = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i == idx)		  		
@@ -217,9 +192,6 @@
 		};
 		//testing
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
-			console.log('HomeCtrl')
-
-
 			var vm=this;
 			vm.auth = auth;
 			
@@ -262,8 +234,6 @@
 			}
 		}
 		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,UsersService){
-			console.log('loginHomeCtr')
-
 			var vm=this;
 			vm.auth = auth;
 			var userName;
@@ -317,7 +287,6 @@
 		}
 		function LogoutCtrl($location,auth,store){
 			var vm = this;
-			console.log('logout ctrl active')
 			vm.auth = auth;
 			vm.go = function ( path ) {
 			    $location.path( path );
@@ -395,15 +364,17 @@
 
 
 //~~~~~~CODING POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, $timeout, $rootScope, $scope){
+		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, codingHistory, $timeout, $rootScope, CodingPostConversationsService){
+
 			var vm = this, span, area, cursor;
-			console.log('wtf! how is $scope undefined??', $scope)
 
 			vm.showMap = false
+			vm.showChat = false;
 			vm.showVid = true
 			vm.toggleView = false
 			vm.toggleResponseView = false
 		  	vm.showText = false;
+		  	vm.waitingResponse = false;
 		  	vm.showCommentInput = true;
 		  	vm.showResponses = false;
 			vm.posts = posts.data;
@@ -416,8 +387,9 @@
 			vm.responsesNeedCleanup = false;
 			vm.responses; 
 			vm.convo = null;
-
-			console.log('POSTS ARE ', posts)
+			vm.convoBegun = true;
+			vm.theyResponded = false;
+			vm.showCrickets = false;
 
 			if(localStorage.length > 0){
 				vm.loggedIn = true
@@ -456,11 +428,12 @@
 	  		 vm.toggleView = !vm.toggleView
 	  		 vm.showText = !vm.showText
 	  		 vm.showVid = !vm.showVid
+
+
 	  		 var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
 	  		 	 others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
 
 		  		if(vm.toggleView === true){
-		  		  
 				  vm.backButton = 'codingIndex';
 	  		
 		  		  selected[0].classList.add('focus')	  		
@@ -482,8 +455,14 @@
   			  	    	}
   			  	    })
 
+  			  	    if(!vm.responses.length){
+  			  	    	console.log('YOU AINT GOT NO RESPONSES YET, SUCKA');
+  			  	    	vm.showCrickets = true;
+  			  	    	// document.getElementsByClassName('messageContainer')
+  			  	    }
+
   			  	    vm.showResponse = function(index, response){
-  			  	    	console.log('IDX IS ', idx)
+  			  	    	var convoStarted = false;
   			  	    	vm.responsesNeedCleanup = true;
   			  	    	vm.toggleResponseView = !vm.toggleResponseView;
   			  	    	var responseContainer = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString()),
@@ -492,29 +471,241 @@
   			  	    		responseHeader = selectedResponse[idx].parentElement.children[0],
   			  	    		conversationArea = selectedResponse[idx].parentElement.children[1];
 
-  			  	    	if(vm.toggleResponseView){
-  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'})
-  			  	    		vm.convo = index;
+  			  	    	// console.log('IDX IS ', idx, posts.data[idx], vm.responses[index])
 
-  			  	    		conversationArea.style.height = responseContainer[0].clientHeight + 'px'
+  			  	    	var req = {post: vm.msg};
+  			  	    	CodingPostConversationsService.getConvos(vm.responses[index].id).then(function(res){
+  			  	    		if(!res.data.length){
+  			  	    			// convoStarted = true;
+  			  	    			// console.log('hooray! ', res.data[0])
+		  			  	    	if(vm.toggleResponseView){
+		  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'})
+		  			  	    		vm.convo = index;
 
-  			  	    		if(selectedResponse[idx].parentElement.classList.contains('odd2')){
-  			  	    			conversationArea.style.background = '#ccceff'
+		  			  	    		conversationArea.style.height = responseContainer[0].clientHeight + 'px'
+
+
+		  			  	    		if(selectedResponse[idx].parentElement.classList.contains('odd2')){
+		  			  	    			conversationArea.style.background = '#ccceff'
+		  			  	    		} else {
+		  			  	    			conversationArea.style.background = '#E6FFCC'
+		  			  	    		}
+
+		  			  	    		var beginConvoButton = document.createElement('div')
+
+		  			  	    		beginConvoButton.style.width = '100%;'
+		  			  	    		beginConvoButton.style.backgroundColor = '#beed90'
+		  			  	    		beginConvoButton.style.margin = '5px'
+		  			  	    		beginConvoButton.style.height = '60px'
+		  			  	    		beginConvoButton.style.textAlign = 'center'
+		  			  	    		beginConvoButton.style.paddingTop = '15px'
+		  			  	    		beginConvoButton.style.marginLeft = '55px'
+		  			  	    		beginConvoButton.style.marginRight = '55px'
+		  			  	    		beginConvoButton.innerHTML = 'Begin Conversation';
+		  			  	    		conversationArea.appendChild(beginConvoButton)
+		  			  	    		// var beginConvoButton = document.getElementById('beginConvoButton');
+		  			  	    		beginConvoButton.onmouseenter = function(){
+		  			  	    			beginConvoButton.style.backgroundColor = '#a7d37a'
+		  			  	    		};
+		  			  	    		beginConvoButton.onmouseleave = function(){
+		  			  	    			beginConvoButton.style.backgroundColor = '#beed90'
+		  			  	    		};
+		  			  	    		beginConvoButton.onmousedown = function(){
+		  			  	    			beginConvoButton.style.backgroundColor = '#ffffff'
+		  			  	    			vm.convoBegun = true;
+
+
+		  			  	    			// var mapContainers = document.getElementsByClassName('mapContainer')
+		  			  	    			// 	mapContainers[idx].classList.remove('animated','slideInRight');
+		  			  	    			// 	mapContainers[idx].classList.add('animated', 'slideOutRight');
+		  			  	    			vm.showMap = false;
+		  			  	    			vm.showChat = true;
+
+		  			  	    			console.log('TESTIES', idx, document.getElementsByClassName('chatboxText')[idx])
+		  			  	    			var li = document.createElement('li'),
+		  			  	    			response = vm.responses[index];
+
+		  			  	    			li.innerHTML = response.display_name + ':  &nbsp;' + response.comment
+
+		  			  	    			var chatbox = document.getElementsByClassName('chatboxText')[idx];
+		  			  	    			chatbox.appendChild(li)
+		  			  	    		};
+
+		  			  	    		//CREATING CONVO MESSGAE
+		  			  	    		vm.msg = {};
+		  			  	    		vm.codingPostConversation = function(message){
+		  			  	    			 vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
+		  			  	    			 vm.msg.coding_post_id = vm.posts[idx].id;
+		  			  	    			 vm.msg.first_comment_id = vm.responses[index].id;
+
+			  	    			   		var req = {post: vm.msg};
+			  	    			   		CodingPostConversationsService.createMessage(req).then(function(res){
+	  		  	    			   			var newLi2 = document.createElement('li');
+	  		  	    			   				msg = res.data[0].message;
+		  		  	    			   		newLi2.innerHTML = 'You:  &nbsp;' + msg;
+		  		  	    			   		var chatbox = document.getElementsByClassName('chatboxText')[idx];
+		  			  	    				chatbox.appendChild(newLi2);
+		  			  	    				vm.msg.message = '';
+		  			  	    				console.log(conversationArea)
+		  			  	    				conversationArea.removeChild(beginConvoButton)
+			  	    			   		}, vm);
+		  			  	    		}
+		  			  	    	} else {
+			  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'block'})
+			  			  	    		vm.convo = null;
+			  			  	    		var chatbox = document.getElementsByClassName('chatboxText')[idx]
+			  			  	    		chatbox.innerHTML = ''
+			  			  	    		vm.showMap = true;
+			  			  	    		vm.showChat = false;
+			  			  	    		var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
+			  			  	    		convoAreas.forEach(function(e){ e.innerHTML = '' });
+			  			  	    } 
   			  	    		} else {
-  			  	    			conversationArea.style.background = '#E6FFCC'
-  			  	    		}
-  			  	    		
-  			  	    	// q[0].style.background = 'green'
+  			  	    			console.log('convo started, res is ', res.data)
+  			  	    			console.log('vm.toggleResponseView is ', vm.toggleResponseView)
+  			  	    			vm.convoBegun = true;
 
-  			  	    	// console.log(document.querySelectorAll('.whatf'))
-  			  	    	} else {
-  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'block'})
-  			  	    		vm.convo = null;
-  			  	    	}
+  			  	    			if(vm.toggleResponseView){
+	  			  	    			nonselectedResponses.forEach(function(i){i.style.display = 'none'})
+	  			  	    			conversationArea.style.height = responseContainer[0].clientHeight + 'px'
+	  			  	    			var mapContainers = document.getElementsByClassName('mapContainer')
+	  			  	    				mapContainers[idx].classList.remove('animated','slideInRight');
+	  			  	    				mapContainers[idx].classList.add('animated', 'slideOutRight');
+
+	  			  	    			vm.showMap = false;
+	  			  	    			vm.showChat = true;
+	  			  	    			var li = document.createElement('li'),
+	  			  	    			response = vm.responses[index];
+
+	  			  	    			li.innerHTML = response.display_name + ':  &nbsp;' + response.comment
+
+	  			  	    			var chatbox = document.getElementsByClassName('chatboxText')[idx];
+	  			  	    			chatbox.innerHTML = '';
+	  			  	    			chatbox.appendChild(li);
+
+	  			  	    			res.data.forEach(function(v){
+	  			  	    				var newLi = document.createElement('li'),
+	  			  	    				    msg = v.message, name;
+	  			  	    				if(v.user_id === JSON.parse(localStorage.profile).user_id){
+	  			  	    					name = 'You';
+	  			  	    				} else {
+	  			  	    					name = response.display_name
+	  			  	    				};
+	  			  	    				newLi.innerHTML = name + ':  &nbsp;' + msg;
+	  			  	    				chatbox.appendChild(newLi);
+				    		  	  	}) 
+	  	  			  	    		vm.msg = {};
+	  	  			  	    		vm.codingPostConversation = function(message){
+	  	  			  	    			 vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
+	  	  			  	    			 vm.msg.coding_post_id = vm.posts[idx].id;
+	  	  			  	    			 vm.msg.first_comment_id = vm.responses[index].id;
+
+	  		  	    			   		var req = {post: vm.msg};
+	  		  	    			   		CodingPostConversationsService.createMessage(req).then(function(res){
+	  		  	    			   			var newLi2 = document.createElement('li');
+	  		  	    			   				msg = res.data[0].message;
+		  		  	    			   		newLi2.innerHTML = 'You:  &nbsp;' + msg;
+		  			  	    				chatbox.appendChild(newLi2);
+		  			  	    				vm.msg.message = '';
+	  		  	    			   		}, vm);
+	  	  			  	    		}
+
+  			  	    			} else {
+  			  	    				var mapContainers = document.getElementsByClassName('mapContainer')
+  			  	    					mapContainers[idx].classList.remove('animated','slideOutRight');
+  			  	    					mapContainers[idx].classList.add('animated', 'slideInRight');
+
+  			  	    				nonselectedResponses.forEach(function(i){i.style.display = 'block'})
+  			  	    				vm.convo = null;
+  			  	    				var chatbox = document.getElementsByClassName('chatboxText')[idx]
+  			  	    				chatbox.innerHTML = ''
+  			  	    				console.log('no way its getting here')
+  			  	    				vm.showMap = true;
+  			  	    				vm.showChat = false;
+  			  	    				var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
+  			  	    				convoAreas.forEach(function(e){ e.innerHTML = '' });
+  			  	    			};
+  			  	    		}
+  			  	    	}, vm);
   			  	    }
-    		  	  };
+    		  	  } else {
+    		  	//   	var mapContainers = document.getElementsByClassName('mapContainer')
+    		  	//   		mapContainers[idx].classList.remove('animated','slideInRight');
+    		  	//   		mapContainers[idx].classList.add('animated', 'slideOutRight');
+    		  	//   	vm.showMap = false;
+	  			  	// vm.showChat = true;
+	  			  	// vm.showResponses = true;
+  			  	 //    vm.showCommentInput = false;
+  			  	 	vm.history = {};
+  			  	 	vm.history.comment;
+    		  	  	codingHistory.data.forEach(function(v){
+    		  	  		if(v.post_id === posts.data[idx].id){
+    		  	  			vm.showCommentInput = false;
+    		  	  			vm.waitingResponse = true;
+    		  	  			vm.history.comment = v.comment;
+    		  	  			var yourCommentMsg = v.comment;
+    		  	  			console.log('inside, vis', v)
+    		  	  			CodingPostConversationsService.getConvos(v.id).then(function(res){
+    		  	  				// console.log('way inside, res is ' ,res)
+    		  	  				if(res.data.length){
+    		  	  					vm.waitingResponse = false;
+    		  	  					
+	  			  	    			// vm.showMap = false;
+	  			  	    			vm.showChat = true;
+    		  	  					vm.showCommentInput = false;
+    		  	  					vm.theyResponded = true;
+    		  	  					// console.log('PIGGIES ', idx, posts, posts.data[idx])
+    		  	  					var chatbox = document.getElementsByClassName('chatboxText')[idx],
+    		  	  						yourComment = document.createElement('li');
+    		  	  					chatbox.innerHTML = '';
+    		  	  					yourComment.innerHTML = 'You: &nbsp;' + yourCommentMsg;
+    		  	  					chatbox.appendChild(yourComment);
+	  			  	    			res.data.forEach(function(v){
+	  			  	    				var newLi = document.createElement('li'),
+	  			  	    				    msg = v.message, name;
+	  			  	    				if(v.user_id === JSON.parse(localStorage.profile).user_id){
+	  			  	    					name = 'You';
+	  			  	    				} else {
+	  			  	    					name = posts.data[idx].display_name
+	  			  	    				};
+
+	  			  	    				console.log(msg);
+
+	  			  	    				newLi.innerHTML = name + ':  &nbsp;' + msg;
+	  			  	    				chatbox.appendChild(newLi);
+				    		  	  	})
+	  			  	    			//CREATING CONVO MESSGAE
+		  			  	    		vm.msg = {};
+		  			  	    		vm.codingPostConversation = function(message){
+		  			  	    			console.log('got here niggaaa, v.id is ', v.id)
+
+		  			  	    			 vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
+		  			  	    			 vm.msg.coding_post_id = vm.posts[idx].id;
+		  			  	    			 vm.msg.first_comment_id = v.id;
+
+			  	    			   		var req = {post: vm.msg};
+			  	    			   		CodingPostConversationsService.createMessage(req).then(function(res){
+	  		  	    			   			var newLi2 = document.createElement('li');
+	  		  	    			   				msg = res.data[0].message;
+		  		  	    			   		newLi2.innerHTML = 'You:  &nbsp;' + msg;
+		  		  	    			   		var chatbox = document.getElementsByClassName('chatboxText')[idx];
+		  			  	    				chatbox.appendChild(newLi2);
+		  			  	    				vm.msg.message = '';
+			  	    			   		}, vm);
+		  			  	    		}
+
+	  			  	    		// return
+    		  	  				};
+    		  	  			}, vm);
+    		  	  		}
+    		  	  	}) 
+    		  	  }
 
   		 		  $timeout(function() {
+  		 		  	if(vm.showChat){
+  		 		  		console.log('ha! it worked')
+  		 		  		return
+  		 		  	}
 	  		 		vm.showMap = true;
 
 	  		 		myArrayFromNodeList = Array.from(document.querySelectorAll('md-input-container'))
@@ -558,18 +749,24 @@
 		  		}
 
 		  		if(vm.toggleView === false){
+		  			vm.theyResponded = false;
+		  			vm.waitingResponse = false;
 		  			vm.showCommentInput = true;
 		  			vm.showResponses = false;
 		  			vm.leftPanel = 'CONNECT';
 		  		 	vm.showMap = false;
+		  		 	vm.showChat = false;
+		  		 	vm.showCrickets = false;
 		  		 	vm.backButton = 'home';
 
 		  			var expandingNodes = Array.from(document.querySelectorAll('.expandingAreaactive')),
 		  				fakeSpans = Array.from(document.querySelectorAll('#fakespan')),
 		  				textAreas = Array.from(document.querySelectorAll('textarea')),
-		  				containers = Array.from(document.querySelectorAll('.messageContainer'));		  		
-		  				
-		  			containers.forEach(function(i){i.style.height = '75%'})
+		  				containers = Array.from(document.querySelectorAll('.messageContainer')),		  		
+		  				convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
+		  			// containers.forEach(function(i){i.style.height = '75%'})
+		  			
+		  			convoAreas.forEach(function(e){ e.innerHTML = '' })
 		  			others.forEach(function(i){i.style.display = 'block'});
 		  			if(vm.responsesNeedCleanup){
 		  				Array.from(document.querySelectorAll('.responses')).forEach(function(i){i.style.display = 'block'})
@@ -599,26 +796,23 @@
 		  	vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
 		  	x = NgMap.getMap('map');
 		  	
-  		  	
-
-
-		  	vm.comment = {}
+		  	vm.comment = {};
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
-
-		  		// console.log('in CODING POST COMMENT, id is ', id, 'comment is ', newCodingPostComment)
-
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
 		  		var req = {post: newCodingPostComment};
-		  		
-		  		// this.toggleView = false
-
 		  		CodingPostCommentsService.createPost(req).then(function(res){
-		  			// $location.path('/filmPosts');
+		  			codingHistory.data.push({
+						comment : newCodingPostComment,
+						display_name : "user",
+						post_id : posts.data[vm.tempIndex].id, 
+						user_id : "google-oauth2|118441111248082986291",
+						user_pic : "https://lh5.googleusercontent.com/-7zq80lVi4As/AAAAAAAAAAI/AAAAAAAAAAw/uOSgeu2eTVU/photo.jpg"
+					})
+
 		  			vm.show(vm.tempIndex)
-		  			// vm.goBack();
 		  		}, vm)
-		  	}
+		  	};
 		}
 		function NewCodingPostController(CodingPostService,UsersService,$location,store){
 			var vm = this;
@@ -629,14 +823,9 @@
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 
 			function makeExpandingArea(container) {
-			console.log(container)			
 			 var area = container.querySelector('textarea');
 			 var span = container.querySelector('#fakespan');
 			 var cursor = container.querySelector('.blinking-cursor');
-			 span.addEventListener('onactivate', function(){
-			   console.log('span ITS ACTIVE')
-
-			 })
 
 			 if (area.addEventListener) {
 			   area.addEventListener('focus', function(){
@@ -649,25 +838,15 @@
 			   	if(span.offsetWidth > area.offsetWidth){
 			   		var carriage = document.createElement("input");
 			   		carriage.setAttribute('inputType', 'insertLineBreak');
-			   		span.appendChild(carriage)
-			   		// console.log(e)
-			   		// e.inputType = "insertLineBreak";
-			   		// e.data = 'hey whats going on fattie';
-			   		// e.isDefaultPrevented = true;
-			   		// console.log(e)
-			   		// area.value = '/r' + area.value
-			   		// return
-			   	}
-			   		// console.log(e.inputType)
+			   		span.appendChild(carriage);
+			   	};
 			     span.textContent = area.value;
-			     // console.log('area.width vs span width is ', area.offsetWidth, span.offsetWidth)
 			   }, false);
 			   span.textContent = area.value;
 			 } else if (area.attachEvent) {
 			   // IE8 compatibility
 			   area.attachEvent('onpropertychange', function() {
 			     span.innerText = area.value;
-			     console.log('here2')
 			   });
 			   span.innerText = area.value;
 			 }
@@ -677,15 +856,9 @@
 			var l = areas.length;while (l--) {
 			 makeExpandingArea(areas[l]);
 			}
-			// makeExpandingArea(document)
-
-
-
 
 			vm.addCodingPost = function(newCodingPost){
 				var req = {post: newCodingPost};
-				// var id = vm.post.user_id
-				console.log('going to codingPostService')
 				CodingPostService.createPost(req).then(function(res){
 					$location.path('/codingPosts');
 				})
@@ -825,20 +998,12 @@
 			var vm = this;
 			vm.showMap = false;
 			vm.showVid = true;
-
-			console.log('IN FILM POSTS CONTROLLER, filmMail is ', filmMail, 'FilmPostCommentsService is ',  FilmPostCommentsService)
-
 			vm.posts = posts.data;
-			console.log(vm.posts.length)
 			for(var i = 0; i < vm.posts.length; i++){
-							console.log(1)
 				if(!vm.posts[i].display_name){
-					var userId = vm.posts[i].user_id
-					console.log(vm.posts[i])
+					var userId = vm.posts[i].user_id;
 					UsersService.getUser(userId).then(function(user){
 						if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
-							// vm.posts[i].display_name = user.data.name
-							console.log('vm.posts[i]')
 						}
 						else {
 							vm.posts[i].display_name = user.data.display_name
@@ -871,12 +1036,10 @@
 		  	vm.toggleView = false
 		  	vm.showText = false
 		  	vm.show = function(idx){
-		  		vm.toggleView = !vm.toggleView
-		  		vm.showText = !vm.showText
-		  		vm.showMap = !vm.showMap
-		  		vm.showVid = !vm.showVid
-
-		  		// if()
+		  		vm.toggleView = !vm.toggleView;
+		  		vm.showText = !vm.showText;
+		  		vm.showMap = !vm.showMap;
+		  		vm.showVid = !vm.showVid;
 
 		  		if(vm.toggleView === true){
 		  		var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx)		  		
@@ -931,7 +1094,6 @@
 				$location.path('/filmPosts')
 			}
 			vm.addFilmPost = function(newFilmPost){
-				console.log(newFilmPost)
 				var req = {post: newFilmPost};
 				FilmPostService.createPost(req).then(function(res){
 						location.href ='/filmPosts';
@@ -940,7 +1102,6 @@
 		}
 		function EditFilmPostController(FilmPostService, post, $location){ 
 			var vm = this;
-			alert('got to edit contrler')
 				vm.post = post.data
 				if(!vm.post) {
 					$location.path('/filmPosts')
@@ -953,13 +1114,11 @@
 				})
 			}
 		}
-		// var spoon = 'fid'
-		CodingPostsController.$inject = ['CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'codingMail', '$timeout', '$scope'];
+		CodingPostsController.$inject = ['CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'codingMail', 'codingHistory', '$timeout', '$scope','CodingPostConversationsService'];
 		NewCodingPostController.$inject = ['CodingPostService','UsersService','$location','store'] 
 		EditCodingPostController.$inject = ['CodingPostService', 'post', '$location']
 
 		FilmPostsController.$inject = ['FilmPostService','FilmPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'filmMail'];
-		//  ^removed $rootScopt, cause I don't think it's needed
 		NewFilmPostController.$inject = ['FilmPostService','UsersService','$location','store'] 
 		EditFilmPostController.$inject = ['FilmPostService', 'post', '$location']
 

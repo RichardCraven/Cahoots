@@ -4,27 +4,30 @@ const knex = require('../db/knex')
 
 
 router.get('/', function (req,res){
-console.log(req.body)
-console.log(req.body.user_id)	
-
 knex('coding_post_comments').where('user_id',req.body)
 	.then(function(post){
 		res.send(post)
 	})
 })
 router.get('/:id', function(req,res){
-	knex.select(['c.comment','c.id','cp.framework','u.user_pic','u.display_name', 'c.user_id', ]).from('coding_posts as cp')
+	knex.select(['c.comment','c.id','cp.framework','u.user_pic','u.display_name', 'c.user_id']).from('coding_posts as cp')
 	.join('coding_post_comments as c', 'c.post_id', '=', 'cp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('cp.user_id',req.params.id)
 	.then(function(mail){
-		for(var a in mail[0]){
-			console.log('a 666666 is ',a)
-		}
-		// console.log('coding mail is: '+   mail[0])
 		res.send(mail)
 	})
-	
+})
+
+router.get('/history/:id', function(req,res){
+	knex.select(['c.comment','c.post_id','u.user_pic','u.display_name', 'c.user_id','c.id' ]).from('coding_post_comments as c')
+	.join('coding_posts as cp', 'c.post_id', '=', 'cp.id')
+	.join('users as u', 'u.third_party_user_id','=','c.user_id')
+	.where('c.user_id',req.params.id)
+	.then(function(comment){
+		console.log('IN ROUTES, HISTORY. COMMENT IS ', comment)
+		res.send(comment)
+	})
 })
 
 router.post('/',function(req,res){

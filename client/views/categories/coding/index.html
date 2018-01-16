@@ -58,9 +58,16 @@
                         <div flex layout-gt-sm="column" data-parentidx = '{{$index}}' class='messageContainer' >
                           <div flex-gt-sm="80">
                             <md-content class='backgroundTransparent' ng-click='vm.postTest(post)'>
+                              <div ng-show = 'vm.showCrickets'>
+                                <h5>YOU AINT GOT NOT RESPONSE YET, SUCKAFISH</h5>
+                              </div>
+                              <div class='messagePitch' ng-show ='vm.showCommentInput'>
+                                <h5>Does this interest you?</h5>
+                                <h4>Send a collaboration pitch, and if they respond you can have a conversation!</h4>
+                              </div>
                               <form  ng-show = 'vm.showCommentInput' name="newCodingProject" ng-submit="vm.addCodingPostComment(post.id,vm.comment)">
                                 <div flex>
-                                  <md-input-container class='width70' style='margin-top:50px'>
+                                  <md-input-container class='width70 commentInputContainer' style='margin-top:50px'>
                                     <!-- <label style='color:black' class='arial' >Brief Description</label> -->
                                     <!-- <div md-no-asterisk ng-model="vm.post.description" placeholder=" " contenteditable required ></div> -->
                                     <div class="expandingArea">
@@ -73,6 +80,15 @@
                                 <button type="submit" class="btn btn-7 btn-7h hidden" id='submit-form{{$index}}'> <i class="material-icons md-48" >add</i> Comment</button>
                               </form>
                                 <!--  -->
+                              <div class='waitingResponse' ng-show='vm.waitingResponse'>
+                                <h3> You said: "{{vm.history.comment}}"</h3>
+                                <h3>Poster has not responded yet</h3>
+                              </div>  
+                              <div  style='margin-top: 15%' ng-show='vm.waitingResponse' class='text-center owlButton '><a href="/" style='color:yellow'><span><img src="images/owl_clipped.png" alt=""></span></a>
+                              </div>
+                              <div class='waitingResponse' ng-show='vm.theyResponded'>
+                                <h3> THEY RESPONDED!</h3>
+                              </div> 
                               <div  ng-show='vm.showResponses'  ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd2 animated bounceInRight'" ng-class-even="'even2 animated bounceInLeft'" >
                                 <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='    {{response.id}}'  class='md-list-item-text responses H100px'>
                                 <!-- ng-click="vm.show($index, post)" -->
@@ -91,31 +107,50 @@
                                   </div>
                                 </div>
                                 <div flex   ng-show='vm.convo == $index' class='conversationArea md-list-item-text' data-index= {{vm.tempIndex}}>
-                                  <li>YOYOYO  ]</li>
-                                  <li>WASSUP DOC</li>
-                                  <li>BEEEEEJUSS</li>
                                 </div>
                               </div>
                             </md-content>
                           </div>
-                        </div>
-                        <div flex-gt-sm="20">
-                          <md-content flex class='backgroundTransparent'>
-                            <label ng-show='vm.showCommentInput' for='submit-form{{$index}}' style='padding: 0px;' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i></label>
-                          </md-content>
+                          <div flex-gt-sm="20">
+                            <md-content flex class='backgroundTransparent'>
+                              <label ng-show='vm.showCommentInput' for='submit-form{{$index}}' style='padding: 0px;' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i></label>
+                            </md-content>
+                          </div>
                         </div>
                       </div>
                     
 
                    
-                      <div flex-gt-sm="50"  class='postChatRight animated slideInRight' >
+                      <div flex-gt-sm="50" id='mapContainer'  class='postChatRight animated slideInRight' >
                         <!-- <h1 class="md-display-3">Headline</h1> -->
                         <h2 class="md-display-1">PROXIMITY</h2>
-                        <ng-map  ng-if= 'vm.showMap' id='map' center="37.7749,-122.4194" zoom="15" trigger-resize="true">
-                            <marker position="37.7749,-122.4194" title="Hello World!"></marker>
-                        </ng-map> 
+                        <div class='mapContainer'>
+                          
+                          <ng-map  ng-if= 'vm.showMap' id='map' center="37.7749,-122.4194" zoom="15" trigger-resize="true">
+                              <marker position="37.7749,-122.4194" title="Hello World!"></marker>
+                          </ng-map> 
+                        </div>
                         <!-- <h3 class="md-headline">Headline</h3> -->
+                        <div id="wrapper">
+                            <div id="menu">
+                                <p class="welcome">Welcome, <b></b></p>
+                                <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
+                                <div style="clear:both"></div>
+                            </div>
+                             
+                            <div class="chatbox">
+                              <ul class="chatboxText"></ul>
+                            </div>
+                             
+                            <form name="message"  ng-submit="vm.codingPostConversation(vm.msg)">
+                                <input name="usermsg" type="text" id="usermsg" class='pickles' ng-model="vm.msg.message" size="63" />
+                                <input name="submitmsg"  type="submit"  id="submitmsg" value="Send" />
+                            </form>
+                        </div>
                       </div>
+                      <!-- <div flex-gt-sm="50"  ng-show='vm.showChat' class='postChatRight animated slideInRight' > -->
+                      <!-- </div> -->
+
                 
                     <!-- <form class='commentForm' action="" ng-submit='vm.addCodingPostComment(post.id,vm.comment)'>
                       <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
