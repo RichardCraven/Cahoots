@@ -22,7 +22,8 @@ footer {
     /*margin: 20px 0;*/
 }
 header .jumbotron,.hero-spacer{
-	background-color: #F0F8FF;
+	background-color: #6c828e;
+	
 }
 #header-description{
 	margin-top:30px;
@@ -30,14 +31,14 @@ header .jumbotron,.hero-spacer{
 div .thumbnail{
 	height: 100%;
 	padding-bottom: 0px;
-	background-color: #F0F8FF;
+	background-color: #6c828e;
 }
 .thumbnail img{
 	height: 50%;
 	width: 100%;
 }
 div .caption{
-	background-color: #F0F8FF; 
+	background-color: #6c828e; 
 }
 /*footer {
 	position: fixed;

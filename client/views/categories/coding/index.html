@@ -75,6 +75,9 @@
                                       <textarea class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder="message" rows="10" required style='color:white; word-wrap: break-word; white-space: pre-wrap; height:1px; margin-top:-20px; font-size: 1px; cursor: pointer;' spellcheck="false"></textarea>
                                     </div>
                                   </md-input-container>
+                                  <div class='submitButtonContainer'>
+                                      <label for='submit-form{{$index}}' class="" style='margin-left: 30%'> Submit</label>
+                                  </div>
                                 </div>
 
                                 <button type="submit" class="btn btn-7 btn-7h hidden" id='submit-form{{$index}}'> <i class="material-icons md-48" >add</i> Comment</button>
@@ -111,11 +114,7 @@
                               </div>
                             </md-content>
                           </div>
-                          <div flex-gt-sm="20">
-                            <md-content flex class='backgroundTransparent'>
-                              <label ng-show='vm.showCommentInput' for='submit-form{{$index}}' style='padding: 0px;' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i></label>
-                            </md-content>
-                          </div>
+                        <!-- 4 -->
                         </div>
                       </div>
                     
@@ -123,7 +122,7 @@
                    
                       <div flex-gt-sm="50" id='mapContainer'  class='postChatRight animated slideInRight' >
                         <!-- <h1 class="md-display-3">Headline</h1> -->
-                        <h2 class="md-display-1">PROXIMITY</h2>
+                        <h2 class="md-display-1">{{vm.rightColumnHeader}}</h2>
                         <div class='mapContainer'>
                           
                           <ng-map  ng-if= 'vm.showMap' id='map' center="37.7749,-122.4194" zoom="15" trigger-resize="true">

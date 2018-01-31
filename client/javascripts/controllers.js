@@ -198,6 +198,8 @@
 
 			if(localStorage.profile){
 		  		$location.path('/loggedinHome');
+		  	} else {
+		  		localStorage.clear();
 		  	}
 
 		  	vm.go = function ( path ) {
@@ -234,10 +236,13 @@
 			}
 		}
 		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,UsersService){
-			var vm=this;
+			var vm=this,
+				facebook = /^(facebook)/,
+				numberPattern = /\d+/g,
+			    fbUserId, userName;
 			vm.auth = auth;
-			var userName;
-			vm.welcome = 'Hey, beautiful'
+			vm.welcome = 'Hey, beautiful';
+			
 			var getUser = function(id){
 				UsersService.getUser(id).then(function(user){
 					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
@@ -266,8 +271,17 @@
 
 
 			if(localStorage.length>0){
-				vm.name = JSON.parse(localStorage.profile).given_name
-				vm.picture = JSON.parse(localStorage.profile).picture
+				var user = JSON.parse(localStorage.profile)
+				vm.name = user.given_name
+				vm.picture = user.picture
+
+				console.log('got here, user.third party id is ', user.user_id, user)
+				if(facebook.test(user.user_id)){
+					console.log('aaaaand  here')
+					fbUserId = user.user_id.match(numberPattern)[0];
+					vm.picture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+				}
+
 				document.getElementById('newpic').style.display = 'inline';
 				document.getElementById('newpic').style.height = "100px !important" 
 				document.getElementById('newpic').style.width = '100px !important'
@@ -390,6 +404,7 @@
 			vm.convoBegun = true;
 			vm.theyResponded = false;
 			vm.showCrickets = false;
+			vm.rightColumnHeader = 'PROXIMITY'
 
 			if(localStorage.length > 0){
 				vm.loggedIn = true
@@ -644,17 +659,15 @@
     		  	  			vm.waitingResponse = true;
     		  	  			vm.history.comment = v.comment;
     		  	  			var yourCommentMsg = v.comment;
-    		  	  			console.log('inside, vis', v)
     		  	  			CodingPostConversationsService.getConvos(v.id).then(function(res){
-    		  	  				// console.log('way inside, res is ' ,res)
     		  	  				if(res.data.length){
     		  	  					vm.waitingResponse = false;
-    		  	  					
-	  			  	    			// vm.showMap = false;
 	  			  	    			vm.showChat = true;
     		  	  					vm.showCommentInput = false;
     		  	  					vm.theyResponded = true;
-    		  	  					// console.log('PIGGIES ', idx, posts, posts.data[idx])
+    		  	  					vm.rightColumnHeader = 'CONVERSATION'
+    		  	  					// *****
+
     		  	  					var chatbox = document.getElementsByClassName('chatboxText')[idx],
     		  	  						yourComment = document.createElement('li');
     		  	  					chatbox.innerHTML = '';
@@ -668,9 +681,6 @@
 	  			  	    				} else {
 	  			  	    					name = posts.data[idx].display_name
 	  			  	    				};
-
-	  			  	    				console.log(msg);
-
 	  			  	    				newLi.innerHTML = name + ':  &nbsp;' + msg;
 	  			  	    				chatbox.appendChild(newLi);
 				    		  	  	})
@@ -692,9 +702,7 @@
 		  			  	    				chatbox.appendChild(newLi2);
 		  			  	    				vm.msg.message = '';
 			  	    			   		}, vm);
-		  			  	    		}
-
-	  			  	    		// return
+		  			  	    		};
     		  	  				};
     		  	  			}, vm);
     		  	  		}
@@ -758,6 +766,7 @@
 		  		 	vm.showChat = false;
 		  		 	vm.showCrickets = false;
 		  		 	vm.backButton = 'home';
+		  		 	vm.rightColumnHeader = 'PROXIMITY'
 
 		  			var expandingNodes = Array.from(document.querySelectorAll('.expandingAreaactive')),
 		  				fakeSpans = Array.from(document.querySelectorAll('#fakespan')),

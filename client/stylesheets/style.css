@@ -1,7 +1,7 @@
 body{
 	color:black;
 	/*padding-top: 70px;*/
-	background-color: #cce7ff ;
+	background-color: #5a628d ;
 	/*background:url();
 	 background-repeat: no-repeat;
 	 background-size: cover;*/
@@ -203,14 +203,14 @@ img{
 }
 .smallGobackHomeArrow{
 	color:#58157e !important;
-	font-size:2em;
+	font-size:1.3em;
 }
 .smallGobackHomeArrow:hover {
 	color:#b60b0b !important;
-	font-size:2em;
+	font-size:1.3em;
 }
 .goBack{
-	font-size:3.5em;
+	font-size:1.5em;
 }
 .delete{
 	font-size:1.5em;
@@ -275,18 +275,18 @@ img{
 }
 #addButton{
 	font-size:1.8em;
-	
 	margin-top: -5px;
 }
-#add-filmPost{
+/*#addButton{
+
+}*/
+#add-filmPost,#add-codingPost,#add-musicPost{
 	color: #496cb6; 
 }
-#add-codingPost{
-	color: #496cb6; 
+#add-filmPost:hover,#add-codingPost:hover,#add-musicPost:hover{
+	color: green; 
 }
-#add-musicPost{
-	color: #496cb6; 
-}
+
 
 .postLine{
 	margin-top: 5px;
@@ -307,7 +307,7 @@ img{
 } 
 
 .even{
-	background-color: #2;
+	background-color: #5a628d;
 	padding:0px;
 	display:block;
 	/*border : 5px solid black;*/
@@ -358,7 +358,7 @@ img{
 	height: 100%;
 }
 md-list-item{
-	padding: 0 !important;
+	/*padding: 0 !important;*/
 }
 
 #goButton{
@@ -386,8 +386,11 @@ md-list-item{
 	font-size: 1.8em;
 }
 .setText{
-	margin-top: 16%;
-	font-size: 1.8em;
+/*	margin-top: 16%;
+	font-size: 1.8em;*/
+}
+md-input-container label:not(._md-container-ignore){
+	bottom:75%;
 }
 .NEWspacer{
 	height: 0px;
@@ -396,7 +399,7 @@ md-list-item{
 	margin-left:140px;
 }
 .SETmargin {
-	margin-left:80px;
+	/*margin-left:80px;*/
 }
 #map{
 	height: 100vh;
@@ -449,16 +452,13 @@ header .jumbotron,.hero-spacer{
 }
 
 header .jumbotron, .hero-spacer{
-	font-weight: bold;
-	font-family: 'Amatic SC';
+	/*font-weight: bold;*/
+	font-family: 'Arial';
 	/*max-height: 80vh;*/
 
 }
 .displayName{
-	font-weight: bold !important;
-	font-size:1.1em !important;
 	color:#58157e !important;
-	font-family: 'Indie Flower';
 }
 body, html{
 	/*max-height: 500vh;*/
@@ -468,8 +468,6 @@ body, html{
 	color: #610000;
 }
 #header-main-mailbox{
-	margin-top: -80px;
-	/*margin-top: -134px;*/
 	color: #610000;
 }
 #mailList{
@@ -579,7 +577,7 @@ div .owlButton{
 	width: 80px !important;
 }
 .navbar-brand{
-	font-size: 3em;
+	/*font-size: 3em;*/
 }
 .nav a{
 	font-size: 2em;
@@ -609,9 +607,11 @@ md-input-container{
 	visibility: visible;
 }
 .inputField{
-	height: 50px !important;
+	height: 40px !important;
 	overflow: scroll !important;
-	font-size:0.7em;
+	font-size:0.45em;
+	background-color: #c0cbd1 !important;
+	width: 100% !important;
 }
 .bottom-button{
 	position: absolute;
@@ -683,10 +683,105 @@ md-input-container.md-default-theme.md-input{
 	height: 35vh;
 	background-color: #fffdd3;
 }
-.settingsBio{
-	font-size: 0.8em;
-	height: 280px !important;
+.zipCode{
+	margin-bottom: 0;
+}
+.settingsBio input{
 	overflow: scroll !important;
+	/*padding-left:10px;*/
+	height: 17vh;
+}
+.settingsBio md-input-container{	
+	width: 100%;
+	height: 71%;
+	margin-top: -23px;
+}
+input.inputField{
+	border-radius: 10px;
+}
+.settingsBio md-input-container label{
+	color:black !important; 
+	margin-bottom: -8px;
+	position:relative;
+}
+.settingsBio textarea{
+	border-radius: 10px;
+	background-color: #c0cbd1;
+	margin-top:-16px;
+	font-size:0.45em;
+}
+input[type=checkbox] {
+	visibility: hidden;
+}
+.settingsCheckboxes{
+	/*padding-left: 155px;*/
+	padding-top: 27px;
+	/*width: 41vw;*/
+}
+.settingsCheckboxes .row{
+	/*height: 8vh;*/
+	margin-left: 15px;
+	margin-bottom: 30px;
+	height: 50px;
+	border-left: 1px solid cyan;
+	border-bottom: 1px solid cyan;
+}
+#chckbx1, #chckbx2, #chckbx3{
+	margin-top: 8px;
+	text-align: left;
+}
+.checkbox1,.checkbox2,.checkbox3{
+	width: 120px;
+	height: 40px;
+	border-radius: 50px;
+	background: #333;
+	position: relative;
+}
+.checkbox1:before,.checkbox2:before,.checkbox3:before {
+	font-family:  Roboto,"Helvetica Neue",sans-serif;
+	content: 'On';
+	position: absolute;
+	top: 12px;
+	left: 13px;
+	height: 2px;
+	color: #26ca28;
+	font-size: 16px;
+}
+.checkbox1:after, .checkbox2:after, .checkbox3:after {
+	font-family:  Roboto,"Helvetica Neue",sans-serif;
+	content: 'Off';
+	position: absolute;
+	top: 12px;
+	left: 84px;
+	height: 2px;
+	color: #ff0000;
+	font-size: 16px;
+}
+.checkbox1 label, .checkbox2 label, .checkbox3 label {
+	display: block;
+	width: 52px;
+	height: 22px;
+	border-radius: 50px;
+
+	transition: all .5s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 9px;
+	z-index: 1;
+	left: 12px;
+	background: #ddd;
+}
+.checkbox1 input[type=checkbox]:checked + label {
+	left: 60px;
+	background: #26ca28;
+}
+.checkbox2 input[type=checkbox]:checked + label {
+	left: 60px;
+	background: #26ca28;
+}
+.checkbox3 input[type=checkbox]:checked + label {
+	left: 60px;
+	background: #26ca28;
 }
 .chatbox{
 	border: 1px solid black;
@@ -1032,6 +1127,52 @@ input.newPostTopicArea{
 	font-weight: 300;
 }
 
+.loggedIn{
+	margin-left:0px;
+}
+#newname{
+	display:inline-block;
+	color:white; 
+	font-size:1.3em; 
+	margin-left:10px; 
+}
+.submitButtonContainer{
+	width:120px; 
+	display:inline-block;
+	color: black;
+	border: 1px solid black;
+	border-radius: 50px;
+	text-align: center;
+	background-color: lightgreen;
+}
+.submitButtonContainer:hover, .submitButtonContainer label:hover{
+	color: lightgreen;
+	cursor: pointer;
+	background-color: green;
+}
+
+@media only screen 
+and (max-width : 1199px) {
+	.settingsCheckboxes{
+		/*padding-left: 155px;*/
+		padding-top: 27px;
+		width: 41vw;
+	}
+	.col-sm-offset-0{ 
+		margin-left: 0;	
+	}
+}
+@media (max-width: 1100px){
+}
+
+.submitRow {
+	display: flex;
+	justify-content: flex-end;
+	padding-left: 10%;
+    padding-right: 5%;
+	
+	/*margin: 15px 0px 15px 30px;*/
+}
 /*#beginConvoButton {
 	width: 100%;
 	background-color : #beed90;

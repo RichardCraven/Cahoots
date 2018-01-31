@@ -4,7 +4,7 @@
 
  <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div  class="container" style='margin-left: 0px'>
+        <div  class="loggedIn container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div id='navbar' class="navbar-header">
                 <a id='newloginButton' class="navbar-brand" ng-click="vm.login()" href="javascript:;" >Login</a>
@@ -14,7 +14,7 @@
                     <span style='display:inline' id='newpic'><img style='display:inline-block' ng-src="{{vm.picture}}"
                     alt=''></span>
                 
-                <div id='newname'  style='display:inline-block; color:white; font-size:3em; margin-left:10px; margin-top: 20px;'>
+                <div id='newname'>
                     <div> {{vm.name}}</div>
                     <a style='font-size:12px' id='newlogoutButton' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
                 </div>
@@ -30,6 +30,7 @@
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
             <h1 id='header-main' class='text-center'>{{vm.welcome}}</h1>
+            <mat-checkbox type='checkbox' labelPosition='before'>Check me!</mat-checkbox>
             <p class='text-left' id='header-description'></p>
             <div class='pull-right settingsButton'><a href="/{{vm.user_id}}/userSettings" ><span><img src="images/gear.png" alt=""></span></a>
             </div>

@@ -5,13 +5,14 @@
  <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style='height: 101px;'>
         <div  class="container" style='margin-left: 0px'>
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 
-                    <span style='display:inline' class='userPic'><img style='display:inline-block' ng-src="{{vm.navpicture}}"
-                    alt=''></span>                
-                <div   style='display:inline-block; color:white; font-size:3em; margin-left:10px; margin-top: 20px;'>
+                    <span style='display:inline' id='newpic'><img style='display:inline-block' ng-src="{{vm.navpicture}}"
+                    alt=''></span>
+                
+                <div id='newname'>
                     <div> {{vm.name}}</div>
-                    <a style='font-size:12px' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
+                    <a style='font-size:12px' id='newlogoutButton' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
                 </div>
              </div>
             <!-- /.navbar-collapse -->
@@ -23,42 +24,82 @@
 
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer settingsJumbo">
-            <a href="/loggedinHome" class="goBack">
+            <!-- <a href="/loggedinHome" class="goBack">
               <span class="glyphicon glyphicon-arrow-left"></span>
+            </a> -->
+            <a href="/loggedinHome" class="smallGobackHomeArrow">
+              <span style='margin-left:10px' class="glyphicon glyphicon-arrow-left"></span>
             </a>
-            <h1 id='header-main-mailbox' class='text-center'>SETTINGS</h1>
-            
-            <form  name="newFilm" class='setText SETmargin' ng-submit="vm.updateUser(vm.user)" style='margin-top:50px' >
+            <h1 id='header-main-mailbox' class='text-left'>User Settings</h1>
+            <form  name="newFilm" class='setText SETmargin' ng-submit="vm.updateUser(vm.user)">
+              <!-- <mat-checkbox type='checkbox' labelPosition='before'>Check me!</mat-checkbox> -->
+              <!-- ^ invistigate why mat-checkbox isnt working -->
             <div layout-gt-sm="row">
-            <div flex-gt-sm="50" style='margin-right: 30px' >
+            <div flex-gt-sm="40"  >
               <!-- <div class="NEWspacer"></div> -->
               <div >
-                <md-input-container style='margin-bottom: 90px' class="md-block" >
+                <md-input-container  class="md-block" >
                   <label style='color:black;'>Display Name</label>
-                  <input class='inputField' name="display name" md-no-asterisk ng-model="vm.user.display_name" placeholder="{{vm.user.display_name}}" autofocus  >
+                  <input class='inputField' name="display name" md-no-asterisk ng-model="vm.user.display_name" placeholder="{{vm.user.display_name}}" autofocus='false'>
                 </md-input-container>
               </div>
               <div >
-                <md-input-container class="md-block" >
+                <md-input-container class="md-block zipCode" >
                    <label style='color:black'>Zip Code</label>
                    <input class='inputField' autofocus='false' ng-model="vm.user.zip_code" type="comment" placeholder="vm.user.zip_code">
                   <!--  <textarea class='inputField' name="zip code" md-no-asterisk ng-model="vm.user.zip_code" placeholder="vm.user.zip_code" ></textarea> -->
                 </md-input-container> 
               </div>
-            </div>
-            <div flex-gt-sm="50"  >
-              <div >
-                <md-input-container  md-no-float >
-                  <label style='color:black;'>Bio </label>
-                  <input class='inputField' autofocus='false' ng-model="vm.user.bio" type="comment" placeholder="vm.user.bio">
-                 <!--  <textarea  class='settingsBio' name="bio"  ng-model="vm.user.bio" placeholder=" "  ></textarea> -->
+              <div class='settingsBio'>
+                <md-input-container   md-no-float >
+                  <label >Bio </label>
+                  <!-- <input class='inputField' autofocus='false' ng-model="vm.user.bio" type="comment" placeholder="vm.user.bio"> -->
+                  <textarea  class='settingsBio' name="bio"  ng-model="vm.user.bio" placeholder=" "  ></textarea>
                 </md-input-container>
+                
               </div>
             </div>
+            <div flex-gt-sm="50">
+              <!-- <div > -->
+              <!-- </div> -->
+              <div class="row submitRow">
+                <div class='submitButtonContainer '>
+                        <label for='submit-form' > Submit</label>
+                </div>
+              </div>
+              <div class='settingsCheckboxes'>
+                <div class="row">
+                  <div class="col-md-8 col-sm-4 col-md-offset-1 col-sm-offset-0" id='chckbx1'>Automatic updates</div>
+                  <div class='col-md-3 checkbox1'>
+                    <input type="checkbox" id="checkBox1" name="subscribe" value="1">
+                    <label for="checkBox1"></label>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-8 col-sm-4 col-md-offset-1 col-sm-offset-0" id='chckbx2'>Location-based profiling</div>
+                  <div class='col-md-3 checkbox2'>
+                    <input type="checkbox" id="checkBox2" name="subscribe" value="1">
+                    <label for="checkBox2"></label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-8 col-sm-4 col-md-offset-1 col-sm-offset-0" id='chckbx3'>Swinging nutsacks</div>
+                  <div class='col-md-3 checkbox3'>
+                    <input type="checkbox" id="checkBox3" name="subscribe" value="1">
+                    <label for="checkBox3"></label>
+                  </div>
+                </div>
+              </div>
+              <!-- <mat-checkbox>No me!</mat-checkbox> -->
+              <!-- <mat-checkbox>Nooooo!</mat-checkbox> -->
+                  
+            </div>
             </div>
 
 
-              <button type="submit" class="btn btn-success NEWmargin" >Submit</button>
+              <button type="submit" class="btn btn-7 btn-7h hidden" id="submit-form"> <i class="material-icons md-48" >add</i> Create Post</button>
             </form>
 
 

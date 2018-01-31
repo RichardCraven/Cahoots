@@ -13,7 +13,7 @@
         <md-subheader style='font-size:2em' class="md-no-sticky text-center">POST AN IDEA</md-subheader> 
       </md-list>
       <div flex layout-gt-sm="column" style='height:83%'>
-        <div flex-gt-sm="80">
+        <div flex-gt-sm="100">
           <md-content class='height100'>
             <form  name="newCodingProject" ng-submit="vm.addCodingPost(vm.post)" style='height: 100%' >
             <!-- <div layout="column" class='inputfieldForNewPost' > -->
@@ -25,6 +25,20 @@
                     <!-- <input class='inputField' name="topic" md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus required> -->
                     <input autocomplete="off" name="topic" class= 'newPostTopicArea' md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus required style="height: 50px">
                   </md-input-container>
+                  <div class='submitButtonContainer'>
+                    <label for='submit-form' class="" style='margin-left: 30%'> Submit</label>
+                  </div>
+                                         
+
+                                          <!-- padding-left: 44px; -->
+  
+
+
+                   <!-- <div>
+                     <md-content flex>
+                       <label for='submit-form' class="btn btn-4a btn-4a" > <i class="material-icons md-48" >add</i> Create Post</label>
+                     </md-content>
+                   </div> -->
                 </div>
                 <div flex >
                   <md-input-container class='width70'>
@@ -46,11 +60,11 @@
             </form>
           </md-content>
         </div>
-        <div flex-gt-sm="20">
+       <!--  <div flex-gt-sm="20">
           <md-content flex>
-            <label for='submit-form' class="btn btn-7 btn-7h" > <i class="material-icons md-48" >add</i> Create Post</label>
+            <label for='submit-form' class="btn btn-4a btn-4a" > <i class="material-icons md-48" >add</i> Create Post</label>
           </md-content>
-        </div>
+        </div> -->
       </div>
 
       <!-- <form  name="newCodingProject" class='formText NEWmargin' ng-submit="vm.addCodingPost(vm.post)" > -->
