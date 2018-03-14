@@ -298,18 +298,23 @@ img{
 	background-color: #cce7ff;
 	padding:0px;
 	display: block;
+	border: 2px solid #cce7ff;
 }
 .odd:hover, .even:hover{
-	background-color: #99ADBF;
+	/*background-color: #99ADBF;*/
+	/*background-color: #e0e0fd;*/
+	border: 2px solid black;
 }
 .odd:hover hr, .even:hover hr{
     border: 0.5px solid #F2F2FE;
 } 
 
 .even{
-	background-color: #5a628d;
+	/*background-color: #5a628d;*/
+	background-color: #F2F2FE;
 	padding:0px;
 	display:block;
+	border: 2px solid #F2F2FE;
 	/*border : 5px solid black;*/
 }
 
@@ -465,9 +470,11 @@ body, html{
 	overflow-y: scroll !important;
 }
 #header-main{
+	font-family: 'Amatic SC';
 	color: #610000;
 }
 #header-main-mailbox{
+	font-family: 'Amatic SC';
 	color: #610000;
 }
 #mailList{
@@ -581,6 +588,9 @@ div .owlButton{
 }
 .nav a{
 	font-size: 2em;
+}
+.navbar .container{
+	margin-left: 3%;
 }
 md-input-container{
 	font-size: 2em;

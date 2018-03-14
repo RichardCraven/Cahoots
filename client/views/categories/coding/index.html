@@ -1,7 +1,7 @@
   <!-- CODING INDEX -->
 
   <div layout-gt-sm="row" >
-    <div flex-gt-sm="100" id='codingContent'  >
+    <div flex-gt-sm="{{vm.leftWidth}}" id='codingContent'  >
       <md-toolbar layout="row" class="md-hue-3">
         <div class="md-toolbar-tools">
           <a ng-click='vm.goBack()' class="smallGobackHomeArrow">
@@ -168,23 +168,21 @@
 
 <!-- ~~~~~~~~~~~~~~~~~~~MAP~~~~~~~~~~~~~~~~~~ -->
 
-    <!-- <md-divider></md-divider>
-    <div ng-show='vm.showMap' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
-      <md-toolbar layout="row" class="md-hue-1" >
-        <div class="md-toolbar-tools">
-          <span>Everyone Loves a Good Map.</span>
-        </div>
-      </md-toolbar>
-	        <ng-map id='map' center="37.7749,-122.4194" zoom="15">
-	        	<marker position="37.7749,-122.4194" title="Hello World!"></marker>
-	    </ng-map>   
-    </div>
+    <!-- <md-divider></md-divider> -->
+<!--     <div ng-show='vm.showOwl' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
+      <div  flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
+            <video id="owlVid2"  muted autoplay >
+              <source src="images/NewOwl666.mp4" type="video/mp4">
+           </video>
+      </div>
 
-    <div ng-show='vm.showVid' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
+    </div> -->
+
+    <div ng-show='vm.showOwl' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
           <video id="owlVid2"  muted autoplay >
             <source src="images/NewOwl666.mp4" type="video/mp4">
          </video>
-    </div> -->
+    </div>
 </div>
 <!-- end master-layout div -->
 

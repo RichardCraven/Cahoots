@@ -404,7 +404,14 @@
 			vm.convoBegun = true;
 			vm.theyResponded = false;
 			vm.showCrickets = false;
-			vm.rightColumnHeader = 'PROXIMITY'
+			vm.rightColumnHeader = 'PROXIMITY';
+			vm.showOwl = true;
+			vm.leftWidth = 50;
+
+			if($(window).width() < 1200){
+				vm.leftWidth = 100;
+				vm.showOwl = false;
+			}
 
 			if(localStorage.length > 0){
 				vm.loggedIn = true
@@ -437,19 +444,30 @@
 	  			vm.backButton = 'home'	
 	  		 };
 		  	};
-
-		  	vm.show = function(idx){
+			 vm.show = function(idx){
 		  	 vm.tempIndex = idx;
 	  		 vm.toggleView = !vm.toggleView
 	  		 vm.showText = !vm.showText
 	  		 vm.showVid = !vm.showVid
 
 
+	  		 
 	  		 var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
 	  		 	 others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
 
+
+	  		 	
+
 		  		if(vm.toggleView === true){
 				  vm.backButton = 'codingIndex';
+
+				  
+
+				  if(vm.leftWidth === 50){
+				  	vm.leftWidth = 100;
+				  	vm.showOwl = false;
+				  	console.log('HERE MOTHERFUCKER!', vm.showOwl)
+				  }
 	  		
 		  		  selected[0].classList.add('focus')	  		
 		  		  others.forEach(function(i){i.style.display = 'none'})
@@ -484,11 +502,8 @@
   			  	    		selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
   			  	    		nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment),
   			  	    		responseHeader = selectedResponse[idx].parentElement.children[0],
-  			  	    		conversationArea = selectedResponse[idx].parentElement.children[1];
-
-  			  	    	// console.log('IDX IS ', idx, posts.data[idx], vm.responses[index])
-
-  			  	    	var req = {post: vm.msg};
+  			  	    		conversationArea = selectedResponse[idx].parentElement.children[1],
+  			  	    	    req = {post: vm.msg};
   			  	    	CodingPostConversationsService.getConvos(vm.responses[index].id).then(function(res){
   			  	    		if(!res.data.length){
   			  	    			// convoStarted = true;
@@ -644,14 +659,7 @@
   			  	    	}, vm);
   			  	    }
     		  	  } else {
-    		  	//   	var mapContainers = document.getElementsByClassName('mapContainer')
-    		  	//   		mapContainers[idx].classList.remove('animated','slideInRight');
-    		  	//   		mapContainers[idx].classList.add('animated', 'slideOutRight');
-    		  	//   	vm.showMap = false;
-	  			  	// vm.showChat = true;
-	  			  	// vm.showResponses = true;
-  			  	 //    vm.showCommentInput = false;
-  			  	 	vm.history = {};
+    		  	    vm.history = {};
   			  	 	vm.history.comment;
     		  	  	codingHistory.data.forEach(function(v){
     		  	  		if(v.post_id === posts.data[idx].id){
@@ -767,14 +775,16 @@
 		  		 	vm.showCrickets = false;
 		  		 	vm.backButton = 'home';
 		  		 	vm.rightColumnHeader = 'PROXIMITY'
+					expandingNodes = Array.from(document.querySelectorAll('.expandingAreaactive')),
+	  				fakeSpans = Array.from(document.querySelectorAll('#fakespan')),
+	  				textAreas = Array.from(document.querySelectorAll('textarea')),
+	  				containers = Array.from(document.querySelectorAll('.messageContainer')),		  		
+	  				convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
 
-		  			var expandingNodes = Array.from(document.querySelectorAll('.expandingAreaactive')),
-		  				fakeSpans = Array.from(document.querySelectorAll('#fakespan')),
-		  				textAreas = Array.from(document.querySelectorAll('textarea')),
-		  				containers = Array.from(document.querySelectorAll('.messageContainer')),		  		
-		  				convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
-		  			// containers.forEach(function(i){i.style.height = '75%'})
-		  			
+  			  	    if($(window).width() > 1200){
+  			  	    	vm.leftWidth = 50;
+  			  	    	vm.showOwl = true;
+  			  	    };
 		  			convoAreas.forEach(function(e){ e.innerHTML = '' })
 		  			others.forEach(function(i){i.style.display = 'block'});
 		  			if(vm.responsesNeedCleanup){
@@ -782,9 +792,8 @@
 		  				vm.responsesNeedCleanup = false;
 		  				vm.toggleResponseView = false;
 		  				vm.convo = null;
-		  			}
+		  			};
 		  			selected[0].classList.remove('focus');	
-
 		  			expandingNodes.forEach(function (e){e.className = "expandingArea"});
 		  		 	fakeSpans.forEach(function (e){e.textContent = ''});
 		  		 	textAreas.forEach(function (e){e.value = ''});
