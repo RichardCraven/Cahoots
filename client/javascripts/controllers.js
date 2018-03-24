@@ -454,30 +454,19 @@
 	  		 
 	  		 var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
 	  		 	 others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
-
-
-	  		 	
-
-		  		if(vm.toggleView === true){
+	  		 	  if(vm.toggleView === true){
 				  vm.backButton = 'codingIndex';
-
-				  
-
 				  if(vm.leftWidth === 50){
 				  	vm.leftWidth = 100;
 				  	vm.showOwl = false;
-				  	console.log('HERE MOTHERFUCKER!', vm.showOwl)
-				  }
-	  		
-		  		  selected[0].classList.add('focus')	  		
-		  		  others.forEach(function(i){i.style.display = 'none'})
-
+				  };
+		  		  selected[0].classList.add('focus')	  	;	
+		  		  others.forEach(function(i){i.style.display = 'none'});
     		  	  if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
   			  	    vm.showResponses = true;
   			  	    vm.showCommentInput = false;
   			  	    vm.leftPanel = 'RESPONSES'
   			  	    vm.responses = codingMail.data.filter((v,i) => codingMail.data[i].framework === posts.data[idx].framework);
-
   			  	    vm.responses.forEach(function(i){
   			  	    	var facebook = /^(facebook)/,
   			  	    		numberPattern = /\d+/g,
@@ -485,20 +474,16 @@
   			  	    	if(facebook.test(i.user_id)){
   			  	    		fbUserId = i.user_id.match(numberPattern)[0];
   			  	    		i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
-  			  	    	}
-  			  	    })
-
+  			  	    	};
+  			  	    });
   			  	    if(!vm.responses.length){
-  			  	    	console.log('YOU AINT GOT NO RESPONSES YET, SUCKA');
   			  	    	vm.showCrickets = true;
-  			  	    	// document.getElementsByClassName('messageContainer')
-  			  	    }
-
+  			  	    };
   			  	    vm.showResponse = function(index, response){
-  			  	    	var convoStarted = false;
   			  	    	vm.responsesNeedCleanup = true;
   			  	    	vm.toggleResponseView = !vm.toggleResponseView;
-  			  	    	var responseContainer = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString()),
+  			  	    	var convoStarted = false,
+  			  	    	    responseContainer = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString()),
   			  	    		selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
   			  	    		nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment),
   			  	    		responseHeader = selectedResponse[idx].parentElement.children[0],
@@ -506,61 +491,38 @@
   			  	    	    req = {post: vm.msg};
   			  	    	CodingPostConversationsService.getConvos(vm.responses[index].id).then(function(res){
   			  	    		if(!res.data.length){
-  			  	    			// convoStarted = true;
-  			  	    			// console.log('hooray! ', res.data[0])
 		  			  	    	if(vm.toggleResponseView){
-		  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'})
+		  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'});
 		  			  	    		vm.convo = index;
-
-		  			  	    		conversationArea.style.height = responseContainer[0].clientHeight + 'px'
-
-
+		  			  	    		conversationArea.style.height = responseContainer[0].clientHeight + 'px';
 		  			  	    		if(selectedResponse[idx].parentElement.classList.contains('odd2')){
-		  			  	    			conversationArea.style.background = '#ccceff'
-		  			  	    		} else {
-		  			  	    			conversationArea.style.background = '#E6FFCC'
-		  			  	    		}
+		  			  	    			conversationArea.style.background = '#ccceff';
+		  			  	    		} else {conversationArea.style.background = '#E6FFCC'};
 
-		  			  	    		var beginConvoButton = document.createElement('div')
-
-		  			  	    		beginConvoButton.style.width = '100%;'
-		  			  	    		beginConvoButton.style.backgroundColor = '#beed90'
-		  			  	    		beginConvoButton.style.margin = '5px'
-		  			  	    		beginConvoButton.style.height = '60px'
-		  			  	    		beginConvoButton.style.textAlign = 'center'
-		  			  	    		beginConvoButton.style.paddingTop = '15px'
-		  			  	    		beginConvoButton.style.marginLeft = '55px'
-		  			  	    		beginConvoButton.style.marginRight = '55px'
+		  			  	    		var beginConvoButton = document.createElement('div');
+		  			  	    		beginConvoButton.style.width = '100%;';
+		  			  	    		beginConvoButton.style.backgroundColor = '#beed90';
+		  			  	    		beginConvoButton.style.margin = '5px';
+		  			  	    		beginConvoButton.style.height = '60px';
+		  			  	    		beginConvoButton.style.textAlign = 'center';
+		  			  	    		beginConvoButton.style.paddingTop = '15px';
+		  			  	    		beginConvoButton.style.marginLeft = '55px';
+		  			  	    		beginConvoButton.style.marginRight = '55px';
 		  			  	    		beginConvoButton.innerHTML = 'Begin Conversation';
-		  			  	    		conversationArea.appendChild(beginConvoButton)
-		  			  	    		// var beginConvoButton = document.getElementById('beginConvoButton');
-		  			  	    		beginConvoButton.onmouseenter = function(){
-		  			  	    			beginConvoButton.style.backgroundColor = '#a7d37a'
-		  			  	    		};
-		  			  	    		beginConvoButton.onmouseleave = function(){
-		  			  	    			beginConvoButton.style.backgroundColor = '#beed90'
-		  			  	    		};
+		  			  	    		conversationArea.appendChild(beginConvoButton);
+		  			  	    		beginConvoButton.onmouseenter = function(){beginConvoButton.style.backgroundColor = '#a7d37a'};
+		  			  	    		beginConvoButton.onmouseleave = function(){beginConvoButton.style.backgroundColor = '#beed90'};
 		  			  	    		beginConvoButton.onmousedown = function(){
-		  			  	    			beginConvoButton.style.backgroundColor = '#ffffff'
+		  			  	    			beginConvoButton.style.backgroundColor = '#ffffff';
 		  			  	    			vm.convoBegun = true;
-
-
-		  			  	    			// var mapContainers = document.getElementsByClassName('mapContainer')
-		  			  	    			// 	mapContainers[idx].classList.remove('animated','slideInRight');
-		  			  	    			// 	mapContainers[idx].classList.add('animated', 'slideOutRight');
 		  			  	    			vm.showMap = false;
 		  			  	    			vm.showChat = true;
-
-		  			  	    			console.log('TESTIES', idx, document.getElementsByClassName('chatboxText')[idx])
 		  			  	    			var li = document.createElement('li'),
 		  			  	    			response = vm.responses[index];
-
-		  			  	    			li.innerHTML = response.display_name + ':  &nbsp;' + response.comment
-
+		  			  	    			li.innerHTML = response.display_name + ':  &nbsp;' + response.comment;
 		  			  	    			var chatbox = document.getElementsByClassName('chatboxText')[idx];
-		  			  	    			chatbox.appendChild(li)
+		  			  	    			chatbox.appendChild(li);
 		  			  	    		};
-
 		  			  	    		//CREATING CONVO MESSGAE
 		  			  	    		vm.msg = {};
 		  			  	    		vm.codingPostConversation = function(message){
@@ -831,7 +793,7 @@
 		  			vm.show(vm.tempIndex)
 		  		}, vm)
 		  	};
-		}
+		};
 		function NewCodingPostController(CodingPostService,UsersService,$location,store){
 			var vm = this;
 			vm.post = {};

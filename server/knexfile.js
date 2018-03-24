@@ -10,9 +10,9 @@ module.exports = {
   	client: 'pg',
     connection: {
       database: 'cahoots_db',
-      host: 'cahootsdb.cnusdpqarpmx.us-west-2.rds.amazonaws.com',
-      user: 'GalvanizeComp',
-      password: 'yogsoth30'
+      host: '18.217.62.59 ',
+      user: 'richardcraven',
+      password: 'Yogsoth33'
     }
   }
 }
