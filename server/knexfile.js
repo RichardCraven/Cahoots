@@ -12,7 +12,7 @@ module.exports = {
       database: 'cahoots_db',
       host: '18.217.62.59 ',
       user: 'richardcraven',
-      password: 'Yogsoth33'
+      password: '12345678'
     }
   }
 }
