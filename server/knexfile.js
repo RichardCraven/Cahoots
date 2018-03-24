@@ -9,7 +9,7 @@ module.exports = {
   production: {
   	client: 'pg',
     connection: {
-      database: 'cahoots_db',
+      database: 'cahootsdb',
       host: '18.217.62.59 ',
       user: 'richardcraven',
       password: '12345678'
