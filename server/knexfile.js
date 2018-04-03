@@ -1,13 +1,11 @@
 module.exports = {
   development: {
-    client: 'pg',
-    connection: {
-      database: 'cahootsDB',
-      host: '18.217.62.59 ',
-      user: 'richardcraven',
-      password: '12345678'
-    }
-  },
+      client: 'pg',
+      connection: {
+        database: 'cahoots_db'
+
+      }
+    },
   production: {
   	client: 'pg',
     connection: {

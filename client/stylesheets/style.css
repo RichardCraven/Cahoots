@@ -1,20 +1,10 @@
 body{
 	color:black;
-	/*padding-top: 70px;*/
 	background-color: #5a628d ;
-	/*background:url();
-	 background-repeat: no-repeat;
-	 background-size: cover;*/
-	 
-/*	 background: url('collaboBackground.jpg') 
-	 no-repeat center center fixed; 
-	   -webkit-background-size: cover;
-	   -moz-background-size: cover;
-	   -o-background-size: cover;
-	   background-size: cover;*/
-	   /*overflow: scroll;*/
-	   /*ahyes*/
 }
+/*label{
+	margin-bottom: 0px;
+}*/
 .navbar-fixed-bottom, .navbar-fixed-top{
 	position: static ;
 }
@@ -111,10 +101,6 @@ img{
 #new{
 	margin:5px;
 }
-/*.mainText{
-	color:blue;
-}*/
-
 .mainText {
 	height: 200px;
   background-color: #42A5F5; color: blue;}
@@ -157,12 +143,6 @@ img{
 	width: 10px;
 	margin-left: 80px;
 }
-
-/*dark: #604a33*/
-/*light: #aad8c2*/
-
-/*dark: #31445d*/
-/*light: #cda17f*/
 .headline{
 	color: #0c1133;
 	font-size:8em !important;
@@ -204,10 +184,13 @@ img{
 .smallGobackHomeArrow{
 	color:#58157e !important;
 	font-size:1.3em;
+	transition: 1s all;
+	cursor: pointer;
 }
 .smallGobackHomeArrow:hover {
-	color:#b60b0b !important;
+	color:green !important;
 	font-size:1.3em;
+	margin-left: -5px;
 }
 .goBack{
 	font-size:1.5em;
@@ -230,9 +213,6 @@ img{
 	height: 100px;
 	width: 100px;
 }
-.userPicContainer{
-	/*margin-right: 10px;*/
-}
 .postContentContainer{
 	overflow: scroll;
 	margin-left: 15px;
@@ -244,7 +224,6 @@ img{
 }
 
 .panel{
-	/*background-color:red;*/
 	max-height: 650px;
 }
 .newButton{
@@ -258,7 +237,6 @@ img{
 	width: 49vw;
 }
 .glyphicon-home{
-	/*margin-left: 150% !important;*/
 	color:#58157e !important;
 	font-size: 2.25em !important;
 }
@@ -277,9 +255,6 @@ img{
 	font-size:1.8em;
 	margin-top: -5px;
 }
-/*#addButton{
-
-}*/
 #add-filmPost,#add-codingPost,#add-musicPost{
 	color: #496cb6; 
 }
@@ -301,8 +276,6 @@ img{
 	border: 2px solid #cce7ff;
 }
 .odd:hover, .even:hover{
-	/*background-color: #99ADBF;*/
-	/*background-color: #e0e0fd;*/
 	border: 2px solid black;
 }
 .odd:hover hr, .even:hover hr{
@@ -310,19 +283,11 @@ img{
 } 
 
 .even{
-	/*background-color: #5a628d;*/
 	background-color: #F2F2FE;
 	padding:0px;
 	display:block;
 	border: 2px solid #F2F2FE;
-	/*border : 5px solid black;*/
 }
-
-/*.even:hover{
-	background-color: #9999BF;
-}*/
-
-
 .odd2{
 	background-color: #ccceff;
 	padding:0px;
@@ -331,23 +296,15 @@ img{
 }
 .odd2:hover{
 	background-color: 	#b7b9e5
-	/*border-left : 5px solid green!important;*/
-	/*why the uck can't I change the border on hover*/
-	/*border: 5px solid blue !important;
-    border-color: blue !important;*/
 }
 .even2{
-	/*background-color: #ccfffe;*/
 	background-color: #E6FFCC;
-
 	padding:0px;
 	display:block;
 
 }
 .even2:hover{
 	background-color: #b8d39a;
-	/*border: 5px solid black;*/
-	/*background-color: red;*/
 }
  md-list-item._md-button-wrap.item-text-wrap>div.md-button:first-child{
 	display:block;
@@ -357,15 +314,9 @@ img{
 	background-color: #cce7ff;
 }
 .md-list-item-text {
-	/*padding-left: 10px;*/
-/*	max-height: 60px;*/
 	white-space: inherit;
 	height: 100%;
 }
-md-list-item{
-	/*padding: 0 !important;*/
-}
-
 #goButton{
 	height: 60px;
 	margin-left:40px;
@@ -374,37 +325,28 @@ md-list-item{
 	white-space: normal;
 	line-height: 25px !important;
 	max-height: 50px !important;
-}
-
-/*.md-list-item-text h4 {
-	white-space: inherit;
-}*/
+};
 .H100px{
 	height: 100px;
 }
 
 .settingsJumbo{
 	height: 80vh;
+	width: 60vw;
+	max-width: 765px;
+	display: inline-block;
+	float:left;
 }
+
 .formText{
 	margin-top: 16%;
 	font-size: 1.8em;
-}
-.setText{
-/*	margin-top: 16%;
-	font-size: 1.8em;*/
-}
-md-input-container label:not(._md-container-ignore){
-	bottom:75%;
 }
 .NEWspacer{
 	height: 0px;
 }
 .NEWmargin {
 	margin-left:140px;
-}
-.SETmargin {
-	/*margin-left:80px;*/
 }
 #map{
 	height: 100vh;
@@ -584,7 +526,7 @@ div .owlButton{
 	width: 80px !important;
 }
 .navbar-brand{
-	/*font-size: 3em;*/
+	margin-left: -15px;
 }
 .nav a{
 	font-size: 2em;
@@ -593,13 +535,16 @@ div .owlButton{
 	margin-left: 3%;
 }
 md-input-container{
-	font-size: 2em;
+	font-size: 1.4em;
 }
 #owlVid2{
 	width: 100%;
   	opacity: 0.6;
   	height: 100vh;
   	object-fit: inherit;
+}
+#settingsOwlVid{
+	display: none;
 }
 #bs-example-navbar-collapse-1{
 	max-height: 100px;
@@ -610,8 +555,6 @@ md-input-container{
 #pic img{
 	max-height: 100px;
 	max-width: 100px;
-	/*visibility: hidden;*/
-	/*display:none;*/
 }
 #pic img [ng-src*="http"]{
 	visibility: visible;
@@ -696,14 +639,13 @@ md-input-container.md-default-theme.md-input{
 .zipCode{
 	margin-bottom: 0;
 }
-.settingsBio input{
+/*.settingsBio input{
 	overflow: scroll !important;
-	/*padding-left:10px;*/
 	height: 17vh;
-}
+}*/
 .settingsBio md-input-container{	
 	width: 100%;
-	height: 71%;
+	/*height: 71%;*/
 	margin-top: -23px;
 }
 input.inputField{
@@ -711,7 +653,6 @@ input.inputField{
 }
 .settingsBio md-input-container label{
 	color:black !important; 
-	margin-bottom: -8px;
 	position:relative;
 }
 .settingsBio textarea{
@@ -739,6 +680,7 @@ input[type=checkbox] {
 #chckbx1, #chckbx2, #chckbx3{
 	margin-top: 8px;
 	text-align: left;
+	float: none;
 }
 .checkbox1,.checkbox2,.checkbox3{
 	width: 120px;
@@ -796,13 +738,10 @@ input[type=checkbox] {
 .chatbox{
 	border: 1px solid black;
 	height: 100%;
-	/*display:none;*/
 }
 .arrowRight{
-	/*content:''; */   
 	width: 20px;
     height: 20px;
-	/*position:absolute;*/
 	margin:auto;
 	top:35px;
 	right:0;
@@ -840,10 +779,6 @@ input[type=checkbox] {
 
 .postChatLeft{
 	border-right: 1px solid black;
-	/*overflow: scroll;*/
-	/*border-left: 2px solid black;*/
-	/*border-top: 2px solid black;*/
-	/*border-bottom: : 2px solid black;*/
 }
 .postChatRight{
   /*border-right: 2px solid black;
@@ -864,14 +799,9 @@ input[type=checkbox] {
 	height: 100px;
 	background: rgb(204, 205, 255);
 }
-/*.waitingResponse h3{
-	margin: 0;
-}*/
 .waitingResponse > h3:nth-child(2){
 	margin-top:20px !important;
 }
-
-
 .btn-7{
 	font-size: 0px;
 }
@@ -894,26 +824,12 @@ div.flex md-input-container{
 .messageContainer{
 	height:100%
 }
-
-/*textarea.newPostTextArea{
-	width: 100%;
-	height: 5vh;
-	line-height: 40px;
-}*/
-
 .arial{
 	font-weight: 100;
 	font-family: arial;
 	color: black;
 	letter-spacing: 3px;
 }
-
-.redBoy{
-	height: 100px;
-	width: 100%;
-	background-color: red;
-}
-
 textarea, 
 pre {
   margin: 0;
@@ -1162,17 +1078,53 @@ input.newPostTopicArea{
 }
 
 @media only screen 
-and (max-width : 1199px) {
-	.settingsCheckboxes{
-		/*padding-left: 155px;*/
+and (min-width : 1425px) {
+/*	.settingsCheckboxes{
 		padding-top: 27px;
 		width: 41vw;
 	}
 	.col-sm-offset-0{ 
 		margin-left: 0;	
+	}*/
+	.settingsGumbo{
+		display: inline-block;
+		height: 80vh;
+		width: 40vw;
+   	    margin-top: 25px;
+	}
+	#settingsOwlVid{
+		display: block;
+	  	height: 100%;
+	  	border-radius: 6px;
+	  		width: 100%;
+	  	  	opacity: 0.6;
+	  	  	object-fit: inherit;
 	}
 }
-@media (max-width: 1100px){
+@media only screen 
+and (min-width : 1470px) {
+		.settingsGumbo{
+	   	    margin-left: 20px;
+		}
+}
+@media only screen 
+and (min-width : 1626px) {
+		.settingsGumbo{
+			width: 46vw;
+	   	    margin-left: 20px;
+		}
+}
+@media only screen 
+and (min-width : 1690px) {
+		.settingsGumbo{
+			width: 50vw;
+	   	    /*margin-left: 200px;*/
+		}
+}
+.container-fluid .jumbotron {
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 6px;
 }
 
 .submitRow {
@@ -1180,27 +1132,15 @@ and (max-width : 1199px) {
 	justify-content: flex-end;
 	padding-left: 10%;
     padding-right: 5%;
-	
-	/*margin: 15px 0px 15px 30px;*/
 }
-/*#beginConvoButton {
-	width: 100%;
-	background-color : #beed90;
-	margin: 5px;
-	height: 60px;
-	text-align: center;
-	padding-top: 15px;
-	margin-left: 55px;
-	margin-right: 55px;
-}*/
-	
-/*font-family: 'Indie Flower', cursive;
-
-font-family: 'Open Sans', sans-serif;
-
-font-family: 'Josefin Sans', sans-serif;
-
-font-family: 'Amatic SC', cursive;
-
-font-family: 'Josefin Slab', serif;*/
-
+.revisedThumbnail{
+    display: block;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    /*border: 1px solid #ddd;*/
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}

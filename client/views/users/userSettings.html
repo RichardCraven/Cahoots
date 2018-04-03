@@ -1,42 +1,25 @@
-     <!-- Custom CSS -->
     <link href="stylesheets/heroic-features.css" rel="stylesheet">
-
-
- <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style='height: 101px;'>
         <div  class="container" style='margin-left: 0px'>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                
+            <div class="" id="">
                     <span style='display:inline' id='newpic'><img style='display:inline-block' ng-src="{{vm.navpicture}}"
                     alt=''></span>
-                
                 <div id='newname'>
                     <div> {{vm.name}}</div>
-                    <a style='font-size:12px' id='newlogoutButton' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
+                    <a style='font-size:12px' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
                 </div>
              </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
-
-    <div class="container-fluid" style='overflow:scroll'>
-
-        <!-- Jumbotron Header -->
-        <header class="jumbotron hero-spacer settingsJumbo">
-            <!-- <a href="/loggedinHome" class="goBack">
-              <span class="glyphicon glyphicon-arrow-left"></span>
-            </a> -->
-            <a href="/loggedinHome" class="smallGobackHomeArrow">
-              <span style='margin-left:10px' class="glyphicon glyphicon-arrow-left"></span>
-            </a>
-            <h1 id='header-main-mailbox' class='text-left'>User Settings</h1>
-            <form  name="newFilm" class='setText SETmargin' ng-submit="vm.updateUser(vm.user)">
-              <!-- <mat-checkbox type='checkbox' labelPosition='before'>Check me!</mat-checkbox> -->
-              <!-- ^ invistigate why mat-checkbox isnt working -->
-            <div layout-gt-sm="row">
-            <div flex-gt-sm="40"  >
-              <!-- <div class="NEWspacer"></div> -->
+    <div class="container-fluid"  style='display:inline-block;' style='overflow:scroll'>
+      <header class="jumbotron hero-spacer settingsJumbo">
+        <a href="/loggedinHome" class="smallGobackHomeArrow">
+          <span style='margin-left:10px' class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+        <h1 id='header-main-mailbox' class='text-left'>User Settings</h1>
+        <form  name="newFilm" class='setText SETmargin' ng-submit="vm.updateUser(vm.user)">
+          <div layout='row' layout-sm="column">
+            <div style='flex-grow: 1'>
               <div >
                 <md-input-container  class="md-block" >
                   <label style='color:black;'>Display Name</label>
@@ -47,21 +30,16 @@
                 <md-input-container class="md-block zipCode" >
                    <label style='color:black'>Zip Code</label>
                    <input class='inputField' autofocus='false' ng-model="vm.user.zip_code" type="comment" placeholder="vm.user.zip_code">
-                  <!--  <textarea class='inputField' name="zip code" md-no-asterisk ng-model="vm.user.zip_code" placeholder="vm.user.zip_code" ></textarea> -->
                 </md-input-container> 
               </div>
               <div class='settingsBio'>
                 <md-input-container   md-no-float >
                   <label >Bio </label>
-                  <!-- <input class='inputField' autofocus='false' ng-model="vm.user.bio" type="comment" placeholder="vm.user.bio"> -->
                   <textarea  class='settingsBio' name="bio"  ng-model="vm.user.bio" placeholder=" "  ></textarea>
                 </md-input-container>
-                
               </div>
             </div>
-            <div flex-gt-sm="50">
-              <!-- <div > -->
-              <!-- </div> -->
+            <div style='flex-grow: 3'>
               <div class="row submitRow">
                 <div class='submitButtonContainer '>
                         <label for='submit-form' > Submit</label>
@@ -69,39 +47,35 @@
               </div>
               <div class='settingsCheckboxes'>
                 <div class="row">
-                  <div class="col-md-8 col-sm-4 col-md-offset-1 col-sm-offset-0" id='chckbx1'>Automatic updates</div>
+                  <div class=" col-sm-8 col-md-offset-0 col-sm-offset-0" id='chckbx1'>Automatic updates</div>
                   <div class='col-md-3 checkbox1'>
                     <input type="checkbox" id="checkBox1" name="subscribe" value="1">
                     <label for="checkBox1"></label>
                   </div>
                 </div>
-                
                 <div class="row">
-                  <div class="col-md-8 col-sm-4 col-md-offset-1 col-sm-offset-0" id='chckbx2'>Location-based profiling</div>
+                  <div class=" col-sm-8 col-md-offset-0 col-sm-offset-0" id='chckbx2'>Location-based profiling</div>
                   <div class='col-md-3 checkbox2'>
                     <input type="checkbox" id="checkBox2" name="subscribe" value="1">
                     <label for="checkBox2"></label>
                   </div>
                 </div>
-
                 <div class="row">
-                  <div class="col-md-8 col-sm-4 col-md-offset-1 col-sm-offset-0" id='chckbx3'>Swinging nutsacks</div>
+                  <div class=" col-sm-8 col-md-offset-0 col-sm-offset-0" id='chckbx3'>Swinging nutsacks</div>
                   <div class='col-md-3 checkbox3'>
                     <input type="checkbox" id="checkBox3" name="subscribe" value="1">
                     <label for="checkBox3"></label>
                   </div>
                 </div>
               </div>
-              <!-- <mat-checkbox>No me!</mat-checkbox> -->
-              <!-- <mat-checkbox>Nooooo!</mat-checkbox> -->
-                  
             </div>
-            </div>
-
-
-              <button type="submit" class="btn btn-7 btn-7h hidden" id="submit-form"> <i class="material-icons md-48" >add</i> Create Post</button>
-            </form>
-
-
-        </header>
+          </div>
+          <button type="submit" class="btn btn-7 btn-7h hidden" id="submit-form"> <i class="material-icons md-48" >add</i> Create Post</button>
+        </form>
+      </header>
+      <div class='settingsGumbo' >
+            <video id="settingsOwlVid"  muted autoplay >
+              <source src="images/NewOwl666.mp4" type="video/mp4">
+           </video>
+      </div>
     </div>
