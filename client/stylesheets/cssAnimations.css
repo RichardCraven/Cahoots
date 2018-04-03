@@ -41,28 +41,28 @@ font-family: 'Josefin Slab', serif;*/
 div #meet{
   font-family: 'Josefin Sans';
   font-weight:500;
-  margin-top: 90px;
-  margin-left: 20px;
+  margin-top: 50px;
+  margin-left: 2%;
   color: black;
-  font-size: 4em;
-  animation-delay:3.7s; -moz-animation-delay:4.7s; -webkit-animation-delay:3.7s;
+  font-size: 3em;
+  animation-delay:3.7s; -moz-animation-delay:3.7s; -webkit-animation-delay:3.7s;
 }
 div #create{
   font-family: 'Josefin Sans';
   font-weight: 500;
-  margin-top: 30px;
-  margin-left: 60px;
+  margin-top: 15px;
+  margin-left: 3%;
   color: black;
-  font-size: 4em;
+  font-size: 3em;
   animation-delay:4s; -moz-animation-delay:4s; -webkit-animation-delay:4s;
 }
 div #share{
   font-family: 'Josefin Sans';
   font-weight: 500;
-  margin-top: 30px;
-  margin-left: 105px;
+  margin-top: 15px;
+  margin-left: 6%;
   color: black;
-  font-size: 4em;
+  font-size: 3em;
   animation-delay:4.3s; -moz-animation-delay:4.3s; -webkit-animation-delay:4.3s;
 }
 

@@ -143,11 +143,12 @@ img{
 	width: 10px;
 	margin-left: 80px;
 }
-.headline{
+.cahoots-headline{
 	color: #0c1133;
-	font-size:8em !important;
+	font-size:4em !important;
 	font-family: 'Limelight';
 	text-shadow: 5px 1px #cbdd86;
+	margin-left: 10px;
 }
 .btn-xlg {
     padding: 18px 28px;
@@ -182,14 +183,13 @@ img{
 	margin-left: 50px;
 }
 .smallGobackHomeArrow{
-	color:#58157e !important;
-	font-size:1.3em;
+	color:white !important;
+	font-size:2.3em;
 	transition: 1s all;
 	cursor: pointer;
 }
 .smallGobackHomeArrow:hover {
-	color:green !important;
-	font-size:1.3em;
+	color:#764d8e !important;
 	margin-left: -5px;
 }
 .goBack{
@@ -394,21 +394,13 @@ img{
 .material-icons.md-48 { font-size: 168px; margin-left: 0px;}
 .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
 
-header .jumbotron,.hero-spacer{
-	/*margin-top: 70px !important;*/
-}
-
 header .jumbotron, .hero-spacer{
-	/*font-weight: bold;*/
 	font-family: 'Arial';
-	/*max-height: 80vh;*/
-
 }
 .displayName{
 	color:#58157e !important;
 }
 body, html{
-	/*max-height: 500vh;*/
 	overflow-y: scroll !important;
 }
 #header-main{
@@ -423,13 +415,11 @@ body, html{
 	max-height: 65vh;
 }
 .filmCommentMailHeader{
-	/*background-color: #bfd9bf;*/
 	background-color: #f9dace;
 }
 .filmCommentMailOdd{
 	overflow: scroll;
 	background-color:#e6c8ff;
-	/*padding-bottom:15px;*/
 }
 .filmCommentMailEven{
 	overflow: scroll;
@@ -465,9 +455,6 @@ md-list {
 	background-color: #F0F8FF;
 	/*max-height: 80vh;*/
 }
-/*a:hover {
-    background-color: yellow;
-}*/
 md-list-item.filmCommentMailOdd:hover{
 	background-color: #CFB4E5;
 }
@@ -513,10 +500,6 @@ div .mailButton{
 	width: 70px !important;
 }
 div .settingsButton{
-	/*margin-top:12px;*/
-	/*margin-top:1%;*/
-	/*height: 70px !important;
-	width: 80px !important;*/
 	height: 100px !important;
 	width: 110px !important;
 }
