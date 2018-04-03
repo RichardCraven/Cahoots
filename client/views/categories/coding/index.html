@@ -67,12 +67,10 @@
                               </div>
                               <form  ng-show = 'vm.showCommentInput' name="newCodingProject" ng-submit="vm.addCodingPostComment(post.id,vm.comment)">
                                 <div flex>
-                                  <md-input-container class='width70 commentInputContainer' style='margin-top:50px'>
-                                    <!-- <label style='color:black' class='arial' >Brief Description</label> -->
-                                    <!-- <div md-no-asterisk ng-model="vm.post.description" placeholder=" " contenteditable required ></div> -->
+                                  <md-input-container class='width70 commentInputContainer' style='margin-top:50px' >
                                     <div class="expandingArea">
                                       <pre><span id='fakespan'></span><span class='blinking-cursor'>|</span><br></pre>
-                                      <textarea class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder="message" rows="10" required style='color:white; word-wrap: break-word; white-space: pre-wrap; height:1px; margin-top:-20px; font-size: 1px; cursor: pointer;' spellcheck="false"></textarea>
+                                      <textarea class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder="message" rows="10" required style='color:white; word-wrap: break-word; white-space: pre-wrap; height:1px; margin-top:-20px; font-size: 1px; cursor: pointer;' spellcheck="false" autofocus='true' md-autofocus></textarea>
                                     </div>
                                   </md-input-container>
                                   <div class='submitButtonContainer'>

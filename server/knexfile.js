@@ -3,7 +3,6 @@ module.exports = {
       client: 'pg',
       connection: {
         database: 'cahoots_db'
-
       }
     },
   production: {

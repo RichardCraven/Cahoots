@@ -437,12 +437,14 @@
 	  		 
 	  		 var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
 	  		 	 others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
-	  		 	  if(vm.toggleView === true){
+
+	  		 	if(vm.toggleView === true){
 				  vm.backButton = 'codingIndex';
 				  if(vm.leftWidth === 50){
 				  	vm.leftWidth = 100;
 				  	vm.showOwl = false;
 				  };
+				  console.log('selected is ', selected[0])
 		  		  selected[0].classList.add('focus')	  	;	
 		  		  others.forEach(function(i){i.style.display = 'none'});
     		  	  if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
