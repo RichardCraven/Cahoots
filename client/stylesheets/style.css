@@ -1,10 +1,10 @@
 body{
 	color:black;
-	background-color: #5a628d ;
+	background-color: none ;
 }
-/*label{
+label{
 	margin-bottom: 0px;
-}*/
+}
 .navbar-fixed-bottom, .navbar-fixed-top{
 	position: static ;
 }
@@ -331,7 +331,7 @@ img{
 }
 
 .settingsJumbo{
-	height: 80vh;
+	height: 53vh;
 	width: 60vw;
 	max-width: 765px;
 	display: inline-block;
@@ -413,11 +413,11 @@ body, html{
 }
 #header-main{
 	font-family: 'Amatic SC';
-	color: #610000;
+	color: white;
 }
 #header-main-mailbox{
 	font-family: 'Amatic SC';
-	color: #610000;
+	color: white;
 }
 #mailList{
 	max-height: 65vh;
@@ -500,7 +500,7 @@ header p{
 .caption h1 {
 	font-weight: bold;
 	font-family: 'Amatic SC';
-	color: #610000;
+	color: white;
 }
 .caption h4 {
 	font-family: 'Open Sans';
@@ -521,7 +521,7 @@ div .settingsButton{
 	width: 110px !important;
 }
 div .owlButton{
-	margin-left:45%;
+	margin: 0 auto;
 	height: 70px !important;
 	width: 80px !important;
 }
@@ -666,7 +666,7 @@ input[type=checkbox] {
 }
 .settingsCheckboxes{
 	/*padding-left: 155px;*/
-	padding-top: 27px;
+	/*padding-top: 27px;*/
 	/*width: 41vw;*/
 }
 .settingsCheckboxes .row{
@@ -683,7 +683,7 @@ input[type=checkbox] {
 	float: none;
 }
 .checkbox1,.checkbox2,.checkbox3{
-	width: 120px;
+	width: 101px;
 	height: 40px;
 	border-radius: 50px;
 	background: #333;
@@ -703,8 +703,8 @@ input[type=checkbox] {
 	font-family:  Roboto,"Helvetica Neue",sans-serif;
 	content: 'Off';
 	position: absolute;
-	top: 12px;
-	left: 84px;
+	top: 9px;
+	left: 70px;
 	height: 2px;
 	color: #ff0000;
 	font-size: 16px;
@@ -724,15 +724,15 @@ input[type=checkbox] {
 	background: #ddd;
 }
 .checkbox1 input[type=checkbox]:checked + label {
-	left: 60px;
+	left: 41px;
 	background: #26ca28;
 }
 .checkbox2 input[type=checkbox]:checked + label {
-	left: 60px;
+	left: 41px;
 	background: #26ca28;
 }
 .checkbox3 input[type=checkbox]:checked + label {
-	left: 60px;
+	left: 41px;
 	background: #26ca28;
 }
 .chatbox{
@@ -1035,6 +1035,11 @@ input.newPostTopicArea{
 #menu { padding:12.5px 25px 12.5px 25px; }
   
 .welcome { float:left; }
+
+.welcomeOptionsContainer{
+	width: 50%;
+	margin: 0 auto;
+}
   
 .logout { float:right; }
   
@@ -1063,7 +1068,7 @@ input.newPostTopicArea{
 	margin-left:10px; 
 }
 .submitButtonContainer{
-	width:120px; 
+	width:75px; 
 	display:inline-block;
 	color: black;
 	border: 1px solid black;
@@ -1076,16 +1081,15 @@ input.newPostTopicArea{
 	cursor: pointer;
 	background-color: green;
 }
+.submitRow {
+	display: flex;
+	justify-content: flex-end;
+	padding-left: 10%;
+    padding-right: 5%;
+}
 
 @media only screen 
 and (min-width : 1425px) {
-/*	.settingsCheckboxes{
-		padding-top: 27px;
-		width: 41vw;
-	}
-	.col-sm-offset-0{ 
-		margin-left: 0;	
-	}*/
 	.settingsGumbo{
 		display: inline-block;
 		height: 80vh;
@@ -1094,11 +1098,11 @@ and (min-width : 1425px) {
 	}
 	#settingsOwlVid{
 		display: block;
-	  	height: 100%;
+	  	height: 53vh;
 	  	border-radius: 6px;
-	  		width: 100%;
-	  	  	opacity: 0.6;
-	  	  	object-fit: inherit;
+  		width: 100%;
+  	  	opacity: 0.6;
+  	  	object-fit: inherit;
 	}
 }
 @media only screen 
@@ -1121,26 +1125,38 @@ and (min-width : 1690px) {
 	   	    /*margin-left: 200px;*/
 		}
 }
+@media only screen 
+and (max-width : 960px) {
+	.settingsJumbo{
+		height: 80vh;
+		min-width: 370px;
+	}
+	form.setText md-input-container{
+		max-width: 250px;
+	}
+}
 .container-fluid .jumbotron {
     padding-right: 15px;
     padding-left: 15px;
     border-radius: 6px;
 }
 
-.submitRow {
-	display: flex;
-	justify-content: flex-end;
-	padding-left: 10%;
-    padding-right: 5%;
-}
 .revisedThumbnail{
     display: block;
     margin-bottom: 20px;
     line-height: 1.42857143;
     background-color: #fff;
-    /*border: 1px solid #ddd;*/
     border-radius: 4px;
     -webkit-transition: border .2s ease-in-out;
     -o-transition: border .2s ease-in-out;
     transition: border .2s ease-in-out;
+}
+.dataShareMessageContainer{
+	position: fixed;
+	    top: 70%;
+	    background: grey;
+	    left: 14%;
+	    height: 100px;
+	    display: table-cell;
+	    vertical-align: middle;
 }

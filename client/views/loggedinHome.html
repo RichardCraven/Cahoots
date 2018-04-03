@@ -5,43 +5,38 @@
  <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div  class="loggedIn container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div id='navbar' class="navbar-header">
                 <a id='newloginButton' class="navbar-brand" ng-click="vm.login()" href="javascript:;" >Login</a>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                
-                    <span style='display:inline' id='newpic'><img style='display:inline-block' ng-src="{{vm.picture}}"
-                    alt=''></span>
-                
+            <div>
+                <span style='display:inline' id='newpic'><img style='display:inline-block' ng-src="{{vm.picture}}"
+                alt=''></span>
                 <div id='newname'>
                     <div> {{vm.name}}</div>
                     <a style='font-size:12px' id='newlogoutButton' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
                 </div>
              </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
 
     <!-- Page Content -->
     <div class="container-fluid">
-
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
             <h1 id='header-main' class='text-center'>{{vm.welcome}}</h1>
-            <mat-checkbox type='checkbox' labelPosition='before'>Check me!</mat-checkbox>
             <p class='text-left' id='header-description'></p>
-            <div class='pull-right settingsButton'><a href="/{{vm.user_id}}/userSettings" ><span><img src="images/gear.png" alt=""></span></a>
-            </div>
-            <div ng-show='!vm.hasMail' class='pull-left mailButton '><a href="/mailbox" ><span><img src="images/Inbox-empty.png" alt=""></span></a>
-            </div>
-            <div ng-show='vm.hasMail' class='pull-left mailButton '><a href="/mailbox" ><span><img src="images/Inbox-full.png" alt=""></span></a>
+            <div class="welcomeOptionsContainer">
+                <div class='pull-right settingsButton'><a href="/{{vm.user_id}}/userSettings" ><span><img src="images/gear.png" alt=""></span></a>
+                </div>
+                <div ng-show='!vm.hasMail' class='pull-left mailButton '><a href="/mailbox" ><span><img src="images/Inbox-empty.png" alt=""></span></a>
+                </div>
+                <div ng-show='vm.hasMail' class='pull-left mailButton '><a href="/mailbox" ><span><img src="images/Inbox-full.png" alt=""></span></a>
+                </div>
+                <div class='text-center owlButton '><a href="/" style='color:yellow'><span><img src="images/owl_clipped.png" alt=""></span></a>
+                </div>
             </div>
             
 
-            <div class='text-center owlButton '><a href="/" style='color:yellow'><span><img src="images/owl_clipped.png" alt=""></span></a>
-            </div>
         </header>
 
         <hr>
