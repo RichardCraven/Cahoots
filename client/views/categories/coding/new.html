@@ -22,32 +22,17 @@
                 <div flex style='margin-bottom: 40px;'>
                   <md-input-container class='width70'>
                     <label style='position: static' class='arial'>Framework</label>
-                    <!-- <input class='inputField' name="topic" md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus required> -->
                     <input autocomplete="off" name="topic" class= 'newPostTopicArea' md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus required style="height: 50px">
                   </md-input-container>
                   <div class='submitButtonContainer'>
                     <label for='submit-form'> Submit</label>
                   </div>
-                                         
-
-                                          <!-- padding-left: 44px; -->
-  
-
-
-                   <!-- <div>
-                     <md-content flex>
-                       <label for='submit-form' class="btn btn-4a btn-4a" > <i class="material-icons md-48" >add</i> Create Post</label>
-                     </md-content>
-                   </div> -->
                 </div>
                 <div flex >
                   <md-input-container class='width70'>
                     <label style='color:black' class='arial' >Brief Description</label>
-                    <!-- <div md-no-asterisk ng-model="vm.post.description" placeholder=" " contenteditable required ></div> -->
                     <div class="expandingArea">
                       <pre><span id='fakespan'></span><span class='blinking-cursor'>|</span><br></pre>
-
-                      <!-- <textarea></textarea> -->
                       <textarea class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.post.description" placeholder=" " rows="10" required style='color:white; word-wrap: break-word; white-space: pre-wrap; height:1px; margin-top:-20px; font-size: 1px' spellcheck="false"></textarea>
                     </div>
                   </md-input-container>

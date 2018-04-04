@@ -189,8 +189,8 @@ img{
 	cursor: pointer;
 }
 .smallGobackHomeArrow:hover {
-	color:#764d8e !important;
-	margin-left: -5px;
+	color:green !important;
+	margin-left: -10px;
 }
 .goBack{
 	font-size:1.5em;
@@ -1073,7 +1073,7 @@ input.newPostTopicArea{
 
 @media only screen 
 and (min-width : 1425px) {
-	.settingsGumbo{
+	.settingsOwlContainer{
 		display: inline-block;
 		height: 80vh;
 		width: 40vw;
@@ -1090,22 +1090,21 @@ and (min-width : 1425px) {
 }
 @media only screen 
 and (min-width : 1470px) {
-		.settingsGumbo{
+		.settingsOwlContainer{
 	   	    margin-left: 20px;
 		}
 }
 @media only screen 
 and (min-width : 1626px) {
-		.settingsGumbo{
+		.settingsOwlContainer{
 			width: 46vw;
 	   	    margin-left: 20px;
 		}
 }
 @media only screen 
 and (min-width : 1690px) {
-		.settingsGumbo{
+		.settingsOwlContainer{
 			width: 50vw;
-	   	    /*margin-left: 200px;*/
 		}
 }
 @media only screen 
@@ -1116,6 +1115,23 @@ and (max-width : 960px) {
 	}
 	form.setText md-input-container{
 		max-width: 250px;
+	}
+}
+
+@media only screen 
+and (max-height: 777px) {
+	.settingsJumbo{
+		height: 74vh;
+	}
+	.settingsOwlContainer{
+		/*margin-left: 5px;*/
+		height: 74vh;
+	}
+	#settingsOwlVid{
+		height: 74vh;
+	}
+	.navbar{
+		margin-bottom: 0px;
 	}
 }
 .container-fluid .jumbotron {

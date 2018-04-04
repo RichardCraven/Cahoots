@@ -444,7 +444,7 @@
 				  	vm.leftWidth = 100;
 				  	vm.showOwl = false;
 				  };
-				  console.log('selected is ', selected[0])
+				  // console.log('selected is ', selected[0])
 		  		  selected[0].classList.add('focus')	  	;	
 		  		  others.forEach(function(i){i.style.display = 'none'});
     		  	  if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
@@ -679,11 +679,15 @@
 	  		 		});
 
 		  		 	function makeExpandingArea(container) {
+    		  	  		 console.log('HERE999, container is ', container)
 		  		 	 var area = container.querySelector('textarea'),
 		  		 	 	 span = container.querySelector('#fakespan'),
 		  		 	     cursor = container.querySelector('.blinking-cursor'), areas;
 
 		  		 	 if(area.addEventListener) {
+		  		 	 	console.log('area is ', area)
+		  		 	 	// area.focus()
+		  		 	 	// cursor.style.visibility = 'visible'
 		  		 	   area.addEventListener('focus', function(){
 		  		 	     cursor.style.visibility = 'visible'
 		  		 	   })
