@@ -5,7 +5,7 @@
 (function(){
 	console.log("creating angular app")
 	angular
-		.module('collaboApp',['ngRoute','ui.bootstrap','ngMaterial','ngMap','auth0', 'angular-storage', 'angular-jwt','mrResponsiveParallax'])
+		.module('collaboApp',['ngRoute','ui.bootstrap','ngMaterial','ngMap','auth0', 'angular-storage', 'angular-jwt'])
 		// ,'ngMap'
 		.config(config)
 		.config(auth0)
@@ -48,11 +48,6 @@
 				  resolve: {
 					 user: getUserById
 				  }
-				})
-				.when( '/logout', {
-				  controller: 'LogoutCtrl',
-				  controllerAs: 'vm',
-				  templateUrl: '../views/logout/logout.html'
 				})
 				.when( '/misc', {
 				  controller: 'MiscCtrl',
@@ -255,7 +250,6 @@
 		      $rootScope.watch = true;
 
 		    });
-		    // $location.url('/'); // location after login.
 		  }]);
 
 		//Called when login fails
@@ -265,77 +259,61 @@
 	}
 	function getAllPosts(PostService){
 		return PostService.getPosts();
-	}
+	};
 	function getPostById(PostService,$route){
 		return PostService.getPost($route.current.params.id);
-	}
-
+	};
 	function getAllFilmPosts(FilmPostService){
 		return FilmPostService.getPosts();
-	}
+	};
 	function getFilmPostById(FilmPostService,$route){
 		return FilmPostService.getPost($route.current.params.id);
-	}
+	};
 	function getAllCodingPosts(CodingPostService){
 		return CodingPostService.getPosts();
-	}
+	};
 	function getCodingPostById(CodingPostService,$route){
 		return CodingPostService.getPost($route.current.params.id);
-	}
-
+	};
 	function getMusicPostById(MusicPostService,$route){
 		return MusicPostService.getPost($route.current.params.id);
-	}
+	};
 	function getUserById(UsersService,$route){
 		return UsersService.getUser($route.current.params.id);
-	}
+	};
 	function getUserAtHomePage(UsersService){
-		var id = JSON.parse(localStorage.profile).user_id
-		console.log ('getUserByID at home page. id = '+id)
+		var id = JSON.parse(localStorage.profile).user_id;
 		return UsersService.getUser(id)
-
-	}
+	};
 	function getAllMusicPosts(MusicPostService){
 		return MusicPostService.getPosts();
-	}
+	};
 	function getAllFilmMail(FilmPostCommentsService){
-		console.log('ok this is getAllFilmMail in app.js')
-		var user_id = JSON.parse(localStorage.profile).user_id
-		console.log('HOOOOOOOMAMAMAMAMAMAMA', FilmPostCommentsService.getMail(user_id))
+		var user_id = JSON.parse(localStorage.profile).user_id;
 		return FilmPostCommentsService.getMail(user_id);
-	}
+	};
 	function getAllMusicMail(MusicPostCommentsService){
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return MusicPostCommentsService.getMail(user_id);
-	}
+	};
 	function getAllCodingMail(CodingPostCommentsService){
-		console.log('in codingPostCommentsService via app.js, codingpostconvos is ', CodingPostCommentsService)
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return CodingPostCommentsService.getMail(user_id);
-	}
+	};
 	function getAllCodingCommentHistory(CodingPostCommentsService){
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return CodingPostCommentsService.getHistory(user_id);
-	}
+	};
 	function getAllCodingConvos(CodingPostConversationsService){
-		console.log('trying to get all coding convos')
-		// console.log(CodingPostCommentsService)
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return 'hi_mom'
-	}
-		// return CodingPostConversationsService.getConvos(user_id);
-
-
-
-
+	};
 	config.$inject = ['$routeProvider', '$locationProvider','authProvider']
 
 	runFunction.$inject = ['$rootScope', 'auth', 'store', 'jwtHelper', '$location','UsersService']
 
 	getAllPosts.$inject = ['PostService']
 	getPostById.$inject = ['PostService','$route']
-
-	// getAllCodingConvos.$inject = ['CodingPostConversationsService']
 
 	getAllFilmPosts.$inject = ['FilmPostService']
 	getFilmPostById.$inject = ['FilmPostService','$route']
@@ -347,16 +325,5 @@
 
 	getUserAtHomePage.$inject = ['UsersService']
 
-	// getAllFilmMail.$inject = ['FilmPostCommentsService']
-	// getAllMusicMail.$inject = ['MusicPostCommentsService']
-	// getAllCodingMail.$inject = ['CodingPostCommentsService']
-
 	auth0.$inject = ['authProvider']
-
-
 })()
-
-// var colorArr = ['#181e31','#2b3249','#b6962a','#ecd350','#6b1f0f']
-// var random = Math.round(Math.random() *11) 
-// console.log(random)
-// console.log(colorArr)

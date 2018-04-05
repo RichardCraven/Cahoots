@@ -7,6 +7,7 @@ label{
 }
 .navbar-fixed-bottom, .navbar-fixed-top{
 	position: static ;
+	height: 101px;
 }
 .glyphicon-arrow-right:before {
 	content: "\e092";
@@ -60,13 +61,12 @@ background-color:CadetBlue;
 }
 img{
 	width: 100%;
-	max-height: 475px;
 }
 .backgroundTransparent {
 	background: transparent;
 }
 
-#newpic img {
+.navbar .container img {
 	width: 100px;
 	height: 100px;
 }
@@ -157,6 +157,10 @@ img{
     -webkit-border-radius: 8px;
        -moz-border-radius: 8px;
             border-radius: 8px;
+}
+.navbar-brand.login-button{
+	margin-top: 1.5%;
+	margin-left: 33px;
 }
 .spacer{
 	height: 20px;
@@ -261,14 +265,11 @@ img{
 #add-filmPost:hover,#add-codingPost:hover,#add-musicPost:hover{
 	color: green; 
 }
-
-
 .postLine{
 	margin-top: 5px;
 	margin-bottom: 5px;
 	border: 0.5px solid rgb(140,158,255);
 }
-
 .odd{
 	background-color: #cce7ff;
 	padding:0px;
@@ -508,14 +509,11 @@ div .owlButton{
 	height: 70px !important;
 	width: 80px !important;
 }
-.navbar-brand{
-	margin-left: -15px;
-}
 .nav a{
 	font-size: 2em;
 }
 .navbar .container{
-	margin-left: 3%;
+	margin-left: 2%;
 }
 md-input-container{
 	font-size: 1.4em;
@@ -526,15 +524,6 @@ md-input-container{
   	height: 100vh;
   	object-fit: inherit;
 }
-#settingsOwlVid{
-	display: none;
-}
-#bs-example-navbar-collapse-1{
-	max-height: 100px;
-}
-#logoutButton{
-	display:none;
-}
 #pic img{
 	max-height: 100px;
 	max-width: 100px;
@@ -542,23 +531,14 @@ md-input-container{
 #pic img [ng-src*="http"]{
 	visibility: visible;
 }
-.inputField{
-	height: 40px !important;
-	overflow: scroll !important;
-	font-size:0.45em;
-	background-color: #c0cbd1 !important;
-	width: 100% !important;
-}
 .bottom-button{
 	position: absolute;
  	bottom: 7px;
 }
-
 #preFooter-hr{
 	color: black !important;
 	background-color: black !important;
 	width: 100vw !important;
-
 	border-top: 1px solid black;
 }
 
@@ -567,16 +547,14 @@ md-input-container{
     padding-left: 45px;
     margin-right: auto;
     margin-left: auto;
-    }
+}
 .postTextArea{
 	margin-bottom:5px;
 	height: 68vh;
 	width: 100%;
 	background-color: #F0F8FF;
-	/*z-index: 2;	*/
 }
 .postFilmResponseArea{
-	/*height: 33vh;*/
 	width: 100%;
 	border-radius: 20%;
 	padding-top:6%;
@@ -595,15 +573,11 @@ md-input-container{
 }
 md-input-container.md-default-theme label, 
  md-input-container.md-default-theme .md-placeholder{
-    color:white !important;
+    color:white;
 }
 md-input-container.md-default-theme.md-input{
 	font-color:white;
 	border-color:white;
-}
-
-.responseField{
-	/*background-color: green;*/
 }
 .postTextField{
 	padding:20px;
@@ -618,105 +592,6 @@ md-input-container.md-default-theme.md-input{
 .commentForm{
 	height: 35vh;
 	background-color: #fffdd3;
-}
-.zipCode{
-	margin-bottom: 0;
-}
-/*.settingsBio input{
-	overflow: scroll !important;
-	height: 17vh;
-}*/
-.settingsBio md-input-container{	
-	width: 100%;
-	/*height: 71%;*/
-	margin-top: -23px;
-}
-input.inputField{
-	border-radius: 10px;
-}
-.settingsBio md-input-container label{
-	color:black !important; 
-	position:relative;
-}
-.settingsBio textarea{
-	border-radius: 10px;
-	background-color: #c0cbd1;
-	margin-top:-16px;
-	font-size:0.45em;
-}
-input[type=checkbox] {
-	visibility: hidden;
-}
-.settingsCheckboxes{
-	/*padding-left: 155px;*/
-	/*padding-top: 27px;*/
-	/*width: 41vw;*/
-}
-.settingsCheckboxes .row{
-	/*height: 8vh;*/
-	margin-left: 15px;
-	margin-bottom: 30px;
-	height: 50px;
-	border-left: 1px solid cyan;
-	border-bottom: 1px solid cyan;
-}
-#chckbx1, #chckbx2, #chckbx3{
-	margin-top: 8px;
-	text-align: left;
-	float: none;
-}
-.checkbox1,.checkbox2,.checkbox3{
-	width: 101px;
-	height: 40px;
-	border-radius: 50px;
-	background: #333;
-	position: relative;
-}
-.checkbox1:before,.checkbox2:before,.checkbox3:before {
-	font-family:  Roboto,"Helvetica Neue",sans-serif;
-	content: 'On';
-	position: absolute;
-	top: 12px;
-	left: 13px;
-	height: 2px;
-	color: #26ca28;
-	font-size: 16px;
-}
-.checkbox1:after, .checkbox2:after, .checkbox3:after {
-	font-family:  Roboto,"Helvetica Neue",sans-serif;
-	content: 'Off';
-	position: absolute;
-	top: 9px;
-	left: 70px;
-	height: 2px;
-	color: #ff0000;
-	font-size: 16px;
-}
-.checkbox1 label, .checkbox2 label, .checkbox3 label {
-	display: block;
-	width: 52px;
-	height: 22px;
-	border-radius: 50px;
-
-	transition: all .5s ease;
-	cursor: pointer;
-	position: absolute;
-	top: 9px;
-	z-index: 1;
-	left: 12px;
-	background: #ddd;
-}
-.checkbox1 input[type=checkbox]:checked + label {
-	left: 41px;
-	background: #26ca28;
-}
-.checkbox2 input[type=checkbox]:checked + label {
-	left: 41px;
-	background: #26ca28;
-}
-.checkbox3 input[type=checkbox]:checked + label {
-	left: 41px;
-	background: #26ca28;
 }
 .chatbox{
 	border: 1px solid black;
@@ -1040,15 +915,14 @@ input.newPostTopicArea{
 .commentInputContainer label{
 	font-weight: 300;
 }
-
-.loggedIn{
-	margin-left:0px;
-}
-#newname{
+.name-container{
 	display:inline-block;
 	color:white; 
 	font-size:1.3em; 
 	margin-left:10px; 
+}
+.name-container a{
+	font-size: 12px;
 }
 .submitButtonContainer{
 	width:75px; 
@@ -1069,70 +943,6 @@ input.newPostTopicArea{
 	justify-content: flex-end;
 	padding-left: 10%;
     padding-right: 5%;
-}
-
-@media only screen 
-and (min-width : 1425px) {
-	.settingsOwlContainer{
-		display: inline-block;
-		height: 80vh;
-		width: 40vw;
-   	    margin-top: 25px;
-	}
-	#settingsOwlVid{
-		display: block;
-	  	height: 53vh;
-	  	border-radius: 6px;
-  		width: 100%;
-  	  	opacity: 0.6;
-  	  	object-fit: inherit;
-	}
-}
-@media only screen 
-and (min-width : 1470px) {
-		.settingsOwlContainer{
-	   	    margin-left: 20px;
-		}
-}
-@media only screen 
-and (min-width : 1626px) {
-		.settingsOwlContainer{
-			width: 46vw;
-	   	    margin-left: 20px;
-		}
-}
-@media only screen 
-and (min-width : 1690px) {
-		.settingsOwlContainer{
-			width: 50vw;
-		}
-}
-@media only screen 
-and (max-width : 960px) {
-	.settingsJumbo{
-		height: 80vh;
-		min-width: 370px;
-	}
-	form.setText md-input-container{
-		max-width: 250px;
-	}
-}
-
-@media only screen 
-and (max-height: 777px) {
-	.settingsJumbo{
-		height: 74vh;
-	}
-	.settingsOwlContainer{
-		/*margin-left: 5px;*/
-		height: 74vh;
-	}
-	#settingsOwlVid{
-		height: 74vh;
-	}
-	.navbar{
-		margin-bottom: 0px;
-	}
 }
 .container-fluid .jumbotron {
     padding-right: 15px;
@@ -1158,4 +968,14 @@ and (max-height: 777px) {
 	    height: 100px;
 	    display: table-cell;
 	    vertical-align: middle;
+}
+#video-background{
+	z-index:6;
+	width: 100vw;
+	opacity: 0.6;
+	height: 100vh;
+	object-fit: fill;
+}
+#owl{
+	object-fit:cover;
 }

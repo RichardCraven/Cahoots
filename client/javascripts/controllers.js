@@ -20,52 +20,47 @@
 		.controller('MiscCtrl',MiscCtrl)
 		.controller('HomeCtrl', HomeCtrl)
 		.controller('LoginHomeCtrl', LoginHomeCtrl)
-		.controller('LogoutCtrl', LogoutCtrl)
 		.controller('MailCtrl', MailCtrl)
 		.controller('LandingCtrl', LandingCtrl)
 		function LandingCtrl($location,auth, store,$timeout,$rootScope, UsersService){
-
 			var vm=this;
-			vm.auth = auth
 		  	var fadeOut = function(){
-		  		
 		  		location.href = '/home';
-		  		
 		  	};
 			if(localStorage.length > 0){
 		  		location.href = '/loggedinHome';
-		  	}
-	  		else {
+		  	} else {
 	  			localStorage.clear()
 	  			var fadeOut = $timeout(fadeOut,6900)
-	  		}
-
+	  		};
 		};
 		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService,ConvoRepoService){
 			var vm=this;
-			vm.auth = auth;
-
-			vm.name = JSON.parse(localStorage.profile).given_name
-			vm.navpicture = JSON.parse(localStorage.profile).picture
-			vm.filmCommentPosts = []
-			vm.musicPostComments = []
-			vm.codingPostComments = []
-			var myDisplayName;
-
-			var currentId = JSON.parse(localStorage.profile).user_id
-			UsersService.getUser(currentId).then(function(res){
-				myDisplayName = res.data.display_name
-			})
-			
-			for(let i = 0; i<filmMail.data.length; i++){
-					var id = filmMail.data[i].post_id
-					FilmPostService.getPost(id).then(function(res){
-					filmMail.data[i].recipient = res.data.display_name
-						if(res.data.display_name===myDisplayName){
-							filmMail.data[i].recipient = 'You'
-						}
-					})
-					vm.filmCommentPosts.push(filmMail.data[i])
+			vm.name = JSON.parse(localStorage.profile).given_name;
+			vm.navpicture = JSON.parse(localStorage.profile).picture;
+			vm.filmCommentPosts = [];
+			vm.musicPostComments = [];
+			vm.codingPostComments = [];
+			vm.user_id = JSON.parse(localStorage.profile).user_id;
+			var myDisplayName, post_id, fbUserId, facebook = /^(facebook)/,
+				numberPattern = /\d+/g;
+			UsersService.getUser(vm.user_id).then(function(res){
+				myDisplayName = res.data.display_name;
+			});
+			console.log('profile is ',JSON.parse(localStorage.profile) ,'facebook is ', facebook, 'test results is, ', JSON.parse(localStorage.profile).third_party_user_id)
+			if(facebook.test(vm.user_id)){
+				fbUserId = vm.user_id.match(numberPattern)[0];
+				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+			};
+			for(var i = 0; i<filmMail.data.length; i++){
+				// post_id = filmMail.data[i].post_id;
+				// FilmPostService.getPost(post_id).then(function(res){
+				// filmMail.data[i].recipient = res.data.display_name
+				// 	if(res.data.display_name===myDisplayName){
+				// 		filmMail.data[i].recipient = 'You'
+				// 	}
+				// })
+				vm.filmCommentPosts.push(filmMail.data[i])
 			}
 			for(var i = 0; i<musicMail.data.length; i++){
 					vm.musicPostComments.push(musicMail.data[i])
@@ -73,48 +68,28 @@
 			for(var i = 0; i<codingMail.data.length; i++){
 					vm.codingPostComments.push(codingMail.data[i])
 			}
-			vm.hasNewFilmMail = false
-			vm.hasNewMusicMail = false
-			vm.hasNewCodingMail = false
-
-			vm.showFilmMail = false
-			vm.showMusicMail = false
-			vm.showCodingMail = false
-
-			vm.showFilmResponseField = false
-			vm.showMusicResponseField = false
-			vm.showCodingResponseField = false
-
-			var responseAutoFocus = false
+			vm.hasNewFilmMail = vm.hasNewMusicMail = vm.hasNewCodingMail = 
+			vm.showFilmMail = vm.showMusicMail = vm.showCodingMail = 
+			vm.showFilmResponseField = vm.showMusicResponseField = 
+			vm.showCodingResponseField = false;
 
 			if(vm.filmCommentPosts.length>0){
 				vm.showFilmMail = true	
-			}
+			};
 			if(vm.musicPostComments.length>0){
 				vm.showMusicMail = true
-			}
+			};
 			if(vm.codingPostComments.length>0){
 				vm.showCodingMail = true
-			}
-
+			};
 			vm.logout = function(){
 				store.remove('profile')
 				store.remove('token')
 				location.href = '/home';c
-			}
-
-
+			};
 			vm.go = function ( path ) {
 			    $location.path( path );
-			  };
-
-
-			if(localStorage.length>0){
-				document.getElementById('newpic').style.display = 'inline';
-				document.getElementById('newpic').style.height = "100px !important" 
-				document.getElementById('newpic').style.width = '100px !important'
-			}
-
+			};
 			vm.newMessage = function(postId,message,category){
 				vm.post = {}
 				vm.post.category = category
@@ -123,23 +98,18 @@
 				vm.post.user_id = JSON.parse(localStorage.profile).user_id
 				var req = {post: vm.post};
 				ConvoRepoService.createMessage(req);
-			}
-
+			};
 			vm.deleteConvo = function(postId, comment, category){
 			};
-
-
-			var bool = true
 			vm.respondFilm = function(idx){
 				vm.messages = []
-				var eyedee = vm.filmCommentPosts[idx].id
-				ConvoRepoService.getMessages('film',eyedee).then(function(res){
+				var id = vm.filmCommentPosts[idx].id;
+				ConvoRepoService.getMessages('film',id).then(function(res){
 					res.data.forEach(function(e){
 						vm.messages.push({user:e.display_name,message:e.message})
-					})
-		  		})
-
-				vm.showFilmResponseField = !vm.showFilmResponseField
+					});
+		  		});
+				vm.showFilmResponseField = !vm.showFilmResponseField;
 				if(vm.showFilmResponseField === true){
 
 
@@ -151,24 +121,22 @@
 
 				}
 				if(vm.showFilmResponseField === false){
-					var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx)		  			
-					var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx)	
-					var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx)
-					selectedChatbox[0].style.display = 'none'
-					others.forEach(function(i){i.style.display = 'block'})
-
+					var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx),
+						others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx);
+					selectedChatbox[0].style.display = 'none';
+					others.forEach(function(i){i.style.display = 'block'});
 				};
 			}
 			vm.respondMusic = function(idx){
 				vm.showMusicResponseField = !vm.showMusicResponseField
 				if(vm.showMusicResponseField === true){
-				var selected = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i == idx)		  		
-				var others = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i !== idx)		  		
+				var selected = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i == idx),		  		
+					others = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i !== idx);		  		
 				others.forEach(function(i){i.style.display = 'none'})
 				}
 				if(vm.showMusicResponseField === false){
-					var selected = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i == idx)		  			
-					var others = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i !== idx)
+					var selected = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i == idx),		  			
+						others = Array.from(document.querySelectorAll('.postMusicResponseArea')).filter((v,i) => i !== idx);
 
 					others.forEach(function(i){i.style.display = 'block'})
 				}
@@ -176,138 +144,85 @@
 			vm.respondCoding = function(idx){
 				vm.showCodingResponseField = !vm.showCodingResponseField
 				if(vm.showCodingResponseField === true){
-				var selected = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i == idx)		  		
-				var others = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i !== idx)		  		
-				others.forEach(function(i){i.style.display = 'none'})
-				}
+				var selected = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i == idx),		  		
+				    others = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i !== idx);		  		
+				others.forEach(function(i){i.style.display = 'none'});
+				};
 				if(vm.showCodingResponseField === false){
-					var selected = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i == idx)		  			
-					var others = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i !== idx)
-
-					others.forEach(function(i){i.style.display = 'block'})
-				}
-			}
-
+					var selected = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i == idx),		  			
+						others = Array.from(document.querySelectorAll('.postCodingResponseArea')).filter((v,i) => i !== idx);
+					others.forEach(function(i){i.style.display = 'block'});
+				};
+			};
 		};
-		//testing
+
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 			var vm=this;
-			vm.auth = auth;
-			
 
 			if(localStorage.profile){
 		  		$location.path('/loggedinHome');
 		  	} else {
 		  		localStorage.clear();
-		  	}
-
+		  	};
 		  	vm.go = function ( path ) {
 			    $location.path( path );
 			  };
-
-			var doThisOnce = true
-			if(document.getElementById('video-background')&&doThisOnce){  
-			  	document.getElementById('video-background').addEventListener('loadedmetadata', function() {
-			  		
-			 	 this.currentTime = 2;
-			 	 doThisOnce = false
-				}, false);
-			}
 			vm.login = function (){
 				auth.signin({popup: true}, function(profile,token){
-				})
+				});
 			}
 			vm.logout = function(){
-				store.remove('profile')
-				store.remove('token')
-				localStorage.clear()
+				store.remove('profile');
+				store.remove('token');
+				localStorage.clear();
 			}
 		};
 		function MiscCtrl($location){
 			var vm=this;
 			vm.goBack = function(){
 				if(localStorage.length === 0){
-				$location.path('/home')
-				}
-				else if (localStorage.length>0){
-				$location.path('/loggedinHome')	
-				}
-			}
-		}
+					$location.path('/home');
+				} else if (localStorage.length>0){
+					$location.path('/loggedinHome');	
+				};
+			};
+		};
 		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,UsersService){
 			var vm=this,
 				facebook = /^(facebook)/,
 				numberPattern = /\d+/g,
 			    fbUserId, userName;
-			vm.auth = auth;
-			vm.welcome = 'Hey, beautiful';
-			
-			var getUser = function(id){
-				UsersService.getUser(id).then(function(user){
-					if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
-						vm.welcome = 'Hey, beautiful'
-					}
-					else {
-						userName = user.data.display_name
-						vm.welcome = ('Welcome '+user.data.display_name)
-					}
-				})
-			}
-			var id = JSON.parse(localStorage.profile).user_id
-			
-			getUser(id)
-			
-
+			vm.showLoginButton = false;
+			vm.user_id = JSON.parse(localStorage.profile).user_id;
 			vm.go = function ( path ) {
 			    $location.path( path );
 			};
-
-			vm.user_id = JSON.parse(localStorage.profile).user_id
+			UsersService.getUser(vm.user_id).then(function(user){
+				if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
+					vm.welcome = 'Welcome'
+				} else {
+					userName = user.data.display_name
+					vm.welcome = ('Welcome '+user.data.display_name)
+				};
+			});
 			vm.hasMail = false
 			if(localStorage.length>0){
-				vm.hasMail = true
-			}
-
-
+				// vm.hasMail = true
+			};
 			if(localStorage.length>0){
 				var user = JSON.parse(localStorage.profile)
 				vm.name = user.given_name
 				vm.picture = user.picture
 
-				console.log('got here, user.third party id is ', user.user_id, user)
 				if(facebook.test(user.user_id)){
-					console.log('aaaaand  here')
 					fbUserId = user.user_id.match(numberPattern)[0];
 					vm.picture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
 				}
-
-				document.getElementById('newpic').style.display = 'inline';
-				document.getElementById('newpic').style.height = "100px !important" 
-				document.getElementById('newpic').style.width = '100px !important'
-				document.getElementById('newloginButton').style.display = 'none';
-				document.getElementById('newlogoutButton').style.display = 'inline';
 			}
 
 
 			vm.logout = function(){
 				localStorage.clear()
-				document.getElementById('newloginButton').style.display = 'inline';
-				document.getElementById('newlogoutButton').style.display = 'none';
-				document.getElementById('newpic').style.display = 'none';
-				document.getElementById('newname').style.display = 'none';
-				location.href = '/home';
-			}
-		}
-		function LogoutCtrl($location,auth,store){
-			var vm = this;
-			vm.auth = auth;
-			vm.go = function ( path ) {
-			    $location.path( path );
-			  };
-
-			vm.logout = function(){
-				store.remove('profile')
-				store.remove('token')
 				location.href = '/home';
 			}
 		}
@@ -326,40 +241,37 @@
 		  	}	
 		}
 		function EditUserController(UsersService, $location,auth,store,user){ 
-			var vm = this;
+			var vm = this, fbUserId, facebook = /^(facebook)/, numberPattern = /\d+/g;
 			vm.user = user.data;
-			// vm.show
+			vm.user_id = JSON.parse(localStorage.profile).user_id;
+			vm.navpicture = JSON.parse(localStorage.profile).picture;
+			vm.name = JSON.parse(localStorage.profile).given_name;
+
 			if(vm.user.display_name==null||vm.user.display_name==undefined){
 				vm.user.display_name = ''
-			}
+			};
 			if(vm.user.zip_code==null){
 				vm.user.zip_code = ' '
-			}
+			};
 			if(vm.user.bio===null){
 				vm.user.bio = ' '
-			}
-			vm.auth = auth;
-
-			vm.navpicture = JSON.parse(localStorage.profile).picture
-
-			vm.name = JSON.parse(localStorage.profile).given_name
-
+			};
+			if(facebook.test(vm.user_id)){
+				fbUserId = vm.user_id.match(numberPattern)[0];
+				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+			};
 			vm.logout = function(){
 				store.remove('profile')
 				store.remove('token')
 				$location.path('/home')
 			}
-
 			vm.updateUser = function(user){
 				var req = {user: user}
 				UsersService.updateUser(req).then(function(res){					
 				$location.path('/loggedinHome');
 				})
-			}
-		}
-
-
-
+			};
+		};
 //~~~~~~CODING POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, codingHistory, $timeout, $rootScope, CodingPostConversationsService){
 
@@ -413,9 +325,7 @@
 					fbUserId = i.third_party_user_id.match(numberPattern)[0];
 					i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
 				}
-			})
-
-			//handles the back button
+			});
 		  	vm.goBack = function(){
 	  		 if(localStorage.length === 0){
 	  			$location.path('/home')
@@ -429,12 +339,10 @@
 		  	};
 			 vm.show = function(idx){
 		  	 vm.tempIndex = idx;
-	  		 vm.toggleView = !vm.toggleView
-	  		 vm.showText = !vm.showText
-	  		 vm.showVid = !vm.showVid
+	  		 vm.toggleView = !vm.toggleView;
+	  		 vm.showText = !vm.showText;
+	  		 vm.showVid = !vm.showVid;
 
-
-	  		 
 	  		 var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
 	  		 	 others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
 
@@ -444,7 +352,6 @@
 				  	vm.leftWidth = 100;
 				  	vm.showOwl = false;
 				  };
-				  // console.log('selected is ', selected[0])
 		  		  selected[0].classList.add('focus')	  	;	
 		  		  others.forEach(function(i){i.style.display = 'none'});
     		  	  if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
@@ -666,7 +573,6 @@
 
   		 		  $timeout(function() {
   		 		  	if(vm.showChat){
-  		 		  		console.log('ha! it worked')
   		 		  		return
   		 		  	}
 	  		 		vm.showMap = true;
@@ -1097,7 +1003,6 @@
 
 		LandingCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 
-		LogoutCtrl.$inject = ['$location','auth','store']
 
 		MiscCtrl.$inject = ['$location']
 

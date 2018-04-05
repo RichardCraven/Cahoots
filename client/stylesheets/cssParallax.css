@@ -6,7 +6,6 @@
     -webkit-perspective: 300px;
     perspective: 300px;
   }
-
   .parallax__group {
     position: relative;
     height: 500px; /* fallback for older browsers */
@@ -74,14 +73,6 @@
     transition: transform 0.5s;
   }
 
-
-  /* demo styles
-  --------------------------------------------- */
-
-  /*body, html {
-    overflow: hidden;
-  }*/
-
   body {
     font: 100% / 1.5 Arial;
   }
@@ -109,99 +100,11 @@
 
   /* style the groups
   --------------------------------------------- */
-  #video-background{
-  	z-index:6;
-  	width: 100vw;
-  	opacity: 0.6;
-  	height: 100vh;
-  	object-fit: fill;
-  }
-  #owl{
-  	object-fit:cover;
-  }
-  #group1 {
-    z-index: 5; /* slide over group 2 */
-  }
-  #group1 .parallax_group{
-  	height: 200px;
-  }
+  
   .parallax .jumbotron{
-
     animation-delay:6s; -moz-animation-delay:6s; -webkit-animation-delay:6s;
      -webkit-transition: all 4.8s ease-in-out;
     -moz-transition: all 4.8s ease-in-out;
     -o-transition: all 4.8s ease-in-out;
     transition: all 4.8s ease-in-out;
-  }
-  #group2,.parallax_group{
-  	position:absolute;
-  	z-index: 0;
-  	height: 100vh;
-  	width: 100vw;
-  	background-color: blue;
-    animation-delay:7.8s; -moz-animation-delay:7.8s; -webkit-animation-delay:7.8s;
-     -webkit-transition: all 2s ease-in-out;
-    -moz-transition: all 2s ease-in-out;
-    -o-transition: all 2s ease-in-out;
-    transition: all 2s ease-in-out;
-  }
-
-  #group2 {
-    z-index: 3; /* slide under groups 1 and 3 */
-  }
-  #group2 .parallax__layer--back {
-      
-	   -webkit-background-size: cover;
-	   -moz-background-size: cover;
-	   -o-background-size: cover;
-	   background-size: cover;
-  }
-
-  #group3 {
-    z-index: 4; /* slide over group 2 and 4 */
-  }
-  #group3 .parallax__layer--base,{
-          background-color: #f2f2f2;
-	   height: 100vh;
-  }
-
-  #group4 {
-    z-index: 2; /* slide under group 3 and 5 */
-  }
-  #group4 .parallax__layer--deep {
-    background: rgb(184,223,101);
-  }
-
-  #group5 {
-    z-index: 3; /* slide over group 4 and 6 */
-  }
-  #group5 .parallax__layer--base {
-    background: rgb(214,229,100);
-  }
-
-  #group6 {
-    z-index: 2; /* slide under group 5 and 7 */
-  }
-  #group6 .parallax__layer--back {
-    background: rgb(245,235,100);
-  }
-
-  #group7 {
-    z-index: 3; /* slide over group 7 */
-  }
-  #group7 .parallax__layer--base {
-    background: rgb(255,241,100);
-  }
-
-
-  /* misc
-  --------------------------------------------- */
-  .demo__info {
-    position: absolute;
-    z-index:100;
-    bottom: 1vh;
-    top: auto;
-    font-size:80%;
-    text-align:center;
-    width: 100%;
   }

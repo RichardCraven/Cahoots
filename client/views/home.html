@@ -1,105 +1,62 @@
      <!-- Custom CSS -->
     <link href="stylesheets/heroic-features.css" rel="stylesheet">
 
-
- <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div id='navbar' class="navbar-header">
-                <a id='loginButton' class="navbar-brand" ng-click="vm.login()" href="javascript:;" >Login</a>
+        <!-- <div class="container"> -->
+            <div>
+                <a class="navbar-brand login-button" ng-click="vm.login()" href="javascript:;" >Login</a>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-                <span style='display:inline-block' id='pic'><img style='display:inline-block' ng-src="{{vm.picture}}"
-                alt=''></span>
-
-                <div id='name'  style='display:inline-block; color:white; font-size:3em; margin-left:10px; margin-top: 20px;'>
-                    <div> {{vm.name}}</div>
-                    <a style='font-size:12px' id='logoutButton' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
-                </div>
-                
-             </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
+        <!-- </div> -->
     </nav>
-
-    <!-- Page Content -->
     <div class="container-fluid">
-
-        <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
-            <!-- <h1 id='header-main' class='text-center'>SOMETHING'S WRONG! </h1> -->
-            <!-- <p class='text-center' id='header-description'>Working out some bugs... please come back later</p> -->
             <h1 id='header-main' class='text-center'>Welcome to Cahoots!</h1>
             <p class='text-center' id='header-description'>The creative collaboration network for the modernist.</p>
             <div class='text-center owlButton '> <hr> <a href="/" style='color:yellow'><span><img src="images/owl_clipped.png" alt=""></span></a>
             </div>
         </header>
-
         <hr>
-
-  
-        <!-- Page Features -->
         <div class="row text-center">
-            
             <div class="col-md-3 col-sm-6 hero-feature">
-
                 <div class="revisedThumbnail" ng-click="vm.go('/filmPosts')">
                     <img  src="images/film4.jpg" alt="">
                     <div class="caption">
                         <h1>Film</h1>
-                        <!-- <h4>make squeal-inducing moving pictures!</h4> -->
                     </div>
                 </div>
-
             </div>
-
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="revisedThumbnail" ng-click="vm.go('/musicPosts')">
                     <img src="images/music5.jpg" alt="">
                     <div class="caption">
                         <h1>Music</h1>
-                        <!-- <h4>Find a tamborine player!</h4> -->
                     </div>
                 </div>
             </div>
-
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="revisedThumbnail" ng-click="vm.go('/codingPosts')">
                     <img src="images/coding2.jpg" alt="">
                     <div class="caption">
                         <h1>Coding</h1>
-                        <!-- <h4>Find someone to code with!</h4> -->
                     </div>
                 </div>
             </div>
-
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="revisedThumbnail" ng-click="vm.go('/misc')">
                     <img src="images/DIY.jpg" alt="">
                     <div class="caption">
                         <h1>DIY Projects</h1>
-                        <!-- <h4>Find a fellow hobbyist!</h4> -->
                     </div>
                 </div>
             </div>
-
         </div>
-        <!-- /.row -->
-
-
     </div>
-        <hr id='preFooter-hr'>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div  class="col-lg-12 text-center">
-                    <p>Copyright &copy; cravenTech 2016 || the world is your oyster</p>
-                </div>
+    <hr id='preFooter-hr'>
+    <footer>
+        <div class="row">
+            <div  class="col-lg-12 text-center">
+                <p>Copyright &copy; cravenTech 2016 || the world is your oyster</p>
             </div>
-        </footer>
-    <!-- /.container -->
+        </div>
+    </footer>
 

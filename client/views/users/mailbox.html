@@ -1,41 +1,21 @@
      <!-- Custom CSS -->
     <link href="stylesheets/heroic-features.css" rel="stylesheet">
 
-
- <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div  class="container" style='margin-left: 0px'>
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <!-- <div id='navbar' class="navbar-header">
-                <a id='newloginButton' class="navbar-brand" ng-click="vm.login()" href="javascript:;" >Login</a>
-            </div> -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                
-                    <span style='display:inline' id='newpic'><img style='display:inline-block' ng-src="{{vm.navpicture}}"
-                    alt=''></span>
-                
-                <div id='newname'  style='display:inline-block; color:white; font-size:3em; margin-left:10px; margin-top: 20px;'>
-                    <div> {{vm.name}}</div>
-                    <a style='font-size:12px' id='newlogoutButton' class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
-                </div>
-             </div>
-            <!-- /.navbar-collapse -->
+        <div class="container" >
+          <img ng-src="{{vm.navpicture}}">
+          <div class='name-container'>
+              <div> {{vm.name}}</div>
+              <a class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
+          </div>
         </div>
-        <!-- /.container -->
     </nav>
-
-    <!-- Page Content -->
     <div class="container-fluid" style='overflow:scroll'>
-
-        <!-- Jumbotron Header -->
-
         <header class="jumbotron hero-spacer">
             <a href="/loggedinHome" class="goBack">
               <span class="glyphicon glyphicon-arrow-left"></span>
             </a>
             <h1 id='header-main-mailbox' class='text-center'>MAILBOX</h1>
-            
-
               <div layout-gt-sm="column" >
                 <div flex-gt-sm="80">
                   <md-content>
@@ -66,9 +46,6 @@
                                               </h6>
                                             </div>
                                             <div flex='30'>
-                                              <!-- <a href="/loggedinHome" class="delete">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                              </a> -->
                                               <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.testies"
                                               >
                                                 <span class="glyphicon glyphicon-remove "></span>
@@ -100,11 +77,6 @@
                                             <button ng-click='vm.deleteConvo(post.id, vm.comment, "film")' class="btn btn-danger">Delete Conversation</button>
                                           </div>
                                         </div>
-                                      <!--   <div layout='row'>
-                                          <form ng-submit='vm.testies()' class='testies'>
-                                          <button type="submit" class="btn btn-danger">Delete</button>
-                                          </form>
-                                        </div> -->
                                       </div>
                                       <div flex='50'  >
                                         <div class='chatbox' flex>
