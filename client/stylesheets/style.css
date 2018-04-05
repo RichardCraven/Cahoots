@@ -331,13 +331,7 @@ img{
 	height: 100px;
 }
 
-.settingsJumbo{
-	height: 53vh;
-	width: 60vw;
-	max-width: 765px;
-	display: inline-block;
-	float:left;
-}
+
 
 .formText{
 	margin-top: 16%;
@@ -412,74 +406,7 @@ body, html{
 	font-family: 'Amatic SC';
 	color: white;
 }
-#mailList{
-	max-height: 65vh;
-}
-.filmCommentMailHeader{
-	background-color: #f9dace;
-}
-.filmCommentMailOdd{
-	overflow: scroll;
-	background-color:#e6c8ff;
-}
-.filmCommentMailEven{
-	overflow: scroll;
-	background-color: #d1ffd9;
-}
-div.md-list-item-text{
-	width: 100%;
-}
-.musicCommentMailHeader{
-	/*background-color: #bfd9bf;*/
-	background-color: #a6e7c5;
-}
-.musicCommentMailOdd{
-	overflow: scroll;
-	background-color:#e6c8ff;
-}
-.musicCommentMailEven{
-	overflow: scroll;
-	background-color: #d1ffd9;
-}
-.codingCommentMailHeader{
-	background-color: #c7aeff;
-}
-.codingCommentMailOdd{
-	overflow: scroll;
-	background-color:#e6c8ff;
-}
-.codingCommentMailEven{
-	overflow: scroll;
-	background-color: #d1ffd9;
-}
-md-list {
-	background-color: #F0F8FF;
-	/*max-height: 80vh;*/
-}
-md-list-item.filmCommentMailOdd:hover{
-	background-color: #CFB4E5;
-}
-md-list-item.filmCommentMailEven:hover{
-	background-color: #BCE5C3;
-}
-md-list-item.musicCommentMailOdd:hover{
-	background-color: #CFB4E5;
-}
-md-list-item.musicCommentMailEven:hover{
-	background-color: #BCE5C3;
-}
-md-list-item.codingCommentMailOdd:hover{
-	background-color: #CFB4E5;
-}
-md-list-item.codingCommentMailEven:hover{
-	background-color: #BCE5C3;
-}
-md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple{
-	font-size:5em;
-}
-md-pagination-wrapper{
-	width: 100% !important;
-}
+
 
 
 header p{
@@ -497,17 +424,17 @@ header p{
 
 }
 div .mailButton{
-	height: 60px !important;
-	width: 70px !important;
+	height: 60px;
+	width: 70px;
 }
 div .settingsButton{
-	height: 100px !important;
-	width: 110px !important;
+	height: 100px;
+	width: 110px;
 }
 div .owlButton{
 	margin: 0 auto;
-	height: 70px !important;
-	width: 80px !important;
+	height: 70px;
+	width: 80px;
 }
 .nav a{
 	font-size: 2em;
@@ -947,7 +874,7 @@ input.newPostTopicArea{
 .container-fluid .jumbotron {
     padding-right: 15px;
     padding-left: 15px;
-    border-radius: 6px;
+    border-radius: 0px;
 }
 
 .revisedThumbnail{

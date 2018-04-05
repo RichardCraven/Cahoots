@@ -109,6 +109,9 @@
 					controllerAs: 'vm',
 					resolve: {
 						posts: getAllMusicPosts
+						// musicMail: getAllMusicMail,
+						// musicHistory: getAllMusicCommentHistory,
+						// musicConvos: getAllMusicConvos
 					//^resolve waits for the promise to get resolved and stores it as posts, then injects it into the controller
 					}
 				})
@@ -304,10 +307,11 @@
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return CodingPostCommentsService.getHistory(user_id);
 	};
-	function getAllCodingConvos(CodingPostConversationsService){
-		var user_id = JSON.parse(localStorage.profile).user_id
-		return 'hi_mom'
-	};
+	// function getAllCodingConvos(CodingPostConversationsService){
+	// 	var user_id = JSON.parse(localStorage.profile).user_id
+	// 	return 'hi_mom'
+	// };
+	
 	config.$inject = ['$routeProvider', '$locationProvider','authProvider']
 
 	runFunction.$inject = ['$rootScope', 'auth', 'store', 'jwtHelper', '$location','UsersService']

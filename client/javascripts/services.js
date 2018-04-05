@@ -1,6 +1,4 @@
 //SERVICES MANAGE DATA BETWEEN ANGULAR AND BACK END
-
-
 (function() {
 
 	angular
@@ -79,124 +77,95 @@
 			this.updatePost = function(data){
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
 			}
-		}
+		};
 		function FilmPostService($http){
-		 	const BASE_URL = '/api/film'
+		 	const BASE_URL = '/api/film';
 
 			this.getPosts = function(){
 				return $http.get(BASE_URL)
-			}
-
+			}:
 			this.createPost = function(newPost){
 				return $http.post(BASE_URL, newPost); //on server req.body.post
-			}
-
-			// this.createPostComment = function(comment){
-			// 	return $http.post(BASE_URL, comment);
-			// }
-			
-
+			};
 			this.getPost = function(id){
 				return $http.get(BASE_URL + '/' + id)
-			}
-
+			};
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
-			}
-
+			};=
 			this.updatePost = function(data){
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
-			}
-		}
+			};
+		};
 		function FilmPostCommentsService($http){
-		 	const BASE_URL = '/api/filmPostComments'
-
+		 	const BASE_URL = '/api/filmPostComments';
 
 			this.getMail = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
-			}
-
+			};
 			this.createPost = function(newPost){
 				return $http.post(BASE_URL, newPost); //on server req.body.post
-			}
+			};
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
-			}
-
+			};
 			this.updatePost = function(data){
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
-			}
-		}
+			};
+		};
 		function CodingPostService($http){
 		 	const BASE_URL = '/api/coding'
 
 			this.getPosts = function(){
 				return $http.get(BASE_URL)
-			}
-
+			};
 			this.createPost = function(newPost){
 				return $http.post(BASE_URL, newPost); //on server req.body.post
-			}
-
+			};
 			this.getPost = function(id){
 				return $http.get(BASE_URL + '/' + id)
-			}
-
+			};
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
-			}
-
+			};
 			this.updatePost = function(data){
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
-			}
-		}
+			};
+		};
 		function CodingPostCommentsService($http){
 		 	const BASE_URL = '/api/codingPostComments'
 			this.getMail = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
-			}
-
+			};
 			this.getHistory = function(user_id){
 				return $http.get(BASE_URL+'/history/'+user_id)
-			}
-
-
+			};
 			this.createPost = function(newPost){
-
 				return $http.post(BASE_URL, newPost); //on server req.body.post
-			}
+			};
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
-			}
-
+			};
 			this.updatePost = function(data){
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
-			}
-		}
+			};
+		};
 		function CodingPostConversationsService($http){
-				
 		 	const BASE_URL = '/api/codingPostConversations'
 			this.getConvos = function(first_comment_id){
 				console.log('in convos service!!! comment id is ', first_comment_id)
 				return $http.get(BASE_URL+'/'+first_comment_id)
 			};
-			// this.checkResponses = function(first_comment_id){
-			// 	return $http.get(BASE_URL+'/'+first_comment_id)
-			// };
 			this.createMessage = function(message){
-
-				console.log('in create convo  service, convo message is ', message)
-
 				return $http.post(BASE_URL, message); //on server req.body.post
-			}
+			};
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
-			}
-
+			};
 			this.updatePost = function(data){
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
-			}
-		}
+			};
+		};
 		function UsersService($http){
 		 	const BASE_URL = '/api/users'
 		 	

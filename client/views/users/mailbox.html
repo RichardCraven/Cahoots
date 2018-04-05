@@ -21,7 +21,7 @@
                   <md-content>
                     <md-tabs md-dynamic-height md-border-bottom>
                           <md-tab style='font-size:5em' label="FILM" >
-                            <md-content class="md-padding">
+                            <md-content class="">
                               <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'"  >
                                 <div class="md-list-item-text" >
                                     <div id='postRow' layout='row' ng-click='vm.respondFilm($index)'>
@@ -92,7 +92,7 @@
 
                           </md-tab>
                           <md-tab label="MUSIC">
-                            <md-content class="md-padding">
+                            <md-content class="">
                               <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap"  md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
 
                                 <div class="md-list-item-text">
@@ -134,7 +134,7 @@
 
 
                           <md-tab label="CODING">
-                            <md-content class="md-padding">
+                            <md-content class="">
                               <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
                                 <div class="md-list-item-text">
                                     <div layout='row' ng-click='vm.respondCoding($index)'>
@@ -168,17 +168,17 @@
 
 
                           <md-tab label="Dogs">
-                            <md-content class="md-padding">
+                            <md-content class="">
 
                               <md-tabs md-dynamic-height md-border-bottom>
                                 <md-tab label="Dog Mingling">
-                                  <md-content class="md-padding">
+                                  <md-content class="">
                                     <h1 class="md-display-2">Mingle!</h1>
                                     <p>Get your pup on</p>
                                   </md-content>
                                 </md-tab>
                                 <md-tab label="Dog Adoption">
-                                  <md-content class="md-padding">
+                                  <md-content class="">
                                     <h1 class="md-display-2">Adopt some pups!</h1>
                                     <p>Adopt!</p>
                                   </md-content>
@@ -189,7 +189,7 @@
                           </md-tab>
 
                           <md-tab label="JOBS">
-                            <md-content class="md-padding">
+                            <md-content class="">
                               <h1 class="md-display-2">Get a job, my man!</h1>
                               <p>wtf yo</p>
                             </md-content>

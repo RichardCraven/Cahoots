@@ -1,0 +1,70 @@
+#mailList{
+	max-height: 65vh;
+}
+.filmCommentMailHeader{
+	background-color: #f9dace;
+}
+.filmCommentMailOdd{
+	overflow: scroll;
+	background-color:#e6c8ff;
+}
+.filmCommentMailEven{
+	overflow: scroll;
+	background-color: #d1ffd9;
+}
+div.md-list-item-text{
+	width: 100%;
+}
+.musicCommentMailHeader{
+	/*background-color: #bfd9bf;*/
+	background-color: #a6e7c5;
+}
+.musicCommentMailOdd{
+	overflow: scroll;
+	background-color:#e6c8ff;
+}
+.musicCommentMailEven{
+	overflow: scroll;
+	background-color: #d1ffd9;
+}
+.codingCommentMailHeader{
+	background-color: #c7aeff;
+}
+.codingCommentMailOdd{
+	overflow: scroll;
+	background-color:#a0c4d8;
+	background-color:white;
+}
+.codingCommentMailEven{
+	overflow: scroll;
+	background-color: #bad3e2;
+	background-color:white;
+}
+md-list {
+	background-color: #F0F8FF;
+	/*max-height: 80vh;*/
+}
+md-list-item.filmCommentMailOdd:hover{
+	background-color: #CFB4E5;
+}
+md-list-item.filmCommentMailEven:hover{
+	background-color: #BCE5C3;
+}
+md-list-item.musicCommentMailOdd:hover{
+	background-color: #CFB4E5;
+}
+/*md-list-item.musicCommentMailEven:hover{
+	background-color: #BCE5C3;
+}*/
+md-list-item.codingCommentMailOdd:hover{
+	background-color: rgb(255,64,129);
+}
+md-list-item.codingCommentMailEven:hover{
+	background-color: rgb(255,64,129);
+}
+md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple{
+	font-size:2em;
+}
+md-pagination-wrapper{
+	width: 100% !important;
+}
