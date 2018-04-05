@@ -82,10 +82,9 @@
 					controller: 'FilmPostsController',
 					controllerAs: 'vm',
 					resolve: {
-						// document.getElementById('map').style.height = '100%'  <---- how can I do this?
 						posts: getAllFilmPosts,
-						filmMail: getAllFilmMail
-						// filmMail: getAllFilmMail
+						filmMail: getAllFilmMail,
+						filmHistory: getAllFilmCommentHistory,
 					//^resolve waits for the promise to get resolved and stores it as posts, then injects it into the controller
 					}
 				})
@@ -108,10 +107,9 @@
 					controller: 'MusicPostsController',
 					controllerAs: 'vm',
 					resolve: {
-						posts: getAllMusicPosts
-						// musicMail: getAllMusicMail,
-						// musicHistory: getAllMusicCommentHistory,
-						// musicConvos: getAllMusicConvos
+						posts: getAllMusicPosts,
+						musicMail: getAllMusicMail,
+						musicHistory: getAllMusicCommentHistory,
 					//^resolve waits for the promise to get resolved and stores it as posts, then injects it into the controller
 					}
 				})
@@ -137,7 +135,7 @@
 						posts: getAllCodingPosts,
 						codingMail: getAllCodingMail,
 						codingHistory: getAllCodingCommentHistory,
-						codingConvos: getAllCodingConvos
+						// codingConvos: getAllCodingConvos
 					//^resolve waits for the promise to get resolved and stores it as posts, then injects it into the controller
 					}
 				})
@@ -272,32 +270,19 @@
 	function getFilmPostById(FilmPostService,$route){
 		return FilmPostService.getPost($route.current.params.id);
 	};
+	function getAllFilmMail(FilmPostCommentsService){
+		var user_id = JSON.parse(localStorage.profile).user_id;
+		return FilmPostCommentsService.getMail(user_id);
+	};
+	function getAllFilmCommentHistory(FilmPostCommentsService){
+		var user_id = JSON.parse(localStorage.profile).user_id
+		return FilmPostCommentsService.getHistory(user_id);
+	};
 	function getAllCodingPosts(CodingPostService){
 		return CodingPostService.getPosts();
 	};
 	function getCodingPostById(CodingPostService,$route){
 		return CodingPostService.getPost($route.current.params.id);
-	};
-	function getMusicPostById(MusicPostService,$route){
-		return MusicPostService.getPost($route.current.params.id);
-	};
-	function getUserById(UsersService,$route){
-		return UsersService.getUser($route.current.params.id);
-	};
-	function getUserAtHomePage(UsersService){
-		var id = JSON.parse(localStorage.profile).user_id;
-		return UsersService.getUser(id)
-	};
-	function getAllMusicPosts(MusicPostService){
-		return MusicPostService.getPosts();
-	};
-	function getAllFilmMail(FilmPostCommentsService){
-		var user_id = JSON.parse(localStorage.profile).user_id;
-		return FilmPostCommentsService.getMail(user_id);
-	};
-	function getAllMusicMail(MusicPostCommentsService){
-		var user_id = JSON.parse(localStorage.profile).user_id
-		return MusicPostCommentsService.getMail(user_id);
 	};
 	function getAllCodingMail(CodingPostCommentsService){
 		var user_id = JSON.parse(localStorage.profile).user_id
@@ -307,11 +292,32 @@
 		var user_id = JSON.parse(localStorage.profile).user_id
 		return CodingPostCommentsService.getHistory(user_id);
 	};
+	function getAllMusicPosts(MusicPostService){
+		return MusicPostService.getPosts();
+	};
+	function getMusicPostById(MusicPostService,$route){
+		return MusicPostService.getPost($route.current.params.id);
+	};
+	function getAllMusicMail(MusicPostCommentsService){
+		var user_id = JSON.parse(localStorage.profile).user_id
+		return MusicPostCommentsService.getMail(user_id);
+	};
+	function getAllMusicCommentHistory(MusicPostCommentsService){
+		var user_id = JSON.parse(localStorage.profile).user_id
+		return MusicPostCommentsService.getHistory(user_id);
+	};
+	function getUserById(UsersService,$route){
+		return UsersService.getUser($route.current.params.id);
+	};
+	function getUserAtHomePage(UsersService){
+		var id = JSON.parse(localStorage.profile).user_id;
+		return UsersService.getUser(id)
+	};
 	// function getAllCodingConvos(CodingPostConversationsService){
 	// 	var user_id = JSON.parse(localStorage.profile).user_id
 	// 	return 'hi_mom'
 	// };
-	
+
 	config.$inject = ['$routeProvider', '$locationProvider','authProvider']
 
 	runFunction.$inject = ['$rootScope', 'auth', 'store', 'jwtHelper', '$location','UsersService']

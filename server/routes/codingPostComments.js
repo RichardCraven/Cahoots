@@ -25,7 +25,6 @@ router.get('/history/:id', function(req,res){
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('c.user_id',req.params.id)
 	.then(function(comment){
-		console.log('IN ROUTES, HISTORY. COMMENT IS ', comment)
 		res.send(comment)
 	})
 })

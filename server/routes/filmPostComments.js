@@ -4,14 +4,11 @@ const knex = require('../db/knex')
 
 
 router.get('/', function (req,res){
-console.log(req.body)
-console.log(req.body.user_id)	
-
-knex('film_post_comments').where('user_id',req.body)
+	knex('film_post_comments').where('user_id',req.body)
 	.then(function(post){
 		res.send(post)
 	})
-})
+});
 router.get('/:id', function(req,res){
 	knex.select(['c.comment','fp.topic','u.user_pic','u.display_name','c.id','c.post_id']).from('film_posts as fp')
 	.join('film_post_comments as c', 'c.post_id', '=', 'fp.id')
@@ -21,7 +18,17 @@ router.get('/:id', function(req,res){
 		console.log('film mail is: '+mail)
 		res.send(mail)
 	})
-})
+});
+
+router.get('/history/:id', function(req,res){
+	knex.select(['c.comment','c.post_id','u.user_pic','u.display_name', 'c.user_id','c.id' ]).from('film_post_comments as c')
+	.join('film_posts as fp', 'c.post_id', '=', 'fp.id')
+	.join('users as u', 'u.third_party_user_id','=','c.user_id')
+	.where('c.user_id',req.params.id)
+	.then(function(comment){
+		res.send(comment)
+	})
+});
 
 router.post('/',function(req,res){
 	console.log('ATTENTION! req.body = '+req.body)
@@ -31,8 +38,7 @@ router.post('/',function(req,res){
 	.then(function(post){
 		res.send(post)
 	})
-})
-
+});
 
 router.delete('/:id', (req,res) => {
 	knex('film_post_comments').where('id', req.params.id).del().then(function(){
@@ -40,7 +46,7 @@ router.delete('/:id', (req,res) => {
 	}).catch(function(err){
 		res.send
 	})
-})
+});
 
 router.put('/:id', (req,res) => {
 	knex('film_post_comments')
@@ -51,5 +57,5 @@ router.put('/:id', (req,res) => {
 		}).catch(function(err){
 			res.send(err);
 		})
-})
+});
 module.exports = router

@@ -66,7 +66,9 @@
 			this.getMail = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
 			}
-
+			this.getHistory = function(user_id){
+				return $http.get(BASE_URL+'/history/'+user_id)
+			};
 			this.createPost = function(newPost){
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			}
@@ -78,12 +80,27 @@
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
 			}
 		};
+		function MusicPostConversationsService($http){
+		 	const BASE_URL = '/api/codingPostConversations'
+			this.getConvos = function(first_comment_id){
+				return $http.get(BASE_URL+'/'+first_comment_id)
+			};
+			this.createMessage = function(message){
+				return $http.post(BASE_URL, message); //on server req.body.post
+			};
+			this.deletePost = function(id){
+				return $http.delete(BASE_URL + '/' + id)
+			};
+			this.updatePost = function(data){
+				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
+			};
+		};
 		function FilmPostService($http){
 		 	const BASE_URL = '/api/film';
 
 			this.getPosts = function(){
 				return $http.get(BASE_URL)
-			}:
+			};
 			this.createPost = function(newPost){
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			};
@@ -92,7 +109,7 @@
 			};
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
-			};=
+			};
 			this.updatePost = function(data){
 				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
 			};
@@ -103,8 +120,26 @@
 			this.getMail = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
 			};
+			this.getHistory = function(user_id){
+				return $http.get(BASE_URL+'/history/'+user_id)
+			};
 			this.createPost = function(newPost){
 				return $http.post(BASE_URL, newPost); //on server req.body.post
+			};
+			this.deletePost = function(id){
+				return $http.delete(BASE_URL + '/' + id)
+			};
+			this.updatePost = function(data){
+				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
+			};
+		};
+		function FilmPostConversationsService($http){
+		 	const BASE_URL = '/api/filmPostConversations'
+			this.getConvos = function(first_comment_id){
+				return $http.get(BASE_URL+'/'+first_comment_id)
+			};
+			this.createMessage = function(message){
+				return $http.post(BASE_URL, message); //on server req.body.post
 			};
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
@@ -153,7 +188,6 @@
 		function CodingPostConversationsService($http){
 		 	const BASE_URL = '/api/codingPostConversations'
 			this.getConvos = function(first_comment_id){
-				console.log('in convos service!!! comment id is ', first_comment_id)
 				return $http.get(BASE_URL+'/'+first_comment_id)
 			};
 			this.createMessage = function(message){
@@ -184,7 +218,7 @@
 			this.updateUser = function(data){
 				return $http.put(BASE_URL + '/' + data.user.id, data) //on server req.body.post
 			}
-		}
+		};
 		function ConvoRepoService($http){
 		 	const BASE_URL = '/api/convoRepository'
 
@@ -203,19 +237,17 @@
 			this.deleteMessage = function(id){
 				return $http.delete(BASE_URL + '/' + id)
 			}
-
-			// this.updatePost = function(data){
-			// 	return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
-			// }
-		}
+		};
 		UsersService.$inject = ['$http']
 		PostService.$inject = ['$http']
 		MusicPostService.$inject = ['$http']
 		MusicPostCommentsService.$inject = ['$http']
+		MusicPostConversationsService.$inject = ['$http']
 		FilmPostService.$inject = ['$http']
 		FilmPostCommentsService.$inject = ['$http']
+		FilmPostConversationsService.$inject = ['$http']
 		CodingPostService.$inject = ['$http']
-		CodingPostConversationsService.$inject = ['$http']
 		CodingPostCommentsService.$inject = ['$http']
+		CodingPostConversationsService.$inject = ['$http']
 		ConvoRepoService.$inject = ['$http']
 })()
