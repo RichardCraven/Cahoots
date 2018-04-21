@@ -47,56 +47,35 @@
 			UsersService.getUser(vm.user_id).then(function(res){
 				myDisplayName = res.data.display_name;
 			});
-			console.log('profile is ',JSON.parse(localStorage.profile) ,'facebook is ', facebook, 'test results is, ', JSON.parse(localStorage.profile).third_party_user_id)
 			if(facebook.test(vm.user_id)){
 				fbUserId = vm.user_id.match(numberPattern)[0];
 				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
 			};
-			for(var i = 0; i<filmMail.data.length; i++){
-				// post_id = filmMail.data[i].post_id;
-				// FilmPostService.getPost(post_id).then(function(res){
-				// filmMail.data[i].recipient = res.data.display_name
-				// 	if(res.data.display_name===myDisplayName){
-				// 		filmMail.data[i].recipient = 'You'
-				// 	}
-				// })
-				vm.filmCommentPosts.push(filmMail.data[i])
-			}
-			for(var i = 0; i<musicMail.data.length; i++){
-					vm.musicPostComments.push(musicMail.data[i])
-			}
-			for(var i = 0; i<codingMail.data.length; i++){
-					vm.codingPostComments.push(codingMail.data[i])
-			}
+			for(var i = 0; i<filmMail.data.length; i++){vm.filmCommentPosts.push(filmMail.data[i])}
+			for(var i = 0; i<musicMail.data.length; i++){vm.musicPostComments.push(musicMail.data[i])}
+			for(var i = 0; i<codingMail.data.length; i++){vm.codingPostComments.push(codingMail.data[i])}
+
 			vm.hasNewFilmMail = vm.hasNewMusicMail = vm.hasNewCodingMail = 
 			vm.showFilmMail = vm.showMusicMail = vm.showCodingMail = 
 			vm.showFilmResponseField = vm.showMusicResponseField = 
 			vm.showCodingResponseField = false;
 
-			if(vm.filmCommentPosts.length>0){
-				vm.showFilmMail = true	
-			};
-			if(vm.musicPostComments.length>0){
-				vm.showMusicMail = true
-			};
-			if(vm.codingPostComments.length>0){
-				vm.showCodingMail = true
-			};
+			if(vm.filmCommentPosts.length>0){vm.showFilmMail = true};
+			if(vm.musicPostComments.length>0){vm.showMusicMail = true};
+			if(vm.codingPostComments.length>0){vm.showCodingMail = true};
 			vm.logout = function(){
 				store.remove('profile')
 				store.remove('token')
 				location.href = '/home';c
 			};
-			vm.go = function ( path ) {
-			    $location.path( path );
-			};
+			vm.go = function(path){$location.path(path)};
 			vm.newMessage = function(postId,message,category){
-				vm.post = {}
-				vm.post.category = category
-				vm.post.message = message
-				vm.post.original_comment_id = postId
-				vm.post.user_id = JSON.parse(localStorage.profile).user_id
-				var req = {post: vm.post};
+				vm.post = {};
+				vm.post.category = category;
+				vm.post.message = message;
+				vm.post.original_comment_id = postId;
+				vm.post.user_id = JSON.parse(localStorage.profile).user_id;
+				let req = {post: vm.post};
 				ConvoRepoService.createMessage(req);
 			};
 			vm.deleteConvo = function(postId, comment, category){
@@ -111,14 +90,12 @@
 		  		});
 				vm.showFilmResponseField = !vm.showFilmResponseField;
 				if(vm.showFilmResponseField === true){
-
-
-				var selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx);
-				var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx);
-				var others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx);		  		
-				others.forEach(function(i){i.style.display = 'none'})
-				selectedChatbox[0].style.display = 'block'
-
+					let selected = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i == idx),
+					selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx),
+					others = Array.from(document.querySelectorAll('.postFilmResponseArea')).filter((v,i) => i !== idx);	
+								
+					others.forEach(function(i){i.style.display = 'none'});
+					selectedChatbox[0].style.display = 'block';
 				}
 				if(vm.showFilmResponseField === false){
 					var selectedChatbox = Array.from(document.querySelectorAll('.chatbox')).filter((v,i) => i == idx),
@@ -277,30 +254,16 @@
 
 			var vm = this, span, area, cursor;
 
-			vm.showMap = false
-			vm.showChat = false;
-			vm.showVid = true
-			vm.toggleView = false
-			vm.toggleResponseView = false
-		  	vm.showText = false;
-		  	vm.waitingResponse = false;
-		  	vm.showCommentInput = true;
-		  	vm.showResponses = false;
+			vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
+			vm.showMap = vm.showChat = vm.toggleView = vm.toggleResponseView =
+			vm.showText = vm.waitingResponse = vm.showResponses = vm.test = 
+			vm.theyResponded = vm.showCrickets = vm.responsesNeedCleanup = 
+			vm.loggedIn = vm.currentUser = vm.convo = vm.tempIndex = false;
 			vm.posts = posts.data;
 			vm.backButton = 'home'
-			vm.tempIndex = null;
-			vm.test = false;
-			vm.currentUser = null;
 			vm.leftPanel = 'CONNECT'
-			vm.loggedIn = false;
-			vm.responsesNeedCleanup = false;
 			vm.responses; 
-			vm.convo = null;
-			vm.convoBegun = true;
-			vm.theyResponded = false;
-			vm.showCrickets = false;
 			vm.rightColumnHeader = 'PROXIMITY';
-			vm.showOwl = true;
 			vm.leftWidth = 50;
 
 			if($(window).width() < 1200){
@@ -338,6 +301,8 @@
 	  		 };
 		  	};
 			 vm.show = function(idx){
+				 console.log('HERE?');
+				 
 		  	 vm.tempIndex = idx;
 	  		 vm.toggleView = !vm.toggleView;
 	  		 vm.showText = !vm.showText;
@@ -430,7 +395,6 @@
 		  		  	    			   		var chatbox = document.getElementsByClassName('chatboxText')[idx];
 		  			  	    				chatbox.appendChild(newLi2);
 		  			  	    				vm.msg.message = '';
-		  			  	    				console.log(conversationArea)
 		  			  	    				conversationArea.removeChild(beginConvoButton)
 			  	    			   		}, vm);
 		  			  	    		}
@@ -445,8 +409,6 @@
 			  			  	    		convoAreas.forEach(function(e){ e.innerHTML = '' });
 			  			  	    } 
   			  	    		} else {
-  			  	    			console.log('convo started, res is ', res.data)
-  			  	    			console.log('vm.toggleResponseView is ', vm.toggleResponseView)
   			  	    			vm.convoBegun = true;
 
   			  	    			if(vm.toggleResponseView){
@@ -502,8 +464,7 @@
   			  	    				nonselectedResponses.forEach(function(i){i.style.display = 'block'})
   			  	    				vm.convo = null;
   			  	    				var chatbox = document.getElementsByClassName('chatboxText')[idx]
-  			  	    				chatbox.innerHTML = ''
-  			  	    				console.log('no way its getting here')
+  			  	    				chatbox.innerHTML = '';
   			  	    				vm.showMap = true;
   			  	    				vm.showChat = false;
   			  	    				var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
@@ -514,23 +475,26 @@
   			  	    }
     		  	  } else {
     		  	    vm.history = {};
-  			  	 	vm.history.comment;
+					vm.history.comment;
+					console.log('codingHistory data is ', codingHistory.data);
+						 
     		  	  	codingHistory.data.forEach(function(v){
+						//If you have already commented on this post, display waiting message
     		  	  		if(v.post_id === posts.data[idx].id){
     		  	  			vm.showCommentInput = false;
     		  	  			vm.waitingResponse = true;
     		  	  			vm.history.comment = v.comment;
     		  	  			var yourCommentMsg = v.comment;
     		  	  			CodingPostConversationsService.getConvos(v.id).then(function(res){
+								//If they responded, show chat box
     		  	  				if(res.data.length){
+									let chatbox;
     		  	  					vm.waitingResponse = false;
 	  			  	    			vm.showChat = true;
     		  	  					vm.showCommentInput = false;
     		  	  					vm.theyResponded = true;
-    		  	  					vm.rightColumnHeader = 'CONVERSATION'
-    		  	  					// *****
-
-    		  	  					var chatbox = document.getElementsByClassName('chatboxText')[idx],
+									vm.rightColumnHeader = 'CONVERSATION';	
+    		  	  					chatbox = document.getElementsByClassName('chatboxText')[idx],
     		  	  						yourComment = document.createElement('li');
     		  	  					chatbox.innerHTML = '';
     		  	  					yourComment.innerHTML = 'You: &nbsp;' + yourCommentMsg;
@@ -549,12 +513,9 @@
 	  			  	    			//CREATING CONVO MESSGAE
 		  			  	    		vm.msg = {};
 		  			  	    		vm.codingPostConversation = function(message){
-		  			  	    			console.log('got here niggaaa, v.id is ', v.id)
-
 		  			  	    			 vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
 		  			  	    			 vm.msg.coding_post_id = vm.posts[idx].id;
 		  			  	    			 vm.msg.first_comment_id = v.id;
-
 			  	    			   		var req = {post: vm.msg};
 			  	    			   		CodingPostConversationsService.createMessage(req).then(function(res){
 	  		  	    			   			var newLi2 = document.createElement('li');
@@ -569,8 +530,7 @@
     		  	  			}, vm);
     		  	  		}
     		  	  	}) 
-    		  	  }
-
+    		  	  };
   		 		  $timeout(function() {
   		 		  	if(vm.showChat){
   		 		  		return
@@ -585,13 +545,11 @@
 	  		 		});
 
 		  		 	function makeExpandingArea(container) {
-    		  	  		 console.log('HERE999, container is ', container)
 		  		 	 var area = container.querySelector('textarea'),
 		  		 	 	 span = container.querySelector('#fakespan'),
 		  		 	     cursor = container.querySelector('.blinking-cursor'), areas;
 
 		  		 	 if(area.addEventListener) {
-		  		 	 	console.log('area is ', area)
 		  		 	 	// area.focus()
 		  		 	 	// cursor.style.visibility = 'visible'
 		  		 	   area.addEventListener('focus', function(){
@@ -622,16 +580,14 @@
 		  		}
 
 		  		if(vm.toggleView === false){
-		  			vm.theyResponded = false;
-		  			vm.waitingResponse = false;
-		  			vm.showCommentInput = true;
-		  			vm.showResponses = false;
+					vm.showCommentInput = true;
+					vm.theyResponded = vm.waitingResponse = 
+					vm.showResponses = vm.showMap = vm.showChat = 
+					vm.showCrickets = false;
+
+					vm.backButton = 'home';
+					vm.rightColumnHeader = 'PROXIMITY'
 		  			vm.leftPanel = 'CONNECT';
-		  		 	vm.showMap = false;
-		  		 	vm.showChat = false;
-		  		 	vm.showCrickets = false;
-		  		 	vm.backButton = 'home';
-		  		 	vm.rightColumnHeader = 'PROXIMITY'
 					expandingNodes = Array.from(document.querySelectorAll('.expandingAreaactive')),
 	  				fakeSpans = Array.from(document.querySelectorAll('#fakespan')),
 	  				textAreas = Array.from(document.querySelectorAll('textarea')),
@@ -670,21 +626,14 @@
 		  	var map;
 		  	vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
 		  	x = NgMap.getMap('map');
-		  	
 		  	vm.comment = {};
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
+				  console.log('IN CODING POST COMMENT add post comment', id, newCodingPostComment)
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
 		  		var req = {post: newCodingPostComment};
 		  		CodingPostCommentsService.createPost(req).then(function(res){
-		  			codingHistory.data.push({
-						comment : newCodingPostComment,
-						display_name : "user",
-						post_id : posts.data[vm.tempIndex].id, 
-						user_id : "google-oauth2|118441111248082986291",
-						user_pic : "https://lh5.googleusercontent.com/-7zq80lVi4As/AAAAAAAAAAI/AAAAAAAAAAw/uOSgeu2eTVU/photo.jpg"
-					})
-
+					codingHistory.data.push(res.data[0])
 		  			vm.show(vm.tempIndex)
 		  		}, vm)
 		  	};

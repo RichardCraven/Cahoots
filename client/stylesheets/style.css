@@ -2,6 +2,9 @@ body{
 	color:black;
 	background-color: none ;
 }
+md-list md-list-item{
+	padding: 0px !important;
+}
 label{
 	margin-bottom: 0px;
 }
@@ -12,6 +15,13 @@ label{
 .glyphicon-arrow-right:before {
 	content: "\e092";
 	color: CadetBlue !important;
+}
+.md-toolbar-tools{
+	background-color: #5994b5;
+}
+.md-toolbar-tools h3{
+	margin: 0 auto;
+	color: white;
 }
 .you{
 	color:blue;
@@ -195,6 +205,7 @@ img{
 .smallGobackHomeArrow:hover {
 	color:green !important;
 	margin-left: -10px;
+	margin-right: 10px;
 }
 .goBack{
 	font-size:1.5em;
@@ -260,7 +271,8 @@ img{
 	margin-top: -5px;
 }
 #add-filmPost,#add-codingPost,#add-musicPost{
-	color: #496cb6; 
+	color: white; 
+	transition: all 0.5s;
 }
 #add-filmPost:hover,#add-codingPost:hover,#add-musicPost:hover{
 	color: green; 
@@ -392,8 +404,10 @@ img{
 header .jumbotron, .hero-spacer{
 	font-family: 'Arial';
 }
-.displayName{
+.userPicContainer .displayName{
 	color:#58157e !important;
+	width: 138px;
+	max-height: 21px;
 }
 body, html{
 	overflow-y: scroll !important;
