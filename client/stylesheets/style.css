@@ -5,6 +5,14 @@ body{
 md-list md-list-item{
 	padding: 0px !important;
 }
+h1{
+	margin: 0;
+}
+.owl-pane{
+	position:fixed; 
+	margin-left: 50%; 
+	width:50%
+}
 label{
 	margin-bottom: 0px;
 }
@@ -18,6 +26,7 @@ label{
 }
 .md-toolbar-tools{
 	background-color: #5994b5;
+	padding: 0px 40px;
 }
 .md-toolbar-tools h3{
 	margin: 0 auto;
@@ -36,12 +45,9 @@ label{
 	color:maroon;
 }
 .postStyle{
-	/*margin-left:2px;*/
 	font-family: 'Raleway', sans-serif;
 }
 .commentStyle{
-	/*margin-left:2px;*/
-	/*font-family: 'Raleway', sans-serif;*/
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 }
 
@@ -103,13 +109,9 @@ img{
 	height: 150px;
 	width: 150px;
 }
-
-#edit{
-	margin:5px;
-}
-
-#new{
-	margin:5px;
+.postContentContainer a{
+	/* cursor: pointer; */
+	margin: 5px;
 }
 .mainText {
 	height: 200px;
@@ -196,16 +198,16 @@ img{
 .goHome{
 	margin-left: 50px;
 }
-.smallGobackHomeArrow{
+.backArrow{
 	color:white !important;
 	font-size:2.3em;
 	transition: 1s all;
 	cursor: pointer;
 }
-.smallGobackHomeArrow:hover {
-	color:green !important;
-	margin-left: -10px;
-	margin-right: 10px;
+.backArrow:hover {
+	color:#35fc2a !important;
+	margin-left: -5px;
+	margin-right: 5px;
 }
 .goBack{
 	font-size:1.5em;
@@ -262,20 +264,17 @@ img{
 	font-size:2em;
 }
 .homeButton{
-	margin-left: 400px
+	margin-left: 400px;
 	height: 200px;
 	width: 200px;
 }
-#addButton{
-	font-size:1.8em;
-	margin-top: -5px;
-}
-#add-filmPost,#add-codingPost,#add-musicPost{
+.md-toolbar-tools a{
 	color: white; 
-	transition: all 0.5s;
+	transition: all 1s;	
+	font-size: 1.6em;
 }
-#add-filmPost:hover,#add-codingPost:hover,#add-musicPost:hover{
-	color: green; 
+.md-toolbar-tools a:hover{
+	color: #35fc2a; 	
 }
 .postLine{
 	margin-top: 5px;
@@ -291,10 +290,6 @@ img{
 .odd:hover, .even:hover{
 	border: 2px solid black;
 }
-.odd:hover hr, .even:hover hr{
-    border: 0.5px solid #F2F2FE;
-} 
-
 .even{
 	background-color: #F2F2FE;
 	padding:0px;
@@ -449,6 +444,7 @@ div .owlButton{
 	margin: 0 auto;
 	height: 70px;
 	width: 80px;
+	/* margin-top: 	15%; */
 }
 .nav a{
 	font-size: 2em;
@@ -639,9 +635,15 @@ pre {
   font-size: 0.6em;
   font: helvetica;
 }
+md-content{
+	outline: 0;
+}
+md-content div.text-center.owlButton{
+	margin-top: 15%;
+}
 
 input.newPostTopicArea{
-	font-size: 0.60em;
+	font-size: 1em;
 	    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 
@@ -670,7 +672,7 @@ input.newPostTopicArea{
  background:white;
   width: 100%;
   height: 5vh;
-  line-height: 40px;
+  /* line-height: 40px; */
   font-size: 0.65em;
 }
 
@@ -702,11 +704,16 @@ input.newPostTopicArea{
   resize: none;
    background:white;
 }
-
 .newPostTextArea{
 	background:transparent !important; 
+	color:white; 
+	word-wrap: break-word; 
+	white-space: pre-wrap; 
+	height:1px; 
+	margin-top:-20px; 
+	font-size: 1px; 
+	cursor: pointer;
 }
-
 .expandingArea > pre {
   display: none;
 }
@@ -777,16 +784,13 @@ input.newPostTopicArea{
     color: black;
   }
 }
-
-.conversationArea{
-	padding : 15px;
-}
-
 /*************************************/
+/*CHATBOX*/
 
 #wrapper{
     margin:0 auto;
-    padding-bottom:25px;
+	padding-bottom:25px;
+	padding-top: 50px;
     background:#EBF4FB;
     border:1px solid #ACD8F0; 
 }
@@ -846,13 +850,15 @@ input.newPostTopicArea{
 
 
 .messagePitch{
-	padding-left: 10px
+	padding-left: 18px;
 }
 
 .messageLabel{
 	font-weight: 300;
 }
-
+.commentInputContainer{
+	margin-top:50px;
+}
 .commentInputContainer label{
 	font-weight: 300;
 }
@@ -866,18 +872,15 @@ input.newPostTopicArea{
 	font-size: 12px;
 }
 .submitButtonContainer{
+	margin-left: 18px;
 	width:75px; 
-	display:inline-block;
 	color: black;
 	border: 1px solid black;
-	border-radius: 50px;
 	text-align: center;
-	background-color: lightgreen;
 }
 .submitButtonContainer:hover, .submitButtonContainer label:hover{
-	color: lightgreen;
 	cursor: pointer;
-	background-color: green;
+	background-color: lightGreen;
 }
 .submitRow {
 	display: flex;

@@ -6,8 +6,10 @@
 		.service('PostService', PostService)
 		.service('MusicPostService', MusicPostService)
 		.service('MusicPostCommentsService', MusicPostCommentsService)
+		.service('MusicPostConversationsService', MusicPostConversationsService)
 		.service('FilmPostService', FilmPostService)
 		.service('FilmPostCommentsService', FilmPostCommentsService)
+		.service('FilmPostConversationsService', FilmPostConversationsService)
 		.service('CodingPostService', CodingPostService)
 		.service('CodingPostCommentsService', CodingPostCommentsService)
 		.service('CodingPostConversationsService', CodingPostConversationsService)
@@ -81,7 +83,7 @@
 			}
 		};
 		function MusicPostConversationsService($http){
-		 	const BASE_URL = '/api/codingPostConversations'
+		 	const BASE_URL = '/api/musicPostConversations'
 			this.getConvos = function(first_comment_id){
 				return $http.get(BASE_URL+'/'+first_comment_id)
 			};
@@ -130,7 +132,7 @@
 				return $http.delete(BASE_URL + '/' + id)
 			};
 			this.updatePost = function(data){
-				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
+				return $http.put(BASE_URL + '/' + data.post.id, data) 
 			};
 		};
 		function FilmPostConversationsService($http){
@@ -139,13 +141,13 @@
 				return $http.get(BASE_URL+'/'+first_comment_id)
 			};
 			this.createMessage = function(message){
-				return $http.post(BASE_URL, message); //on server req.body.post
+				return $http.post(BASE_URL, message); 
 			};
 			this.deletePost = function(id){
 				return $http.delete(BASE_URL + '/' + id)
 			};
 			this.updatePost = function(data){
-				return $http.put(BASE_URL + '/' + data.post.id, data) //on server req.body.post
+				return $http.put(BASE_URL + '/' + data.post.id, data) 
 			};
 		};
 		function CodingPostService($http){
@@ -155,7 +157,7 @@
 				return $http.get(BASE_URL)
 			};
 			this.createPost = function(newPost){
-				return $http.post(BASE_URL, newPost); //on server req.body.post
+				return $http.post(BASE_URL, newPost); 
 			};
 			this.getPost = function(id){
 				return $http.get(BASE_URL + '/' + id)
@@ -220,13 +222,11 @@
 			}
 		};
 		function ConvoRepoService($http){
-		 	const BASE_URL = '/api/convoRepository'
-
+		 	const BASE_URL = '/api/convoRepository';
 			this.getMessages = function(category,post_id){
 				console.log('got to the convoRepo service'+post_id)
 				return $http.get(BASE_URL+'/'+category+'/'+post_id)
 			}
-
 			this.createMessage = function(newCommentObj){
 				// $scope.$apply();
 				return $http.post(BASE_URL+ '/', newCommentObj); //on server req.body.post

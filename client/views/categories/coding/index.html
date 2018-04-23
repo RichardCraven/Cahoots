@@ -1,14 +1,14 @@
   <!-- CODING INDEX -->
   <div layout-gt-sm="row" >
-    <div flex-gt-sm="{{vm.leftWidth}}" id='codingContent'  >
+    <div flex-gt-sm="{{vm.leftWidth}}">
       <md-toolbar layout="row" class="md-hue-3">
         <div class="md-toolbar-tools">
-          <a ng-click='vm.goBack()' class="smallGobackHomeArrow">
-            <span style='margin-left:10px' class="glyphicon glyphicon-arrow-left"></span>
+          <a ng-click='vm.goBack()' class="backArrow">
+            <span class="glyphicon glyphicon-arrow-left"></span>
           </a>
-          <h3>CODING POSTS</h3>
-          <div class='pull-right' id='addButton'>
-            <a href="/codingPosts/new" id='add-codingPost' ng-show='vm.loggedIn'>
+          <h3>CODING PROJECTS</h3>
+          <div class='pull-right'>
+            <a href="/codingPosts/new" ng-show='vm.loggedIn'>
               <span class="glyphicon glyphicon-plus"></span>
             </a>
           </div>
@@ -17,7 +17,7 @@
       <md-content>
         <md-list>
           <!-- "post in vm.posts track by vm.myTrackingFunction(post)" -->
-	          <md-list-item    ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd animated bounceInRight'" ng-class-even="'even animated bounceInLeft'" >
+	          <md-list-item    ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" ng-class-odd="'odd animated bounceInRight'" ng-class-even="'even animated bounceInLeft'" >
 	            <div class="md-list-item-text">
                 <div layout='row' ng-click="vm.show($index)">
                   <div flex-gt-sm='15' class='userPicContainer'>
@@ -25,10 +25,10 @@
                      <p class='displayName'>{{post.display_name}}</p>
                   </div>
                   <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-      	            <a  href="/codingPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right'>
+      	            <a  href="/codingPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
       	              <span class="glyphicon glyphicon-pencil "></span>
       	            </a>
-      	            <a href="javascript:void(0)" id='new' ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
+      	            <a href="javascript:void(0)" ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
       	              <span class="glyphicon glyphicon-remove "></span>
       	            </a>
                     <div class='postStyle'>
@@ -51,30 +51,32 @@
                                 <h5>Does this interest you?</h5>
                                 <h4>Send a collaboration pitch, and if they respond you can have a conversation!</h4>
                               </div>
-                              <form  ng-show = 'vm.showCommentInput' name="newCodingProject" ng-submit="vm.addCodingPostComment(post.id,vm.comment)">
+                              <form  ng-show ='vm.showCommentInput' name="newCodingProject" ng-submit="vm.addCodingPostComment(post.id,vm.comment)">
                                 <div flex>
-                                  <md-input-container class='width70 commentInputContainer' style='margin-top:50px' >
-                                    <div class="expandingArea">
+                                  <md-input-container class='width70 commentInputContainer'>
+                                    <input aria-label='text-input' autocomplete="off" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder=" "
+                                      autofocus required style="height: 50px">
+                                    <!-- <div class="expandingArea">
                                       <pre><span id='fakespan'></span><span class='blinking-cursor'>|</span><br></pre>
-                                      <textarea class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder="message" rows="10" required style='color:white; word-wrap: break-word; white-space: pre-wrap; height:1px; margin-top:-20px; font-size: 1px; cursor: pointer;' spellcheck="false" autofocus='true' md-autofocus></textarea>
-                                    </div>
+                                      <textarea aria-label='text-input' class="newPostTextArea" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder="message" rows="10" required spellcheck="false" autofocus='true' md-autofocus></textarea>
+                                    </div> -->
                                   </md-input-container>
                                   <div class='submitButtonContainer'>
                                       <label for='submit-form{{$index}}'> Submit</label>
                                   </div>
-                                </div>]
+                                </div>
                                 <button type="submit" class="btn btn-7 btn-7h hidden" id='submit-form{{$index}}'> <i class="material-icons md-48" >add</i> Comment</button>
                               </form>
                               <div class='waitingResponse' ng-show='vm.waitingResponse'>
                                 <h3> You said: "{{vm.history.comment}}"</h3>
                                 <h3>Poster has not responded yet</h3>
                               </div>  
-                              <div  style='margin-top: 15%' ng-show='vm.waitingResponse' class='text-center owlButton '><a href="/" style='color:yellow'><span><img src="images/owl_clipped.png" alt=""></span></a>
+                              <div ng-show='vm.waitingResponse' class='text-center owlButton '><a href="/"><span><img src="images/owl_clipped.png" alt=""></span></a>
                               </div>
                               <div class='waitingResponse' ng-show='vm.theyResponded'>
                                 <h3> THEY RESPONDED!</h3>
                               </div> 
-                              <div  ng-show='vm.showResponses'  ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'odd2 animated bounceInRight'" ng-class-even="'even2 animated bounceInLeft'" >
+                              <div  ng-show='vm.showResponses'  ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'" ng-class-even="'even2 animated bounceInLeft'" >
                                 <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='    {{response.id}}'  class='md-list-item-text responses H100px'>
                                   <div layout='row' ng-click="vm.showResponse($index, response)"  class='height100'>
                                     <div flex-gt-sm='15' class='userPicContainer'>
@@ -103,11 +105,6 @@
                           </ng-map> 
                         </div>
                         <div id="wrapper">
-                            <div id="menu">
-                                <p class="welcome">Welcome, <b></b></p>
-                                <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
-                                <div style="clear:both"></div>
-                            </div>
                             <div class="chatbox">
                               <ul class="chatboxText"></ul>
                             </div>
@@ -122,7 +119,7 @@
 	          </md-list-item>
       </md-content>
     </div>
-    <div ng-show='vm.showOwl' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%'>
+    <div ng-show='vm.showOwl' flex-gt-sm="50" class='owl-pane'>
           <video id="owlVid2"  muted autoplay >
             <source src="images/NewOwl666.mp4" type="video/mp4">
          </video>

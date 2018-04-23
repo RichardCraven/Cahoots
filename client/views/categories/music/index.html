@@ -1,111 +1,136 @@
-<!-- <div class='row'>
-	<div class="bigButton col-sm-1">
-		<a href="/" class="btn btn-primary btn-sm goHome">HOME</a>
-		
-	</div>
-	<div class='bigButton col-sm-3 col-sm-offset-4'>
-		<h1>MUSIC POSTS</h1>
-	</div>
-</div>
-<div class='row menu-row'>
-		<div class='col-sm-1 col-sm-offset-5 bigButton text-center'>
- 			<a href="/musicPosts/new" id='add-musicPost' class='newButton btn btn-lg btn-success'>NEW</a>
-		</div>
-</div>
-<ng-music-post-show ng-repeat="post in vm.posts track by $index" post='post'></ng-music-post-show> -->
-
-<div layout-gt-sm="row" >
-    <div flex-gt-sm="50" id='musicContent'>
-      <md-toolbar layout="row" class="md-hue-3">
-        <div class="md-toolbar-tools">
-          <a ng-click='vm.goBack()' class="smallGobackHomeArrow">
-            <span style='margin-left:10px' class="glyphicon glyphicon-arrow-left"></span>
+<div layout-gt-sm="row">
+  <div flex-gt-sm="{{vm.leftWidth}}">
+    <md-toolbar layout="row" class="md-hue-3">
+      <div class="md-toolbar-tools">
+        <a ng-click='vm.goBack()' class="backArrow">
+          <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+        <h3>MUSIC PROJECTS</h3>
+        <div class='pull-right'>
+          <a href="/musicPosts/new" ng-show='vm.loggedIn'>
+            <span class="glyphicon glyphicon-plus"></span>
           </a>
         </div>
-      </md-toolbar>
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <md-content>
-
-        <md-list>
-          <md-subheader  class="md-no-sticky text-center">MUSIC POSTS   
-          	<div class='pull-right' id='addButton'>
-          		<a href="/musicPosts/new" id='add-musicPost' ng-show='vm.loggedIn'> 
-				        <span  class="glyphicon glyphicon-plus"></span>
-          		</a> 
-          			
-          		</div>
-          </md-subheader>
-          <!-- <div class="container"> -->
-	          <md-list-item  
-            style='margin-left:0px' 
-            class="md-2-line item-text-wrap" ng-repeat="post in vm.posts track by $index" ng-class-odd="'odd animated bounceInLeft'" ng-class-even="'animated bounceInRight even'">
-					    <div class="md-list-item-text">
-                <div layout='row' ng-click="vm.show($index)">
-                  <div flex-gt-sm='15' class='userPicContainer'>
-                     <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                     <p class='displayName'>{{post.display_name}}</p>
-                  </div>
-
-                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-
-  					        <a  href="/musicPosts/{{post.id}}/edit" id='edit' ng-show='vm.checkId(post)' class='pull-right'>
-                   <!-- ng-click="vm.editMusicPost(post.id)" VERIFY THIS IS NOT NEEDED, THEN DELETE-->
-  					              <span class="glyphicon glyphicon-pencil "></span>
-  					            </a>
-    		            <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.removePost(post.id)" ng-show='vm.checkId(post)'>
-    		              <span class="glyphicon glyphicon-remove "></span>
-    		            </a>
-                      <div class='postStyle'>
-  					              <h3><span class='topic'>Genre: </span><span class='topicText'>{{post.genre}}</span></h3>
-                          <p><span class='topic'>Roles Needed: </span><span class='topicText'>{{post.roles_needed}}</span></p>
-                          <hr class='postLine'>
-                          <h4 class='descrip'><span class='postText'>{{post.description}}</span></h4>
-  					          </div>
-  		            </div>
-                </div>
-                <!-- end row   -->
-                <div layout='row'>
-                  <div ng-show='vm.showText' class='postTextArea'>
-                    <form class='commentForm' action="" 
-                    ng-submit='vm.addMusicPostComment(post.id,vm.comment)'
-                    >
-                    <!-- ng-submit="vm.addFilmPost(vm.post)"  -->
-                      <textarea ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
-
-                      <button type="submit" class="btn btn-success" >Submit</button>
-                    </form>
-                  </div>
-                </div>
-                <!-- end row -->
+      </div>
+    </md-toolbar>
+    <md-content>
+      <md-list>
+        <md-list-item ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" ng-class-odd="'odd animated bounceInRight'"
+          ng-class-even="'even animated bounceInLeft'">
+          <div class="md-list-item-text">
+            <div layout='row' ng-click="vm.show($index)">
+              <div flex-gt-sm='15' class='userPicContainer'>
+                <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                <p class='displayName'>{{post.display_name}}</p>
               </div>
-              <!-- end list-item-text -->
-	          </md-list-item>
-      </md-content>
-    </div>
-    <!-- end flex-50 div -->
-
-
-    <!-- ~~~~~~~~~~~~~~~~~~~MAP~~~~~~~~~~~~~~~~~~ -->
-    <md-divider></md-divider>
-    <div ng-show='vm.showMap' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
-      <md-toolbar layout="row" class="md-hue-1" >
-        <div class="md-toolbar-tools">
-          <span>Everyone Loves a Good Map.</span>
-        </div>
-      </md-toolbar>
-          <ng-map id='map' center="37.7749,-122.4194" zoom="15">
-            <marker position="37.7749,-122.4194" title="Hello World!"></marker>
-      </ng-map>   
-    </div>
-
-    <div ng-show='vm.showVid' flex-gt-sm="50" style='position:fixed; margin-left: 50%; width:50%' >
-          <video id="owlVid2"  muted autoplay >
-            <source src="images/NewOwl666.mp4" type="video/mp4">
-         </video>
-    </div>
-</div>
-<!-- end master-layout div -->
-
-
+              <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                <a href="/musicPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
+                  <span class="glyphicon glyphicon-pencil "></span>
+                </a>
+                <a href="javascript:void(0)" ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
+                  <span class="glyphicon glyphicon-remove "></span>
+                </a>
+                <div class='postStyle'>
+                  <h3>
+                    <span class='topic'>Genre: </span>
+                    <span class='topicText'>{{post.genre}}</span>
+                  </h3>
+                  <hr class='postLine'>
+                  <h4 class='descrip'>
+                    <span class='postText'>{{post.description}}</span>
+                  </h4>
+                </div>
+              </div>
+            </div>
+            <div layout='row' ng-show='vm.showText' class='postTextArea'>
+              <div flex-gt-sm="50" class='postChatLeft animated slideInLeft'>
+                <h2 class="md-display-1" id='connect'>{{vm.leftPanel}}</h2>
+                <div flex layout-gt-sm="column" data-parentidx='{{$index}}' class='messageContainer'>
+                  <div flex-gt-sm="80">
+                    <md-content class='backgroundTransparent' ng-click='vm.postTest(post)'>
+                      <div ng-show='vm.showCrickets'>
+                        <h5>YOU AINT GOT NOT RESPONSE YET, SUCKAFISH</h5>
+                      </div>
+                      <div class='messagePitch' ng-show='vm.showCommentInput'>
+                        <h5>Does this interest you?</h5>
+                        <h4>Send a collaboration pitch, and if they respond you can have a conversation!</h4>
+                      </div>
+                      <form id='form{{$index}}' ng-show='vm.showCommentInput' name="newMusicProject" ng-submit="vm.addMusicPostComment(post.id,vm.comment)">
+                        <div flex>
+                          <md-input-container class='width70 commentInputContainer'>
+                            <input aria-label='text-input' autocomplete="off" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder=" "
+                              autofocus required style="height: 50px">
+                          </md-input-container>
+                          <div class='submitButtonContainer'>
+                            <label for='submit-form{{$index}}'> Submit</label>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-7 btn-7h hidden" id='submit-form{{$index}}'>
+                          <i class="material-icons md-48">add</i> Comment</button>
+                      </form>
+                      <div class='waitingResponse' ng-show='vm.waitingResponse'>
+                        <h3> You said: "{{vm.history.comment}}"</h3>
+                        <h3>Poster has not responded yet</h3>
+                      </div>
+                      <div ng-show='vm.waitingResponse' class='text-center owlButton '>
+                        <a href="/">
+                          <span>
+                            <img src="images/owl_clipped.png" alt="">
+                          </span>
+                        </a>
+                      </div>
+                      <div class='waitingResponse' ng-show='vm.theyResponded'>
+                        <h3> THEY RESPONDED!</h3>
+                      </div>
+                      <div ng-show='vm.showResponses' ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'"
+                        ng-class-even="'even2 animated bounceInLeft'">
+                        <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='    {{response.id}}' class='md-list-item-text responses H100px'>
+                          <div layout='row' ng-click="vm.showResponse($index, response)" class='height100'>
+                            <div flex-gt-sm='15' class='userPicContainer'>
+                              <img class='userPic' ng-src="{{response.user_pic}}" alt="">
+                              <p class='displayName'>{{response.display_name}}</p>
+                            </div>
+                            <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                              <div class='commentStyle'>
+                                <h4 class='descrip'>
+                                  <span class='postText'>{{response.comment}}</span>
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div flex ng-show='vm.convo == $index' class='conversationArea md-list-item-text' data-index={ {vm.tempIndex}}>
+                        </div>
+                      </div>
+                    </md-content>
+                  </div>
+                </div>
+              </div>
+              <div flex-gt-sm="50" id='mapContainer' class='postChatRight animated slideInRight'>
+                <h2 class="md-display-1">{{vm.rightColumnHeader}}</h2>
+                <div class='mapContainer'>
+                  <ng-map ng-if='vm.showMap' id='map' center="37.7749,-122.4194" zoom="15" trigger-resize="true">
+                    <marker position="37.7749,-122.4194" title="Hello World!"></marker>
+                  </ng-map>
+                </div>
+                <div id="wrapper">
+                  <div class="chatbox">
+                    <ul class="chatboxText"></ul>
+                  </div>
+                  <form name="message" ng-submit="vm.musicPostConversation(vm.msg)">
+                    <input name="usermsg" type="text" id="usermsg" class='pickles' ng-model="vm.msg.message" size="63" />
+                    <input name="submitmsg" type="submit" id="submitmsg" value="Send" />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </md-list-item>
+    </md-content>
   </div>
+  <div ng-show='vm.showOwl' flex-gt-sm="50" class='owl-pane'>
+    <video id="owlVid2" muted autoplay>
+      <source src="images/NewOwl666.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
