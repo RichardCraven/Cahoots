@@ -2,6 +2,7 @@
 (function() {
 	angular 
 		.module('collaboApp')
+		.directive('paperInput', paperInput)
 		.controller('CodingPostsController', CodingPostsController) 
 		.controller('NewCodingPostController', NewCodingPostController)
 		.controller('EditCodingPostController', EditCodingPostController)
@@ -16,12 +17,30 @@
 		
 		.controller('UsersController', UsersController)
 		.controller('EditUserController', EditUserController)
-
+		
 		.controller('MiscCtrl',MiscCtrl)
 		.controller('HomeCtrl', HomeCtrl)
 		.controller('LoginHomeCtrl', LoginHomeCtrl)
 		.controller('MailCtrl', MailCtrl)
 		.controller('LandingCtrl', LandingCtrl)
+		
+		function paperInput($templateCache){
+			function linkFn(scope, element, attrs) {
+				scope.isRequired = angular.isDefined(attrs.required);
+				scope.isDatepicker = angular.isDefined(attrs.date);
+				scope.state = {
+					opened: false
+				};
+			}
+			return {
+				template: $templateCache.get('paperInput'),
+				scope: {
+					label: '@',
+					type: '@',
+					modelRef: '='
+				}
+			}
+		}
 		function LandingCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 			var vm=this;
 		  	var fadeOut = function(){
@@ -135,14 +154,11 @@
 
 		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
 			var vm=this;
-			console.log(localStorage.profile)
 			localStorage.clear()
 			if(localStorage.profile){
-				console.log('in here')
-				//   $location.path('/loggedinHome');
 					location.href = '/loggedinHome';
 		  	} else {
-				  console.log('GGG');
+				  console.log('clearing local storage');
 				  
 		  		localStorage.clear();
 		  	};
@@ -593,7 +609,6 @@
 		  	x = NgMap.getMap('map');
 		  	vm.comment = {};
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
-				  console.log('IN CODING POST COMMENT add post comment', id, newCodingPostComment)
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 		  		vm.comment.post_id = id
 		  		var req = {post: newCodingPostComment};
@@ -853,7 +868,6 @@
 				} else {
 					vm.history = {};
 					vm.history.comment;
-
 					musicHistory.data.forEach(function (v) {
 						//If you have already commented on this post, display waiting message
 						if (v.post_id === posts.data[idx].id) {
@@ -969,7 +983,6 @@
 		x = NgMap.getMap('map');
 		vm.comment = {};
 		vm.addMusicPostComment = function (id, newMusicPostComment) {
-			console.log('IN MUSIC POST COMMENT add post comment', id, newMusicPostComment)
 			vm.comment.user_id = JSON.parse(localStorage.profile).user_id
 			vm.comment.post_id = id
 			var req = { post: newMusicPostComment };
@@ -985,7 +998,20 @@
 			vm.post = {};
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id
 
-			document.getElementsByClassName('newPostTopicArea')[0].focus();
+			// document.getElementsByClassName('newPostTopicArea')[0].focus();
+
+			function paperInput($templateCache) {
+				function linkFn(scope, element, attrs) {
+				}
+				return {
+					template: $templateCache.get('paperInput'),
+					scope: {
+						label: '@',
+						type: '@',
+						modelRef: '='
+					}
+				}
+			}
 
 			vm.goBackToMusicIndex = function(){
 				$location.path('/musicPosts')
@@ -1015,8 +1041,6 @@
 		}
 //~~~~~~FILMposts controller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
 	function FilmPostsController(FilmPostService, FilmPostCommentsService, UsersService, posts, $location, $route, NgMap, filmMail, filmHistory, $timeout, $rootScope, FilmPostConversationsService) {
-		console.log('film mail is ', filmMail, 'filmHistory is ', filmHistory);
-		
 		var vm = this, span, area, cursor;
 
 		vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
@@ -1103,12 +1127,13 @@
 					vm.showResponse = function (index, response) {
 						vm.responsesNeedCleanup = true;
 						vm.toggleResponseView = !vm.toggleResponseView;
+
 						var convoStarted = false,
-							responseContainer = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString()),
-							selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
-							nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment),
-							responseHeader = selectedResponse[idx].parentElement.children[0],
-							conversationArea = selectedResponse[idx].parentElement.children[1],
+						responseContainer = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString()),
+						selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
+						nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment);
+						var responseHeader = selectedResponse[idx].parentElement.children[0];
+							var conversationArea = selectedResponse[idx].parentElement.children[1],
 							req = { post: vm.msg };
 						FilmPostConversationsService.getConvos(vm.responses[index].id).then(function (res) {
 							if (!res.data.length) {
@@ -1147,7 +1172,7 @@
 									vm.msg = {};
 									vm.filmPostConversation = function(message){
 										vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
-										vm.msg.coding_post_id = vm.posts[idx].id;
+										vm.msg.film_post_id = vm.posts[idx].id;
 										vm.msg.first_comment_id = vm.responses[index].id;
 
 										var req = { post: vm.msg };
@@ -1204,7 +1229,7 @@
 									vm.msg = {};
 									vm.filmPostConversation = function (message) {
 										vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
-										vm.msg.coding_post_id = vm.posts[idx].id;
+										vm.msg.film_post_id = vm.posts[idx].id;
 										vm.msg.first_comment_id = vm.responses[index].id;
 
 										var req = { post: vm.msg };
@@ -1271,7 +1296,7 @@
 									vm.msg = {};
 									vm.filmPostConversation = function (message) {
 										vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
-										vm.msg.coding_post_id = vm.posts[idx].id;
+										vm.msg.film_post_id = vm.posts[idx].id;
 										vm.msg.first_comment_id = v.id;
 										var req = { post: vm.msg };
 										FilmPostConversationsService.createMessage(req).then(function (res) {
@@ -1399,7 +1424,7 @@
 		NewFilmPostController.$inject = ['FilmPostService','UsersService','$location','store'] 
 		EditFilmPostController.$inject = ['FilmPostService', 'post', '$location']
 
-	MusicPostsController.$inject = ['MusicPostService', 'MusicPostCommentsService', 'UsersService', 'posts', '$location', '$route', 'NgMap', 'musicMail', 'musicHistory', '$timeout', '$scope', 'MusicPostConversationsService'];
+		MusicPostsController.$inject = ['MusicPostService', 'MusicPostCommentsService', 'UsersService', 'posts', '$location', '$route', 'NgMap', 'musicMail', 'musicHistory', '$timeout', '$scope', 'MusicPostConversationsService'];
 		NewMusicPostController.$inject = ['MusicPostService','UsersService','$location','store'] 
 		EditMusicPostController.$inject = ['MusicPostService', 'post', '$location']
 

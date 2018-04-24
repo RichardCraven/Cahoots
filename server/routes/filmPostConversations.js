@@ -9,7 +9,7 @@ knex('film_post_conversations').where('user_id',req.body)
 	});
 });
 router.get('/:id', function(req,res){
-	knex.select(['fpc.message','mpc.user_id']).from('film_post_conversations as fpc')
+	knex.select(['fpc.message','fpc.user_id']).from('film_post_conversations as fpc')
 	.where('fpc.first_comment_id',req.params.id)
 	.then(function(messages){
 		res.send(messages)

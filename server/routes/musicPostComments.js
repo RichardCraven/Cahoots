@@ -11,7 +11,7 @@ knex('music_post_comments').where('user_id',req.body)
 });
 
 router.get('/:id', function(req,res){
-	knex.select(['c.comment','mp.genre','u.user_pic','u.display_name']).from('music_posts as mp')
+	knex.select(['c.comment','mp.genre','u.user_pic','u.display_name', 'c.user_id']).from('music_posts as mp')
 	.join('music_post_comments as c', 'c.post_id', '=', 'mp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('mp.user_id',req.params.id)
@@ -34,15 +34,19 @@ router.get('/history/:id', function(req,res){
 });
 
 router.post('/',function(req,res){
-	knex('music_posts').where({id:req.body.post.post_id}).first().then(function(data){
-		knex('users').where({third_party_user_id:data.user_id}).first().update('has_mail','true')
-			.then(function(){
-				knex('music_post_comments').insert(req.body.post, '*')
-					.then(function(post){
-						res.send({post})
-					})
-			})
-	})
+	knex('music_post_comments').insert(req.body.post, '*')
+		.then(function (post) {
+			res.send(post)
+		})
+	// knex('music_posts').where({id:req.body.post.post_id}).first().then(function(data){
+	// 	knex('users').where({third_party_user_id:data.user_id}).first().update('has_mail','true')
+	// 		.then(function(){
+	// 			knex('music_post_comments').insert(req.body.post, '*')
+	// 				.then(function(post){
+	// 					res.send({post})
+	// 				})
+	// 		})
+	// })
 });
 
 router.delete('/:id', (req,res) => {
