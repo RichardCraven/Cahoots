@@ -53,26 +53,33 @@
 	  			var fadeOut = $timeout(fadeOut,6900)
 	  		};
 		};
-		function MailCtrl(filmMail,musicMail,codingMail,$location,auth, store,$timeout,$rootScope, UsersService,FilmPostCommentsService,FilmPostService,ConvoRepoService){
+	function MailCtrl(filmMail, musicMail, codingMail, $location, auth, store, $timeout, $rootScope, UsersService, FilmPostCommentsService, FilmPostService, ConvoRepoService,CodingPostConversationsService,FilmPostConversationsService,MusicPostConversationsService){
 			var vm=this;
 			vm.name = JSON.parse(localStorage.profile).given_name;
 			vm.navpicture = JSON.parse(localStorage.profile).picture;
 			vm.filmCommentPosts = [];
 			vm.musicPostComments = [];
 			vm.codingPostComments = [];
-			vm.user_id = JSON.parse(localStorage.profile).user_id;
-			var myDisplayName, post_id, fbUserId, facebook = /^(facebook)/,
+			// CodingPostConversationsService.getConvos(vm.responses[index].id).then(function (res) {
+				// });
+				
+				vm.user_id = JSON.parse(localStorage.profile).user_id;
+				var myDisplayName, post_id, fbUserId, facebook = /^(facebook)/,
 				numberPattern = /\d+/g;
-			UsersService.getUser(vm.user_id).then(function(res){
-				myDisplayName = res.data.display_name;
-			});
-			if(facebook.test(vm.user_id)){
-				fbUserId = vm.user_id.match(numberPattern)[0];
-				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
-			};
-			for(var i = 0; i<filmMail.data.length; i++){vm.filmCommentPosts.push(filmMail.data[i])}
-			for(var i = 0; i<musicMail.data.length; i++){vm.musicPostComments.push(musicMail.data[i])}
-			for(var i = 0; i<codingMail.data.length; i++){vm.codingPostComments.push(codingMail.data[i])}
+				UsersService.getUser(vm.user_id).then(function(res){
+					myDisplayName = res.data.display_name;
+				});
+				if(facebook.test(vm.user_id)){
+					fbUserId = vm.user_id.match(numberPattern)[0];
+					vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+				};
+				for(var i = 0; i<filmMail.data.length; i++){vm.filmCommentPosts.push(filmMail.data[i])}
+				for(var i = 0; i<musicMail.data.length; i++){vm.musicPostComments.push(musicMail.data[i])}
+				for(var i = 0; i<codingMail.data.length; i++){vm.codingPostComments.push(codingMail.data[i])}
+				
+			console.log('film mail is: ', filmMail.data, 'musicMail: ', musicMail.data, 'codingMail: ', codingMail.data);
+		 	console.log(vm.filmCommentPosts, vm.musicPostComments, vm.codingPostComments);
+			// vm.codeResponses = codingMail.data.filter((v, i) => codingMail.data[i].framework === posts.data[idx].framework);
 
 			vm.hasNewFilmMail = vm.hasNewMusicMail = vm.hasNewCodingMail = 
 			vm.showFilmMail = vm.showMusicMail = vm.showCodingMail = 
@@ -1435,7 +1442,7 @@
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','UsersService']
-		MailCtrl.$inject = ['filmMail','musicMail','codingMail','$location','auth', 'store','$timeout','$rootScope', 'UsersService','FilmPostCommentsService','FilmPostService','ConvoRepoService']
+	MailCtrl.$inject = ['filmMail', 'musicMail', 'codingMail', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'FilmPostConversationsService', 'MusicPostConversationsService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
 

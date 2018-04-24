@@ -11,7 +11,7 @@
         </div>
     </nav>
     <div class="container-fluid" style='overflow:scroll'>
-        <header class="jumbotron hero-spacer">
+        <header class="jumbotron hero-spacer mailbox">
             <a href="/loggedinHome" class="goBack">
               <span class="glyphicon glyphicon-arrow-left"></span>
             </a>
@@ -20,7 +20,7 @@
                 <div flex-gt-sm="80">
                   <md-content>
                     <md-tabs md-dynamic-height md-border-bottom>
-                          <md-tab style='font-size:5em' label="FILM" >
+                          <md-tab style='font-size:5em' label="Pending Conversations" >
                             <md-content class="">
                               <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'"  >
                                 <div class="md-list-item-text" >
@@ -91,7 +91,7 @@
                             </md-content>
 
                           </md-tab>
-                          <md-tab label="MUSIC">
+                          <md-tab label="Active Conversations">
                             <md-content class="">
                               <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap"  md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
 
@@ -103,13 +103,10 @@
                                       <div flex-gt-sm='85' class='postContentContainer' layout-padding>
                                           <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'>Responding to: {{post.genre}}</h6>
                                           <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'>{{post.comment}}</h3>
-                                      </div>          
-                                      
+                                      </div>   
                                     </div>
-
                                     <div ng-show='vm.showMusicResponseField' layout='row' class='responseField'>
                                       <div  class='postMusicResponseArea'>
-
                                         <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
                                         <md-input-container class="md-block">
                                           <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
@@ -125,15 +122,7 @@
                             </md-content>
                           </md-tab>
 
-
-
-
-
-
-
-
-
-                          <md-tab label="CODING">
+                          <md-tab label="Project Staging">
                             <md-content class="">
                               <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
                                 <div class="md-list-item-text">
@@ -162,25 +151,20 @@
                               </md-list-item>
                             </md-content>
                           </md-tab>
-
-
-
-
-
                           <md-tab label="Dogs">
                             <md-content class="">
 
                               <md-tabs md-dynamic-height md-border-bottom>
                                 <md-tab label="Dog Mingling">
                                   <md-content class="">
-                                    <h1 class="md-display-2">Mingle!</h1>
+                                    <h4 class="">Mingle!</h4>
                                     <p>Get your pup on</p>
                                   </md-content>
                                 </md-tab>
                                 <md-tab label="Dog Adoption">
                                   <md-content class="">
-                                    <h1 class="md-display-2">Adopt some pups!</h1>
-                                    <p>Adopt!</p>
+                                    <h4 class="">Adopt some pups!</h4>
+                                    <p>Do it!</p>
                                   </md-content>
                                 </md-tab>
                               </md-tabs>
@@ -188,14 +172,12 @@
                             </md-content>
                           </md-tab>
 
-                          <md-tab label="JOBS">
+                          <!-- <md-tab label="JOBS">
                             <md-content class="">
-                              <h1 class="md-display-2">Get a job, my man!</h1>
+                              <h1 class="">Get a job, my man!</h1>
                               <p>wtf yo</p>
                             </md-content>
-                          </md-tab>
-
-
+                          </md-tab> -->
                         </md-tabs>
 
 
