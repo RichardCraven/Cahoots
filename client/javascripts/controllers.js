@@ -53,16 +53,21 @@
 	  			var fadeOut = $timeout(fadeOut,6900)
 	  		};
 		};
-	function MailCtrl(filmMail, musicMail, codingMail, $location, auth, store, $timeout, $rootScope, UsersService, FilmPostCommentsService, FilmPostService, ConvoRepoService,CodingPostConversationsService,FilmPostConversationsService,MusicPostConversationsService){
+	function MailCtrl(filmMail, musicMail, codingMail, $location, auth, store, $timeout, $rootScope, UsersService, FilmPostCommentsService, FilmPostService, ConvoRepoService, CodingPostConversationsService,CodingPostCommentsService,FilmPostConversationsService,MusicPostConversationsService){
 			var vm=this;
 			vm.name = JSON.parse(localStorage.profile).given_name;
 			vm.navpicture = JSON.parse(localStorage.profile).picture;
 			vm.filmCommentPosts = [];
 			vm.musicPostComments = [];
 			vm.codingPostComments = [];
+			vm.isVisible = false;
+			vm.showButtons = function(post){vm.isVisible = post.id}
+			vm.hideButtons = function(post){vm.isVisible = false}
+			
 			// CodingPostConversationsService.getConvos(vm.responses[index].id).then(function (res) {
 				// });
-				
+
+
 				vm.user_id = JSON.parse(localStorage.profile).user_id;
 				var myDisplayName, post_id, fbUserId, facebook = /^(facebook)/,
 				numberPattern = /\d+/g;
@@ -73,12 +78,30 @@
 					fbUserId = vm.user_id.match(numberPattern)[0];
 					vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
 				};
-				for(var i = 0; i<filmMail.data.length; i++){vm.filmCommentPosts.push(filmMail.data[i])}
-				for(var i = 0; i<musicMail.data.length; i++){vm.musicPostComments.push(musicMail.data[i])}
-				for(var i = 0; i<codingMail.data.length; i++){vm.codingPostComments.push(codingMail.data[i])}
+				for(var i = 0; i<filmMail.data.length; i++){
+					if (facebook.test(filmMail.data[i].user_id)) {
+						fbUserId = filmMail.data[i].user_id.match(numberPattern)[0];
+						filmMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					vm.filmCommentPosts.push(filmMail.data[i])
+				}
+				for(var i = 0; i<musicMail.data.length; i++){
+					if (facebook.test(musicMail.data[i].user_id)) {
+						fbUserId = musicMail.data[i].user_id.match(numberPattern)[0];
+						musicMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					vm.musicPostComments.push(musicMail.data[i])
+				}
+				for(var i = 0; i<codingMail.data.length; i++){
+					if (facebook.test(codingMail.data[i].user_id)) {
+						fbUserId = codingMail.data[i].user_id.match(numberPattern)[0];
+						codingMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					vm.codingPostComments.push(codingMail.data[i])
+				}
 				
-			console.log('film mail is: ', filmMail.data, 'musicMail: ', musicMail.data, 'codingMail: ', codingMail.data);
-		 	console.log(vm.filmCommentPosts, vm.musicPostComments, vm.codingPostComments);
+			// console.log('film mail is: ', filmMail.data, 'musicMail: ', musicMail.data, 'codingMail: ', codingMail.data);
+		 	// console.log(vm.codingPostComments);
 			// vm.codeResponses = codingMail.data.filter((v, i) => codingMail.data[i].framework === posts.data[idx].framework);
 
 			vm.hasNewFilmMail = vm.hasNewMusicMail = vm.hasNewCodingMail = 
@@ -90,11 +113,84 @@
 			if(vm.musicPostComments.length>0){vm.showMusicMail = true};
 			if(vm.codingPostComments.length>0){vm.showCodingMail = true};
 			vm.logout = function(){
-				store.remove('profile')
-				store.remove('token')
-				location.href = '/home';c
+				store.remove('profile');
+				store.remove('token');
+				location.href = '/home';
 			};
-			vm.go = function(path){$location.path(path)};
+			vm.goBack = function(){
+				$location.path('/loggedinHome')
+			};
+			vm.test = function (node){
+				console.log(node.target);
+				node.target.style.backgroundColor = 'red'
+				
+			}
+			vm.clickTrigger = function(targetNode){
+				
+					function triggerMouseEvent(node, eventType) {
+						var clickEvent = document.createEvent('MouseEvents');
+						clickEvent.initEvent(eventType, true, true);
+						node.dispatchEvent(clickEvent);
+					}
+					if (targetNode) {
+						//--- Simulate a natural mouse-click sequence.
+						triggerMouseEvent(targetNode, "mouseover");
+						triggerMouseEvent(targetNode, "mousedown");
+						// triggerMouseEvent(targetNode, "mouseup");
+						// triggerMouseEvent(targetNode, "click");
+						console.log('in here');
+						
+					}
+					else
+					console.log("*** Target node not found!");
+					
+				
+			
+		}
+			// var targetNode = document.getElementsByClassName('md-tab')[5]
+
+			vm.acceptConversation = function(post){
+				console.log('accepting ', post);
+				let msg = {};
+
+				msg.user_id = JSON.parse(localStorage.profile).user_id;
+				msg.coding_post_id = post.post_id;
+				msg.first_comment_id = post.id;
+				msg.message = post.comment;
+					let req = { post: msg };
+					CodingPostConversationsService.createMessage(req).then(function (res) {
+						for(let i = 0; i<vm.codingPostComments.length; i++){
+							if(vm.codingPostComments[i].id === res.data[0].first_comment_id){
+								vm.codingPostComments.splice(i,1);		
+								let activeTab = document.getElementsByClassName('md-tab')[5]
+								activeTab.style.backgroundColor = '#f5f5dc';
+								let beigePulse = setTimeout(function(){
+									activeTab.style.backgroundColor = 'white';
+								}, 500);			
+							}
+						}
+					}, vm);
+			};
+			vm.declineConversation = function(post, $event) {
+				let index;
+				node = $event.target
+				for(let i =0; i<vm.codingPostComments.length; i++){
+					if(vm.codingPostComments[i].id === post.id){
+						index = i;
+					}
+				}
+				let req = post.id
+				// console.log('declining ', $event.target.parentElement.parentElement.parentElement);
+				let timer = setTimeout(vm.clickTrigger(node), 250);
+				let timer2 = setTimeout(function(){
+					vm.codingPostComments.splice(index, 1);
+					CodingPostCommentsService.deletePost(req).then(function(res){
+						console.log('delete res is ', res);
+						
+					})
+				},500)
+			};
+
 			vm.newMessage = function(postId,message,category){
 				vm.post = {};
 				vm.post.category = category;
@@ -325,7 +421,7 @@
 	  		 } else if (localStorage.length>0 && vm.backButton === 'codingIndex'){
 	  			vm.show(vm.tempIndex)
 	  			vm.backButton = 'home'	
-	  		};
+	  		 };
 		  	};
 			 vm.show = function(idx){
 		  	 vm.tempIndex = idx;
@@ -348,10 +444,10 @@
     		  	  if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
   			  	    vm.showResponses = true;
   			  	    vm.showCommentInput = false;
-  			  	    vm.leftPanel = 'RESPONSES'
+  			  	    vm.leftPanel = 'RESPONSES';
   			  	    vm.responses = codingMail.data.filter((v,i) => codingMail.data[i].framework === posts.data[idx].framework);
   			  	    vm.responses.forEach(function(i){
-  			  	    	var facebook = /^(facebook)/,
+  			  	    	let facebook = /^(facebook)/,
   			  	    		numberPattern = /\d+/g,
   			  	    		fbUserId;
   			  	    	if(facebook.test(i.user_id)){
@@ -363,9 +459,11 @@
   			  	    	vm.showCrickets = true;
   			  	    };
   			  	    vm.showResponse = function(index, response){
+							// console.log('IN SHOW RESPONSE');
+							
   			  	    	vm.responsesNeedCleanup = true;
   			  	    	vm.toggleResponseView = !vm.toggleResponseView;
-  			  	    	var convoStarted = false,
+  			  	    	let convoStarted = false,
   			  	    	    responseContainer = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString()),
   			  	    		selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
   			  	    		nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment),
@@ -382,7 +480,7 @@
 		  			  	    			conversationArea.style.background = '#ccceff';
 		  			  	    		} else {conversationArea.style.background = '#E6FFCC'};
 
-		  			  	    		var beginConvoButton = document.createElement('div');
+		  			  	    		let beginConvoButton = document.createElement('div');
 		  			  	    		beginConvoButton.style.width = '100%;';
 		  			  	    		beginConvoButton.style.backgroundColor = '#beed90';
 		  			  	    		beginConvoButton.style.margin = '5px';
@@ -400,7 +498,7 @@
 		  			  	    			vm.convoBegun = true;
 		  			  	    			vm.showMap = false;
 		  			  	    			vm.showChat = true;
-		  			  	    			var li = document.createElement('li'),
+		  			  	    			let li = document.createElement('li'),
 		  			  	    			response = vm.responses[index];
 		  			  	    			li.innerHTML = response.display_name + ':  &nbsp;' + response.comment;
 		  			  	    			var chatbox = document.getElementsByClassName('chatboxText')[idx];
@@ -1442,7 +1540,7 @@
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','UsersService']
-	MailCtrl.$inject = ['filmMail', 'musicMail', 'codingMail', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'FilmPostConversationsService', 'MusicPostConversationsService']
+	MailCtrl.$inject = ['filmMail', 'musicMail', 'codingMail', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'CodingPostCommentsService', 'FilmPostConversationsService', 'MusicPostConversationsService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
 

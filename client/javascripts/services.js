@@ -181,6 +181,8 @@
 				return $http.post(BASE_URL, newPost); //on server req.body.post
 			};
 			this.deletePost = function(id){
+				console.log('DELETE ID IS ', id);
+				
 				return $http.delete(BASE_URL + '/' + id)
 			};
 			this.updatePost = function(data){

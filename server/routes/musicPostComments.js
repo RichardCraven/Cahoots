@@ -24,7 +24,7 @@ router.get('/:id', function(req,res){
 });
 
 router.get('/history/:id', function(req,res){
-	knex.select(['c.comment','c.post_id','u.user_pic','u.display_name', 'c.user_id','c.id' ]).from('music_post_comments as c')
+	knex.select(['c.comment','c.post_id','u.user_pic','u.display_name', 'c.user_id','c.id', 'mp.genre' ]).from('music_post_comments as c')
 	.join('music_posts as mp', 'c.post_id', '=', 'mp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('c.user_id',req.params.id)

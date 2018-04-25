@@ -1,5 +1,6 @@
 .jumbotron.mailbox{
 	height: 65vh;
+	overflow: scroll;
 }
 
 #mailList{
@@ -66,13 +67,93 @@ md-list-item.codingCommentMailOdd:hover{
 md-list-item.codingCommentMailEven:hover{
 	background-color: rgb(255,64,129);
 }
-md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple:hover{
+.mailbox md-list-item{
+	padding: 0;
+}
+md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple:hover, .mailbox md-list-item:hover{
 	/* font-size:2em; */
 	background-color: #f5f5dc;
+	transition: all 0.2s;
 }
 md-pagination-wrapper{
 	width: 100% !important;
 }
 div md-content.ng-scope{
 	padding-left:10px;
+}
+.mailbox-message-pane{
+	background-color: white;
+}
+.mailbox-response-pending-text{
+	max-width: 60%;
+}
+.accept-decline-button-container{
+	width: 40%;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+}
+.pending-accept-container, .pending-decline-container{
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	padding-left: 5px;
+	padding-right:15px;
+	font-weight: bold;
+	outline: 0;
+}
+.pending-accept-container:hover{
+	color: green;
+}
+.pending-decline-container:hover{
+	color: red;
+}
+.mailboxLeftCol{
+	flex: 4;
+}
+.mailboxRightCol{
+	flex: 5;
+	height: 100%;
+}
+
+footer{
+	background-color: black;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
+Here is the best way to do it:
+
+<div md-ink-ripple class="ripple">Div like an md-button</div>
+add to your div md-ink-ripple directive
+add ripple class to your div:
+`
+
+.ripple {
+  position: relative;
+  &:active > .wave {
+    animation: ripple 2.25s;
+  }
+  .wave{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 0 0;
+    top:0;
+    left:0;
+    transform: scale(0);
+    opacity:0;
+  }
+}
+@keyframes ripple {
+  0% {transform: scaleX(0);}
+  50%{transform: scaleX(1);opacity:0.3;}
+  100%{transform: scaleX(1);opacity:0;background-size: 1000% 1000%;}
 }

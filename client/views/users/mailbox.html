@@ -10,322 +10,113 @@
           </div>
         </div>
     </nav>
-    <div class="container-fluid" style='overflow:scroll'>
-        <header class="jumbotron hero-spacer mailbox">
-            <a href="/loggedinHome" class="goBack">
-              <span class="glyphicon glyphicon-arrow-left"></span>
-            </a>
-            <h1 id='header-main-mailbox' class='text-center'>MAILBOX</h1>
-              <div layout-gt-sm="column" >
-                <div flex-gt-sm="80">
-                  <md-content>
-                    <md-tabs md-dynamic-height md-border-bottom>
-                          <md-tab style='font-size:5em' label="Pending Conversations" >
-                            <md-content class="">
-                              <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'"  >
-                                <div class="md-list-item-text" >
-                                    <div id='postRow' layout='row' ng-click='vm.respondFilm($index)'>
-                                      <div flex-gt-sm='15' class='userPicContainer'>
-                                         <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                                      </div>    
-                                      <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                          <div layout='row' class="postContentHeader">
-                                            <div flex='30'>
-                                              <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'> <span class='you'>{{post.display_name}}</span> 
-                                              <!-- <span class="glyphicon glyphicon-arrow-right"></span>  -->
-                                              </h6>
-                                            </div>
-                                            <div  class="arrowRight"></div>
-                                            <div flex='15'>
-                                              <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px; margin-left: 35%; white-space: nowrap;'>
-                                                <span class='recipient'>{{post.recipient}} </span> 
-                                              </h6>
-                                            </div>
-                                            <div flex='30'>
-                                              <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px; max-height: 30px; overflow:hidden; white-space: nowrap; text-overflow:ellipsis;'> Context: {{post.topic}}
-                                              </h6>
-                                            </div>
-                                            <div flex='30'>
-                                              <a href="javascript:void(0)" id='new' class='pull-right' ng-click="vm.testies"
-                                              >
-                                                <span class="glyphicon glyphicon-remove "></span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                          <div layout='row'>
-                                            <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; max-height:200px; margin-top:10px; overflow-y: scroll;'>{{post.comment}}
-                                            </h3>
-                                          </div>
-                                      </div>  
-
+    <div class="container-fluid">
+        <div class=" hero-spacer mailbox">
+          <a ng-click='vm.goBack()' class="backArrow">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+          </a>
+          <h1 id='header-main-mailbox' class='text-center'>MAILBOX</h1>
+          <div layout="row">
+            <div layout="column" class='mailboxLeftCol' >
+              <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                  <md-tab label="Conversations" >
+                    <md-content class="">
+                      <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="Pending">
+                          <md-content class="">
+                            <md-list-item  ng-show='vm.showCodingMail' ng-repeat="post in vm.codingPostComments track by post.id" class=""
+                               ng-class-odd="" ng-class-even="">
+                              <div class="md-list-item-text">
+                                <div layout='row' md-ink-ripple="#FF0000" ng-mouseover='vm.showButtons(post)' ng-mouseleave='vm.hideButtons(post)'>
+                                  <div  flex='15'>
+                                    <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                                  </div>
+                                  <div flex='65'  class='mailbox-response-pending-text' layout-padding>
+                                    <p>{{post.framework}}</p>
+                                    <p>{{post.display_name}} says: {{post.comment}}</p>
+                                  </div>
+                                  <div flex='20' layout='row'>
+                                    <div  ng-show='vm.isVisible === {{post.id}}' ng-click='vm.acceptConversation(post)' class='pending-accept-container' flex='50'>
+                                      <div>ACCEPT</div>
                                     </div>
-                                    <div ng-show='vm.showFilmResponseField' layout='row' 
-                                    >
-                                    <!-- class='responseField'> -->
-
-                                      <div flex="50" class='postFilmResponseArea'>
-                                        <div layout='column' style='height: 100%'>
-                                          <div flex="80">
-                                            <form  ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
-                                              <md-input-container class="md-block">
-                                                <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
-                                              </md-input-container>
-                                              <button type="submit" class="btn btn-success">Submit</button>
-                                            </form>
-                                          </div>
-                                          <div flex="20">
-                                            <button ng-click='vm.deleteConvo(post.id, vm.comment, "film")' class="btn btn-danger">Delete Conversation</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div flex='50'  >
-                                        <div class='chatbox' flex>
-                                          <md-list-item ng-repeat="message in vm.messages track by $index" ng-class-odd="'cadet'" ng-class-even="'cornflowerBlue'">
-                                            {{message.user}}: {{message.message}}
-                                          </md-list-item>
-                                        </div>
-                                      </div>
+                                    <div ng-show='vm.isVisible === {{post.id}}' ng-click='vm.declineConversation(post, $event)' class='pending-decline-container' flex='50'>
+                                      <div>DECLINE</div>
                                     </div>
-                                </div>
-                              </md-list-item>
-                            </md-content>
-
-                          </md-tab>
-                          <md-tab label="Active Conversations">
-                            <md-content class="">
-                              <md-list-item ng-show='vm.showMusicMail'  ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap"  md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
-
-                                <div class="md-list-item-text">
-                                    <div layout='row' ng-click='vm.respondMusic($index)'>
-                                      <div flex-gt-sm='15' class='userPicContainer'>
-                                         <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                                      </div>    
-                                      <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                          <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'>Responding to: {{post.genre}}</h6>
-                                          <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2.5em; margin-top:15px;'>{{post.comment}}</h3>
-                                      </div>   
-                                    </div>
-                                    <div ng-show='vm.showMusicResponseField' layout='row' class='responseField'>
-                                      <div  class='postMusicResponseArea'>
-                                        <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
-                                        <md-input-container class="md-block">
-                                          <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
-                                        </md-input-container>
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                        </form>
-                                      </div>
-                                    </div>
-
-                                </div>
-                              </md-list-item>
-
-                            </md-content>
-                          </md-tab>
-
-                          <md-tab label="Project Staging">
-                            <md-content class="">
-                              <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
-                                <div class="md-list-item-text">
-                                    <div layout='row' ng-click='vm.respondCoding($index)'>
-                                      <div flex-gt-sm='15' class='userPicContainer'>
-                                         <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                                      </div>    
-                                      <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                          <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.scripting_language}}</h6>
-                                          <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
-                                      </div>          
-                                      
-                                    </div>
-                                    <div ng-show='vm.showCodingResponseField' layout='row' class='responseField'>
-                                      <div  class='postCodingResponseArea'>
-
-                                        <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
-                                        <md-input-container class="md-block">
-                                          <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
-                                        </md-input-container>
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                        </form>
-                                      </div>
-                                    </div>
-                                </div>
-                              </md-list-item>
-                            </md-content>
-                          </md-tab>
-                          <md-tab label="Dogs">
-                            <md-content class="">
-
-                              <md-tabs md-dynamic-height md-border-bottom>
-                                <md-tab label="Dog Mingling">
-                                  <md-content class="">
-                                    <h4 class="">Mingle!</h4>
-                                    <p>Get your pup on</p>
-                                  </md-content>
-                                </md-tab>
-                                <md-tab label="Dog Adoption">
-                                  <md-content class="">
-                                    <h4 class="">Adopt some pups!</h4>
-                                    <p>Do it!</p>
-                                  </md-content>
-                                </md-tab>
-                              </md-tabs>
-
-                            </md-content>
-                          </md-tab>
-
-                          <!-- <md-tab label="JOBS">
-                            <md-content class="">
-                              <h1 class="">Get a job, my man!</h1>
-                              <p>wtf yo</p>
-                            </md-content>
-                          </md-tab> -->
-                        </md-tabs>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <!-- <md-list id='mailList' style='margin-left:0px; overflow: scroll !important;' > -->
-
-                    <!--_____________________________FILM MAIL______________________________-->
-                  
-                          <!-- <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showFilmMail' class="md-2-line item-text-wrap filmCommentMailHeader">
-                            <div class="md-list-item-text">
-                                <div layout='row'>
-                                  <div flex-gt-sm='15' class='userPicContainer'>
-                                     <img class='userPic' ng-src="images/film3.jpg" alt="">
-                                  </div>    
-                                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                    <div ng-show='vm.hasFilmMail' class='pull-left mailButton'><span><img src="images/exclamation.png" alt=""></span>
-                                    </div>
-
-                                    <h2 style='font-weight: bold'>Film Mail</h2>
-                                     
-                                  </div>   
-                                </div>
-                            </div>
-                          </md-list-item>
-                          <md-list-item ng-show='vm.showFilmMail'  ng-repeat="post in vm.filmCommentPosts track by $index"  class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'filmCommentMailOdd'" ng-class-even="'filmCommentMailEven'" >
-                            <div class="md-list-item-text">
-                                <div layout='row' ng-click='vm.respondFilm($index)' >
-                                  <div flex-gt-sm='15' class='userPicContainer'>
-                                     <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                                  </div>    
-                                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                      <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.topic}}</h6>
-                                      <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; max-height:800px; margin-top:15px; margin-left:20px; overflow:scroll'>{{post.comment}}</h3>
-                                  </div>  
-
-                                </div>
-                                <div ng-show='vm.showResponseField' layout='row' class='responseField'>
-                                  <div  class='postResponseArea'>
-                                    <form autofocus class='commentForm' action="" 
-                                    ng-submit='vm.addFilmCommentResponse(post.id,vm.comment)'
-                                    >
-                                      <textarea  ng-model='vm.comment.comment' class='postTextField' name="" id="" cols="30" rows="10"></textarea>
-
-                                      <button type="submit" class="btn btn-success">Submit</button>
-                                    </form>
                                   </div>
                                 </div>
-                                    
-                                  
-                            </div>
-                          </md-list-item> -->
-
-                <!-- ____________________________MUSIC MAIL___________________________-->
-
-                    <!-- <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showMusicMail' class="md-2-line item-text-wrap musicCommentMailHeader">
-                            <div class="md-list-item-text">
-                                <div layout='row'>
-                                  <div flex-gt-sm='15' class='userPicContainer'>
-                                     <img class='userPic' ng-src="images/music3.jpg" alt="">
-                                  </div>    
-                                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                    
-                                    <div ng-show='vm.hasNewMusicMail' class='pull-left mailButton'><span><img src="images/exclamation.png" alt=""></span>
-                                    </div>
-
-                                    <h2 style='font-weight: bold'>Music Mail</h2>
-                                     
-                                  </div>   
-                                </div>
-                            </div>
-                    </md-list-item>
-                    <md-list-item ng-show='vm.showMusicMail' ng-click='vm.respond()' ng-repeat="post in vm.musicPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'musicCommentMailOdd'" ng-class-even="'musicCommentMailEven'" >
-                      <div class="md-list-item-text">
-                          <div layout='row'>
-                            <div flex-gt-sm='15' class='userPicContainer'>
-                               <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                            </div>    
-                            <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.genre}}</h6>
-                                <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
-                            </div>          
-                            
-                          </div>
-                      </div>
-                    </md-list-item> -->
-
-                    <!--______________________________CODING MAIL____________________________-->
-
-                    <!-- <md-list-item md-ink-ripple="#FF0000" ng-show='vm.showCodingMail' class="md-2-line item-text-wrap codingCommentMailHeader">
-                      <div class="md-list-item-text">
-                          <div layout='row'>
-                            <div flex-gt-sm='15' class='userPicContainer'>
-                               <img class='userPic' ng-src="images/coding3.jpg" alt="">
-                            </div>    
-                            <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                              
-                              <div ng-show='vm.hasNewCodingMail' class='pull-left mailButton'><span><img src="images/exclamation.png" alt=""></span>
                               </div>
+                            </md-list-item>
+                          </md-content>
+                        </md-tab>
+                        <md-tab id='active-convo-tab' label="Active">
+                          <md-content class="">
+                            <md-list-item ng-show='vm.showFilmMail' ng-repeat="post in vm.filmPostComments track by $index" class="" md-ink-ripple="#FF0000"
+                              ng-class-odd="" ng-class-even="">
+                              <div class="md-list-item-text">
+                                <div layout='row' ng-click='vm.respondFilm($index)'>
+                                  <div flex-gt-sm='15' class=''>
+                                    <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                                  </div>
+                                  <div flex-gt-sm='85' class='mailbox-response-pending-text' layout-padding>
+                                    <p>Responding to: {{post.topic}}</p>
+                                    <p>{{post.display_name}} says: {{post.comment}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </md-list-item>
+                          </md-content>
+                        </md-tab>
+                      </md-tabs>
+                    </md-content>
+                  </md-tab>
+                  <md-tab label="Project Staging">
+                    <md-content class="">
+                      <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
+                        <div class="md-list-item-text">
+                            <div layout='row' ng-click='vm.respondCoding($index)'>
+                              <div flex-gt-sm='15' class='userPicContainer'>
+                                  <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                              </div>    
+                              <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                  <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.scripting_language}}</h6>
+                                  <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
+                              </div>          
+                              
+                            </div>
+                            <div ng-show='vm.showCodingResponseField' layout='row' class='responseField'>
+                              <div  class='postCodingResponseArea'>
 
-                              <h2 style='font-weight: bold'>Coding Mail</h2>
-                               
-                            </div>    
-                          </div>
-                      </div>
-                    </md-list-item>
-                    <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" ng-click='vm.respond()' md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
-                      <div class="md-list-item-text">
-                          <div layout='row'>
-                            <div flex-gt-sm='15' class='userPicContainer'>
-                               <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                            </div>    
-                            <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.scripting_language}}</h6>
-                                <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
-                            </div>          
-                            
-                          </div>
-                      </div>
-                    </md-list-item> -->
-                    
-                  </md-content>
-                </div>
+                                <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
+                                <md-input-container class="md-block">
+                                  <input autofocus='true' ng-model="vm.comment" type="comment" placeholder="Message:" ng-required="true">
+                                </md-input-container>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                                </form>
+                              </div>
+                            </div>
+                        </div>
+                      </md-list-item>
+                    </md-content>
+                  </md-tab>
+                </md-tabs>
+              </md-content>
+            </div>
+            <div layout="column" class='mailboxRightCol' class='mailbox-message-pane'>
+              <md-content>
+                <p></p>
+                
+              </md-content>
+            </div>
 
-        </header>
-
+            </div>
+          </div>
         <hr>
-
-  
-
         <hr id='preFooter-hr'>
-
+      </div>
+    </div>  
         <!-- Footer -->
-        <footer>
+        <footer class='mailboxFooter'>
             <div class="row">
                 <div  class="col-lg-12 text-center">
                     <p>Copyright &copy; cravenTech 2016 || the world is your oyster</p>

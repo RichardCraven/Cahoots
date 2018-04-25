@@ -2,8 +2,14 @@ body{
 	color:black;
 	background-color: none ;
 }
+.layout-row{
+	outline: 0;
+}
 md-list md-list-item{
 	padding: 0px !important;
+}
+md-list-item p{
+	color: black;
 }
 h1{
 	margin: 0;
@@ -268,13 +274,21 @@ img{
 	height: 200px;
 	width: 200px;
 }
-.md-toolbar-tools a{
+.mailbox-response-pending-text p{
+	margin: 0px;
+	font-family: "Arial";
+}
+.md-toolbar-tools a, .mailbox a{
 	color: white; 
 	transition: all 1s;	
 	font-size: 1.6em;
 }
-.md-toolbar-tools a:hover{
+.md-toolbar-tools a:hover, .mailbox a:hover{
 	color: #35fc2a; 	
+}
+.mailbox .backArrow span{
+	margin-top: 10px;
+	margin-left: 20px;
 }
 .postLine{
 	margin-top: 5px;

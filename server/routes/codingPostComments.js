@@ -10,7 +10,7 @@ knex('coding_post_comments').where('user_id',req.body)
 	})
 })
 router.get('/:id', function(req,res){
-	knex.select(['c.comment','c.id','cp.framework','u.user_pic','u.display_name', 'c.user_id']).from('coding_posts as cp')
+	knex.select(['c.comment','c.id','cp.framework','u.user_pic','u.display_name', 'c.user_id', 'c.post_id']).from('coding_posts as cp')
 	.join('coding_post_comments as c', 'c.post_id', '=', 'cp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('cp.user_id',req.params.id)
@@ -42,7 +42,7 @@ router.post('/',function(req,res){
 
 router.delete('/:id', (req,res) => {
 	knex('coding_post_comments').where('id', req.params.id).del().then(function(){
-		res.send('codingPost deleted!');
+		res.send('codingPostComment deleted!');
 	}).catch(function(err){
 		res.send
 	})
