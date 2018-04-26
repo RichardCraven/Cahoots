@@ -1,10 +1,11 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('music_posts', table => {
-  	table.increments();
+		table.increments();
+		table.text('descriptive_title');
   	table.text('genre');
-  	table.text('description');
-  	table.text('roles_needed')
-  	table.text('user_id')
+  	table.text('summary');
+		table.text('user_id');
+		table.timestamp('created_at').defaultTo(knex.fn.now());
   })
 };
 

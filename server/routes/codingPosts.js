@@ -3,9 +3,13 @@ const router = express.Router();
 const knex = require('../db/knex')
 
 router.get('/', function (req,res){
-	knex.select(['u.display_name','u.user_pic','u.third_party_user_id','c.id','description','framework']).from('coding_posts as c')
+	console.log('in router get coding points');
+	
+	knex.select(['u.display_name', 'u.user_pic', 'u.third_party_user_id', 'c.id', 'descriptive_title', 'summary', 'framework', 'created_at']).from('coding_posts as c')
 	.join('users as u', 'u.third_party_user_id', '=', 'c.user_id')
 		.then(function(codingPosts){
+			console.log('posts are ', codingPosts);
+			
 		res.send(codingPosts);
 		})
 	.catch(function(err){

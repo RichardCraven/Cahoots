@@ -19,26 +19,24 @@
           ng-class-even="'even animated bounceInLeft'">
           <div class="md-list-item-text">
             <div layout='row' ng-click="vm.show($index)">
-              <div flex-gt-sm='15' class='userPicContainer'>
+              <div class='userPicContainer'>
                 <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                <p class='displayName'>{{post.display_name}}</p>
               </div>
-              <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                <a href="/musicPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
+              <div class='postContentContainer' layout-padding>
+                <a href="/filmPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
                   <span class="glyphicon glyphicon-pencil "></span>
                 </a>
                 <a href="javascript:void(0)" ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
                   <span class="glyphicon glyphicon-remove "></span>
                 </a>
                 <div class='postStyle'>
-                  <h3>
-                    <span class='topic'>Genre: </span>
-                    <span class='topicText'>{{post.genre}}</span>
-                  </h3>
+                  <p class='displayName'>{{post.display_name}}</p>
                   <hr class='postLine'>
-                  <h4 class='descrip'>
-                    <span class='postText'>{{post.description}}</span>
-                  </h4>
+                  <h3>
+                    <span class='topic'>Title: </span>
+                    <span class='topicText'>{{post.descriptive_title}}</span>
+                  </h3>
+                  <p>{{post.genre}}</p>
                 </div>
               </div>
             </div>
@@ -48,13 +46,21 @@
                 <div flex layout-gt-sm="column" data-parentidx='{{$index}}' class='messageContainer'>
                   <div flex-gt-sm="80">
                     <md-content class='backgroundTransparent' ng-click='vm.postTest(post)'>
-                      <div ng-show='vm.showCrickets'>
-                        <h5>YOU AINT GOT NOT RESPONSE YET, SUCKAFISH</h5>
+                      <div class='post-summary-container'>
+                        <h5>Project Summary</h5>
+                        <h4 class='summary'>{{post.summary}}</h4>
                       </div>
-                      <div class='messagePitch' ng-show='vm.showCommentInput'>
+                      <div ng-show='vm.showCrickets' class='crickets-container'>
+                        <h4>No responses yet</h4>
+                      
+                          <!-- <img class'small-owl-graphic' src="images/owl_clipped.png" alt=""> -->
+                    
+                      </div>
+                      <div class='message-pitch-container' ng-show='vm.showCommentInput'>
                         <h5>Does this interest you?</h5>
                         <h4>Send a collaboration pitch, and if they respond you can have a conversation!</h4>
                       </div>
+                      <div class='comment-form-container'></div>  
                       <form id='form{{$index}}' ng-show='vm.showCommentInput' name="newMusicProject" ng-submit="vm.addMusicPostComment(post.id,vm.comment)">
                         <div flex>
                           <md-input-container class='width70 commentInputContainer'>
@@ -69,8 +75,8 @@
                           <i class="material-icons md-48">add</i> Comment</button>
                       </form>
                       <div class='waitingResponse' ng-show='vm.waitingResponse'>
-                        <h3> You said: "{{vm.history.comment}}"</h3>
-                        <h3> Poster has not responded yet. </h3>
+                        <h3> <span> You said: </span> "{{vm.history.comment}}"</h3>
+                        <h3> {{post.display_name}} has not responded yet. </h3>
                       </div>
                       <div ng-show='vm.waitingResponse' class='text-center owlButton '>
                         <a href="/">
@@ -85,13 +91,13 @@
                       <div ng-show='vm.showResponses' ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'"
                         ng-class-even="'even2 animated bounceInLeft'">
                         <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='    {{response.id}}' class='md-list-item-text responses H100px'>
-                          <div layout='row' ng-click="vm.showResponse($index, response)" class='height100'>
-                            <div flex-gt-sm='15' class='userPicContainer'>
+                          <div layout='row' ng-click="vm.showResponse($index, response)" class=''>
+                            <div class='userPicContainer'>
                               <img class='userPic' ng-src="{{response.user_pic}}" alt="">
-                              <p class='displayName'>{{response.display_name}}</p>
                             </div>
-                            <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                            <div class='postContentContainer' layout-padding>
                               <div class='commentStyle'>
+                                <p class='displayName'>{{response.display_name}} says:</p>
                                 <h4 class='descrip'>
                                   <span class='postText'>{{response.comment}}</span>
                                 </h4>

@@ -125,15 +125,7 @@ footer{
     width: 100%;
 }
 
-
-Here is the best way to do it:
-
-<div md-ink-ripple class="ripple">Div like an md-button</div>
-add to your div md-ink-ripple directive
-add ripple class to your div:
-`
-
-.ripple {
+/* .ripple {
   position: relative;
   &:active > .wave {
     animation: ripple 2.25s;
@@ -156,4 +148,4 @@ add ripple class to your div:
   0% {transform: scaleX(0);}
   50%{transform: scaleX(1);opacity:0.3;}
   100%{transform: scaleX(1);opacity:0;background-size: 1000% 1000%;}
-}
+} */

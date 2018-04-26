@@ -10,24 +10,31 @@
     </md-toolbar>
     <md-content style='height:100%;'>
       <md-list flex>
-        <md-subheader style='font-size:2em' class="md-no-sticky text-center">POST A PROJECT PROPOSAL</md-subheader>
+        <md-subheader style='font-size:2em' class="md-no-sticky text-center">PROPOSE A FILM PROJECT</md-subheader>
       </md-list>
       <div flex layout-gt-sm="column" style='height:83%'>
         <div flex-gt-sm="100">
           <md-content class='height100'>
             <form name="newFilmProject" ng-submit="vm.addFilmPost(vm.post)" style='height: 100%'>
               <div layout="column" class='height100'>
+                <div flex>
+                  <md-input-container class='width70'>
+                    <label style='color:black' class='arial'>Descriptive Title</label>
+                    <input autocomplete="off" name="topic" class='newPostTopicArea'  ng-model="vm.post.descriptive_title" placeholder=" "
+                      autofocus required style="height: 50px">
+                  </md-input-container>
+                </div>
                 <div flex style='margin-bottom: 40px;'>
                   <md-input-container class='width70'>
-                    <label style='position: static' class='arial'>Topic</label>
-                    <input autocomplete="off" name="topic" class='newPostTopicArea' md-no-asterisk ng-model="vm.post.topic" placeholder=" "
-                      autofocus='true' required style="height: 50px">
+                    <label style='position: static' class='arial'>Genre (optional)</label>
+                    <input autocomplete="off" name="topic" class='newPostTopicArea' md-no-asterisk ng-model="vm.post.genre" placeholder=" "
+                      autofocus='true' style="height: 50px">
                   </md-input-container>
                 </div>
                 <div flex>
                   <md-input-container class='width70'>
-                    <label style='color:black' class='arial'>Brief Description</label>
-                    <input autocomplete="off" name="topic" class='newPostTopicArea' md-no-asterisk ng-model="vm.post.brief_description" placeholder=" "
+                    <label style='color:black' class='arial'>Project Summary</label>
+                    <input autocomplete="off" name="topic" class='newPostTopicArea'  ng-model="vm.post.summary" placeholder=" "
                       autofocus required style="height: 50px">
                   </md-input-container>
                 </div>

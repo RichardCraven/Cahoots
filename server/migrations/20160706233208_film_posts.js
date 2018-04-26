@@ -1,10 +1,11 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('film_posts', table => {
-  	table.increments();
-  	table.text('topic');
-  	table.text('brief_description');
-  	table.integer('estimated_runtime');
-  	table.text('user_id')
+		table.increments();
+		table.text('descriptive_title');
+  	table.text('genre');
+  	table.text('summary');
+		table.text('user_id');
+		table.timestamp('created_at').defaultTo(knex.fn.now());
   })
 };
 

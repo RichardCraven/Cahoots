@@ -20,23 +20,26 @@
 	          <md-list-item    ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" ng-class-odd="'odd animated bounceInRight'" ng-class-even="'even animated bounceInLeft'" >
 	            <div class="md-list-item-text">
                 <div layout='row' ng-click="vm.show($index)">
-                  <div flex-gt-sm='15' class='userPicContainer'>
-                     <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                     <p class='displayName'>{{post.display_name}}</p>
+                  <div class='userPicContainer'>
+                    <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                   </div>
-                  <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-      	            <a  href="/codingPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
-      	              <span class="glyphicon glyphicon-pencil "></span>
-      	            </a>
-      	            <a href="javascript:void(0)" ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
-      	              <span class="glyphicon glyphicon-remove "></span>
-      	            </a>
+                  <div class='postContentContainer' layout-padding>
+                    <a href="/filmPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
+                      <span class="glyphicon glyphicon-pencil "></span>
+                    </a>
+                    <a href="javascript:void(0)" ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
+                      <span class="glyphicon glyphicon-remove "></span>
+                    </a>
                     <div class='postStyle'>
-      	              <h3><span class='topic'>Framework: </span><span class='topicText'>{{post.framework}}</span></h3>
+                      <p class='displayName'>{{post.display_name}}</p>
                       <hr class='postLine'>
-      	              <h4 class='descrip'><span class='postText'>{{post.description}}</span></h4>
+                      <h3>
+                        <span class='topic'>Title: </span>
+                        <span class='topicText'>{{post.descriptive_title}}</span>
+                      </h3>
+                      <p>{{post.framework}}</p>
                     </div>
-                  </div>  
+                  </div>
                 </div>
                 <div layout='row'  ng-show='vm.showText' class='postTextArea'>
                       <div flex-gt-sm="50" class='postChatLeft animated slideInLeft' >
@@ -44,10 +47,10 @@
                         <div flex layout-gt-sm="column" data-parentidx = '{{$index}}' class='messageContainer' >
                           <div flex-gt-sm="80">
                             <md-content class='backgroundTransparent' ng-click='vm.postTest(post)'>
-                              <div ng-show = 'vm.showCrickets'>
-                                <h5>YOU AINT GOT NOT RESPONSE YET, SUCKAFISH</h5>
+                              <div ng-show = 'vm.showCrickets' class='crickets-container'>
+                                <p>No responses yet</p>
                               </div>
-                              <div class='messagePitch' ng-show ='vm.showCommentInput'>
+                              <div class='message-pitch-container' ng-show ='vm.showCommentInput'>
                                 <h5>Does this interest you?</h5>
                                 <h4>Send a collaboration pitch, and if they respond you can have a conversation!</h4>
                               </div>
@@ -78,16 +81,18 @@
                               </div> 
                               <div  ng-show='vm.showResponses'  ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'" ng-class-even="'even2 animated bounceInLeft'" >
                                 <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='    {{response.id}}'  class='md-list-item-text responses H100px'>
-                                  <div layout='row' ng-click="vm.showResponse($index, response)"  class='height100'>
-                                    <div flex-gt-sm='15' class='userPicContainer'>
-                                       <img class='userPic' ng-src="{{response.user_pic}}" alt="">
-                                       <p class='displayName'>{{response.display_name}}</p>
-                                    </div>   
-                                    <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                                  <div layout='row' ng-click="vm.showResponse($index, response)" class=''>
+                                    <div class='userPicContainer'>
+                                      <img class='userPic' ng-src="{{response.user_pic}}" alt="">
+                                    </div>
+                                    <div class='postContentContainer' layout-padding>
                                       <div class='commentStyle'>
-                                        <h4 class='descrip'><span class='postText'>{{response.comment}}</span></h4>
+                                        <p class='displayName'>{{response.display_name}} says:</p>
+                                        <h4 class='descrip'>
+                                          <span class='postText'>{{response.comment}}</span>
+                                        </h4>
                                       </div>
-                                    </div>  
+                                    </div>
                                   </div>
                                 </div>
                                 <div flex   ng-show='vm.convo == $index' class='conversationArea md-list-item-text' data-index= {{vm.tempIndex}}>

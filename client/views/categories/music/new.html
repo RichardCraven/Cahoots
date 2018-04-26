@@ -19,21 +19,24 @@
     </md-toolbar>
     <md-content style='height:100%;'>
       <md-list flex>
-        <md-subheader style='font-size:2em' class="md-no-sticky text-center">POST A PROJECT PROPOSAL</md-subheader>
+        <md-subheader style='font-size:2em' class="md-no-sticky text-center">PROPOSE A MUSIC PROJECT</md-subheader>
       </md-list>
       <div flex layout-gt-sm="column" style='height:83%'>
         <div flex-gt-sm="100">
           <md-content class='height100'>
             <form name="newMusicProject" ng-submit="vm.addMusicPost(vm.post)" style='height: 100%'>
-              <!-- <paper-input label="Genre" type="text" ng-model="vm.post.genre" required=""></paper-input>
-              <paper-input label="Description" type="text" ng-model="vm.post.description" required=""></paper-input>
-              <div class='submitButtonContainer'>
-                <label for='submit-form'> Submit</label>
-              </div> -->
               <div layout="column" class='height100'>
-                <div flex style='margin-bottom: 40px;'>
+                <div flex>
                   <md-input-container class='width70'>
-                    <label style='position: static' class='arial'>Genre</label>
+                    <label style='color:black' class='arial'>Descriptive Title</label>
+                    <input autocomplete="off" name="topic" class='newPostTopicArea' md-no-asterisk ng-model="vm.post.descriptive_title" placeholder=" "
+                      autofocus required style="height: 50px">
+                    <!-- <paper-input label="Description" model-ref="vm.post.description" type="text" ng-model="vm.post.description" required=""></paper-input> -->
+                  </md-input-container>
+                </div>
+                <div flex>
+                  <md-input-container class='width70'>
+                    <label style='position: static' class='arial'>Genre (optional)</label>
                     <input autocomplete="off" name="topic" class='newPostTopicArea' md-no-asterisk ng-model="vm.post.genre" placeholder=" "
                       autofocus='true' required style="height: 50px">
                       <!-- <paper-input autofocus label="Genre" model-ref="vm.post.genre" type="text" ng-model="vm.post.genre" required=""></paper-input> -->
@@ -41,8 +44,8 @@
                 </div>
                 <div flex>
                   <md-input-container class='width70'>
-                    <label style='color:black' class='arial'>Description</label>
-                    <input autocomplete="off" name="topic" class='newPostTopicArea' md-no-asterisk ng-model="vm.post.description" placeholder=" "
+                    <label style='color:black' class='arial'>Project Summary</label>
+                    <input autocomplete="off" name="topic" class='newPostTopicArea' md-no-asterisk ng-model="vm.post.summary" placeholder=" "
                       autofocus required style="height: 50px">
                       <!-- <paper-input label="Description" model-ref="vm.post.description" type="text" ng-model="vm.post.description" required=""></paper-input> -->
                   </md-input-container>

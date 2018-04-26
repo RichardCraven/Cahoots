@@ -154,6 +154,8 @@
 		 	const BASE_URL = '/api/coding'
 
 			this.getPosts = function(){
+				console.log('in get coding posts');
+				
 				return $http.get(BASE_URL)
 			};
 			this.createPost = function(newPost){

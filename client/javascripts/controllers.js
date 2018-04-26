@@ -266,8 +266,8 @@
 		  		localStorage.clear();
 		  	};
 		  	vm.go = function ( path ) {
-			    $location.path( path );
-			  };
+				location.href = path;
+			};
 			vm.login = function (){
 				auth.signin({popup: true}, function(profile,token){
 				});
@@ -375,7 +375,7 @@
 		};
 //~~~~~~CODING POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, codingHistory, $timeout, $rootScope, CodingPostConversationsService){
-
+			
 			var vm = this, span, area, cursor;
 
 			vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
@@ -403,7 +403,7 @@
 				//some code to put the logged-in user's posts at the top
 			}
 			//this gets around the issue of facebook profile pic URLs expiring
-			posts.data.forEach(function(i){
+			posts.data.length && posts.data.forEach(function(i){
 				var facebook = /^(facebook)/,
 					numberPattern = /\d+/g,
 					fbUserId;
@@ -733,6 +733,8 @@
 			vm.post.user_id = JSON.parse(localStorage.profile).user_id;
 
 			vm.addCodingPost = function(newCodingPost){
+				console.log('creating coding post: ', newCodingPost);
+				
 				var req = {post: newCodingPost};
 				CodingPostService.createPost(req).then(function(res){
 					$location.path('/codingPosts');
@@ -751,22 +753,22 @@
 			}
 		}
 //~~~~~~MUSICposts conroller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
-	function MusicPostsController(MusicPostService, MusicPostCommentsService, UsersService, posts, $location, $route, NgMap, musicMail, musicHistory, $timeout, $rootScope, MusicPostConversationsService) {
+	function MusicPostsController(MusicPostService, MusicPostCommentsService, UsersService,posts,$location, $route, NgMap, musicMail, musicHistory, $timeout, $rootScope, MusicPostConversationsService) {
 
 		var vm = this, span, area, cursor;
 
 		vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
 		vm.showMap = vm.showChat = vm.toggleView = vm.toggleResponseView =
-			vm.showText = vm.waitingResponse = vm.showResponses = vm.test =
-			vm.theyResponded = vm.showCrickets = vm.responsesNeedCleanup =
-			vm.loggedIn = vm.currentUser = vm.convo = vm.tempIndex = false;
+		vm.showText = vm.waitingResponse = vm.showResponses = vm.test =
+		vm.theyResponded = vm.showCrickets = vm.responsesNeedCleanup =
+		vm.loggedIn = vm.currentUser = vm.convo = vm.tempIndex = false;
 		vm.posts = posts.data;
 		vm.backButton = 'home'
 		vm.leftPanel = 'CONNECT'
 		vm.responses;
 		vm.rightColumnHeader = 'PROXIMITY';
 		vm.leftWidth = 50;
-
+		
 		if ($(window).width() < 1200) {
 			vm.leftWidth = 100;
 			vm.showOwl = false;
@@ -780,7 +782,9 @@
 			//some code to put the logged-in user's posts at the top
 		}
 		//this gets around the issue of facebook profile pic URLs expiring
-		posts.data.forEach(function (i) {
+		console.log(posts);
+		
+		posts.data.length && posts.data.forEach(function (i) {
 			var facebook = /^(facebook)/,
 				numberPattern = /\d+/g,
 				fbUserId;
@@ -1150,9 +1154,9 @@
 
 		vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
 		vm.showMap = vm.showChat = vm.toggleView = vm.toggleResponseView =
-			vm.showText = vm.waitingResponse = vm.showResponses = vm.test =
-			vm.theyResponded = vm.showCrickets = vm.responsesNeedCleanup =
-			vm.loggedIn = vm.currentUser = vm.convo = vm.tempIndex = false;
+		vm.showText = vm.waitingResponse = vm.showResponses = vm.test =
+		vm.theyResponded = vm.showCrickets = vm.responsesNeedCleanup =
+		vm.loggedIn = vm.currentUser = vm.convo = vm.tempIndex = false;
 		vm.posts = posts.data;
 		vm.backButton = 'home'
 		vm.leftPanel = 'CONNECT'
@@ -1174,7 +1178,7 @@
 			//some code to put the logged-in user's posts at the top
 		}
 		//this gets around the issue of facebook profile pic URLs expiring
-		posts.data.forEach(function (i) {
+		posts.data.length && posts.data.forEach(function (i) {
 			var facebook = /^(facebook)/,
 				numberPattern = /\d+/g,
 				fbUserId;

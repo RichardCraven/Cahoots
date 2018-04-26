@@ -271,12 +271,14 @@
 		return FilmPostService.getPost($route.current.params.id);
 	};
 	function getAllFilmMail(FilmPostCommentsService){
-		var user_id = JSON.parse(localStorage.profile).user_id;
-		return FilmPostCommentsService.getMail(user_id);
+		if (localStorage.profile){
+			return FilmPostCommentsService.getMail(JSON.parse(localStorage.profile).user_id);
+		}
 	};
 	function getAllFilmCommentHistory(FilmPostCommentsService){
-		var user_id = JSON.parse(localStorage.profile).user_id
-		return FilmPostCommentsService.getHistory(user_id);
+		if (localStorage.profile) { 
+			return FilmPostCommentsService.getHistory(JSON.parse(localStorage.profile).user_id);
+		};
 	};
 	function getAllCodingPosts(CodingPostService){
 		return CodingPostService.getPosts();
@@ -285,12 +287,14 @@
 		return CodingPostService.getPost($route.current.params.id);
 	};
 	function getAllCodingMail(CodingPostCommentsService){
-		var user_id = JSON.parse(localStorage.profile).user_id
-		return CodingPostCommentsService.getMail(user_id);
+		if(localStorage.profile) { 
+			return CodingPostCommentsService.getMail(JSON.parse(localStorage.profile).user_id);
+		}
 	};
 	function getAllCodingCommentHistory(CodingPostCommentsService){
-		var user_id = JSON.parse(localStorage.profile).user_id
-		return CodingPostCommentsService.getHistory(user_id);
+		if (localStorage.profile) { 
+			return CodingPostCommentsService.getHistory(JSON.parse(localStorage.profile).user_id);
+		}
 	};
 	function getAllMusicPosts(MusicPostService){
 		return MusicPostService.getPosts();
@@ -299,19 +303,22 @@
 		return MusicPostService.getPost($route.current.params.id);
 	};
 	function getAllMusicMail(MusicPostCommentsService){
-		var user_id = JSON.parse(localStorage.profile).user_id
-		return MusicPostCommentsService.getMail(user_id);
+		if (localStorage.profile) {
+			return MusicPostCommentsService.getMail(JSON.parse(localStorage.profile).user_id);
+		};
 	};
 	function getAllMusicCommentHistory(MusicPostCommentsService){
-		var user_id = JSON.parse(localStorage.profile).user_id
-		return MusicPostCommentsService.getHistory(user_id);
+		if (localStorage.profile) { 
+			return MusicPostCommentsService.getHistory(JSON.parse(localStorage.profile).user_id);
+		};
 	};
 	function getUserById(UsersService,$route){
 		return UsersService.getUser($route.current.params.id);
 	};
 	function getUserAtHomePage(UsersService){
-		var id = JSON.parse(localStorage.profile).user_id;
-		return UsersService.getUser(id)
+		if (localStorage.profile) { 
+			return UsersService.getUser(JSON.parse(localStorage.profile).user_id);
+		};
 	};
 	// function getAllCodingConvos(CodingPostConversationsService){
 	// 	var user_id = JSON.parse(localStorage.profile).user_id

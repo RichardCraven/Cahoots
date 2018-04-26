@@ -5,7 +5,7 @@ const knex = require('../db/knex')
 router.get('/', function (req,res){
 	// knex('film_posts').then(function(filmPosts){
 	// 	res.send(filmPosts);
-	knex.select(['u.display_name','u.user_pic','u.third_party_user_id','f.id','topic','brief_description']).from('film_posts as f')
+	knex.select(['u.display_name', 'u.user_pic', 'u.third_party_user_id', 'f.id', 'descriptive_title', 'genre', 'summary', 'created_at']).from('film_posts as f')
 	.join('users as u', 'u.third_party_user_id', '=', 'f.user_id')
 		.then(function(filmPosts){
 		res.send(filmPosts);
@@ -13,11 +13,10 @@ router.get('/', function (req,res){
 	.catch(function(err){
 		res.send(err);
 	});		
-	
 })
 
 router.get('/:id', function(req,res){
-	knex.select(['u.display_name','u.user_pic','topic','brief_description']).from('film_posts as f')
+	knex.select(['u.display_name','u.user_pic','descriptive_title','summary','genre']).from('film_posts as f')
 	.join('users as u', 'u.third_party_user_id', '=', 'f.user_id')
 	.where('f.id',req.params.id).first()
 	.then(function(post){
