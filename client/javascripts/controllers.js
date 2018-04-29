@@ -599,7 +599,7 @@
     		  	    vm.history = {};
 					vm.history.comment;
 						 
-    		  	  	codingHistory.data.forEach(function(v){
+    		  	  	codingHistory && codingHistory.data.forEach(function(v){
 						//If you have already commented on this post, display waiting message
     		  	  		if(v.post_id === posts.data[idx].id){
     		  	  			vm.showCommentInput = false;
@@ -768,22 +768,22 @@
 		vm.responses;
 		vm.rightColumnHeader = 'PROXIMITY';
 		vm.leftWidth = 50;
+		vm.postWidth = 100;
+		vm.testHeight = '800px';
 		
+		console.log('musicHistory is ', musicHistory);
+		
+
 		if ($(window).width() < 1200) {
 			vm.leftWidth = 100;
 			vm.showOwl = false;
 		}
-
 		if (localStorage.length > 0) {
 			vm.loggedIn = true
 		};
-
 		vm.myTrackingFunction = function (post) {
 			//some code to put the logged-in user's posts at the top
 		}
-		//this gets around the issue of facebook profile pic URLs expiring
-		console.log(posts);
-		
 		posts.data.length && posts.data.forEach(function (i) {
 			var facebook = /^(facebook)/,
 				numberPattern = /\d+/g,
@@ -810,17 +810,20 @@
 			vm.showText = !vm.showText;
 			vm.showVid = !vm.showVid;
 			vm.comment = {};
-
+			// console.log('uhh ', document.querySelectorAll('.main-post-row'));
+			
 			var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v, i) => i == idx),
-				others = Array.from(document.querySelectorAll('md-list-item')).filter((v, i) => i !== idx);
-
-			if (vm.toggleView === true) {
+			others = Array.from(document.querySelectorAll('md-list-item')).filter((v, i) => i !== idx);
+			
+			if(vm.toggleView === true) {
+				console.log('yo. mapcontaioner is ', document.getElementsByClassName('mapContainer')[idx]);
+				vm.postWidth = 50;
 				vm.backButton = 'musicIndex';
 				if (vm.leftWidth === 50) {
 					vm.leftWidth = 100;
 					vm.showOwl = false;
 				};
-				selected[0].classList.add('focus');
+				selected[0].classList.add('focus');				
 				others.forEach(function (i) { i.style.display = 'none' });
 				if (localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id) {
 					vm.showResponses = true;
@@ -852,55 +855,60 @@
 						MusicPostConversationsService.getConvos(vm.responses[index].id).then(function (res) {
 							if (!res.data.length) {
 								if (vm.toggleResponseView) {
-									nonselectedResponses.forEach(function (i) { i.style.display = 'none' });
-									vm.convo = index;
-									conversationArea.style.height = responseContainer[0].clientHeight + 'px';
-									if (selectedResponse[idx].parentElement.classList.contains('odd2')) {
-										conversationArea.style.background = '#ccceff';
-									} else { conversationArea.style.background = '#E6FFCC' };
+									// nonselectedResponses.forEach(function (i) { i.style.display = 'none' });
+									// vm.convo = index;
 
-									var beginConvoButton = document.createElement('div');
-									beginConvoButton.style.width = '100%;';
-									beginConvoButton.style.backgroundColor = '#beed90';
-									beginConvoButton.style.margin = '5px';
-									beginConvoButton.style.height = '60px';
-									beginConvoButton.style.textAlign = 'center';
-									beginConvoButton.style.paddingTop = '15px';
-									beginConvoButton.style.marginLeft = '55px';
-									beginConvoButton.style.marginRight = '55px';
-									beginConvoButton.innerHTML = 'Begin Conversation';
-									conversationArea.appendChild(beginConvoButton);
-									beginConvoButton.onmouseenter = function () { beginConvoButton.style.backgroundColor = '#a7d37a' };
-									beginConvoButton.onmouseleave = function () { beginConvoButton.style.backgroundColor = '#beed90' };
-									beginConvoButton.onmousedown = function () {
-										beginConvoButton.style.backgroundColor = '#ffffff';
-										vm.convoBegun = true;
-										vm.showMap = false;
-										vm.showChat = true;
-										var li = document.createElement('li'),
-											response = vm.responses[index];
-										li.innerHTML = response.display_name + ':  &nbsp;' + response.comment;
-										var chatbox = document.getElementsByClassName('chatboxText')[idx];
-										chatbox.appendChild(li);
-									};
-									//CREATING CONVO MESSGAE
-									vm.msg = {};
-									vm.musicPostConversation = function (message) {
-										vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
-										vm.msg.music_post_id = vm.posts[idx].id;
-										vm.msg.first_comment_id = vm.responses[index].id;
 
-										var req = { post: vm.msg };
-										MusicPostConversationsService.createMessage(req).then(function (res) {
-											var newLi2 = document.createElement('li');
-											msg = res.data[0].message;
-											newLi2.innerHTML = 'You:  &nbsp;' + msg;
-											var chatbox = document.getElementsByClassName('chatboxText')[idx];
-											chatbox.appendChild(newLi2);
-											vm.msg.message = '';
-											conversationArea.removeChild(beginConvoButton)
-										}, vm);
-									}
+
+									
+									// conversationArea.style.height = responseContainer[0].clientHeight + 'px';
+									// if (selectedResponse[idx].parentElement.classList.contains('odd2')) {
+									// 	conversationArea.style.background = '#ccceff';
+									// } else { conversationArea.style.background = '#E6FFCC' };
+
+									// var beginConvoButton = document.createElement('div');
+									// beginConvoButton.style.width = '100%;';
+									// beginConvoButton.style.backgroundColor = '#beed90';
+									// beginConvoButton.style.margin = '5px';
+									// beginConvoButton.style.height = '60px';
+									// beginConvoButton.style.textAlign = 'center';
+									// beginConvoButton.style.paddingTop = '15px';
+									// beginConvoButton.style.marginLeft = '55px';
+									// beginConvoButton.style.marginRight = '55px';
+									// beginConvoButton.innerHTML = 'Begin Conversation';
+									// conversationArea.appendChild(beginConvoButton);
+									// beginConvoButton.onmouseenter = function () { beginConvoButton.style.backgroundColor = '#a7d37a' };
+									// beginConvoButton.onmouseleave = function () { beginConvoButton.style.backgroundColor = '#beed90' };
+									// beginConvoButton.onmousedown = function () {
+									// 	beginConvoButton.style.backgroundColor = '#ffffff';
+									// 	vm.convoBegun = true;
+									// 	vm.showMap = false;
+									// 	vm.showChat = true;
+									// 	var li = document.createElement('li'),
+									// 		response = vm.responses[index];
+									// 	li.innerHTML = response.display_name + ':  &nbsp;' + response.comment;
+									// 	var chatbox = document.getElementsByClassName('chatboxText')[idx];
+									// 	chatbox.appendChild(li);
+									// };
+
+									//CREATING CONVO MESSAGE
+									// vm.msg = {};
+									// vm.musicPostConversation = function (message) {
+									// 	vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
+									// 	vm.msg.music_post_id = vm.posts[idx].id;
+									// 	vm.msg.first_comment_id = vm.responses[index].id;
+
+									// 	var req = { post: vm.msg };
+									// 	MusicPostConversationsService.createMessage(req).then(function (res) {
+									// 		var newLi2 = document.createElement('li');
+									// 		msg = res.data[0].message;
+									// 		newLi2.innerHTML = 'You:  &nbsp;' + msg;
+									// 		var chatbox = document.getElementsByClassName('chatboxText')[idx];
+									// 		chatbox.appendChild(newLi2);
+									// 		vm.msg.message = '';
+									// 		conversationArea.removeChild(beginConvoButton)
+									// 	}, vm);
+									// };
 								} else {
 									nonselectedResponses.forEach(function (i) { i.style.display = 'block' })
 									vm.convo = null;
@@ -910,6 +918,8 @@
 									vm.showChat = false;
 									var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
 									convoAreas.forEach(function (e) { e.innerHTML = '' });
+
+									
 								}
 							} else {
 								vm.convoBegun = true;
@@ -919,7 +929,8 @@
 									var mapContainers = document.getElementsByClassName('mapContainer')
 									mapContainers[idx].classList.remove('animated', 'slideInRight');
 									mapContainers[idx].classList.add('animated', 'slideOutRight');
-
+									
+									
 									vm.showMap = false;
 									vm.showChat = true;
 									var li = document.createElement('li'),
@@ -977,7 +988,7 @@
 				} else {
 					vm.history = {};
 					vm.history.comment;
-					musicHistory.data.forEach(function (v) {
+					musicHistory && musicHistory.data.forEach(function (v) {
 						//If you have already commented on this post, display waiting message
 						if (v.post_id === posts.data[idx].id) {
 							vm.showCommentInput = false;
@@ -1034,6 +1045,8 @@
 					if (vm.showChat) {
 						return
 					}
+					console.log('IN HERE');
+					
 					vm.showMap = true;
 					myArrayFromNodeList = Array.from(document.querySelectorAll('md-input-container'))
 					myArrayFromNodeList.forEach(function (e) {
@@ -1044,6 +1057,7 @@
 				}, 500);
 			};
 			if (vm.toggleView === false) {
+				vm.postWidth = 100;
 				vm.showCommentInput = true;
 				vm.theyResponded = vm.waitingResponse =
 					vm.showResponses = vm.showMap = vm.showChat =

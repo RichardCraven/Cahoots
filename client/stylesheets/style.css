@@ -33,6 +33,7 @@ label{
 .md-toolbar-tools{
 	background-color: #5994b5;
 	padding: 0px 40px;
+	/* height: 10vh; */
 }
 .md-toolbar-tools h3{
 	margin: 0 auto;
@@ -47,6 +48,9 @@ label{
 #postRow:focus{
 	outline:0;
 }
+/* .post-container-outer{
+	width: 100%;
+} */
 .postContentContainer h3,h6 .topic{
 	color:maroon;
 }
@@ -84,10 +88,6 @@ background-color:CadetBlue;
 img{
 	width: 100%;
 }
-.backgroundTransparent {
-	background: transparent;
-}
-
 .navbar .container img {
 	width: 100px;
 	height: 100px;
@@ -114,6 +114,15 @@ img{
 	background-color: crimson;
 	height: 150px;
 	width: 150px;
+}
+.post-content-main-pain{
+  /* display: flex;
+  flex-direction: column; */
+
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  /* height: 100px; */
 }
 .postContentContainer a{
 	/* cursor: pointer; */
@@ -300,16 +309,17 @@ img{
 	background-color: #cce7ff;
 	padding:0px;
 	display: block;
-	border: 2px solid #cce7ff;
-}
-.odd:hover, .even:hover{
-	border: 2px solid black;
 }
 .even{
 	background-color: #F2F2FE;
 	padding:0px;
 	display:block;
-	border: 2px solid #F2F2FE;
+}
+.odd:hover{
+	background-color: #b8d8f3;
+}
+.even:hover{
+	background-color: #cdcde9;
 }
 .odd2{
 	background-color: #ccceff;
@@ -352,7 +362,7 @@ img{
 .H100px{
 	height: 100px;
 }
-
+/* ng-map {width:100%; height:100%;position: absolute;} */
 
 
 .formText{
@@ -503,9 +513,9 @@ md-input-container{
     margin-left: auto;
 }
 .postTextArea{
-	margin-bottom:5px;
-	height: 68vh;
-	width: 100%;
+	/* flex: 1; */
+	/* margin-bottom:5px; */
+	/* height: 68vh; */
 	background-color: #F0F8FF;
 }
 .postFilmResponseArea{
@@ -525,15 +535,21 @@ md-input-container{
 	border-radius: 20%;
 	padding-top:6%;
 }
+.main-post-row{
+	border: 1px solid black;
+}
 md-input-container.md-default-theme label, 
  md-input-container.md-default-theme .md-placeholder{
     color:white;
 }
 md-input-container.md-default-theme.md-input{
-	font-color:white;
+	color:white;
 	border-color:white;
 }
-.postTextField{
+.post-content-left{
+    height: 83vh;
+}
+.postTextField{ 
 	padding:20px;
 	border-radius: 9%;
 	margin-left:5%;
@@ -590,6 +606,8 @@ md-input-container.md-default-theme.md-input{
 .material-icons.md-48 { font-size: 48px; }
 
 .postChatLeft{
+	width: 100%;
+	flex: 1;
 	border-right: 1px solid black;
 }
 .postChatRight{
@@ -752,7 +770,7 @@ input.newPostTopicArea{
   padding-top: -5px;
 }
 
-@keyframes "blink" {
+@keyframes blink {
   from, to {
     color: transparent;
   }
@@ -770,7 +788,7 @@ input.newPostTopicArea{
   }
 }
 
-@-webkit-keyframes "blink" {
+@-webkit-keyframes blink {
   from, to {
     color: transparent;
   }
@@ -779,7 +797,7 @@ input.newPostTopicArea{
   }
 }
 
-@-ms-keyframes "blink" {
+@-ms-keyframes blink {
   from, to {
     color: transparent;
   }
@@ -788,7 +806,7 @@ input.newPostTopicArea{
   }
 }
 
-@-o-keyframes "blink" {
+@-o-keyframes blink {
   from, to {
     color: transparent;
   }
@@ -879,7 +897,7 @@ input.newPostTopicArea{
 	letter-spacing: 1px;
 }
 .comment-form-container{
-	padding: 10px;
+	padding: 0px 10px;
 
 }
 .comment-form-container h5{
