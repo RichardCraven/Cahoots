@@ -16,75 +16,149 @@
             <span class="glyphicon glyphicon-arrow-left"></span>
           </a>
           <h1 id='header-main-mailbox' class='text-center'>MAILBOX</h1>
-          <div layout="row">
+          <div layout="row" class='mailbox-main-content-row'>
             <div layout="column" class='mailboxLeftCol' >
               <md-content>
-                <md-tabs md-dynamic-height md-border-bottom>
-                  <md-tab label="Conversations" >
-                    <md-content class="">
-                      <md-tabs md-dynamic-height md-border-bottom>
-                        <md-tab label="Pending">
-                          <md-content class="">
-                            <md-list-item  ng-show='vm.showCodingMail' ng-repeat="post in vm.codingPostComments track by post.id" class=""
-                               ng-class-odd="" ng-class-even="">
+                  <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Conversations" >
+                      <md-content class="">
+                        <md-tabs md-dynamic-height md-border-bottom>
+                          <md-tab label="Pending">
+                            <md-content>
+                              <md-list-item  ng-show='vm.codingPostComments.length' ng-repeat="post in vm.codingPostComments track by post.id" class=""
+                              ng-class-odd="" ng-class-even="">
                               <div class="md-list-item-text">
-                                <div layout='row' md-ink-ripple="#FF0000" ng-mouseover='vm.showButtons(post)' ng-mouseleave='vm.hideButtons(post)'>
-                                  <div  flex='15'>
+                                <div layout='row' md-ink-ripple="#FF0000" ng-mouseover='vm.isVisible = [post.comment, post.id]' ng-mouseleave='vm.hideButtons(post)'>
+                                  <div  ng-style="{'width' : vm.littleLength}">
                                     <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                                   </div>
-                                  <div flex='65'  class='mailbox-response-pending-text' layout-padding>
+                                  <div ng-style="{'width' : vm.longLength}"  class='mailbox-response-pending-text' layout-padding>
                                     <p>Responding to: {{post.descriptive_title}}</p>
                                     <p>{{post.display_name}} says: {{post.comment}}</p>
                                   </div>
-                                  <div flex='20' layout='row'>
-                                    <div  ng-show='vm.isVisible === {{post.id}}' ng-click='vm.acceptConversation(post)' class='pending-accept-container' flex='50'>
+                                  <div ng-style="{'width' : vm.middleLength}" layout='row'>
+                                    <div  ng-show='vm.isVisible[0] === post.comment && vm.isVisible[1] === post.id' ng-click='vm.acceptConversation(post)' class='pending-accept-container' >
                                       <div>ACCEPT</div>
                                     </div>
-                                    <div ng-show='vm.isVisible === {{post.id}}' ng-click='vm.declineConversation(post, $event)' class='pending-decline-container' flex='50'>
+                                    <div ng-show='vm.isVisible[0] === post.comment && vm.isVisible[1] === post.id' ng-click='vm.declineConversation(post, $event)' class='pending-decline-container' >
                                       <div>DECLINE</div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </md-list-item>
-                          </md-content>
-                        </md-tab>
-                        <md-tab id='active-convo-tab' label="Active">
-                          <md-content class="">
-                            <md-list-item ng-show='vm.showFilmMail' ng-repeat="post in vm.filmPostComments track by $index" class="" md-ink-ripple="#FF0000"
-                              ng-class-odd="" ng-class-even="">
-                              <div class="md-list-item-text">
-                                <div layout='row' ng-click='vm.respondFilm($index)'>
-                                  <div flex-gt-sm='15' class=''>
-                                    <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                            <md-list-item ng-show='vm.filmPostComments.length' ng-repeat="post in vm.filmPostComments track by post.id" class="" ng-class-odd=""
+                            ng-class-even="">
+                            <div class="md-list-item-text">
+                              <div layout='row' md-ink-ripple="#FF0000" ng-mouseover='vm.isVisible = [post.comment, post.id]' ng-mouseleave='vm.hideButtons(post)'>
+                                <div ng-style="{'width' : vm.littleLength}">
+                                  <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                                </div>
+                                <div ng-style="{'width' : vm.longLength}" class='mailbox-response-pending-text' layout-padding>
+                                  <p>Responding to: {{post.descriptive_title}}</p>
+                                  <p>{{post.display_name}} says: {{post.comment}}</p>
+                                </div>
+                                <div ng-style="{'width' : vm.middleLength}" layout='row'>
+                                  <div ng-show='vm.isVisible[0] === post.comment && vm.isVisible[1] === post.id' ng-click='vm.acceptConversation(post)' class='pending-accept-container' >
+                                    <div>ACCEPT</div>
                                   </div>
-                                  <div flex-gt-sm='85' class='mailbox-response-pending-text' layout-padding>
-                                    <p>Responding to: {{post.descriptive_title}}</p>
-                                    <p>{{post.display_name}} says: {{post.comment}}</p>
-                                  </div>
+                                  <div ng-show='vm.isVisible[0] === post.comment && vm.isVisible[1] === post.id' ng-click='vm.declineConversation(post, $event)' class='pending-decline-container'
+                                  >
+                                  <div>DECLINE</div>
                                 </div>
                               </div>
+                            </div>
+                          </div>
+                        </md-list-item>
+                        <md-list-item ng-show='vm.musicPostComments.length' ng-repeat="post in vm.musicPostComments track by post.id" class="" ng-class-odd=""
+                        ng-class-even="">
+                        <div class="md-list-item-text">
+                          <div layout='row' md-ink-ripple="#FF0000" ng-mouseover='vm.isVisible = [post.comment, post.id]' ng-mouseleave='vm.hideButtons(post)'>
+                            <div  ng-style="{'width' : vm.littleLength}">
+                              <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                            </div>
+                            <div ng-style="{'width' : vm.longLength}" class='mailbox-response-pending-text' layout-padding>
+                              <p>Responding to: {{post.descriptive_title}}</p>
+                              <p>{{post.display_name}} says: {{post.comment}}</p>
+                            </div> 
+                            <div ng-style="{'width' : vm.middleLength}"; layout='row'>
+                              <div ng-show='vm.isVisible[0] === post.comment && vm.isVisible[1] === post.id' ng-click='vm.acceptConversation(post)' class='pending-accept-container' >
+                                <div>ACCEPT</div>
+                              </div>
+                              <div ng-show='vm.isVisible[0] === post.comment && vm.isVisible[1] === post.id' ng-click='vm.declineConversation(post, $event)' class='pending-decline-container'
+                              >
+                              <div>DECLINE</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                             </md-list-item>
                           </md-content>
                         </md-tab>
-                      </md-tabs>
-                    </md-content>
-                  </md-tab>
-                  <md-tab label="Project Staging">
-                    <md-content class="">
-                      <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
-                        <div class="md-list-item-text">
-                            <div layout='row' ng-click='vm.respondCoding($index)'>
-                              <div flex-gt-sm='15' class='userPicContainer'>
-                                  <img class='userPic' ng-src="{{post.user_pic}}" alt="">
-                              </div>    
-                              <div flex-gt-sm='85' class='postContentContainer' layout-padding>
-                                  <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.scripting_language}}</h6>
-                                  <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
-                              </div>          
-                              
+                        <md-tab ng-click='vm.testola($event)' id='active-convo-tab' label="Active">
+                          <md-content>
+                            <md-list-item ng-show='vm.filmConvos.length' ng-repeat="convo in vm.filmConvos track by $index" class="" md-ink-ripple="#FF0000"
+                            ng-class-odd="" ng-class-even="">
+                            <div class="md-list-item-text">
+                              <div layout='row' ng-click=''>
+                                <div ng-style="{'width' : vm.littleLength}">
+                                  <img class='userPic' ng-src="{{convo.user_pic}}" alt="">
+                                </div>
+                                <div ng-style="{'width' : vm.longestLength}" class='mailbox-response-pending-text' layout-padding>
+                                  <p>Responding to: {{convo.descriptive_title}}</p>
+                                  <p>{{convo.display_name}} says: {{convo.message}}</p>
+                                </div>
+                              </div>
                             </div>
-                            <div ng-show='vm.showCodingResponseField' layout='row' class='responseField'>
+                          </md-list-item>
+                          <md-list-item ng-show='vm.codingConvos.length' ng-repeat="convo in vm.codingConvos track by $index" class="" md-ink-ripple="#FF0000"
+                            ng-class-odd="" ng-class-even="">
+                            <div class="md-list-item-text">
+                              <div layout='row' ng-click=''>
+                                <div ng-style="{'width' : vm.littleLength}">
+                                  <img class='userPic' ng-src="{{convo.user_pic}}" alt="">
+                                </div>
+                                <div ng-style="{'width' : vm.longestLength}" class='mailbox-response-pending-text' layout-padding>
+                                  <p>Responding to: {{convo.descriptive_title}}</p>
+                                  <p>{{convo.display_name}} says: {{convo.message}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </md-list-item>
+                          <md-list-item ng-show='vm.musicConvos.length' ng-repeat="convo in vm.musicConvos track by $index" class="" md-ink-ripple="#FF0000"
+                            ng-class-odd="" ng-class-even="">
+                            <div class="md-list-item-text">
+                              <div layout='row' ng-click=''>
+                                <div ng-style="{'width' : vm.littleLength}">
+                                  <img class='userPic' ng-src="{{convo.user_pic}}" alt="">
+                                </div>
+                                <div ng-style="{'width' : vm.longestLength}" class='mailbox-response-pending-text' layout-padding>
+                                  <p>Responding to: {{convo.descriptive_title}}</p>
+                                  <p>{{convo.display_name}} says: {{convo.message}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </md-list-item>
+                        </md-content>
+                      </md-tab>
+                    </md-tabs>
+                  </md-content>
+                </md-tab>
+                <md-tab label="Project Staging">
+                  <md-content class="">
+                    <md-list-item ng-show='vm.showCodingMail'  ng-repeat="post in vm.codingPostComments track by $index" class="md-2-line item-text-wrap" md-ink-ripple="#FF0000" ng-class-odd="'codingCommentMailOdd'" ng-class-even="'codingCommentMailEven'" >
+                      <div class="md-list-item-text">
+                        <div layout='row' ng-click='vm.respondCoding($index)'>
+                          <div flex-gt-sm='15' class='userPicContainer'>
+                            <img class='userPic' ng-src="{{post.user_pic}}" alt="">
+                          </div>    
+                          <div flex-gt-sm='85' class='postContentContainer' layout-padding>
+                            <h6 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>Responding to: {{post.scripting_language}}</h6>
+                            <h3 style='font-family: "Josefin Sans"; font-weight:bold; font-size:2em; margin-top:15px; margin-left:20px'>{{post.comment}}</h3>
+                          </div>          
+                          
+                        </div>
+                        <div ng-show='vm.showCodingResponseField' layout='row' class='responseField'>
                               <div  class='postCodingResponseArea'>
 
                                 <form action="" ng-submit='vm.newMessage(post.id,vm.comment,"film")'>
@@ -104,7 +178,7 @@
             </div>
             <div layout="column" class='mailboxRightCol' class='mailbox-message-pane'>
               <md-content>
-                <p></p>
+                <!-- <p></p> -->
                 
               </md-content>
             </div>

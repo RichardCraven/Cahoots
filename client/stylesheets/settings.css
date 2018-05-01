@@ -1,6 +1,6 @@
 md-input-container .md-input{
 	height: 40px;
-	overflow: scroll;
+	/* overflow: scroll; */
 	font-size:0.85em;
 	background-color: white;
 	width: 100%;

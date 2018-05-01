@@ -2,25 +2,25 @@ const express = require('express')
 const router = express.Router();
 const knex = require('../db/knex')
 
-router.get('/', function (req,res){
-knex('coding_post_conversations').where('user_id',req.body)
+router.get('/:id', function (req,res){
+	knex('coding_post_conversations as cpc', 'original_post')
+	.join('coding_posts as original_post', 'original_post.id', '=', 'cpc.coding_post_id')
+	.join('users as u', 'u.third_party_user_id', '=', 'cpc.user_id')
+	.where('original_post.user_id',req.params.id)
 	.then(function(post){
 		res.send(post)
 	});
 });
-router.get('/:id', function(req,res){
-	knex.select(['cpc.message','cpc.user_id']).from('coding_post_conversations as cpc')
-	.where('cpc.first_comment_id',req.params.id)
-	.then(function(messages){
-		res.send(messages)
-	});
-});
 router.post('/',function(req,res){
-	console.log('ATTENTION! req.body = '+req.body)
-	console.log('req.body.post is: '+req.body.post)
-	
 	knex('coding_post_conversations').insert(req.body.post, '*')
+	// .then(function(post){
+	// 	console.log('HERE ME NOW!!! post.user_id is ', post[0].user_id);
+	// 	var arr = [post]
+	// 	arr.push
+	// 	return knex('users').where('third_party_user_id', post[0].user_id)
+	// })
 	.then(function(post){
+		// console.log('AND HERE THIS! user is ', user, 'post is ', post)
 		res.send(post)
 	});
 });

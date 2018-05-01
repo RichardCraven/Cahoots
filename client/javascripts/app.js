@@ -38,7 +38,10 @@
 				  resolve: {
 				  	filmMail: getAllFilmMail,
 				  	musicMail: getAllMusicMail,
-				  	codingMail: getAllCodingMail
+						codingMail: getAllCodingMail,
+						codingConvos: getAllCodingConversations,
+						musicConvos: getAllMusicConversations,
+						filmConvos: getAllFilmConversations
 				  }
 				})
 				.when('/:id/userSettings',{
@@ -280,6 +283,11 @@
 			return FilmPostCommentsService.getHistory(JSON.parse(localStorage.profile).user_id);
 		};
 	};
+	function getAllFilmConversations(FilmPostConversationsService) {
+		if (localStorage.profile) {
+			return FilmPostConversationsService.getConvos(JSON.parse(localStorage.profile).user_id);
+		};
+	};
 	function getAllCodingPosts(CodingPostService){
 		return CodingPostService.getPosts();
 	};
@@ -296,6 +304,11 @@
 			return CodingPostCommentsService.getHistory(JSON.parse(localStorage.profile).user_id);
 		}
 	};
+	function getAllCodingConversations(CodingPostConversationsService) {
+		if (localStorage.profile) {
+			return CodingPostConversationsService.getConvos(JSON.parse(localStorage.profile).user_id);
+		};
+	};
 	function getAllMusicPosts(MusicPostService){
 		return MusicPostService.getPosts();
 	};
@@ -310,6 +323,11 @@
 	function getAllMusicCommentHistory(MusicPostCommentsService){
 		if (localStorage.profile) { 
 			return MusicPostCommentsService.getHistory(JSON.parse(localStorage.profile).user_id);
+		};
+	};
+	function getAllMusicConversations(MusicPostConversationsService) {
+		if (localStorage.profile) {
+			return MusicPostConversationsService.getConvos(JSON.parse(localStorage.profile).user_id);
 		};
 	};
 	function getUserById(UsersService,$route){

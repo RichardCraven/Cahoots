@@ -2,18 +2,13 @@ const express = require('express')
 const router = express.Router();
 const knex = require('../db/knex')
 
-router.get('/', function (req,res){
-knex('film_post_conversations').where('user_id',req.body)
-	.then(function(post){
-		res.send(post)
-	});
-});
-router.get('/:id', function(req,res){
-	knex.select(['fpc.message','fpc.user_id']).from('film_post_conversations as fpc')
-	.where('fpc.first_comment_id',req.params.id)
-	.then(function(messages){
-		res.send(messages)
-	});
+router.get('/:id', function (req, res) {
+	knex('film_post_conversations as fpc')
+		.join('film_posts as original_post', 'original_post.id', '=', 'fpc.film_post_id')
+		.where('original_post.user_id', req.params.id)
+		.then(function (post) {
+			res.send(post)
+		});
 });
 router.post('/',function(req,res){
 	knex('film_post_conversations').insert(req.body.post, '*')

@@ -84,8 +84,8 @@
 		};
 		function MusicPostConversationsService($http){
 		 	const BASE_URL = '/api/musicPostConversations'
-			this.getConvos = function(first_comment_id){
-				return $http.get(BASE_URL+'/'+first_comment_id)
+			this.getConvos = function(user_id){
+				return $http.get(BASE_URL+'/'+user_id)
 			};
 			this.createMessage = function(message){
 				return $http.post(BASE_URL, message); //on server req.body.post
@@ -137,8 +137,8 @@
 		};
 		function FilmPostConversationsService($http){
 		 	const BASE_URL = '/api/filmPostConversations'
-			this.getConvos = function(first_comment_id){
-				return $http.get(BASE_URL+'/'+first_comment_id)
+			this.getConvos = function(user_id){
+				return $http.get(BASE_URL+'/'+user_id)
 			};
 			this.createMessage = function(message){
 				return $http.post(BASE_URL, message); 
@@ -193,8 +193,8 @@
 		};
 		function CodingPostConversationsService($http){
 		 	const BASE_URL = '/api/codingPostConversations'
-			this.getConvos = function(first_comment_id){
-				return $http.get(BASE_URL+'/'+first_comment_id)
+			this.getConvos = function(user_id){
+				return $http.get(BASE_URL+'/'+user_id)
 			};
 			this.createMessage = function(message){
 				return $http.post(BASE_URL, message); //on server req.body.post

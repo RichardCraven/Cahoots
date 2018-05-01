@@ -2,18 +2,14 @@ const express = require('express')
 const router = express.Router();
 const knex = require('../db/knex')
 
-router.get('/', function (req,res){
-knex('music_post_conversations').where('user_id',req.body)
-	.then(function(post){
-		res.send(post)
-	});
-});
-router.get('/:id', function(req,res){
-	knex.select(['mpc.message','mpc.user_id']).from('music_post_conversations as mpc')
-	.where('mpc.first_comment_id',req.params.id)
-	.then(function(messages){
-		res.send(messages)
-	});
+router.get('/:id', function (req, res) {
+	knex.select(['mpc.id', 'mpc.message', 'mpc.user_id']).from('music_post_conversations as mpc')
+		.join('music_posts as original_post', 'original_post.id', '=', 'mpc.music_post_id')
+		// .join('users as u', 'u.third_party_user_id', '=', 'mpc.user_id')
+		.where('original_post.user_id', req.params.id)
+		.then(function (post) {
+			res.send(post)
+		});
 });
 router.post('/',function(req,res){
 	knex('music_post_conversations').insert(req.body.post, '*')

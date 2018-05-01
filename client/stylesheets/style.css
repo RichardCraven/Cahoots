@@ -896,9 +896,11 @@ input.newPostTopicArea{
 	font-weight: 400;
 	letter-spacing: 1px;
 }
+.log-in-to-respond-message-container{
+	padding-left: 18px;
+}
 .comment-form-container{
 	padding: 0px 10px;
-
 }
 .comment-form-container h5{
 	margin-top: 0px;

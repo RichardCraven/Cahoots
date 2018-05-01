@@ -1,6 +1,6 @@
 .jumbotron.mailbox{
 	height: 65vh;
-	overflow: scroll;
+	/* overflow: scroll; */
 }
 
 #mailList{
@@ -10,11 +10,11 @@
 	background-color: #f9dace;
 }
 .filmCommentMailOdd{
-	overflow: scroll;
+	/* overflow: scroll; */
 	background-color:#e6c8ff;
 }
 .filmCommentMailEven{
-	overflow: scroll;
+	/* overflow: scroll; */
 	background-color: #d1ffd9;
 }
 div.md-list-item-text{
@@ -25,23 +25,23 @@ div.md-list-item-text{
 	background-color: #a6e7c5;
 }
 .musicCommentMailOdd{
-	overflow: scroll;
+	/* overflow: scroll; */
 	background-color:#e6c8ff;
 }
 .musicCommentMailEven{
-	overflow: scroll;
+	/* overflow: scroll; */
 	background-color: #d1ffd9;
 }
 .codingCommentMailHeader{
 	background-color: #c7aeff;
 }
 .codingCommentMailOdd{
-	overflow: scroll;
+	/* overflow: scroll; */
 	background-color:#a0c4d8;
 	background-color:white;
 }
 .codingCommentMailEven{
-	overflow: scroll;
+	/* overflow: scroll; */
 	background-color: #bad3e2;
 	background-color:white;
 }
@@ -85,13 +85,16 @@ div md-content.ng-scope{
 	background-color: white;
 }
 .mailbox-response-pending-text{
-	max-width: 60%;
+	/* max-width: 60%; */
 }
 .accept-decline-button-container{
 	width: 40%;
 	align-items: center;
 	justify-content: center;
 	display: flex;
+}
+.md-list-item-text .layout-row{
+	max-height: 100px;
 }
 .pending-accept-container, .pending-decline-container{
 	height: 100%;
@@ -111,11 +114,36 @@ div md-content.ng-scope{
 }
 .mailboxLeftCol{
 	flex: 4;
+	background: white;
 }
 .mailboxRightCol{
 	flex: 5;
 	height: 100%;
+	background: white;
 }
+.mailbox-main-content-row{
+	height: 68vh;
+}
+ /* md-tabs{
+	 height: 100%;
+ }
+md-tab-content > div{
+	height: 100%;
+}
+.vertical-scroll{
+                height: 100%;
+                overflow-y: auto;
+} */
+.md-tabWrapper{
+	margin-top: 300px;
+}
+md-tabs-wrapper{ 
+	/* position: fixed;  */
+	top: 0px; 
+	left: 0px; z-index: 1000; 
+	width: 100%; 
+}
+
 
 footer{
 	background-color: black;

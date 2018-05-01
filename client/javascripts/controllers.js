@@ -53,65 +53,86 @@
 	  			var fadeOut = $timeout(fadeOut,6900)
 	  		};
 		};
-	function MailCtrl(filmMail, musicMail, codingMail, $location, auth, store, $timeout, $rootScope, UsersService, FilmPostCommentsService, FilmPostService, ConvoRepoService, CodingPostConversationsService,CodingPostCommentsService,FilmPostConversationsService,MusicPostConversationsService){
+	function MailCtrl(filmMail, musicMail, codingMail, filmConvos, musicConvos, codingConvos, $location, auth, store, $timeout, $rootScope, UsersService, FilmPostCommentsService, FilmPostService, ConvoRepoService, CodingPostConversationsService, CodingPostCommentsService, FilmPostConversationsService, FilmPostCommentsService, MusicPostConversationsService, MusicPostCommentsService){
 			var vm=this;
 			vm.name = JSON.parse(localStorage.profile).given_name;
 			vm.navpicture = JSON.parse(localStorage.profile).picture;
-			vm.filmCommentPosts = [];
+			vm.filmPostComments = [];
 			vm.musicPostComments = [];
 			vm.codingPostComments = [];
+			vm.codingConvos = [];
+			vm.musicConvos = [];
+			vm.filmConvos = [];
+			vm.littleLength = '23%';
+			vm.middleLength = '35%';
+			vm.longLength = '65%';
+			vm.longestLength = '75%';
 			vm.isVisible = false;
-			vm.showButtons = function(post){vm.isVisible = post.id}
+			vm.showButtons = function(post){
+				vm.isVisible = post.id;
+			};
 			vm.hideButtons = function(post){vm.isVisible = false}
-			
-			// CodingPostConversationsService.getConvos(vm.responses[index].id).then(function (res) {
-				// });
-
-
-				vm.user_id = JSON.parse(localStorage.profile).user_id;
-				var myDisplayName, post_id, fbUserId, facebook = /^(facebook)/,
-				numberPattern = /\d+/g;
-				UsersService.getUser(vm.user_id).then(function(res){
-					myDisplayName = res.data.display_name;
-				});
-				if(facebook.test(vm.user_id)){
-					fbUserId = vm.user_id.match(numberPattern)[0];
-					vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+			vm.user_id = JSON.parse(localStorage.profile).user_id;
+			var myDisplayName, post_id, fbUserId, facebook = /^(facebook)/,
+			numberPattern = /\d+/g;
+			UsersService.getUser(vm.user_id).then(function(res){
+				myDisplayName = res.data.display_name;
+			});
+			if(facebook.test(vm.user_id)){
+				fbUserId = vm.user_id.match(numberPattern)[0];
+				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+			};
+			for(var i = 0; i<filmMail.data.length; i++){
+				if(filmMail.data[i].is_accepted) continue
+				if (facebook.test(filmMail.data[i].user_id)) {
+					fbUserId = filmMail.data[i].user_id.match(numberPattern)[0];
+					filmMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
 				};
-				for(var i = 0; i<filmMail.data.length; i++){
-					if (facebook.test(filmMail.data[i].user_id)) {
-						fbUserId = filmMail.data[i].user_id.match(numberPattern)[0];
-						filmMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
-					};
-					vm.filmCommentPosts.push(filmMail.data[i])
-				}
-				for(var i = 0; i<musicMail.data.length; i++){
-					if (facebook.test(musicMail.data[i].user_id)) {
-						fbUserId = musicMail.data[i].user_id.match(numberPattern)[0];
-						musicMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
-					};
-					vm.musicPostComments.push(musicMail.data[i])
-				}
-				for(var i = 0; i<codingMail.data.length; i++){
-					if (facebook.test(codingMail.data[i].user_id)) {
-						fbUserId = codingMail.data[i].user_id.match(numberPattern)[0];
-						codingMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
-					};
-					vm.codingPostComments.push(codingMail.data[i])
-				}
-				
-			// console.log('film mail is: ', filmMail.data, 'musicMail: ', musicMail.data, 'codingMail: ', codingMail.data);
-		 	// console.log(vm.codingPostComments);
-			// vm.codeResponses = codingMail.data.filter((v, i) => codingMail.data[i].framework === posts.data[idx].framework);
-
+				vm.filmPostComments.push(filmMail.data[i])
+			};
+			for(var i = 0; i<musicMail.data.length; i++){
+				if (musicMail.data[i].is_accepted) continue
+				if (facebook.test(musicMail.data[i].user_id)) {
+					fbUserId = musicMail.data[i].user_id.match(numberPattern)[0];
+					musicMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+				};
+				vm.musicPostComments.push(musicMail.data[i])
+			};
+			for(var i = 0; i<codingMail.data.length; i++){
+				if (codingMail.data[i].is_accepted) continue
+				if (facebook.test(codingMail.data[i].user_id)) {
+					fbUserId = codingMail.data[i].user_id.match(numberPattern)[0];
+					codingMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+				};
+				vm.codingPostComments.push(codingMail.data[i])
+			};
+			for(var i = 0; i<codingConvos.data.length; i++){
+				if (facebook.test(codingConvos.data[i].user_id)) {
+					fbUserId = codingConvos.data[i].user_id.match(numberPattern)[0];
+					codingConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+				};
+				vm.codingConvos.push(codingConvos.data[i])
+			};
+			for (var i = 0; i < musicConvos.data.length; i++) {
+				if (facebook.test(musicConvos.data[i].user_id)) {
+					fbUserId = musicConvos.data[i].user_id.match(numberPattern)[0];
+					musicConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+				};
+				vm.musicConvos.push(musicConvos.data[i])
+			};
+						
+			for (var i = 0; i < filmConvos.data.length; i++) {
+				if (facebook.test(filmConvos.data[i].user_id)) {
+					fbUserId = filmConvos.data[i].user_id.match(numberPattern)[0];
+					filmConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+				};
+				vm.filmConvos.push(filmConvos.data[i])
+			};
 			vm.hasNewFilmMail = vm.hasNewMusicMail = vm.hasNewCodingMail = 
 			vm.showFilmMail = vm.showMusicMail = vm.showCodingMail = 
 			vm.showFilmResponseField = vm.showMusicResponseField = 
 			vm.showCodingResponseField = false;
 
-			if(vm.filmCommentPosts.length>0){vm.showFilmMail = true};
-			if(vm.musicPostComments.length>0){vm.showMusicMail = true};
-			if(vm.codingPostComments.length>0){vm.showCodingMail = true};
 			vm.logout = function(){
 				store.remove('profile');
 				store.remove('token');
@@ -120,12 +141,16 @@
 			vm.goBack = function(){
 				$location.path('/loggedinHome')
 			};
-			vm.test = function (node){
-				console.log(node.target);
-				node.target.style.backgroundColor = 'red'
-				
+			vm.checkIfPendingEmpty = function (){
+				if (!vm.codingPostComments.length && !vm.musicPostComments.length && !vm.filmPostComments.length){
+					let activeTab = document.getElementsByClassName('md-tab')[5]
+
+					$timeout(function () {
+						vm.clickTrigger(activeTab)
+					}, 0, false);
+				}
 			}
-			vm.clickTrigger = function(targetNode){
+			vm.clickTrigger = function(targetNode, hold){
 				
 					function triggerMouseEvent(node, eventType) {
 						var clickEvent = document.createEvent('MouseEvents');
@@ -133,64 +158,149 @@
 						node.dispatchEvent(clickEvent);
 					}
 					if (targetNode) {
+						console.log('in here, hold is ', hold);
 						//--- Simulate a natural mouse-click sequence.
 						triggerMouseEvent(targetNode, "mouseover");
 						triggerMouseEvent(targetNode, "mousedown");
-						// triggerMouseEvent(targetNode, "mouseup");
-						// triggerMouseEvent(targetNode, "click");
-						console.log('in here');
-						
+						if(!hold){
+						triggerMouseEvent(targetNode, "mouseup");
+						triggerMouseEvent(targetNode, "click");
+						}
 					}
 					else
 					console.log("*** Target node not found!");
-					
-				
-			
 		}
 			// var targetNode = document.getElementsByClassName('md-tab')[5]
 
 			vm.acceptConversation = function(post){
-				console.log('accepting ', post);
 				let msg = {};
-
-				msg.user_id = JSON.parse(localStorage.profile).user_id;
-				msg.coding_post_id = post.post_id;
+				
+				msg.user_id = post.user_id;
 				msg.first_comment_id = post.id;
 				msg.message = post.comment;
-					let req = { post: msg };
-					CodingPostConversationsService.createMessage(req).then(function (res) {
-						for(let i = 0; i<vm.codingPostComments.length; i++){
-							if(vm.codingPostComments[i].id === res.data[0].first_comment_id){
-								vm.codingPostComments.splice(i,1);		
-								let activeTab = document.getElementsByClassName('md-tab')[5]
-								activeTab.style.backgroundColor = '#f5f5dc';
-								let beigePulse = setTimeout(function(){
-									activeTab.style.backgroundColor = 'white';
-								}, 500);			
+				let req = { post: msg };
+				switch(post.category){
+					case 'coding':
+					msg.coding_post_id = post.post_id;
+						CodingPostConversationsService.createMessage(req).then(function (res) {
+							for(let i = 0; i<vm.codingPostComments.length; i++){
+								if(vm.codingPostComments[i].id === res.data[0].first_comment_id){
+									vm.codingPostComments.splice(i,1);	
+									let activeTab = document.getElementsByClassName('md-tab')[5]
+									activeTab.style.backgroundColor = '#f5f5dc';
+									let beigePulse = setTimeout(function(){
+										activeTab.style.backgroundColor = 'white';
+									}, 500);			
+								}
+							};
+							post.message = post.comment;
+							vm.codingConvos.push(post);	
+							req = {post: {
+								id : post.id,
+								is_accepted : true
+							}}
+							CodingPostCommentsService.updatePost(req).then(function (res){
+								vm.checkIfPendingEmpty();
+							}, vm);
+						}, vm);
+					break;
+					case 'music':
+						msg.music_post_id = post.post_id;
+						MusicPostConversationsService.createMessage(req).then(function (res) {
+							for (let i = 0; i < vm.musicPostComments.length; i++) {
+								if (vm.musicPostComments[i].id === res.data[0].first_comment_id) {
+									vm.musicPostComments.splice(i, 1);
+									let activeTab = document.getElementsByClassName('md-tab')[5]
+									activeTab.style.backgroundColor = '#f5f5dc';
+									let beigePulse = setTimeout(function () {
+										activeTab.style.backgroundColor = 'white';
+									}, 500);
+								}
+							};
+							post.message = post.comment;
+							vm.musicConvos.push(post);	
+							req = {
+								post: {
+									id: post.id,
+									is_accepted: true
+								}
 							}
-						}
-					}, vm);
+							MusicPostCommentsService.updatePost(req).then(function (res) {
+								vm.checkIfPendingEmpty();
+							}, vm);
+						}, vm);
+						break;
+					case 'film':
+						msg.film_post_id = post.post_id;
+						FilmPostConversationsService.createMessage(req).then(function (res) {
+							for (let i = 0; i < vm.filmPostComments.length; i++) {
+								if (vm.filmPostComments[i].id === res.data[0].first_comment_id) {
+									vm.filmPostComments.splice(i, 1);	
+									let activeTab = document.getElementsByClassName('md-tab')[5]
+									activeTab.style.backgroundColor = '#f5f5dc';
+									let beigePulse = setTimeout(function () {
+										activeTab.style.backgroundColor = 'white';
+									}, 500);
+								}
+							};
+							post.message = post.comment;
+							vm.filmConvos.push(post);	
+							req = {
+								post: {
+									id: post.id,
+									is_accepted: true
+								}
+							}
+							FilmPostCommentsService.updatePost(req).then(function (res) {
+								vm.checkIfPendingEmpty();
+							}, vm);
+						}, vm);
+						break;
+				}
+
 			};
 			vm.declineConversation = function(post, $event) {
-				let index;
+				let req = post.id, index;
 				node = $event.target
-				for(let i =0; i<vm.codingPostComments.length; i++){
-					if(vm.codingPostComments[i].id === post.id){
-						index = i;
-					}
-				}
-				let req = post.id
-				// console.log('declining ', $event.target.parentElement.parentElement.parentElement);
-				let timer = setTimeout(vm.clickTrigger(node), 250);
-				let timer2 = setTimeout(function(){
-					vm.codingPostComments.splice(index, 1);
-					CodingPostCommentsService.deletePost(req).then(function(res){
-						console.log('delete res is ', res);
-						
-					})
-				},500)
+				$timeout(function () {
+					vm.clickTrigger(node, true)
+				}, 0, false);
+				switch (post.category) {
+					case 'coding':
+						for (let i = 0; i < vm.codingPostComments.length; i++) {
+							if (vm.codingPostComments[i].id === post.id) {
+								index = i;
+							}
+						};
+						vm.codingPostComments.splice(index, 1);
+						CodingPostCommentsService.deletePost(req).then(function (res) {
+							vm.checkIfPendingEmpty();
+						});
+					break;
+					case 'music':
+						for (let i = 0; i < vm.musicPostComments.length; i++) {
+							if (vm.musicPostComments[i].id === post.id) {
+								index = i;
+							}
+						};
+						vm.musicPostComments.splice(index, 1);
+						MusicPostCommentsService.deletePost(req).then(function (res) {
+							vm.checkIfPendingEmpty();
+						});
+						break;
+					case 'film':
+						for (let i = 0; i < vm.filmPostComments.length; i++) {
+							if (vm.filmPostComments[i].id === post.id) {
+								index = i;
+							}
+						};
+						vm.filmPostComments.splice(index, 1);
+						FilmPostCommentsService.deletePost(req).then(function (res) {
+							vm.checkIfPendingEmpty();
+						});
+						break;
+				};
 			};
-
 			vm.newMessage = function(postId,message,category){
 				vm.post = {};
 				vm.post.category = category;
@@ -204,7 +314,7 @@
 			};
 			vm.respondFilm = function(idx){
 				vm.messages = []
-				var id = vm.filmCommentPosts[idx].id;
+				var id = vm.filmPostComments[idx].id;
 				ConvoRepoService.getMessages('film',id).then(function(res){
 					res.data.forEach(function(e){
 						vm.messages.push({user:e.display_name,message:e.message})
@@ -389,6 +499,7 @@
 			vm.responses; 
 			vm.rightColumnHeader = 'PROXIMITY';
 			vm.leftWidth = 50;
+			vm.showLoginToRespond = true;
 
 			if($(window).width() < 1200){
 				vm.leftWidth = 100;
@@ -434,6 +545,12 @@
 	  		 	 others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
 
 	  		 	if(vm.toggleView === true){
+					   console.log('in here coding', localStorage);
+					if (localStorage.length) {
+						vm.showLoginToRespond = false;
+					} else {
+						vm.showCommentInput = false;
+					}
 				  vm.backButton = 'codingIndex';
 				  if(vm.leftWidth === 50){
 				  	vm.leftWidth = 100;
@@ -715,7 +832,8 @@
 		  	vm.comment = {};
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
-		  		vm.comment.post_id = id
+				  vm.comment.post_id = id;
+				  vm.comment.category = 'coding';
 		  		var req = {post: newCodingPostComment};
 		  		CodingPostCommentsService.createPost(req).then(function(res){
 					codingHistory.data.push(res.data[0])
@@ -770,6 +888,7 @@
 		vm.leftWidth = 50;
 		vm.postWidth = 100;
 		vm.testHeight = '800px';
+		vm.showLoginToRespond = true;
 		
 		console.log('musicHistory is ', musicHistory);
 		
@@ -816,6 +935,11 @@
 			others = Array.from(document.querySelectorAll('md-list-item')).filter((v, i) => i !== idx);
 			
 			if(vm.toggleView === true) {
+				if (localStorage.length) {
+					vm.showLoginToRespond = false;
+				} else {
+					vm.showCommentInput = false;
+				}
 				console.log('yo. mapcontaioner is ', document.getElementsByClassName('mapContainer')[idx]);
 				vm.postWidth = 50;
 				vm.backButton = 'musicIndex';
@@ -1107,7 +1231,8 @@
 		vm.comment = {};
 		vm.addMusicPostComment = function (id, newMusicPostComment) {
 			vm.comment.user_id = JSON.parse(localStorage.profile).user_id
-			vm.comment.post_id = id
+			vm.comment.post_id = id;
+			vm.comment.category = 'music';
 			var req = { post: newMusicPostComment };
 			MusicPostCommentsService.createPost(req).then(function (res) {
 				musicHistory.data.push(res.data[0])
@@ -1178,6 +1303,7 @@
 		vm.rightColumnHeader = 'PROXIMITY';
 		vm.leftWidth = 50;
 		vm.comment = {};
+		vm.showLoginToRespond = true;
 
 		if ($(window).width() < 1200) {
 			vm.leftWidth = 100;
@@ -1223,6 +1349,13 @@
 				others = Array.from(document.querySelectorAll('md-list-item')).filter((v, i) => i !== idx);
 
 			if (vm.toggleView === true) {
+				if(localStorage.length){
+					vm.showLoginToRespond = false;
+				} else {
+					vm.showCommentInput = false;
+				}
+				console.log('toggleView is true');
+				
 				vm.backButton = 'filmIndex';
 				if (vm.leftWidth === 50) {
 					vm.leftWidth = 100;
@@ -1233,7 +1366,7 @@
 				if (localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id) {
 					vm.showResponses = true;
 					vm.showCommentInput = false;
-					vm.leftPanel = 'RESPONSES'
+					vm.leftPanel = 'RESPONSES';
 					vm.responses = filmMail.data.filter((v, i) => filmMail.data[i].framework === posts.data[idx].framework);
 					vm.responses.forEach(function (i) {
 						var facebook = /^(facebook)/,
@@ -1385,7 +1518,7 @@
 					vm.history = {};
 					vm.history.comment;
 
-					filmHistory.data.forEach(function (v) {
+					filmHistory && filmHistory.data.forEach(function (v) {
 						//If you have already commented on this post, display waiting message
 						if (v.post_id === posts.data[idx].id) {
 							vm.showCommentInput = false;
@@ -1499,7 +1632,8 @@
 		vm.comment = {};
 		vm.addFilmPostComment = function (id, newFilmPostComment) {
 			vm.comment.user_id = JSON.parse(localStorage.profile).user_id
-			vm.comment.post_id = id
+			vm.comment.post_id = id;
+			vm.comment.category = 'film';
 			var req = { post: newFilmPostComment };
 			FilmPostCommentsService.createPost(req).then(function (res) {
 				filmHistory.data.push(res.data[0])
@@ -1558,7 +1692,7 @@
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','UsersService']
-	MailCtrl.$inject = ['filmMail', 'musicMail', 'codingMail', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'CodingPostCommentsService', 'FilmPostConversationsService', 'MusicPostConversationsService']
+	MailCtrl.$inject = ['filmMail', 'musicMail', 'codingMail', 'filmConvos', 'musicConvos', 'codingConvos', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'CodingPostCommentsService', 'FilmPostConversationsService', 'FilmPostCommentsService', 'MusicPostConversationsService','MusicPostCommentsService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
 

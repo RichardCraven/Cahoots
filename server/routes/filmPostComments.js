@@ -10,7 +10,7 @@ router.get('/', function (req,res){
 	})
 });
 router.get('/:id', function(req,res){
-	knex.select(['c.comment', 'fp.descriptive_title', 'u.user_pic', 'u.display_name', 'c.id', 'c.post_id', 'c.user_id']).from('film_posts as fp')
+	knex.select(['c.comment', 'c.is_accepted', 'fp.descriptive_title', 'u.user_pic', 'u.display_name', 'c.id', 'c.post_id', 'c.category', 'c.user_id']).from('film_posts as fp')
 	.join('film_post_comments as c', 'c.post_id', '=', 'fp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('fp.user_id',req.params.id)
@@ -21,7 +21,7 @@ router.get('/:id', function(req,res){
 });
 
 router.get('/history/:id', function(req,res){
-	knex.select(['c.comment','c.post_id','u.user_pic','u.display_name', 'c.user_id','c.id', 'fp.descriptive_title' ]).from('film_post_comments as c')
+	knex.select(['c.comment', 'c.is_accepted', 'c.post_id', 'u.user_pic', 'u.display_name', 'c.user_id', 'c.id', 'c.category', 'fp.descriptive_title' ]).from('film_post_comments as c')
 	.join('film_posts as fp', 'c.post_id', '=', 'fp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('c.user_id',req.params.id)
