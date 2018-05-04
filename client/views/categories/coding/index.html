@@ -5,7 +5,7 @@
         <a ng-click='vm.goBack()' class="backArrow">
           <span class="glyphicon glyphicon-arrow-left"></span>
         </a>
-        <h3>CODING PROJECTS</h3>
+        <h3>CODING PROJECT PROPOSALS</h3>
         <div class='pull-right'>
           <a href="/codingPosts/new" ng-show='vm.loggedIn'>
             <span class="glyphicon glyphicon-plus"></span>
@@ -44,7 +44,6 @@
               <div ng-style="{'width': vm.postWidth, 'height': vm.testHeight}" ng-show='vm.showText' class='postTextArea'>
                 <div class='postChatLeft animated slideInLeft'>
                   <div flex layout-gt-sm="column" data-parentidx='{{$index}}' class='messageContainer'>
-                    <div>
                       <md-content class='backgroundTransparent post-content-left' ng-click='vm.postTest(post)'>
                         <div class='post-summary-container'>
                           <h5>Project Summary</h5>
@@ -89,28 +88,36 @@
                         <div class='waitingResponse' ng-show='vm.theyResponded'>
                           <h3> THEY RESPONDED!</h3>
                         </div>
+                        <div class='responsesLabel' layout='row' ng-show='vm.showResponses'>
+                          <div>
+                            RESPONSES 
+                          </div>
+                        </div>
                         <div ng-show='vm.showResponses' ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'"
                           ng-class-even="'even2 animated bounceInLeft'">
-                          <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='    {{response.id}}' class='md-list-item-text responses H100px'>
+                          <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='{{response.id}}' class='md-list-item-text responses H100px'>
                             <div layout='row' ng-click="vm.showResponse($index, response)" class=''>
                               <div class='userPicContainer'>
                                 <img class='userPic' ng-src="{{response.user_pic}}" alt="">
                               </div>
                               <div class='postContentContainer' layout-padding>
-                                <div class='commentStyle'>
+                                <!-- <div class='commentStyle'> -->
                                   <p class='displayName'>{{response.display_name}} says:</p>
                                   <h4 class='descrip'>
                                     <span class='postText'>{{response.comment}}</span>
                                   </h4>
-                                </div>
+                                <!-- </div> -->
                               </div>
                             </div>
                           </div>
-                          <div flex ng-show='vm.convo == $index' class='conversationArea md-list-item-text' data-index={ {vm.tempIndex}}>
+                          <div flex ng-show='vm.convoArea === $index' class='conversationArea md-list-item-text' >
+                            <div style='height: 100px;' layout='row' >
+                              <button>ACCEPT </button>  
+                              <button>DECLINE</button>
+                            </div>
                           </div>
                         </div>
                       </md-content>
-                    </div>
                   </div>
                 </div>
               </div>

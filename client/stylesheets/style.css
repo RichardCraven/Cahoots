@@ -11,6 +11,9 @@ md-list md-list-item{
 md-list-item p{
 	color: black;
 }
+md-list-item div{
+	/* padding: 0 !important; */
+}
 h1{
 	margin: 0;
 }
@@ -57,9 +60,9 @@ label{
 .postStyle{
 	font-family: 'Raleway', sans-serif;
 }
-.commentStyle{
+/* .commentStyle{
 	font-family: 'Lato', Calibri, Arial, sans-serif;
-}
+} */
 
 .chatbox md-list-item{
 	font-family: "Josefin Sans";
@@ -311,7 +314,7 @@ img{
 	display: block;
 }
 .even{
-	background-color: #F2F2FE;
+	background-color: #d3defd;
 	padding:0px;
 	display:block;
 }
@@ -319,25 +322,27 @@ img{
 	background-color: #b8d8f3;
 }
 .even:hover{
-	background-color: #cdcde9;
+	background-color: #c7d4fa;
+	/* background-color: #cdcde9; */
 }
 .odd2{
-	background-color: #ccceff;
+	background-color: #dddeff;
 	padding:0px;
 	display: block;
 	border: 0 ;
 }
 .odd2:hover{
-	background-color: 	#b7b9e5
+	background-color: 	#c9caee
 }
 .even2{
-	background-color: #E6FFCC;
+	/* background-color: #E6FFCC; */
+	background-color: #eaf1f7;
 	padding:0px;
 	display:block;
 
 }
 .even2:hover{
-	background-color: #b8d39a;
+	background-color: #d7e2eb;
 }
  md-list-item._md-button-wrap.item-text-wrap>div.md-button:first-child{
 	display:block;
@@ -418,6 +423,25 @@ img{
 .newFilm{
 	font-size:2em;
 }
+.conversationArea div{
+	height: 100px;
+}
+.conversationArea button{
+	width: 50%;
+}
+.conversationArea button:hover{
+	background-color: #E5E5E5;
+	outline: 0;
+}
+.responsesLabel{
+	height: 40px;
+	background-color: mintcream; 
+}
+.responsesLabel div{
+	margin: 0 auto;
+	line-height: 40px;
+}
+
 .material-icons.md-48 { font-size: 168px; margin-left: 0px;}
 .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
 
@@ -462,6 +486,15 @@ header p{
 div .mailButton{
 	height: 60px;
 	width: 70px;
+}
+.mailButton #exclamation-graphic{
+    position: relative;
+    bottom: 78%;
+    left: -25px;
+    z-index: 0;
+    height: 50px;
+	width: 50px;
+	outline: 0;
 }
 div .settingsButton{
 	height: 100px;
@@ -562,10 +595,6 @@ md-input-container.md-default-theme.md-input{
 .commentForm{
 	height: 35vh;
 	background-color: #fffdd3;
-}
-.chatbox{
-	border: 1px solid black;
-	height: 100%;
 }
 .arrowRight{
 	width: 20px;
@@ -836,10 +865,12 @@ input.newPostTopicArea{
     margin-bottom:25px;
     padding:10px;
     background:#fff;
-    height:270px;
+    height:50vh;
     width:80%;
-    border:1px solid #ACD8F0;
-    overflow:auto; }
+	border:1px solid #ACD8F0;
+	border-radius: 5px;
+	overflow:auto; 
+}
  .chatbox ul{
  	list-style-type: none;
  } 
@@ -852,7 +883,7 @@ input.newPostTopicArea{
 #usermsg {
     width:84%;
     border:1px solid #ACD8F0; 
-    border-radius : 20px;
+    border-radius : 5px;
     text-indent: 10px;
 }
 #usermsg:focus {
@@ -862,6 +893,10 @@ input.newPostTopicArea{
 
   
 #submit { width: 60px; }
+input#submitmsg{
+	border-radius: 5px;
+    width: 75px;
+}
   
 .error { color: #ff0000; }
   

@@ -95,50 +95,50 @@
                             </md-list-item>
                           </md-content>
                         </md-tab>
-                        <md-tab ng-click='vm.testola($event)' id='active-convo-tab' label="Active">
+                        <md-tab id='active-convo-tab' label="Active">
                           <md-content>
-                            <md-list-item ng-show='vm.filmConvos.length' ng-repeat="convo in vm.filmConvos track by $index" class="" md-ink-ripple="#FF0000"
-                            ng-class-odd="" ng-class-even="">
+                            <md-list-item ng-show='vm.activeConvos.length' ng-repeat="convo in vm.activeConvos" class="" md-ink-ripple="#FF0000"
+                            ng-class-odd="" ng-class-even="" >
                             <div class="md-list-item-text">
-                              <div layout='row' ng-click=''>
+                              <div layout='row' ng-click='vm.activateConvo($index, convo,$event)'>
                                 <div ng-style="{'width' : vm.littleLength}">
                                   <img class='userPic' ng-src="{{convo.user_pic}}" alt="">
                                 </div>
-                                <div ng-style="{'width' : vm.longestLength}" class='mailbox-response-pending-text' layout-padding>
+                                <div ng-style="{'width' : vm.longestLength}" class='highlightable' layout-padding>
+                                  <p>Responding to: {{convo.descriptive_title}} </p>
+                                  <p>{{convo.display_name}} says: {{convo.message}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </md-list-item>
+                          <!-- <md-list-item ng-show='vm.codingConvos.length' ng-repeat="convo in vm.codingConvos track by convo.created_at" class="" md-ink-ripple="#FF0000"
+                            ng-class-odd="" ng-class-even="" >
+                            <div class="md-list-item-text">
+                              <div layout='row' ng-click='vm.activateConvo(convo,$event)'>
+                                <div ng-style="{'width' : vm.littleLength}">
+                                  <img class='userPic' ng-src="{{convo.user_pic}}" alt="">
+                                </div>
+                                <div ng-style="{'width' : vm.longestLength}" class='highlightable' layout-padding>
                                   <p>Responding to: {{convo.descriptive_title}}</p>
                                   <p>{{convo.display_name}} says: {{convo.message}}</p>
                                 </div>
                               </div>
                             </div>
                           </md-list-item>
-                          <md-list-item ng-show='vm.codingConvos.length' ng-repeat="convo in vm.codingConvos track by $index" class="" md-ink-ripple="#FF0000"
-                            ng-class-odd="" ng-class-even="">
+                          <md-list-item ng-show='vm.musicConvos.length' ng-repeat="convo in vm.musicConvos track by convo.created_at" class="" md-ink-ripple="#FF0000"
+                            ng-class-odd="" ng-class-even="" >
                             <div class="md-list-item-text">
-                              <div layout='row' ng-click=''>
+                              <div layout='row' ng-click='vm.activateConvo(convo,$event)'>
                                 <div ng-style="{'width' : vm.littleLength}">
                                   <img class='userPic' ng-src="{{convo.user_pic}}" alt="">
                                 </div>
-                                <div ng-style="{'width' : vm.longestLength}" class='mailbox-response-pending-text' layout-padding>
+                                <div ng-style="{'width' : vm.longestLength}" class='highlightable' layout-padding>
                                   <p>Responding to: {{convo.descriptive_title}}</p>
                                   <p>{{convo.display_name}} says: {{convo.message}}</p>
                                 </div>
                               </div>
                             </div>
-                          </md-list-item>
-                          <md-list-item ng-show='vm.musicConvos.length' ng-repeat="convo in vm.musicConvos track by $index" class="" md-ink-ripple="#FF0000"
-                            ng-class-odd="" ng-class-even="">
-                            <div class="md-list-item-text">
-                              <div layout='row' ng-click=''>
-                                <div ng-style="{'width' : vm.littleLength}">
-                                  <img class='userPic' ng-src="{{convo.user_pic}}" alt="">
-                                </div>
-                                <div ng-style="{'width' : vm.longestLength}" class='mailbox-response-pending-text' layout-padding>
-                                  <p>Responding to: {{convo.descriptive_title}}</p>
-                                  <p>{{convo.display_name}} says: {{convo.message}}</p>
-                                </div>
-                              </div>
-                            </div>
-                          </md-list-item>
+                          </md-list-item> -->
                         </md-content>
                       </md-tab>
                     </md-tabs>
@@ -178,7 +178,15 @@
             </div>
             <div layout="column" class='mailboxRightCol' class='mailbox-message-pane'>
               <md-content>
-                <!-- <p></p> -->
+                <div ng-show='true' id="wrapper">
+                  <div class="chatbox">
+                    <ul class="chatboxText"></ul>
+                  </div>
+                  <form name="message" ng-submit="vm.newMessage(vm.convoMessage)">
+                    <input name="usermsg" type="text" id="usermsg" class='pickles' ng-model="vm.convoMessage" size="63" />
+                    <input name="submitmsg" type="submit" id="submitmsg" value="Send" />
+                  </form>
+                </div>
                 
               </md-content>
             </div>

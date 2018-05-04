@@ -87,6 +87,9 @@
 			this.getConvos = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
 			};
+			this.getConvoThread = function(user_id, data) {
+				return $http.get(BASE_URL + '/thread/' + user_id, data)
+			};
 			this.createMessage = function(message){
 				return $http.post(BASE_URL, message); //on server req.body.post
 			};
@@ -139,6 +142,9 @@
 		 	const BASE_URL = '/api/filmPostConversations'
 			this.getConvos = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
+			};
+			this.getConvoThread = function (user_id, data) {
+				return $http.get(BASE_URL + '/thread/' + user_id, data)
 			};
 			this.createMessage = function(message){
 				return $http.post(BASE_URL, message); 
@@ -195,6 +201,13 @@
 		 	const BASE_URL = '/api/codingPostConversations'
 			this.getConvos = function(user_id){
 				return $http.get(BASE_URL+'/'+user_id)
+			};
+			this.getConvoThread = function (user_id, data) {
+				let coding_post_id = data.post.coding_post_id,
+				first_comment_id = data.post.first_comment_id;
+				
+				console.log('in service, codingId is ', coding_post_id, 'first_comment_id is ', first_comment_id);
+				return $http.get(BASE_URL + '/thread/coding/' + coding_post_id + '/' + first_comment_id, data.post)
 			};
 			this.createMessage = function(message){
 				return $http.post(BASE_URL, message); //on server req.body.post

@@ -121,8 +121,14 @@ div md-content.ng-scope{
 	height: 100%;
 	background: white;
 }
+.mailboxRightCol md-content, #wrapper{
+	height: 100%;
+}
 .mailbox-main-content-row{
 	height: 68vh;
+}
+.highlightable p{
+	margin:	0;
 }
  /* md-tabs{
 	 height: 100%;

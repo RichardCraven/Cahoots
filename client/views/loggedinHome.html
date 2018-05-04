@@ -19,7 +19,9 @@
                 </div>
                 <div ng-show='!vm.hasMail' class='pull-left mailButton '><a href="/mailbox" ><span><img src="images/Inbox-empty.png" alt=""></span></a>
                 </div>
-                <div ng-show='vm.hasMail' class='pull-left mailButton '><a href="/mailbox" ><span><img src="images/Inbox-full.png" alt=""></span></a>
+                <div ng-show='vm.hasMail' class='pull-left mailButton '>
+                    <a href="/mailbox" ><span><img src="images/Inbox-full.png" alt=""></span></a>
+                    <img ng-click='vm.goToMail()' id='exclamation-graphic' src="images/exclamation.png" alt="">
                 </div>
                 <div class='text-center owlButton '><a href="/" style='color:yellow'><span><img src="images/owl_clipped.png" alt=""></span></a>
                 </div>

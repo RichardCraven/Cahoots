@@ -3,9 +3,9 @@ const router = express.Router();
 const knex = require('../db/knex')
 
 router.get('/:id', function (req, res) {
-	knex.select(['mpc.id', 'mpc.message', 'mpc.user_id']).from('music_post_conversations as mpc')
+	knex.select(['mpc.created_at', 'mpc.message', 'mpc.user_id', 'mpc.first_comment_id', 'mpc.music_post_id', 'u.display_name', 'original_post.descriptive_title', 'original_post.summary', 'u.user_pic']).from('music_post_conversations as mpc')
 		.join('music_posts as original_post', 'original_post.id', '=', 'mpc.music_post_id')
-		// .join('users as u', 'u.third_party_user_id', '=', 'mpc.user_id')
+		.join('users as u', 'u.third_party_user_id', '=', 'mpc.user_id')
 		.where('original_post.user_id', req.params.id)
 		.then(function (post) {
 			res.send(post)

@@ -53,30 +53,35 @@
 	  			var fadeOut = $timeout(fadeOut,6900)
 	  		};
 		};
-	function MailCtrl(filmMail, musicMail, codingMail, filmConvos, musicConvos, codingConvos, $location, auth, store, $timeout, $rootScope, UsersService, FilmPostCommentsService, FilmPostService, ConvoRepoService, CodingPostConversationsService, CodingPostCommentsService, FilmPostConversationsService, FilmPostCommentsService, MusicPostConversationsService, MusicPostCommentsService){
+		function MailCtrl($scope, filmMail, musicMail, codingMail, filmConvos, musicConvos, codingConvos, $location, auth, store, $timeout, $rootScope, UsersService, FilmPostCommentsService, FilmPostService, ConvoRepoService, CodingPostConversationsService, CodingPostCommentsService, FilmPostConversationsService, FilmPostCommentsService, MusicPostConversationsService, MusicPostCommentsService){
 			var vm=this;
 			vm.name = JSON.parse(localStorage.profile).given_name;
+			vm.displayName = '';
 			vm.navpicture = JSON.parse(localStorage.profile).picture;
+			vm.user_id = JSON.parse(localStorage.profile).user_id;
 			vm.filmPostComments = [];
 			vm.musicPostComments = [];
 			vm.codingPostComments = [];
 			vm.codingConvos = [];
 			vm.musicConvos = [];
 			vm.filmConvos = [];
-			vm.littleLength = '23%';
+			vm.activeConvos = [];
+			vm.selectedConvo = 
+			vm.convoMessage = null;
+			vm.littleLength = '100px';
 			vm.middleLength = '35%';
 			vm.longLength = '65%';
-			vm.longestLength = '75%';
+			vm.longestLength = '100%';
 			vm.isVisible = false;
 			vm.showButtons = function(post){
 				vm.isVisible = post.id;
 			};
 			vm.hideButtons = function(post){vm.isVisible = false}
-			vm.user_id = JSON.parse(localStorage.profile).user_id;
 			var myDisplayName, post_id, fbUserId, facebook = /^(facebook)/,
 			numberPattern = /\d+/g;
 			UsersService.getUser(vm.user_id).then(function(res){
 				myDisplayName = res.data.display_name;
+				vm.displayName = res.data.display_name;
 			});
 			if(facebook.test(vm.user_id)){
 				fbUserId = vm.user_id.match(numberPattern)[0];
@@ -107,31 +112,40 @@
 				vm.codingPostComments.push(codingMail.data[i])
 			};
 			for(var i = 0; i<codingConvos.data.length; i++){
+				if (codingConvos.data[i].user_id === vm.user_id) { continue }
 				if (facebook.test(codingConvos.data[i].user_id)) {
 					fbUserId = codingConvos.data[i].user_id.match(numberPattern)[0];
 					codingConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
 				};
+				codingConvos.data[i].category = 'coding';
 				vm.codingConvos.push(codingConvos.data[i])
 			};
 			for (var i = 0; i < musicConvos.data.length; i++) {
+				if (musicConvos.data[i].user_id === vm.user_id) { continue }
 				if (facebook.test(musicConvos.data[i].user_id)) {
 					fbUserId = musicConvos.data[i].user_id.match(numberPattern)[0];
 					musicConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
 				};
+				musicConvos.data[i].category = 'music';
 				vm.musicConvos.push(musicConvos.data[i])
 			};
-						
 			for (var i = 0; i < filmConvos.data.length; i++) {
+				if(filmConvos.data[i].user_id === vm.user_id){continue}
 				if (facebook.test(filmConvos.data[i].user_id)) {
 					fbUserId = filmConvos.data[i].user_id.match(numberPattern)[0];
 					filmConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
 				};
+				filmConvos.data[i].category = 'film';
 				vm.filmConvos.push(filmConvos.data[i])
 			};
-			vm.hasNewFilmMail = vm.hasNewMusicMail = vm.hasNewCodingMail = 
-			vm.showFilmMail = vm.showMusicMail = vm.showCodingMail = 
-			vm.showFilmResponseField = vm.showMusicResponseField = 
-			vm.showCodingResponseField = false;
+			let addToActives = function (arr) {
+				arr.forEach(el => vm.activeConvos.push(el))
+			}
+			addToActives(vm.codingConvos);
+			addToActives(vm.musicConvos);
+			addToActives(vm.filmConvos);
+
+			vm.activeConvos.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
 
 			vm.logout = function(){
 				store.remove('profile');
@@ -143,22 +157,24 @@
 			};
 			vm.checkIfPendingEmpty = function (){
 				if (!vm.codingPostComments.length && !vm.musicPostComments.length && !vm.filmPostComments.length){
-					let activeTab = document.getElementsByClassName('md-tab')[5]
-
+					let activeTab = document.getElementsByClassName('md-tab')[5];
 					$timeout(function () {
 						vm.clickTrigger(activeTab)
 					}, 0, false);
 				}
 			}
+			$scope.$on('$viewContentLoaded', function () {
+				$timeout(function () {
+					vm.checkIfPendingEmpty();
+				}, 500, false);
+			});
 			vm.clickTrigger = function(targetNode, hold){
-				
 					function triggerMouseEvent(node, eventType) {
 						var clickEvent = document.createEvent('MouseEvents');
 						clickEvent.initEvent(eventType, true, true);
 						node.dispatchEvent(clickEvent);
 					}
 					if (targetNode) {
-						console.log('in here, hold is ', hold);
 						//--- Simulate a natural mouse-click sequence.
 						triggerMouseEvent(targetNode, "mouseover");
 						triggerMouseEvent(targetNode, "mousedown");
@@ -169,12 +185,9 @@
 					}
 					else
 					console.log("*** Target node not found!");
-		}
-			// var targetNode = document.getElementsByClassName('md-tab')[5]
-
+			}
 			vm.acceptConversation = function(post){
 				let msg = {};
-				
 				msg.user_id = post.user_id;
 				msg.first_comment_id = post.id;
 				msg.message = post.comment;
@@ -194,7 +207,7 @@
 								}
 							};
 							post.message = post.comment;
-							vm.codingConvos.push(post);	
+							vm.activeConvos.unshift(post);	
 							req = {post: {
 								id : post.id,
 								is_accepted : true
@@ -218,7 +231,7 @@
 								}
 							};
 							post.message = post.comment;
-							vm.musicConvos.push(post);	
+							vm.activeConvos.unshift(post);	
 							req = {
 								post: {
 									id: post.id,
@@ -244,7 +257,7 @@
 								}
 							};
 							post.message = post.comment;
-							vm.filmConvos.push(post);	
+							vm.activeConvos.unshift(post);	
 							req = {
 								post: {
 									id: post.id,
@@ -256,8 +269,7 @@
 							}, vm);
 						}, vm);
 						break;
-				}
-
+				};
 			};
 			vm.declineConversation = function(post, $event) {
 				let req = post.id, index;
@@ -301,14 +313,103 @@
 						break;
 				};
 			};
-			vm.newMessage = function(postId,message,category){
-				vm.post = {};
-				vm.post.category = category;
-				vm.post.message = message;
-				vm.post.original_comment_id = postId;
-				vm.post.user_id = JSON.parse(localStorage.profile).user_id;
-				let req = {post: vm.post};
-				ConvoRepoService.createMessage(req);
+			let highlightables = document.getElementsByClassName('highlightable');
+			vm.activateConvo = function(idx, convoPost, $event){
+				for(let i = 0; i < highlightables.length; i++){
+					highlightables[i].style.backgroundColor = 'white';
+				};
+				highlightables[idx].style.backgroundColor = 'beige';
+				
+				let chatbox = document.getElementsByClassName('chatboxText')[0];
+				chatbox.innerHTML = '';
+				
+				switch(vm.activeConvos[idx].category){
+					case 'film':
+					
+						for (var i = 0; i < filmConvos.data.length; i++) {
+							let current = filmConvos.data[i];
+							if (current.first_comment_id === vm.activeConvos[idx].first_comment_id) {
+								current.display_name === vm.displayName ? name = 'You' : name = current.display_name;
+								let newLi = document.createElement('li'),
+									msg = current.message;
+								newLi.innerHTML = name + ':  &nbsp;' + msg;
+								chatbox.appendChild(newLi);
+							};
+						};
+					break;
+					case 'music':
+						
+						for (var i = 0; i < musicConvos.data.length; i++) {
+							let current = musicConvos.data[i];
+							if (current.first_comment_id === vm.activeConvos[idx].first_comment_id) {
+								current.display_name === vm.displayName ? name = 'You' : name = current.display_name;
+								let newLi = document.createElement('li'),
+									msg = current.message;
+								newLi.innerHTML = name + ':  &nbsp;' + msg;
+								chatbox.appendChild(newLi);
+							};
+						};
+					break;
+					case 'coding':
+						for (var i = 0; i < codingConvos.data.length; i++) {
+							let current = codingConvos.data[i];
+							if (current.first_comment_id === vm.activeConvos[idx].first_comment_id  ){
+								current.display_name === vm.displayName ? name = 'You' : name = current.display_name;
+								let newLi = document.createElement('li'),
+									msg = current.message;
+								newLi.innerHTML = name + ':  &nbsp;' + msg;
+								chatbox.appendChild(newLi);
+							};
+						};
+					break;
+				}
+
+				vm.selectedConvo = vm.activeConvos[idx];
+			};
+			vm.newMessage = function(msg){
+				let chatbox = document.getElementsByClassName('chatboxText')[0];
+				let messageInput = document.getElementById('usermsg');
+				let post = {};
+				let req = {};
+				post.message = msg;
+				post.user_id = vm.user_id;
+				post.first_comment_id = vm.selectedConvo.first_comment_id;
+				switch(vm.selectedConvo.category){
+					case 'film':
+						post.film_post_id = vm.selectedConvo.film_post_id;
+						req.post = post;
+						FilmPostConversationsService.createMessage(req).then(function(res){
+							let name = vm.displayName;
+							let newLi = document.createElement('li');
+							newLi.innerHTML = name + ':  &nbsp;' + msg;
+							chatbox.appendChild(newLi);
+							vm.convoMessage = '';
+						})
+					break;
+					case 'music':
+						post.music_post_id = vm.selectedConvo.music_post_id;
+						req.post = post;
+						MusicPostConversationsService.createMessage(req).then(function (res) {
+							let name = vm.displayName;
+							let newLi = document.createElement('li');
+							newLi.innerHTML = name + ':  &nbsp;' + msg;
+							chatbox.appendChild(newLi);
+							vm.convoMessage = '';
+						})
+					break;
+					case 'coding':
+						post.coding_post_id = vm.selectedConvo.coding_post_id;
+						req.post = post;
+						CodingPostConversationsService.createMessage(req).then(function (res) {
+							let name = vm.displayName;
+							let newLi = document.createElement('li');
+							newLi.innerHTML = name + ':  &nbsp;' + msg;
+							chatbox.appendChild(newLi);
+							vm.convoMessage = '';
+						})
+					break;
+
+				}
 			};
 			vm.deleteConvo = function(postId, comment, category){
 			};
@@ -371,8 +472,6 @@
 			if(localStorage.profile){
 					location.href = '/loggedinHome';
 		  	} else {
-				  console.log('clearing local storage');
-				  
 		  		localStorage.clear();
 		  	};
 		  	vm.go = function ( path ) {
@@ -409,14 +508,21 @@
 			    $location.path( path );
 			};
 			UsersService.getUser(vm.user_id).then(function(user){
+				console.log('user is ', user);
+				
 				if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
 					vm.welcome = 'Welcome'
 				} else {
 					userName = user.data.display_name
-					vm.welcome = ('Welcome '+user.data.display_name)
+					vm.welcome = ('Welcome '+user.data.display_name+'!')
 				};
+				if(user.data.has_mail){
+					console.log('HAS MAIL!');
+					vm.hasMail = true;
+				}
+
 			});
-			vm.hasMail = false
+			vm.hasMail = false;
 			if(localStorage.length>0){
 				// vm.hasMail = true
 			};
@@ -430,7 +536,11 @@
 					vm.picture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
 				}
 			}
-
+			vm.goToMail = function(){
+				console.log('in here???');
+				
+				location.href = '/mailbox'
+			}
 
 			vm.logout = function(){
 				localStorage.clear()
@@ -484,7 +594,7 @@
 			};
 		};
 //~~~~~~CODING POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		function CodingPostsController(CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, codingHistory, $timeout, $rootScope, CodingPostConversationsService){
+		function CodingPostsController($scope, CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, codingHistory, $timeout, $rootScope, CodingPostConversationsService){
 			
 			var vm = this, span, area, cursor;
 
@@ -492,7 +602,10 @@
 			vm.showMap = vm.showChat = vm.toggleView = vm.toggleResponseView =
 			vm.showText = vm.waitingResponse = vm.showResponses = vm.test = 
 			vm.theyResponded = vm.showCrickets = vm.responsesNeedCleanup = 
-			vm.loggedIn = vm.currentUser = vm.convo = vm.tempIndex = false;
+			vm.loggedIn = false;
+			vm.currentUser = false;
+			vm.convoArea = false;
+			vm.tempIndex = false;
 			vm.posts = posts.data;
 			vm.backButton = 'home'
 			vm.leftPanel = 'CONNECT'
@@ -500,6 +613,7 @@
 			vm.rightColumnHeader = 'PROXIMITY';
 			vm.leftWidth = 50;
 			vm.showLoginToRespond = true;
+			vm.showResponse = null;
 
 			if($(window).width() < 1200){
 				vm.leftWidth = 100;
@@ -523,6 +637,17 @@
 					i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
 				}
 			});
+
+			// document.body.onkeydown = function (e) {
+			// 	// alert(String.fromCharCode(e.keyCode) + " --> " + e.keyCode);
+			// 	if (String.fromCharCode(e.keyCode).toLowerCase() === 'p'){
+			// 		console.log('triggering');
+			// 		vm.convo = true;
+			// 		$scope.$digest()
+			// 	}
+			// };
+
+
 		  	vm.goBack = function(){
 	  		 if(localStorage.length === 0){
 	  			$location.path('/home')
@@ -576,8 +701,6 @@
   			  	    	vm.showCrickets = true;
   			  	    };
   			  	    vm.showResponse = function(index, response){
-							// console.log('IN SHOW RESPONSE');
-							
   			  	    	vm.responsesNeedCleanup = true;
   			  	    	vm.toggleResponseView = !vm.toggleResponseView;
   			  	    	let convoStarted = false,
@@ -588,39 +711,45 @@
   			  	    		conversationArea = selectedResponse[idx].parentElement.children[1],
   			  	    	    req = {post: vm.msg};
   			  	    	CodingPostConversationsService.getConvos(vm.responses[index].id).then(function(res){
+								console.log('RES is ', res);
+									
+								
   			  	    		if(!res.data.length){
 		  			  	    	if(vm.toggleResponseView){
-		  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'});
-		  			  	    		vm.convo = index;
-		  			  	    		conversationArea.style.height = responseContainer[0].clientHeight + 'px';
-		  			  	    		if(selectedResponse[idx].parentElement.classList.contains('odd2')){
-		  			  	    			conversationArea.style.background = '#ccceff';
-		  			  	    		} else {conversationArea.style.background = '#E6FFCC'};
+										vm.convoArea = index;	
+								console.log('convo is ', vm.convoArea);
 
-		  			  	    		let beginConvoButton = document.createElement('div');
-		  			  	    		beginConvoButton.style.width = '100%;';
-		  			  	    		beginConvoButton.style.backgroundColor = '#beed90';
-		  			  	    		beginConvoButton.style.margin = '5px';
-		  			  	    		beginConvoButton.style.height = '60px';
-		  			  	    		beginConvoButton.style.textAlign = 'center';
-		  			  	    		beginConvoButton.style.paddingTop = '15px';
-		  			  	    		beginConvoButton.style.marginLeft = '55px';
-		  			  	    		beginConvoButton.style.marginRight = '55px';
-		  			  	    		beginConvoButton.innerHTML = 'Begin Conversation';
-		  			  	    		conversationArea.appendChild(beginConvoButton);
-		  			  	    		beginConvoButton.onmouseenter = function(){beginConvoButton.style.backgroundColor = '#a7d37a'};
-		  			  	    		beginConvoButton.onmouseleave = function(){beginConvoButton.style.backgroundColor = '#beed90'};
-		  			  	    		beginConvoButton.onmousedown = function(){
-		  			  	    			beginConvoButton.style.backgroundColor = '#ffffff';
-		  			  	    			vm.convoBegun = true;
-		  			  	    			vm.showMap = false;
-		  			  	    			vm.showChat = true;
-		  			  	    			let li = document.createElement('li'),
-		  			  	    			response = vm.responses[index];
-		  			  	    			li.innerHTML = response.display_name + ':  &nbsp;' + response.comment;
-		  			  	    			var chatbox = document.getElementsByClassName('chatboxText')[idx];
-		  			  	    			chatbox.appendChild(li);
-		  			  	    		};
+		  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'});
+		  			  	    		
+		  			  	    		// conversationArea.style.height = responseContainer[0].clientHeight + 'px';
+		  			  	    		// if(selectedResponse[idx].parentElement.classList.contains('odd2')){
+		  			  	    		// 	conversationArea.style.background = '#ccceff';
+		  			  	    		// } else {conversationArea.style.background = '#E6FFCC'};
+
+		  			  	    		// let beginConvoButton = document.createElement('div');
+		  			  	    		// beginConvoButton.style.width = '100%;';
+		  			  	    		// beginConvoButton.style.backgroundColor = '#beed90';
+		  			  	    		// beginConvoButton.style.margin = '5px';
+		  			  	    		// beginConvoButton.style.height = '60px';
+		  			  	    		// beginConvoButton.style.textAlign = 'center';
+		  			  	    		// beginConvoButton.style.paddingTop = '15px';
+		  			  	    		// beginConvoButton.style.marginLeft = '55px';
+		  			  	    		// beginConvoButton.style.marginRight = '55px';
+		  			  	    		// beginConvoButton.innerHTML = 'Begin Conversation';
+		  			  	    		// conversationArea.appendChild(beginConvoButton);
+		  			  	    		// beginConvoButton.onmouseenter = function(){beginConvoButton.style.backgroundColor = '#a7d37a'};
+		  			  	    		// beginConvoButton.onmouseleave = function(){beginConvoButton.style.backgroundColor = '#beed90'};
+		  			  	    		// beginConvoButton.onmousedown = function(){
+		  			  	    		// 	beginConvoButton.style.backgroundColor = '#ffffff';
+		  			  	    		// 	vm.convoBegun = true;
+		  			  	    		// 	vm.showMap = false;
+		  			  	    		// 	vm.showChat = true;
+		  			  	    		// 	let li = document.createElement('li'),
+		  			  	    		// 	response = vm.responses[index];
+		  			  	    		// 	li.innerHTML = response.display_name + ':  &nbsp;' + response.comment;
+		  			  	    		// 	var chatbox = document.getElementsByClassName('chatboxText')[idx];
+		  			  	    		// 	chatbox.appendChild(li);
+		  			  	    		// };
 		  			  	    		//CREATING CONVO MESSGAE
 		  			  	    		vm.msg = {};
 		  			  	    		vm.codingPostConversation = function(message){
@@ -641,13 +770,13 @@
 		  			  	    		}
 		  			  	    	} else {
 			  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'block'})
-			  			  	    		vm.convo = null;
+			  			  	    		vm.convoArea = false;
 			  			  	    		var chatbox = document.getElementsByClassName('chatboxText')[idx]
 			  			  	    		chatbox.innerHTML = ''
 			  			  	    		vm.showMap = true;
 			  			  	    		vm.showChat = false;
-			  			  	    		var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
-			  			  	    		convoAreas.forEach(function(e){ e.innerHTML = '' });
+			  			  	    		// var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
+			  			  	    		// convoAreas.forEach(function(e){ e.innerHTML = '' });
 			  			  	    } 
   			  	    		} else {
   			  	    			vm.convoBegun = true;
@@ -701,13 +830,12 @@
   			  	    					mapContainers[idx].classList.add('animated', 'slideInRight');
 
   			  	    				nonselectedResponses.forEach(function(i){i.style.display = 'block'})
-  			  	    				vm.convo = null;
-  			  	    				var chatbox = document.getElementsByClassName('chatboxText')[idx]
-  			  	    				chatbox.innerHTML = '';
+  			  	    				// var chatbox = document.getElementsByClassName('chatboxText')[idx]
+  			  	    				// chatbox.innerHTML = '';
   			  	    				vm.showMap = true;
   			  	    				vm.showChat = false;
-  			  	    				var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
-  			  	    				convoAreas.forEach(function(e){ e.innerHTML = '' });
+  			  	    				// var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
+  			  	    				// convoAreas.forEach(function(e){ e.innerHTML = '' });
   			  	    			};
   			  	    		}
   			  	    	}, vm);
@@ -801,7 +929,7 @@
   			  	    	vm.leftWidth = 50;
   			  	    	vm.showOwl = true;
   			  	    };
-		  			convoAreas.forEach(function(e){ e.innerHTML = '' })
+		  			// convoAreas.forEach(function(e){ e.innerHTML = '' })
 		  			others.forEach(function(i){i.style.display = 'block'});
 		  			if(vm.responsesNeedCleanup){
 		  				Array.from(document.querySelectorAll('.responses')).forEach(function(i){i.style.display = 'block'})
@@ -1673,7 +1801,7 @@
 				})
 			}
 		}
-		CodingPostsController.$inject = ['CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'codingMail', 'codingHistory', '$timeout', '$scope','CodingPostConversationsService'];
+		CodingPostsController.$inject = ['$scope','CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'codingMail', 'codingHistory', '$timeout', '$scope','CodingPostConversationsService'];
 		NewCodingPostController.$inject = ['CodingPostService','UsersService','$location','store'] 
 		EditCodingPostController.$inject = ['CodingPostService', 'post', '$location']
 
@@ -1692,7 +1820,7 @@
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
 		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','UsersService']
-	MailCtrl.$inject = ['filmMail', 'musicMail', 'codingMail', 'filmConvos', 'musicConvos', 'codingConvos', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'CodingPostCommentsService', 'FilmPostConversationsService', 'FilmPostCommentsService', 'MusicPostConversationsService','MusicPostCommentsService']
+	MailCtrl.$inject = ['$scope','filmMail', 'musicMail', 'codingMail', 'filmConvos', 'musicConvos', 'codingConvos', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'CodingPostCommentsService', 'FilmPostConversationsService', 'FilmPostCommentsService', 'MusicPostConversationsService','MusicPostCommentsService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
 
