@@ -76,7 +76,8 @@
                         <div class='waitingResponse' ng-show='vm.waitingResponse'>
                           <h3>
                             <span> You said: </span> "{{vm.history.comment}}"</h3>
-                          <h3> {{post.display_name}} has not responded yet. </h3>
+                            <hr>
+                          <h3 ng-show='vm.waitingResponse'> {{post.display_name}} {{vm.pendingResponseText}}</h3>
                         </div>
                         <div ng-show='vm.waitingResponse' class='text-center owlButton '>
                           <a href="/">
@@ -89,7 +90,7 @@
                           <h3> THEY RESPONDED!</h3>
                         </div>
                         <div class='responsesLabel' layout='row' ng-show='vm.showResponses'>
-                          <div>
+                          <div ng-show='vm.showResponses'>
                             RESPONSES 
                           </div>
                         </div>
@@ -101,21 +102,47 @@
                                 <img class='userPic' ng-src="{{response.user_pic}}" alt="">
                               </div>
                               <div class='postContentContainer' layout-padding>
-                                <!-- <div class='commentStyle'> -->
                                   <p class='displayName'>{{response.display_name}} says:</p>
                                   <h4 class='descrip'>
                                     <span class='postText'>{{response.comment}}</span>
                                   </h4>
-                                <!-- </div> -->
                               </div>
                             </div>
                           </div>
-                          <div flex ng-show='vm.convoArea === $index' class='conversationArea md-list-item-text' >
+                          <div flex ng-show='vm.convoArea === $index' class='conversationArea md-list-item-text' data-userid='{{response.user_id}}' data-comment='{{response.comment}}'>
                             <div style='height: 100px;' layout='row' >
-                              <button>ACCEPT </button>  
-                              <button>DECLINE</button>
+                              <button ng-click='vm.acceptConvo($index)' >ACCEPT </button>  
+                              <button ng-click='vm.declineConvo($index)'>DECLINE</button>
                             </div>
                           </div>
+                        </div>
+                        <div class='responsesLabel' layout='row' ng-show='vm.showActiveConvos'>
+                          <div ng-show='vm.showActiveConvos'>
+                            ACTIVE CONVERSATIONS
+                          </div>
+                        </div>
+                        <div ng-show='vm.showActiveConvos' ng-repeat="active in vm.activeConvos" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'"
+                          ng-class-even="'even2 animated bounceInLeft'">
+                          <div flex class='md-list-item-text responses H100px'>
+                            <div layout='row' ng-click="" class=''>
+                              <div class='userPicContainer'>
+                                <img class='userPic' ng-src="{{active.user_pic}}" alt="">
+                              </div>
+                              <div class='postContentContainer' layout-padding>
+                                <p class='displayName'>{{active.display_name}} says:</p>
+                                <h4 class='descrip'>
+                                  <span class='postText'>{{active.comment}}</span>
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <div flex ng-show='vm.convoArea === $index' class='conversationArea md-list-item-text' data-userid='{{response.user_id}}'
+                            data-comment='{{response.comment}}'>
+                            <div style='height: 100px;' layout='row'>
+                              <button ng-click='vm.acceptConvo($index)'>ACCEPT </button>
+                              <button ng-click='vm.declineConvo($index)'>DECLINE</button>
+                            </div>
+                          </div> -->
                         </div>
                       </md-content>
                   </div>

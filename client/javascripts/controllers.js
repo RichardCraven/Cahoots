@@ -88,7 +88,7 @@
 				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
 			};
 			for(var i = 0; i<filmMail.data.length; i++){
-				if(filmMail.data[i].is_accepted) continue
+				if (filmMail.data[i].is_accepted !== null) continue
 				if (facebook.test(filmMail.data[i].user_id)) {
 					fbUserId = filmMail.data[i].user_id.match(numberPattern)[0];
 					filmMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
@@ -96,7 +96,7 @@
 				vm.filmPostComments.push(filmMail.data[i])
 			};
 			for(var i = 0; i<musicMail.data.length; i++){
-				if (musicMail.data[i].is_accepted) continue
+				if (musicMail.data[i].is_accepted !== null) continue
 				if (facebook.test(musicMail.data[i].user_id)) {
 					fbUserId = musicMail.data[i].user_id.match(numberPattern)[0];
 					musicMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
@@ -104,7 +104,7 @@
 				vm.musicPostComments.push(musicMail.data[i])
 			};
 			for(var i = 0; i<codingMail.data.length; i++){
-				if (codingMail.data[i].is_accepted) continue
+				if (codingMail.data[i].is_accepted !== null) continue
 				if (facebook.test(codingMail.data[i].user_id)) {
 					fbUserId = codingMail.data[i].user_id.match(numberPattern)[0];
 					codingMail.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
@@ -595,17 +595,16 @@
 		};
 //~~~~~~CODING POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		function CodingPostsController($scope, CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, codingHistory, $timeout, $rootScope, CodingPostConversationsService){
-			
 			var vm = this, span, area, cursor;
-
 			vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
 			vm.showMap = vm.showChat = vm.toggleView = vm.toggleResponseView =
 			vm.showText = vm.waitingResponse = vm.showResponses = vm.test = 
-			vm.theyResponded = vm.showCrickets = vm.responsesNeedCleanup = 
+			vm.theyResponded = vm.showCrickets = 
 			vm.loggedIn = false;
 			vm.currentUser = false;
 			vm.convoArea = false;
 			vm.tempIndex = false;
+			vm.tempResponseIndex = false;
 			vm.posts = posts.data;
 			vm.backButton = 'home'
 			vm.leftPanel = 'CONNECT'
@@ -614,20 +613,16 @@
 			vm.leftWidth = 50;
 			vm.showLoginToRespond = true;
 			vm.showResponse = null;
-
+			vm.pendingResponseText = null;
+			vm.showActiveConvos = false;
 			if($(window).width() < 1200){
 				vm.leftWidth = 100;
 				vm.showOwl = false;
-			}
-
+			};
 			if(localStorage.length > 0){
 				vm.loggedIn = true
 			};
-
-			vm.myTrackingFunction = function(post){
-				//some code to put the logged-in user's posts at the top
-			}
-			//this gets around the issue of facebook profile pic URLs expiring
+			// vm.myTrackingFunction = function(post){ some code to put the logged-in user's posts at the top  };
 			posts.data.length && posts.data.forEach(function(i){
 				var facebook = /^(facebook)/,
 					numberPattern = /\d+/g,
@@ -635,19 +630,8 @@
 				if(facebook.test(i.third_party_user_id)){
 					fbUserId = i.third_party_user_id.match(numberPattern)[0];
 					i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
-				}
+				};
 			});
-
-			// document.body.onkeydown = function (e) {
-			// 	// alert(String.fromCharCode(e.keyCode) + " --> " + e.keyCode);
-			// 	if (String.fromCharCode(e.keyCode).toLowerCase() === 'p'){
-			// 		console.log('triggering');
-			// 		vm.convo = true;
-			// 		$scope.$digest()
-			// 	}
-			// };
-
-
 		  	vm.goBack = function(){
 	  		 if(localStorage.length === 0){
 	  			$location.path('/home')
@@ -665,238 +649,188 @@
 	  		 vm.showText = !vm.showText;
 			   vm.showVid = !vm.showVid;
 			 vm.comment = {};
-
 	  		 var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i == idx),
 	  		 	 others = Array.from(document.querySelectorAll('md-list-item')).filter((v,i) => i !== idx);
-
 	  		 	if(vm.toggleView === true){
-					   console.log('in here coding', localStorage);
 					if (localStorage.length) {
 						vm.showLoginToRespond = false;
 					} else {
 						vm.showCommentInput = false;
 					}
-				  vm.backButton = 'codingIndex';
-				  if(vm.leftWidth === 50){
-				  	vm.leftWidth = 100;
-				  	vm.showOwl = false;
-				  };
-		  		  selected[0].classList.add('focus')	  	;	
-		  		  others.forEach(function(i){i.style.display = 'none'});
-    		  	  if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
-  			  	    vm.showResponses = true;
-  			  	    vm.showCommentInput = false;
-  			  	    vm.leftPanel = 'RESPONSES';
-  			  	    vm.responses = codingMail.data.filter((v,i) => codingMail.data[i].framework === posts.data[idx].framework);
-  			  	    vm.responses.forEach(function(i){
-  			  	    	let facebook = /^(facebook)/,
-  			  	    		numberPattern = /\d+/g,
-  			  	    		fbUserId;
-  			  	    	if(facebook.test(i.user_id)){
-  			  	    		fbUserId = i.user_id.match(numberPattern)[0];
-  			  	    		i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
-  			  	    	};
-  			  	    });
-  			  	    if(!vm.responses.length){
-  			  	    	vm.showCrickets = true;
-  			  	    };
-  			  	    vm.showResponse = function(index, response){
-  			  	    	vm.responsesNeedCleanup = true;
-  			  	    	vm.toggleResponseView = !vm.toggleResponseView;
-  			  	    	let convoStarted = false,
-  			  	    	    responseContainer = Array.from(document.querySelectorAll('.messageContainer')).filter((v, i) => v.dataset.parentidx === idx.toString()),
-  			  	    		selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
-  			  	    		nonselectedResponses = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.comment !== response.comment),
-  			  	    		responseHeader = selectedResponse[idx].parentElement.children[0],
-  			  	    		conversationArea = selectedResponse[idx].parentElement.children[1],
-  			  	    	    req = {post: vm.msg};
-  			  	    	CodingPostConversationsService.getConvos(vm.responses[index].id).then(function(res){
-								console.log('RES is ', res);
+					vm.backButton = 'codingIndex';
+					if(vm.leftWidth === 50){
+						vm.leftWidth = 100;
+						vm.showOwl = false;
+					};
+					selected[0].classList.add('focus');	
+					selected[0].classList.add('noHover');
+					others.forEach(function(i){i.style.display = 'none'});
+					if(localStorage.length > 0 && posts.data[idx].third_party_user_id === JSON.parse(localStorage.profile).user_id){
+						vm.showCommentInput = false;
+						vm.responses = codingMail.data.filter((v, i) => codingMail.data[i].framework === posts.data[idx].framework && codingMail.data[i].is_accepted === null );
+						vm.responses.forEach(function(i){
+							let facebook = /^(facebook)/,
+								numberPattern = /\d+/g,
+								fbUserId;
+							if(facebook.test(i.user_id)){
+								fbUserId = i.user_id.match(numberPattern)[0];
+								i.user_pic = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+							};
+						});
+						vm.activeConvos = codingMail.data.filter((v, i) => codingMail.data[i].framework === posts.data[idx].framework && codingMail.data[i].is_accepted === true);
+						vm.activeConvos.forEach(function (i) {
+							let facebook = /^(facebook)/,
+								numberPattern = /\d+/g,
+								fbUserId;
+							if (facebook.test(i.user_id)) {
+								fbUserId = i.user_id.match(numberPattern)[0];
+								i.user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+							};
+						});
+						console.log('active convos are' , vm.activeConvos);
+						if(!vm.responses.length && !vm.activeConvos.length){
+							vm.showCrickets = true;
+						} else if(vm.responses.length){
+							vm.showResponses = true;
+						}
+						if(vm.activeConvos.length){
+							vm.showActiveConvos = true;
+						}
+						vm.showResponse = function(index, response){
+							let convoStarted = false,
+							selectedResponse = Array.from(document.querySelectorAll('.responses')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment),
+							selectedResponseButtonRow = Array.from(document.querySelectorAll('.conversationArea')).filter((v, i) => v.dataset.userid === response.user_id && v.dataset.comment === response.comment);
+							vm.convoArea = index;
+							if(vm.convoArea !== vm.tempResponseIndex){
+								vm.tempResponseIndex = vm.convoArea;
+								vm.showButtons = true;
+							} else {
+								vm.showButtons = false;
+								vm.tempResponseIndex = false;
+							};
+							vm.acceptConvo = function(index){
+								let msg = {},
+									commentReq = {
+										post: {
+											id: response.id,
+											is_accepted: true
+										}
+									},
+									convoReq;
+								selectedResponse[idx].style.display = 'none';
+								selectedResponseButtonRow[idx].style.display = 'none';
+								msg.user_id = response.user_id;
+								msg.first_comment_id = response.id;
+								msg.message = response.comment;
+								msg.coding_post_id = response.post_id;
+								convoReq = { post: msg };
+								$timeout(function () {
+									CodingPostCommentsService.updatePost(commentReq);
+									CodingPostConversationsService.createMessage(convoReq);
+									for(let i = 0 ; i < codingMail.data.length; i++){
+										if(codingMail.data[i].id === response.id)
+										codingMail.data.splice(i, 1)
+									};
+								}, 500);
+							};
+							vm.declineConvo = function (index) {
+								selectedResponse[idx].style.display = 'none';
+								selectedResponseButtonRow[idx].style.display = 'none';
+								let commentReq = {
+									post: {
+										id: response.id,
+										is_accepted: false
+									}
+								};
+								$timeout(function () {
+									CodingPostCommentsService.updatePost(commentReq);
+									for (let i = 0; i < codingMail.data.length; i++) {
+										if (codingMail.data[i].id === response.id)
+											codingMail.data.splice(i, 1)
+									}
+								}, 500);
+							};
+							if (vm.showButtons) {
+								vm.tempResponseIndex = vm.convoArea;
+							} else {
+								//hide buttons
+								vm.convoArea = false;
+								vm.tempResponseIndex = false;
+							} 
+						};
+					} else {
+						vm.tempResponseIndex = false;
+						vm.history = {};
+						vm.history.comment;
+						vm.wasDeclined = false;
+						vm.showActiveConvos = false;
+
+						codingHistory && codingHistory.data.forEach(function(v){
+							//If you have already commented on this post, display waiting message
+							console.log('YO BITCH! V IS ', v);
+							
+							if(v.post_id === posts.data[idx].id){
+									console.log('waiting response post is ', v);
 									
-								
-  			  	    		if(!res.data.length){
-		  			  	    	if(vm.toggleResponseView){
-										vm.convoArea = index;	
-								console.log('convo is ', vm.convoArea);
-
-		  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'none'});
-		  			  	    		
-		  			  	    		// conversationArea.style.height = responseContainer[0].clientHeight + 'px';
-		  			  	    		// if(selectedResponse[idx].parentElement.classList.contains('odd2')){
-		  			  	    		// 	conversationArea.style.background = '#ccceff';
-		  			  	    		// } else {conversationArea.style.background = '#E6FFCC'};
-
-		  			  	    		// let beginConvoButton = document.createElement('div');
-		  			  	    		// beginConvoButton.style.width = '100%;';
-		  			  	    		// beginConvoButton.style.backgroundColor = '#beed90';
-		  			  	    		// beginConvoButton.style.margin = '5px';
-		  			  	    		// beginConvoButton.style.height = '60px';
-		  			  	    		// beginConvoButton.style.textAlign = 'center';
-		  			  	    		// beginConvoButton.style.paddingTop = '15px';
-		  			  	    		// beginConvoButton.style.marginLeft = '55px';
-		  			  	    		// beginConvoButton.style.marginRight = '55px';
-		  			  	    		// beginConvoButton.innerHTML = 'Begin Conversation';
-		  			  	    		// conversationArea.appendChild(beginConvoButton);
-		  			  	    		// beginConvoButton.onmouseenter = function(){beginConvoButton.style.backgroundColor = '#a7d37a'};
-		  			  	    		// beginConvoButton.onmouseleave = function(){beginConvoButton.style.backgroundColor = '#beed90'};
-		  			  	    		// beginConvoButton.onmousedown = function(){
-		  			  	    		// 	beginConvoButton.style.backgroundColor = '#ffffff';
-		  			  	    		// 	vm.convoBegun = true;
-		  			  	    		// 	vm.showMap = false;
-		  			  	    		// 	vm.showChat = true;
-		  			  	    		// 	let li = document.createElement('li'),
-		  			  	    		// 	response = vm.responses[index];
-		  			  	    		// 	li.innerHTML = response.display_name + ':  &nbsp;' + response.comment;
-		  			  	    		// 	var chatbox = document.getElementsByClassName('chatboxText')[idx];
-		  			  	    		// 	chatbox.appendChild(li);
-		  			  	    		// };
-		  			  	    		//CREATING CONVO MESSGAE
-		  			  	    		vm.msg = {};
-		  			  	    		vm.codingPostConversation = function(message){
-		  			  	    			 vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
-		  			  	    			 vm.msg.coding_post_id = vm.posts[idx].id;
-		  			  	    			 vm.msg.first_comment_id = vm.responses[index].id;
-
-			  	    			   		var req = {post: vm.msg};
-			  	    			   		CodingPostConversationsService.createMessage(req).then(function(res){
-	  		  	    			   			var newLi2 = document.createElement('li');
-	  		  	    			   				msg = res.data[0].message;
-		  		  	    			   		newLi2.innerHTML = 'You:  &nbsp;' + msg;
-		  		  	    			   		var chatbox = document.getElementsByClassName('chatboxText')[idx];
-		  			  	    				chatbox.appendChild(newLi2);
-		  			  	    				vm.msg.message = '';
-		  			  	    				conversationArea.removeChild(beginConvoButton)
-			  	    			   		}, vm);
-		  			  	    		}
-		  			  	    	} else {
-			  			  	    		nonselectedResponses.forEach(function(i){i.style.display = 'block'})
-			  			  	    		vm.convoArea = false;
-			  			  	    		var chatbox = document.getElementsByClassName('chatboxText')[idx]
-			  			  	    		chatbox.innerHTML = ''
-			  			  	    		vm.showMap = true;
-			  			  	    		vm.showChat = false;
-			  			  	    		// var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
-			  			  	    		// convoAreas.forEach(function(e){ e.innerHTML = '' });
-			  			  	    } 
-  			  	    		} else {
-  			  	    			vm.convoBegun = true;
-  			  	    			if(vm.toggleResponseView){
-	  			  	    			nonselectedResponses.forEach(function(i){i.style.display = 'none'})
-	  			  	    			conversationArea.style.height = responseContainer[0].clientHeight + 'px'
-	  			  	    			var mapContainers = document.getElementsByClassName('mapContainer')
-	  			  	    				mapContainers[idx].classList.remove('animated','slideInRight');
-	  			  	    				mapContainers[idx].classList.add('animated', 'slideOutRight');
-
-	  			  	    			vm.showMap = false;
-	  			  	    			vm.showChat = true;
-	  			  	    			var li = document.createElement('li'),
-	  			  	    			response = vm.responses[index];
-
-	  			  	    			li.innerHTML = response.display_name + ':  &nbsp;' + response.comment
-
-	  			  	    			var chatbox = document.getElementsByClassName('chatboxText')[idx];
-	  			  	    			chatbox.innerHTML = '';
-	  			  	    			chatbox.appendChild(li);
-
-	  			  	    			res.data.forEach(function(v){
-	  			  	    				var newLi = document.createElement('li'),
-	  			  	    				    msg = v.message, name;
-	  			  	    				if(v.user_id === JSON.parse(localStorage.profile).user_id){
-	  			  	    					name = 'You';
-	  			  	    				} else {
-	  			  	    					name = response.display_name
-	  			  	    				};
-	  			  	    				newLi.innerHTML = name + ':  &nbsp;' + msg;
-	  			  	    				chatbox.appendChild(newLi);
-				    		  	  	});
-	  	  			  	    		vm.msg = {};
-	  	  			  	    		vm.codingPostConversation = function(message){
-	  	  			  	    			 vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
-	  	  			  	    			 vm.msg.coding_post_id = vm.posts[idx].id;
-	  	  			  	    			 vm.msg.first_comment_id = vm.responses[index].id;
-
-	  		  	    			   		var req = {post: vm.msg};
-	  		  	    			   		CodingPostConversationsService.createMessage(req).then(function(res){
-	  		  	    			   			var newLi2 = document.createElement('li');
-	  		  	    			   				msg = res.data[0].message;
-		  		  	    			   		newLi2.innerHTML = 'You:  &nbsp;' + msg;
-		  			  	    				chatbox.appendChild(newLi2);
-		  			  	    				vm.msg.message = '';
-	  		  	    			   		}, vm);
-	  	  			  	    		};
-  			  	    			} else {
-  			  	    				var mapContainers = document.getElementsByClassName('mapContainer')
-  			  	    					mapContainers[idx].classList.remove('animated','slideOutRight');
-  			  	    					mapContainers[idx].classList.add('animated', 'slideInRight');
-
-  			  	    				nonselectedResponses.forEach(function(i){i.style.display = 'block'})
-  			  	    				// var chatbox = document.getElementsByClassName('chatboxText')[idx]
-  			  	    				// chatbox.innerHTML = '';
-  			  	    				vm.showMap = true;
-  			  	    				vm.showChat = false;
-  			  	    				// var convoAreas = Array.from(document.getElementsByClassName('conversationArea'));
-  			  	    				// convoAreas.forEach(function(e){ e.innerHTML = '' });
-  			  	    			};
-  			  	    		}
-  			  	    	}, vm);
-  			  	    }
-    		  	  } else {
-    		  	    vm.history = {};
-					vm.history.comment;
-						 
-    		  	  	codingHistory && codingHistory.data.forEach(function(v){
-						//If you have already commented on this post, display waiting message
-    		  	  		if(v.post_id === posts.data[idx].id){
-    		  	  			vm.showCommentInput = false;
-    		  	  			vm.waitingResponse = true;
-    		  	  			vm.history.comment = v.comment;
-    		  	  			var yourCommentMsg = v.comment;
-    		  	  			CodingPostConversationsService.getConvos(v.id).then(function(res){
-								//If they responded, show chat box
-    		  	  				if(res.data.length){
-									let chatbox;
-    		  	  					vm.waitingResponse = false;
-	  			  	    			vm.showChat = true;
-    		  	  					vm.showCommentInput = false;
-    		  	  					vm.theyResponded = true;
-									vm.rightColumnHeader = 'CONVERSATION';	
-    		  	  					chatbox = document.getElementsByClassName('chatboxText')[idx],
-    		  	  						yourComment = document.createElement('li');
-    		  	  					chatbox.innerHTML = '';
-    		  	  					yourComment.innerHTML = 'You: &nbsp;' + yourCommentMsg;
-    		  	  					chatbox.appendChild(yourComment);
-	  			  	    			res.data.forEach(function(v){
-	  			  	    				var newLi = document.createElement('li'),
-	  			  	    				    msg = v.message, name;
-	  			  	    				if(v.user_id === JSON.parse(localStorage.profile).user_id){
-	  			  	    					name = 'You';
-	  			  	    				} else {
-	  			  	    					name = posts.data[idx].display_name
-	  			  	    				};
-	  			  	    				newLi.innerHTML = name + ':  &nbsp;' + msg;
-	  			  	    				chatbox.appendChild(newLi);
-				    		  	  	})
-	  			  	    			//CREATING CONVO MESSGAE
-		  			  	    		vm.msg = {};
-		  			  	    		vm.codingPostConversation = function(message){
-		  			  	    			 vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
-		  			  	    			 vm.msg.coding_post_id = vm.posts[idx].id;
-		  			  	    			 vm.msg.first_comment_id = v.id;
-			  	    			   		var req = {post: vm.msg};
-			  	    			   		CodingPostConversationsService.createMessage(req).then(function(res){
-	  		  	    			   			var newLi2 = document.createElement('li');
-	  		  	    			   				msg = res.data[0].message;
-		  		  	    			   		newLi2.innerHTML = 'You:  &nbsp;' + msg;
-		  		  	    			   		var chatbox = document.getElementsByClassName('chatboxText')[idx];
-		  			  	    				chatbox.appendChild(newLi2);
-		  			  	    				vm.msg.message = '';
-			  	    			   		}, vm);
-		  			  	    		};
-    		  	  				};
-    		  	  			}, vm);
-    		  	  		}
-    		  	  	}) 
-    		  	  };
+								vm.showCommentInput = false;
+									vm.waitingResponse = true;
+							     	if (v.is_accepted === null){
+										vm.pendingResponseText = 'has not responded yet.'
+									}
+									if(v.is_accepted === false){
+										vm.pendingResponseText = 'declined to respond.'
+									}
+									if(v.is_accepted === true){
+										vm.pendingResponseText = 'accepted your conversation! Check your mailbox.'
+									}
+								vm.history.comment = v.comment;
+								var yourCommentMsg = v.comment;
+								CodingPostConversationsService.getConvos(v.id).then(function(res){
+									//If they responded, show chat box
+									if(res.data.length){
+										let chatbox;
+										vm.waitingResponse = false;
+										vm.showChat = true;
+										vm.showCommentInput = false;
+										vm.theyResponded = true;
+										vm.rightColumnHeader = 'CONVERSATION';	
+										chatbox = document.getElementsByClassName('chatboxText')[idx],
+											yourComment = document.createElement('li');
+										chatbox.innerHTML = '';
+										yourComment.innerHTML = 'You: &nbsp;' + yourCommentMsg;
+										chatbox.appendChild(yourComment);
+										res.data.forEach(function(v){
+											var newLi = document.createElement('li'),
+												msg = v.message, name;
+											if(v.user_id === JSON.parse(localStorage.profile).user_id){
+												name = 'You';
+											} else {
+												name = posts.data[idx].display_name
+											};
+											newLi.innerHTML = name + ':  &nbsp;' + msg;
+											chatbox.appendChild(newLi);
+										})
+										//CREATING CONVO MESSGAE
+										vm.msg = {};
+										vm.codingPostConversation = function(message){
+											vm.msg.user_id = JSON.parse(localStorage.profile).user_id;
+											vm.msg.coding_post_id = vm.posts[idx].id;
+											vm.msg.first_comment_id = v.id;
+											var req = {post: vm.msg};
+											CodingPostConversationsService.createMessage(req).then(function(res){
+												var newLi2 = document.createElement('li');
+													msg = res.data[0].message;
+												newLi2.innerHTML = 'You:  &nbsp;' + msg;
+												var chatbox = document.getElementsByClassName('chatboxText')[idx];
+												chatbox.appendChild(newLi2);
+												vm.msg.message = '';
+											}, vm);
+										};
+									};
+								}, vm);
+							}
+						}) 
+					};
   		 		  $timeout(function() {
   		 		  	if(vm.showChat){
   		 		  		return
@@ -908,13 +842,17 @@
 	  		 			e.classList.remove('md-input-focused')
 	  		 			e.classList.remove('md-input-has-value')
 	  		 		});
-	  		 	  }, 500);
-		  		};
-		  		if(vm.toggleView === false){
+	  		 	  }, 50);
+				};        
+				if(vm.toggleView === false){
+					//BACK TO MAIN INDEX PAGE
+					// vm.convoArea = false;
+					vm.tempResponseIndex = false;
 					vm.showCommentInput = true;
 					vm.theyResponded = vm.waitingResponse = 
 					vm.showResponses = vm.showMap = vm.showChat = 
 					vm.showCrickets = false;
+					vm.showActiveConvos = false;
 
 					vm.backButton = 'home';
 					vm.rightColumnHeader = 'PROXIMITY'
@@ -929,21 +867,14 @@
   			  	    	vm.leftWidth = 50;
   			  	    	vm.showOwl = true;
   			  	    };
-		  			// convoAreas.forEach(function(e){ e.innerHTML = '' })
 		  			others.forEach(function(i){i.style.display = 'block'});
-		  			if(vm.responsesNeedCleanup){
 		  				Array.from(document.querySelectorAll('.responses')).forEach(function(i){i.style.display = 'block'})
 		  				vm.responsesNeedCleanup = false;
-		  				vm.toggleResponseView = false;
-		  				vm.convo = null;
-		  			};
-		  			selected[0].classList.remove('focus');	
-		  			expandingNodes.forEach(function (e){e.className = "expandingArea"});
-		  		 	fakeSpans.forEach(function (e){e.textContent = ''});
-		  		 	textAreas.forEach(function (e){e.value = ''});
-		  		};
+						vm.toggleResponseView = false;
+						selected[0].classList.remove('focus');
+						selected[0].classList.remove('noHover');
+				  };
 		  	}
-
 		  	vm.removePost = function(id){
 	  		 CodingPostService.deletePost(id).then(function(){
 	  			$route.reload();

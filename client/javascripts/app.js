@@ -3,7 +3,7 @@
 
 //Jon Papa style
 (function(){
-	console.log("creating angular app. local storage is ", localStorage)
+	console.log("creating angular app")
 	angular
 		.module('collaboApp',['ngRoute','ui.bootstrap','ngMaterial','ngMap','auth0', 'angular-storage', 'angular-jwt'])
 		// ,'ngMap'

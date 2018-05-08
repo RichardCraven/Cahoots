@@ -2,6 +2,15 @@ body{
 	color:black;
 	background-color: none ;
 }
+*{
+	-webkit-user-select: none; /* Chrome/Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+ */
+
+/* Rules below not implemented in browsers yet */
+-o-user-select: none;
+user-select: none;
+}
 .layout-row{
 	outline: 0;
 }
@@ -313,17 +322,23 @@ img{
 	padding:0px;
 	display: block;
 }
+.odd:hover{
+	background-color: #b8d8f3;
+}
+.odd.noHover:hover{
+	background-color: #cce7ff;
+}
 .even{
 	background-color: #d3defd;
 	padding:0px;
 	display:block;
 }
-.odd:hover{
-	background-color: #b8d8f3;
-}
 .even:hover{
 	background-color: #c7d4fa;
 	/* background-color: #cdcde9; */
+}
+.even.noHover:hover{
+	background-color: #d3defd;
 }
 .odd2{
 	background-color: #dddeff;
