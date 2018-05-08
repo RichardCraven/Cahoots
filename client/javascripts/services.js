@@ -234,8 +234,20 @@
 				return $http.delete(BASE_URL + '/' + id)
 			}
 
-			this.updateUser = function(data){
-				return $http.put(BASE_URL + '/' + data.user.id, data) //on server req.body.post
+			// this.updateUser = function(data){
+			// 	console.log('in update user, data is , ', data);
+				
+			// 	return $http.put(BASE_URL + '/' + data.post.third_party_id, data) //on server req.body.post
+			// }
+			this.updateUser = function (data) {
+				if(!data.user.id && data.user.third_party_id){
+					console.log('here we are');
+					return $http.put(BASE_URL + '/third_party_id/' + data.user.third_party_id, data)
+				} else {
+
+					return $http.put(BASE_URL + '/' + data.user.id, data) //on server req.body.post
+				}
+				
 			}
 		};
 		function ConvoRepoService($http){

@@ -35,14 +35,44 @@ router.delete('/:id', (req,res) => {
 	})
 })
 
-router.put('/:id', (req,res) => {
-	req.body.user.zip_code = +req.body.user.zip_code || null ;
+// router.put('/:id', (req,res) => {
+// 	// req.body.user.zip_code = +req.body.user.zip_code || null ;
+// 	console.log('BIMBOBAMBO req.body is ', req.body);
+	
+// 	knex('users')
+// 		.where('third_party_user_id', req.body.post.third_party_id)
+// 		.update(req.body.post)
+// 		.then(function(){
+// 			console.log('oh hey');
+			
+// 		}).catch(function(err){
+// 			res.send(err);
+// 		})
+// })
+
+router.put('/:id', (req, res) => {
+	req.body.user.zip_code = +req.body.user.zip_code || null;
 	knex('users')
 		.where('id', req.params.id)
 		.update(req.body.user)
-		.then(function(){
+		.then(function () {
 			res.send('user Updated!')
-		}).catch(function(err){
+		}).catch(function (err) {
+			res.send(err);
+		})
+})
+
+router.put('/third_party_id/:id', (req, res) => {
+	console.log('ahoy! req.params.id is ', req.params.id);
+	console.log('stizzles. ', req.body.user);
+	
+	
+	knex('users')
+		.where('third_party_user_id', req.params.id)
+		.update({has_mail : req.body.user.has_mail})
+		.then(function () {
+			res.send('user Updated!')
+		}).catch(function (err) {
 			res.send(err);
 		})
 })

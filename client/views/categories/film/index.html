@@ -44,73 +44,101 @@
               <div ng-style="{'width': vm.postWidth, 'height': vm.testHeight}" ng-show='vm.showText' class='postTextArea'>
                 <div class='postChatLeft animated slideInLeft'>
                   <div flex layout-gt-sm="column" data-parentidx='{{$index}}' class='messageContainer'>
-                    <div>
-                      <md-content class='backgroundTransparent post-content-left' ng-click='vm.postTest(post)'>
-                        <div class='post-summary-container'>
-                          <h5>Project Summary</h5>
-                          <h4 class='summary'>{{post.summary}}</h4>
+                    <md-content class='backgroundTransparent post-content-left' ng-click='vm.postTest(post)'>
+                      <div class='post-summary-container'>
+                        <h5>Project Summary</h5>
+                        <h4 class='summary'>{{post.summary}}</h4>
+                      </div>
+                      <div ng-show='vm.showCrickets' class='crickets-container'>
+                        <h4>No responses yet</h4>
+                      </div>
+                      <div class='log-in-to-respond-message-container' ng-show='vm.showLoginToRespond'>
+                        <h5>Log in to respond</h5>
+                      </div>
+                      <div class='message-pitch-container' ng-show='vm.showCommentInput'>
+                        <h5>Does this interest you?</h5>
+                        <h4>Send a collaboration pitch, and if they respond you can have a conversation!</h4>
+                      </div>
+                      <div class='comment-form-container'></div>
+                      <form id='form{{$index}}' ng-show='vm.showCommentInput' name="newMusicProject" ng-submit="vm.addFilmPostComment(post.id,vm.comment)">
+                        <div flex>
+                          <md-input-container class='width70 commentInputContainer'>
+                            <input aria-label='text-input' autocomplete="off" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder=" "
+                              autofocus required style="height: 50px">
+                          </md-input-container>
+                          <div class='submitButtonContainer'>
+                            <label for='submit-form{{$index}}'> Submit</label>
+                          </div>
                         </div>
-                        <div ng-show='vm.showCrickets' class='crickets-container'>
-                          <h4>No responses yet</h4>
+                        <button type="submit" class="btn btn-7 btn-7h hidden" id='submit-form{{$index}}'>
+                          <i class="material-icons md-48">add</i> Comment</button>
+                      </form>
+                      <div class='waitingResponse' ng-show='vm.waitingResponse'>
+                        <h3>
+                          <span> You said: </span> "{{vm.history.comment}}"</h3>
+                        <hr>
+                        <h3 ng-show='vm.waitingResponse'> {{post.display_name}} {{vm.pendingResponseText}}</h3>
+                      </div>
+                      <div ng-show='vm.waitingResponse' class='text-center owlButton '>
+                        <a href="/">
+                          <span>
+                            <img src="images/owl_clipped.png" alt="">
+                          </span>
+                        </a>
+                      </div>
+                      <div class='waitingResponse' ng-show='vm.theyResponded'>
+                        <h3> THEY RESPONDED!</h3>
+                      </div>
+                      <div class='responsesLabel' layout='row' ng-show='vm.showResponses'>
+                        <div ng-show='vm.showResponses'>
+                          RESPONSES
                         </div>
-                        <div class='log-in-to-respond-message-container' ng-show='vm.showLoginToRespond'>
-                          <h5>Log in to respond</h5>
-                        </div>
-                        <div class='message-pitch-container' ng-show='vm.showCommentInput'>
-                          <h5>Does this interest you?</h5>
-                          <h4>Send a collaboration pitch, and if they respond you can have a conversation!</h4>
-                        </div>
-                        <div class='comment-form-container'></div>
-                        <form id='form{{$index}}' ng-show='vm.showCommentInput' name="newMusicProject" ng-submit="vm.addFilmPostComment(post.id,vm.comment)">
-                          <div flex>
-                            <md-input-container class='width70 commentInputContainer'>
-                              <input aria-label='text-input' autocomplete="off" name="description" md-no-asterisk ng-model="vm.comment.comment" placeholder=" "
-                                autofocus required style="height: 50px">
-                            </md-input-container>
-                            <div class='submitButtonContainer'>
-                              <label for='submit-form{{$index}}'> Submit</label>
+                      </div>
+                      <div ng-show='vm.showResponses' ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'"
+                        ng-class-even="'even2 animated bounceInLeft'">
+                        <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='{{response.id}}' class='md-list-item-text responses H100px'>
+                          <div layout='row' ng-click="vm.showResponse($index, response)" class=''>
+                            <div class='userPicContainer'>
+                              <img class='userPic' ng-src="{{response.user_pic}}" alt="">
+                            </div>
+                            <div class='postContentContainer' layout-padding>
+                              <p class='displayName'>{{response.display_name}} says:</p>
+                              <h4 class='descrip'>
+                                <span class='postText'>{{response.comment}}</span>
+                              </h4>
                             </div>
                           </div>
-                          <button type="submit" class="btn btn-7 btn-7h hidden" id='submit-form{{$index}}'>
-                            <i class="material-icons md-48">add</i> Comment</button>
-                        </form>
-                        <div class='waitingResponse' ng-show='vm.waitingResponse'>
-                          <h3>
-                            <span> You said: </span> "{{vm.history.comment}}"</h3>
-                          <h3> {{post.display_name}} has not responded yet. </h3>
                         </div>
-                        <div ng-show='vm.waitingResponse' class='text-center owlButton '>
-                          <a href="/">
-                            <span>
-                              <img src="images/owl_clipped.png" alt="">
-                            </span>
-                          </a>
+                        <div flex ng-show='vm.convoArea === $index' class='conversationArea md-list-item-text' data-userid='{{response.user_id}}'
+                          data-comment='{{response.comment}}'>
+                          <div style='height: 100px;' layout='row'>
+                            <button ng-click='vm.acceptConvo($index)'>ACCEPT </button>
+                            <button ng-click='vm.declineConvo($index)'>DECLINE</button>
+                          </div>
                         </div>
-                        <div class='waitingResponse' ng-show='vm.theyResponded'>
-                          <h3> THEY RESPONDED!</h3>
+                      </div>
+                      <div class='responsesLabel' layout='row' ng-show='vm.showActiveConvos'>
+                        <div ng-show='vm.showActiveConvos'>
+                          ACTIVE CONVERSATIONS
                         </div>
-                        <div ng-show='vm.showResponses' ng-repeat="response in vm.responses" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'"
-                          ng-class-even="'even2 animated bounceInLeft'">
-                          <div flex data-userid='{{response.user_id}}' data-comment='{{response.comment}}' data-responseid='    {{response.id}}' class='md-list-item-text responses H100px'>
-                            <div layout='row' ng-click="vm.showResponse($index, response)" class=''>
-                              <div class='userPicContainer'>
-                                <img class='userPic' ng-src="{{response.user_pic}}" alt="">
-                              </div>
-                              <div class='postContentContainer' layout-padding>
-                                <div class='commentStyle'>
-                                  <p class='displayName'>{{response.display_name}} says:</p>
-                                  <h4 class='descrip'>
-                                    <span class='postText'>{{response.comment}}</span>
-                                  </h4>
-                                </div>
-                              </div>
+                      </div>
+                      <div ng-show='vm.showActiveConvos' ng-repeat="active in vm.activeConvos" class="md-2-line item-text-wrap" ng-class-odd="'odd2 animated bounceInRight'"
+                        ng-class-even="'even2 animated bounceInLeft'">
+                        <div flex class='md-list-item-text responses H100px'>
+                          <div layout='row' ng-click="" class=''>
+                            <div class='userPicContainer'>
+                              <img class='userPic' ng-src="{{active.user_pic}}" alt="">
+                            </div>
+                            <div class='postContentContainer' layout-padding>
+                              <p class='displayName'>{{active.display_name}} says:</p>
+                              <h4 class='descrip'>
+                                <span class='postText'>{{active.comment}}</span>
+                              </h4>
                             </div>
                           </div>
-                          <div flex ng-show='vm.convo == $index' class='conversationArea md-list-item-text' data-index={ {vm.tempIndex}}>
-                          </div>
                         </div>
-                      </md-content>
-                    </div>
+                      </div>
+                    </md-content>
                   </div>
                 </div>
               </div>
