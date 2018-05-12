@@ -170,7 +170,6 @@
 
 	function runFunction($rootScope, auth, store, jwtHelper, $location,UsersService){
 	  var saveUserInfo = function(profile,token) {
-	  	console.log('saveUserInfo run')
 	    store.set('profile', profile);
 	    store.set('token', token);
 	    var newUser = {name : JSON.parse(localStorage.profile).given_name,display_name:JSON.parse(localStorage.profile).given_name,

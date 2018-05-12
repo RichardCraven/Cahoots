@@ -1,4 +1,3 @@
-
 (function() {
 	angular 
 		.module('collaboApp')
@@ -111,42 +110,244 @@
 				};
 				vm.codingPostComments.push(codingMail.data[i])
 			};
-			for(var i = 0; i<codingConvos.data.length; i++){
-				if (codingConvos.data[i].user_id === vm.user_id) { continue }
-				if (facebook.test(codingConvos.data[i].user_id)) {
-					fbUserId = codingConvos.data[i].user_id.match(numberPattern)[0];
-					codingConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+			vm.codingThreads = {};
+			vm.musicThreads = {};
+			vm.filmThreads = {};
+			// posters messages
+			if(codingConvos.data.posters_messages.length){
+				let messages = codingConvos.data.posters_messages;
+				for (var i = 0; i < messages.length; i++) {
+					let thread_id = messages[i].first_comment_id;
+					if (facebook.test(messages[i].user_id)) {
+						fbUserId = messages[i].user_id.match(numberPattern)[0];
+						messages[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					messages[i].category = 'coding';
+					if(!vm.codingThreads[thread_id]){
+						let newThread = {};
+						newThread.latest_message = '';
+						newThread.last_modified = '';
+						newThread.latest_user = '';
+						newThread.history = [];
+						newThread.history.push(messages[i]);
+						vm.codingThreads[thread_id] = newThread
+					} else {
+						vm.codingThreads[thread_id].history.push(messages[i])
+					}
 				};
-				codingConvos.data[i].category = 'coding';
-				vm.codingConvos.push(codingConvos.data[i])
 			};
-			for (var i = 0; i < musicConvos.data.length; i++) {
-				if (musicConvos.data[i].user_id === vm.user_id) { continue }
-				if (facebook.test(musicConvos.data[i].user_id)) {
-					fbUserId = musicConvos.data[i].user_id.match(numberPattern)[0];
-					musicConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+			//commentors messages
+			if(codingConvos.data.commentors_messages.length) {
+				let messages = codingConvos.data.commentors_messages;
+				for (var i = 0; i < messages.length; i++) {
+					let thread_id = messages[i].first_comment_id;
+					if (facebook.test(messages[i].user_id)) {
+						fbUserId = messages[i].user_id.match(numberPattern)[0];
+						messages[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					messages[i].category = 'coding';
+					if (!vm.codingThreads[thread_id]) {
+						let newThread = {};
+						newThread.latest_message = '';
+						newThread.last_modified = '';
+						newThread.latest_user = '';
+						newThread.history = [];
+						newThread.history.push(messages[i]);
+						vm.codingThreads[thread_id] = newThread
+					} else{
+						vm.codingThreads[thread_id].history.push(messages[i])
+					}
 				};
-				musicConvos.data[i].category = 'music';
-				vm.musicConvos.push(musicConvos.data[i])
 			};
-			for (var i = 0; i < filmConvos.data.length; i++) {
-				if(filmConvos.data[i].user_id === vm.user_id){continue}
-				if (facebook.test(filmConvos.data[i].user_id)) {
-					fbUserId = filmConvos.data[i].user_id.match(numberPattern)[0];
-					filmConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+			//push threads to convos
+			for (var c in vm.codingThreads) {
+				vm.codingThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
+				vm.codingThreads[c].latest_message = vm.codingThreads[c].history[0].message;
+				vm.codingThreads[c].last_modified = vm.codingThreads[c].history[vm.codingThreads[c].history.length-1].created_at;
+				vm.codingThreads[c].latest_user = vm.codingThreads[c].history[0].display_name;
+				vm.codingThreads[c].latest_user_pic = vm.codingThreads[c].history[0].user_pic;
+				vm.codingConvos.push(vm.codingThreads[c]);
+			};
+			// posters messages
+			if (musicConvos.data.posters_messages.length) {
+				let messages = musicConvos.data.posters_messages;
+				for (var i = 0; i < messages.length; i++) {
+					let thread_id = messages[i].first_comment_id;
+					if (facebook.test(messages[i].user_id)) {
+						fbUserId = messages[i].user_id.match(numberPattern)[0];
+						messages[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					messages[i].category = 'music';
+					if (!vm.musicThreads[thread_id]) {
+						let newThread = {};
+						newThread.latest_message = '';
+						newThread.last_modified = '';
+						newThread.latest_user = '';
+						newThread.history = [];
+						newThread.history.push(messages[i]);
+						vm.musicThreads[thread_id] = newThread
+					} else {
+						vm.musicThreads[thread_id].history.push(messages[i])
+					}
 				};
-				filmConvos.data[i].category = 'film';
-				vm.filmConvos.push(filmConvos.data[i])
 			};
-			let addToActives = function (arr) {
-				arr.forEach(el => vm.activeConvos.push(el))
+			//commentors messages
+			if (musicConvos.data.commentors_messages.length) {
+				let messages = musicConvos.data.commentors_messages;
+				for (var i = 0; i < messages.length; i++) {
+					let thread_id = messages[i].first_comment_id;
+					if (facebook.test(messages[i].user_id)) {
+						fbUserId = messages[i].user_id.match(numberPattern)[0];
+						messages[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					messages[i].category = 'music';
+					if (!vm.musicThreads[thread_id]) {
+						let newThread = {};
+						newThread.latest_message = '';
+						newThread.last_modified = '';
+						newThread.latest_user = '';
+						newThread.history = [];
+						newThread.history.push(messages[i]);
+						vm.musicThreads[thread_id] = newThread
+					} else {
+						vm.musicThreads[thread_id].history.push(messages[i])
+					}
+				};
+			};
+			//push threads to convos
+			for (var c in vm.musicThreads) {
+				vm.musicThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
+				vm.musicThreads[c].latest_message = vm.musicThreads[c].history[0].message;
+				vm.musicThreads[c].last_modified = vm.musicThreads[c].history[vm.musicThreads[c].history.length-1].created_at;
+				vm.musicThreads[c].latest_user = vm.musicThreads[c].history[0].display_name;
+				vm.musicThreads[c].latest_user_pic = vm.musicThreads[c].history[0].user_pic;
+				vm.musicConvos.push(vm.musicThreads[c]);
+			};
+
+			// posters messages
+			if (filmConvos.data.posters_messages.length) {
+				let messages = filmConvos.data.posters_messages;
+				for (var i = 0; i < messages.length; i++) {
+					let thread_id = messages[i].first_comment_id;
+					if (facebook.test(messages[i].user_id)) {
+						fbUserId = messages[i].user_id.match(numberPattern)[0];
+						messages[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					messages[i].category = 'film';
+					if (!vm.filmThreads[thread_id]) {
+						let newThread = {};
+						newThread.latest_message = '';
+						newThread.last_modified = '';
+						newThread.latest_user = '';
+						newThread.history = [];
+						newThread.history.push(messages[i]);
+						vm.filmThreads[thread_id] = newThread
+					} else {
+						vm.filmThreads[thread_id].history.push(messages[i])
+					}
+				};
+			};
+			//commentors messages
+			if (filmConvos.data.commentors_messages.length) {
+				let messages = filmConvos.data.commentors_messages;
+				for (var i = 0; i < messages.length; i++) {
+					let thread_id = messages[i].first_comment_id;
+					if (facebook.test(messages[i].user_id)) {
+						fbUserId = messages[i].user_id.match(numberPattern)[0];
+						messages[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					};
+					messages[i].category = 'film';
+					if (!vm.filmThreads[thread_id]) {
+						let newThread = {};
+						newThread.latest_message = '';
+						newThread.last_modified = '';
+						newThread.latest_user = '';
+						newThread.history = [];
+						newThread.history.push(messages[i]);
+						vm.filmThreads[thread_id] = newThread
+					} else {
+						vm.filmThreads[thread_id].history.push(messages[i])
+					}
+				};
+			};
+			//push threads to convos
+			for (var c in vm.filmThreads) {
+				vm.filmThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
+				vm.filmThreads[c].latest_message = vm.filmThreads[c].history[0].message;
+				vm.filmThreads[c].last_modified = vm.filmThreads[c].history[vm.filmThreads[c].history.length-1].created_at;
+				vm.filmThreads[c].latest_user = vm.filmThreads[c].history[0].display_name;
+				vm.filmThreads[c].latest_user_pic = vm.filmThreads[c].history[0].user_pic;
+				vm.filmConvos.push(vm.filmThreads[c]);
+			};
+			///////
+			// for (var i = 0; i < musicConvos.data.length; i++) {
+			// 	let thread_id = musicConvos.data[i].first_comment_id;
+			// 	if (facebook.test(musicConvos.data[i].user_id)) {
+			// 		fbUserId = musicConvos.data[i].user_id.match(numberPattern)[0];
+			// 		musicConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+			// 	};
+			// 	musicConvos.data[i].category = 'music';
+			// 	if (!vm.musicThreads[thread_id]) {
+			// 		let newThread = {};
+			// 		newThread.latest_message = '';
+			// 		newThread.last_modified = '';
+			// 		newThread.latest_user = '';
+			// 		newThread.history = [];
+			// 		newThread.history.push(musicConvos.data[i]);
+			// 		vm.musicThreads[thread_id] = newThread
+			// 	} else {
+			// 		vm.musicThreads[thread_id].history.push(musicConvos.data[i])
+			// 	}
+			// };
+			// for (var c in vm.musicThreads) {
+			// 	vm.musicThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
+			// 	vm.musicThreads[c].latest_message = vm.musicThreads[c].history[0].message;
+			// 	vm.musicThreads[c].last_modified = vm.musicThreads[c].history[0].created_at;
+			// 	vm.musicThreads[c].latest_user = vm.musicThreads[c].history[0].display_name;
+			// 	vm.musicThreads[c].latest_user_pic = vm.musicThreads[c].history[0].user_pic;
+			// 	vm.musicConvos.push(vm.musicThreads[c])
+			// }
+
+			
+			// for (var i = 0; i < filmConvos.data.length; i++) {
+			// 	let thread_id = filmConvos.data[i].first_comment_id;
+			// 	if (facebook.test(filmConvos.data[i].user_id)) {
+			// 		fbUserId = filmConvos.data[i].user_id.match(numberPattern)[0];
+			// 		filmConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+			// 	};
+			// 	filmConvos.data[i].category = 'film';
+			// 	if (!vm.filmThreads[thread_id]) {
+			// 		let newThread = {};
+			// 		newThread.latest_message = '';
+			// 		newThread.last_modified = '';
+			// 		newThread.latest_user = '';
+			// 		newThread.history = [];
+			// 		newThread.history.push(filmConvos.data[i]);
+			// 		vm.filmThreads[thread_id] = newThread
+			// 	} else {
+			// 		vm.filmThreads[thread_id].history.push(filmConvos.data[i])
+			// 	}
+			// };
+			// for (var c in vm.filmThreads) {
+			// 	vm.filmThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
+			// 	vm.filmThreads[c].latest_message = vm.filmThreads[c].history[0].message;
+			// 	vm.filmThreads[c].last_modified = vm.filmThreads[c].history[0].created_at;
+			// 	vm.filmThreads[c].latest_user = vm.filmThreads[c].history[0].display_name;
+			// 	vm.filmThreads[c].latest_user_pic = vm.filmThreads[c].history[0].user_pic;
+			// 	vm.filmConvos.push(vm.filmThreads[c])
+			// };
+
+			
+			let addToActives = function (obj) {
+				Object.keys(obj).map(function (key, index) {
+					vm.activeConvos.push(obj[key])
+				});
 			}
 			addToActives(vm.codingConvos);
 			addToActives(vm.musicConvos);
 			addToActives(vm.filmConvos);
-
-			vm.activeConvos.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
-
+			
+			vm.activeConvos.sort((a, b) => Date.parse(b.last_modified) - Date.parse(a.last_modified));
 			vm.logout = function(){
 				store.remove('profile');
 				store.remove('token');
@@ -157,6 +358,15 @@
 			};
 			vm.checkIfPendingEmpty = function (){
 				if (!vm.codingPostComments.length && !vm.musicPostComments.length && !vm.filmPostComments.length){
+					
+					let req = {
+						user: {
+							third_party_id: vm.user_id,
+							has_mail: false
+						}
+					};
+					UsersService.updateUser(req);
+					
 					let activeTab = document.getElementsByClassName('md-tab')[5];
 					$timeout(function () {
 						vm.clickTrigger(activeTab)
@@ -207,7 +417,18 @@
 								}
 							};
 							post.message = post.comment;
-							vm.activeConvos.unshift(post);	
+							post.first_comment_id = post.id;
+							post.coding_post_id = post.post_id;
+
+							let newThread = {};
+							newThread.latest_message = post.comment;
+							newThread.last_modified = res.data[0].created_at;
+							newThread.latest_user = post.display_name;
+							newThread.latest_user_pic = post.user_pic;
+							newThread.history = [];
+							newThread.history.push(post);
+
+							vm.activeConvos.unshift(newThread);	
 							req = {post: {
 								id : post.id,
 								is_accepted : true
@@ -231,6 +452,15 @@
 								}
 							};
 							post.message = post.comment;
+							post.first_comment_id = post.id;
+							post.coding_post_id = post.post_id;
+							let newThread = {};
+							newThread.latest_message = post.comment;
+							newThread.last_modified = res.data[0].created_at;
+							newThread.latest_user = post.display_name;
+							newThread.latest_user_pic = post.user_pic;
+							newThread.history = [];
+							newThread.history.push(post);
 							vm.activeConvos.unshift(post);	
 							req = {
 								post: {
@@ -257,6 +487,16 @@
 								}
 							};
 							post.message = post.comment;
+							post.first_comment_id = post.id;
+							post.coding_post_id = post.post_id;
+
+							let newThread = {};
+							newThread.latest_message = post.comment;
+							newThread.last_modified = res.data[0].created_at;
+							newThread.latest_user = post.display_name;
+							newThread.latest_user_pic = post.user_pic;
+							newThread.history = [];
+							newThread.history.push(post);
 							vm.activeConvos.unshift(post);	
 							req = {
 								post: {
@@ -321,49 +561,32 @@
 				highlightables[idx].style.backgroundColor = 'beige';
 				
 				let chatbox = document.getElementsByClassName('chatboxText')[0];
+				let firstLi = document.createElement('li');
 				chatbox.innerHTML = '';
-				
-				switch(vm.activeConvos[idx].category){
-					case 'film':
-					
-						for (var i = 0; i < filmConvos.data.length; i++) {
-							let current = filmConvos.data[i];
-							if (current.first_comment_id === vm.activeConvos[idx].first_comment_id) {
-								current.display_name === vm.displayName ? name = 'You' : name = current.display_name;
-								let newLi = document.createElement('li'),
-									msg = current.message;
-								newLi.innerHTML = name + ':  &nbsp;' + msg;
-								chatbox.appendChild(newLi);
-							};
-						};
-					break;
-					case 'music':
-						
-						for (var i = 0; i < musicConvos.data.length; i++) {
-							let current = musicConvos.data[i];
-							if (current.first_comment_id === vm.activeConvos[idx].first_comment_id) {
-								current.display_name === vm.displayName ? name = 'You' : name = current.display_name;
-								let newLi = document.createElement('li'),
-									msg = current.message;
-								newLi.innerHTML = name + ':  &nbsp;' + msg;
-								chatbox.appendChild(newLi);
-							};
-						};
-					break;
-					case 'coding':
-						for (var i = 0; i < codingConvos.data.length; i++) {
-							let current = codingConvos.data[i];
-							if (current.first_comment_id === vm.activeConvos[idx].first_comment_id  ){
-								current.display_name === vm.displayName ? name = 'You' : name = current.display_name;
-								let newLi = document.createElement('li'),
-									msg = current.message;
-								newLi.innerHTML = name + ':  &nbsp;' + msg;
-								chatbox.appendChild(newLi);
-							};
-						};
-					break;
-				}
+				firstLi.innerHTML = 'Responding to:  &nbsp;' + vm.activeConvos[idx].history[0].descriptive_title;
+				firstLi.style.backgroundColor = 'beige';
+				firstLi.style.paddingLeft = '15px';
+				firstLi.style.paddingRight = '15px';
+				firstLi.style.textAlign = 'center';
+				chatbox.appendChild(firstLi);
+				for (var i = 0; i < vm.activeConvos[idx].history.length; i++) {
+					let current = vm.activeConvos[idx].history[i],
+						newLi = document.createElement('li'),
+						msg = current.message;
 
+					if (current.display_name === vm.displayName){
+						newLi.innerHTML = 'You:  &nbsp;' + msg;
+						newLi.style.backgroundColor = 'lightBlue';
+						newLi.style.textAlign = 'left';
+					} else {
+						newLi.innerHTML = current.display_name + ':  &nbsp;' + msg;
+						newLi.style.backgroundColor = '#d9ecfb';
+						newLi.style.textAlign = 'right';
+					}
+					newLi.style.paddingLeft = '15px';
+					newLi.style.paddingRight = '15px';
+						chatbox.appendChild(newLi);
+				};
 				vm.selectedConvo = vm.activeConvos[idx];
 			};
 			vm.newMessage = function(msg){
@@ -371,44 +594,88 @@
 				let messageInput = document.getElementById('usermsg');
 				let post = {};
 				let req = {};
+				let otherPersonsId;
 				post.message = msg;
 				post.user_id = vm.user_id;
-				post.first_comment_id = vm.selectedConvo.first_comment_id;
-				switch(vm.selectedConvo.category){
+				post.first_comment_id = vm.selectedConvo.history[0].first_comment_id;
+				for (let i = 0; i < vm.selectedConvo.history.length; i++){
+					if(vm.selectedConvo.history[i].user_id !== vm.user_id){
+						otherPersonsId = vm.selectedConvo.history[i].user_id;
+					}
+				}
+				switch(vm.selectedConvo.history[0].category){
 					case 'film':
-						post.film_post_id = vm.selectedConvo.film_post_id;
+						post.film_post_id = vm.selectedConvo.history[0].film_post_id;
 						req.post = post;
 						FilmPostConversationsService.createMessage(req).then(function(res){
 							let name = vm.displayName;
 							let newLi = document.createElement('li');
-							newLi.innerHTML = name + ':  &nbsp;' + msg;
+							newLi.innerHTML = 'You :  &nbsp;' + msg;
+							newLi.style.paddingLeft = '15px';
+							newLi.style.paddingRight = '15px';
+							newLi.style.backgroundColor = 'lightBlue';
+							newLi.style.textAlign = 'left';
 							chatbox.appendChild(newLi);
 							vm.convoMessage = '';
+							if(otherPersonsId){
+								let userReq = {
+									user: {
+										third_party_id: otherPersonsId,
+										has_mail: true
+									}
+								};
+								UsersService.updateUser(userReq);
+							}
 						})
 					break;
 					case 'music':
-						post.music_post_id = vm.selectedConvo.music_post_id;
+						post.music_post_id = vm.selectedConvo.history[0].music_post_id;
 						req.post = post;
 						MusicPostConversationsService.createMessage(req).then(function (res) {
 							let name = vm.displayName;
 							let newLi = document.createElement('li');
-							newLi.innerHTML = name + ':  &nbsp;' + msg;
+							newLi.innerHTML = 'You :  &nbsp;' + msg;
+							newLi.style.paddingLeft = '15px';
+							newLi.style.paddingRight = '15px';
+							newLi.style.backgroundColor = 'lightBlue';
+							newLi.style.textAlign = 'left';
 							chatbox.appendChild(newLi);
 							vm.convoMessage = '';
+							if (otherPersonsId) {
+								let userReq = {
+									user: {
+										third_party_id: otherPersonsId,
+										has_mail: true
+									}
+								};
+								UsersService.updateUser(userReq);
+							}
 						})
 					break;
 					case 'coding':
-						post.coding_post_id = vm.selectedConvo.coding_post_id;
+						post.coding_post_id = vm.selectedConvo.history[0].coding_post_id;
 						req.post = post;
 						CodingPostConversationsService.createMessage(req).then(function (res) {
 							let name = vm.displayName;
 							let newLi = document.createElement('li');
-							newLi.innerHTML = name + ':  &nbsp;' + msg;
+							newLi.innerHTML = 'You :  &nbsp;' + msg;
+							newLi.style.paddingLeft = '15px';
+							newLi.style.paddingRight = '15px';
+							newLi.style.backgroundColor = 'lightBlue';
+							newLi.style.textAlign = 'left';
 							chatbox.appendChild(newLi);
 							vm.convoMessage = '';
+							if (otherPersonsId) {
+								let userReq = {
+									user: {
+										third_party_id: otherPersonsId,
+										has_mail: true
+									}
+								};
+								UsersService.updateUser(userReq);
+							}
 						})
 					break;
-
 				}
 			};
 			vm.deleteConvo = function(postId, comment, category){
@@ -501,15 +768,20 @@
 			var vm=this,
 				facebook = /^(facebook)/,
 				numberPattern = /\d+/g,
-			    fbUserId, userName;
+				fbUserId, userName;
+			vm.hasMail = false;
 			vm.showLoginButton = false;
 			vm.user_id = JSON.parse(localStorage.profile).user_id;
 			vm.go = function ( path ) {
 			    $location.path( path );
 			};
+			vm.picture = JSON.parse(localStorage.profile).picture
+
+			if (facebook.test(JSON.parse(localStorage.profile).user_id)) {
+				fbUserId = JSON.parse(localStorage.profile).user_id.match(numberPattern)[0];
+				vm.picture = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+			}
 			UsersService.getUser(vm.user_id).then(function(user){
-				console.log('user is ', user);
-				
 				if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
 					vm.welcome = 'Welcome'
 				} else {
@@ -517,28 +789,19 @@
 					vm.welcome = ('Welcome '+user.data.display_name+'!')
 				};
 				if(user.data.has_mail){
-					console.log('HAS MAIL!');
 					vm.hasMail = true;
 				}
-
-			});
-			vm.hasMail = false;
-			if(localStorage.length>0){
-				// vm.hasMail = true
-			};
+				vm.name = user.data.display_name || JSON.parse(localStorage.profile).given_name;
+				vm.picture = user.data.user_pic;
+				if(facebook.test(vm.user_id)){
+					fbUserId = user.data.third_party_user_id.match(numberPattern)[0];
+					vm.picture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large';
+				};
+			}, vm);
 			if(localStorage.length>0){
 				var user = JSON.parse(localStorage.profile)
-				vm.name = user.given_name
-				vm.picture = user.picture
-
-				if(facebook.test(user.user_id)){
-					fbUserId = user.user_id.match(numberPattern)[0];
-					vm.picture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
-				}
 			}
 			vm.goToMail = function(){
-				console.log('in here???');
-				
 				location.href = '/mailbox'
 			}
 
@@ -569,13 +832,13 @@
 			vm.name = JSON.parse(localStorage.profile).given_name;
 
 			if(vm.user.display_name==null||vm.user.display_name==undefined){
-				vm.user.display_name = ''
+				vm.user.display_name = '';
 			};
 			if(vm.user.zip_code==null){
-				vm.user.zip_code = ' '
+				vm.user.zip_code = '';
 			};
 			if(vm.user.bio===null){
-				vm.user.bio = ' '
+				vm.user.bio = '';
 			};
 			if(facebook.test(vm.user_id)){
 				fbUserId = vm.user_id.match(numberPattern)[0];
@@ -716,6 +979,7 @@
 										}
 									},
 									convoReq;
+
 								selectedResponse[idx].style.display = 'none';
 								selectedResponseButtonRow[idx].style.display = 'none';
 								msg.user_id = response.user_id;
@@ -728,32 +992,17 @@
 										third_party_id: response.user_id,
 										has_mail: true
 									}
-								}
-
-								// req = {
-								// 	post: {
-								// 		id: post.id,
-								// 		is_accepted: true
-								// 	}
-								// }
-
+								};
 								convoReq = { post: msg };
 								$timeout(function () {
 									CodingPostCommentsService.updatePost(commentReq);
 									CodingPostConversationsService.createMessage(convoReq);
+									UsersService.updateUser(userReq);
 									for(let i = 0 ; i < codingMail.data.length; i++){
 										if(codingMail.data[i].id === response.id)
 										codingMail.data.splice(i, 1)
 									};
-									// UsersService.getUser(response.user_id).then(function (res) {
-									// 	console.log('aw yeah update user res is ', res);
-
-									// })
-									UsersService.updateUser(userReq).then(function(res){
-										console.log('aw yeah update user res is ', res);
-										
-									})
-								}, 500);
+								}, 300);
 							};
 							vm.declineConvo = function (index) {
 								selectedResponse[idx].style.display = 'none';
@@ -790,8 +1039,6 @@
 						codingHistory && codingHistory.data.forEach(function(v){
 							//If you have already commented on this post, display waiting message
 							if(v.post_id === posts.data[idx].id){
-									console.log('waiting response post is ', v);
-									
 								vm.showCommentInput = false;
 									vm.waitingResponse = true;
 							     	if (v.is_accepted === null){
@@ -893,7 +1140,25 @@
 						vm.toggleResponseView = false;
 						selected[0].classList.remove('focus');
 						selected[0].classList.remove('noHover');
-				  };
+				};
+				vm.addCodingPostComment = function (id, newCodingPostComment) {
+					vm.comment.user_id = JSON.parse(localStorage.profile).user_id
+					vm.comment.post_id = id;
+					vm.comment.category = 'coding';
+					let req = { post: newCodingPostComment };
+					userReq = {
+						user: {
+							third_party_id: posts.data[idx].third_party_user_id,
+							has_mail: true
+						}
+					};
+					UsersService.updateUser(userReq);
+
+					CodingPostCommentsService.createPost(req).then(function (res) {
+						codingHistory.data.push(res.data[0])
+						vm.show(vm.tempIndex)
+					}, vm)
+				};
 		  	}
 		  	vm.removePost = function(id){
 	  		 CodingPostService.deletePost(id).then(function(){
@@ -976,9 +1241,6 @@
 			if (localStorage.length > 0) {
 				vm.loggedIn = true
 			};
-			// vm.myTrackingFunction = function(post){ some code to put the logged-in user's posts at the top  };
-			console.log('posts are ', posts);
-			
 			posts.data.length && posts.data.forEach(function (i) {
 				var facebook = /^(facebook)/,
 					numberPattern = /\d+/g,
@@ -1072,21 +1334,30 @@
 										}
 									},
 									convoReq;
+
 								selectedResponse[idx].style.display = 'none';
 								selectedResponseButtonRow[idx].style.display = 'none';
 								msg.user_id = response.user_id;
 								msg.first_comment_id = response.id;
 								msg.message = response.comment;
-								msg.music_post_id = response.post_id;
+								msg.coding_post_id = response.post_id;
+
+								userReq = {
+									user: {
+										third_party_id: response.user_id,
+										has_mail: true
+									}
+								};
 								convoReq = { post: msg };
 								$timeout(function () {
 									MusicPostCommentsService.updatePost(commentReq);
 									MusicPostConversationsService.createMessage(convoReq);
-									for (let i = 0; i < musicMail.data.length; i++) {
-										if (musicMail.data[i].id === response.id)
-											musicMail.data.splice(i, 1)
+									UsersService.updateUser(userReq);
+									for (let i = 0; i < codingMail.data.length; i++) {
+										if (codingMail.data[i].id === response.id)
+											codingMail.data.splice(i, 1)
 									};
-								}, 500);
+								}, 300);
 							};
 							vm.declineConvo = function (index) {
 								selectedResponse[idx].style.display = 'none';
@@ -1123,8 +1394,6 @@
 						musicHistory && musicHistory.data.forEach(function (v) {
 							//If you have already commented on this post, display waiting message
 							if (v.post_id === posts.data[idx].id) {
-								console.log('waiting response post is ', v);
-
 								vm.showCommentInput = false;
 								vm.waitingResponse = true;
 								if (v.is_accepted === null) {
@@ -1227,6 +1496,24 @@
 					selected[0].classList.remove('focus');
 					selected[0].classList.remove('noHover');
 				};
+				vm.addMusicPostComment = function (id, newMusicPostComment) {
+					vm.comment.user_id = JSON.parse(localStorage.profile).user_id
+					vm.comment.post_id = id;
+					vm.comment.category = 'music';
+					let req = { post: newMusicPostComment };
+					userReq = {
+						user: {
+							third_party_id: posts.data[idx].third_party_user_id,
+							has_mail: true
+						}
+					};
+					UsersService.updateUser(userReq);
+
+					MusicPostCommentsService.createPost(req).then(function (res) {
+						musicHistory.data.push(res.data[0])
+						vm.show(vm.tempIndex)
+					}, vm)
+				};
 			}
 			vm.removePost = function (id) {
 				MusicPostService.deletePost(id).then(function () {
@@ -1241,17 +1528,6 @@
 			var map;
 			vm.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";
 			x = NgMap.getMap('map');
-			vm.comment = {};
-			vm.addMusicPostComment = function (id, newMusicPostComment) {
-				vm.comment.user_id = JSON.parse(localStorage.profile).user_id
-				vm.comment.post_id = id;
-				vm.comment.category = 'music';
-				var req = { post: newMusicPostComment };
-				MusicPostCommentsService.createPost(req).then(function (res) {
-					musicHistory.data.push(res.data[0])
-					vm.show(vm.tempIndex)
-				}, vm)
-			};
 		};
 		function NewMusicPostController(MusicPostService,UsersService,$location,store){
 			var vm = this;
@@ -1428,15 +1704,22 @@
 							msg.first_comment_id = response.id;
 							msg.message = response.comment;
 							msg.film_post_id = response.post_id;
+							userReq = {
+								user: {
+									third_party_id: response.user_id,
+									has_mail: true
+								}
+							};
 							convoReq = { post: msg };
 							$timeout(function () {
 								FilmPostCommentsService.updatePost(commentReq);
 								FilmPostConversationsService.createMessage(convoReq);
+								UsersService.updateUser(userReq);
 								for (let i = 0; i < filmMail.data.length; i++) {
 									if (filmMail.data[i].id === response.id)
 										filmMail.data.splice(i, 1)
 								};
-							}, 500);
+							}, 300);
 						};
 						vm.declineConvo = function (index) {
 							selectedResponse[idx].style.display = 'none';
@@ -1473,8 +1756,6 @@
 					filmHistory && filmHistory.data.forEach(function (v) {
 						//If you have already commented on this post, display waiting message
 						if (v.post_id === posts.data[idx].id) {
-							console.log('waiting response post is ', v);
-
 							vm.showCommentInput = false;
 							vm.waitingResponse = true;
 							if (v.is_accepted === null) {
@@ -1577,6 +1858,25 @@
 				selected[0].classList.remove('focus');
 				selected[0].classList.remove('noHover');
 			};
+			vm.addFilmPostComment = function (id, newFilmPostComment) {
+				vm.comment.user_id = JSON.parse(localStorage.profile).user_id
+				vm.comment.post_id = id;
+				vm.comment.category = 'film';
+				var req = { post: newFilmPostComment };
+
+				userReq = {
+					user: {
+						third_party_id: posts.data[idx].third_party_user_id,
+						has_mail: true
+					}
+				};
+				UsersService.updateUser(userReq);
+
+				FilmPostCommentsService.createPost(req).then(function (res) {
+					filmHistory.data.push(res.data[0])
+					vm.show(vm.tempIndex)
+				}, vm)
+			};
 		}
 
 		vm.removePost = function (id) {
@@ -1592,17 +1892,6 @@
 		var map;
 		vm.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";
 		x = NgMap.getMap('map');
-		vm.comment = {};
-		vm.addFilmPostComment = function (id, newFilmPostComment) {
-			vm.comment.user_id = JSON.parse(localStorage.profile).user_id
-			vm.comment.post_id = id;
-			vm.comment.category = 'film';
-			var req = { post: newFilmPostComment };
-			FilmPostCommentsService.createPost(req).then(function (res) {
-				filmHistory.data.push(res.data[0])
-				vm.show(vm.tempIndex)
-			}, vm)
-		};
 	};
 
 		function NewFilmPostController(FilmPostService,UsersService,$location, store){

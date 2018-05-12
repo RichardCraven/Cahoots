@@ -5,7 +5,7 @@
         <div class="container" >
           <img ng-src="{{vm.navpicture}}">
           <div class='name-container'>
-              <div> {{vm.name}}</div>
+              <div> {{vm.displayName}}</div>
               <a class="navbar-brand " ng-click="vm.logout()" href="javascript:;">Logout</a>
           </div>
         </div>
@@ -97,16 +97,16 @@
                         </md-tab>
                         <md-tab id='active-convo-tab' label="Active">
                           <md-content>
-                            <md-list-item ng-show='vm.activeConvos.length' ng-repeat="convo in vm.activeConvos" class="" md-ink-ripple="#FF0000"
+                            <md-list-item ng-show='vm.activeConvos.length' ng-repeat="convo in vm.activeConvos track by convo.last_modified" class="" md-ink-ripple="#FF0000"
                             ng-class-odd="" ng-class-even="" >
                             <div class="md-list-item-text">
                               <div layout='row' ng-click='vm.activateConvo($index, convo,$event)'>
                                 <div ng-style="{'width' : vm.littleLength}">
-                                  <img class='userPic' ng-src="{{convo.user_pic}}" alt="">
+                                  <img class='userPic' ng-src="{{convo.latest_user_pic}}" alt="">
                                 </div>
                                 <div ng-style="{'width' : vm.longestLength}" class='highlightable' layout-padding>
-                                  <p>Responding to: {{convo.descriptive_title}} </p>
-                                  <p>{{convo.display_name}} says: {{convo.message}}</p>
+                                  <!-- <p>Responding to: {{convo.descriptive_title}} </p> -->
+                                  <p>{{convo.latest_user}} says: {{convo.latest_message}}</p>
                                 </div>
                               </div>
                             </div>

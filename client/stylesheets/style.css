@@ -10,6 +10,7 @@ body{
 /* Rules below not implemented in browsers yet */
 -o-user-select: none;
 user-select: none;
+outline: none;
 }
 .layout-row{
 	outline: 0;

@@ -61,12 +61,7 @@ router.put('/:id', (req, res) => {
 			res.send(err);
 		})
 })
-
 router.put('/third_party_id/:id', (req, res) => {
-	console.log('ahoy! req.params.id is ', req.params.id);
-	console.log('stizzles. ', req.body.user);
-	
-	
 	knex('users')
 		.where('third_party_user_id', req.params.id)
 		.update({has_mail : req.body.user.has_mail})
