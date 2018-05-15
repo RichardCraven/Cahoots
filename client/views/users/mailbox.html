@@ -178,19 +178,50 @@
             </div>
             <div layout="column" class='mailboxRightCol' class='mailbox-message-pane'>
               <md-content>
-                <div ng-show='true' id="wrapper">
-                  <div class="chatbox">
-                    <ul class="chatboxText"></ul>
-                  </div>
-                  <form name="message" ng-submit="vm.newMessage(vm.convoMessage)">
-                    <input name="usermsg" type="text" id="usermsg" class='pickles' ng-model="vm.convoMessage" size="63" />
-                    <input name="submitmsg" type="submit" id="submitmsg" value="Send" />
-                  </form>
+                <div ng-show='vm.showChatPane' id="chat-wrapper">
+                    <div layout='row' class='chatbox-button-row'>
+                      <div class='chatbox-button'>
+                        <label for='submit-form'>Add User to Project</label>
+                      </div>
+                      <div class='chatbox-button' ng-click="vm.chatbox_toggle()">
+                        <label> {{vm.chatbox_profile_toggle_label}}</label>
+                      </div>
+                    </div>
+                    <div class="chatbox">
+                      <ul class="chatboxText"></ul>
+                    </div>
+                    <form name="message" ng-submit="vm.newMessage(vm.convoMessage)">
+                      <input name="usermsg" type="text" id="usermsg" class='pickles' ng-model="vm.convoMessage" size="63" />
+                      <input name="submitmsg" type="submit" id="submitmsg" value="Send" />
+                    </form>
                 </div>
-                
+                <div ng-show='vm.showProfilePane' id="profile-pane-wrapper">
+                  <div layout='row' class='chatbox-button-row'>
+                    <div class='chatbox-button'>
+                      <label for='submit-form'>Add User to Project</label>
+                    </div>
+                    <div class='chatbox-button' ng-click="vm.chatbox_toggle()">
+                      <label> {{vm.chatbox_profile_toggle_label}}</label>
+                    </div>
+                  </div>
+                  <div class="user-profile-pane">
+                    <div class="user-profile-top-row">
+                      <div layout='row'>
+                        <div class='userPicContainer'>
+                          <img class='userPic' ng-src="{{vm.user_profile.pic}}" alt="">
+                        </div>
+                        <div class='postContentContainer' layout-padding>
+                          <h4>{{vm.user_profile.display_name}}</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="user-profile-main">
+                        <p>{{vm.user_profile.bio}}</p>
+                    </div>
+                  </div>
+                </div>
               </md-content>
             </div>
-
             </div>
           </div>
         <hr>

@@ -862,15 +862,7 @@ input.newPostTopicArea{
 /*************************************/
 /*CHATBOX*/
 
-#wrapper{
-    margin:0 auto;
-	padding-bottom:25px;
-	padding-top: 50px;
-    background:#EBF4FB;
-    border:1px solid #ACD8F0; 
-}
-
-#wrapper > form{
+#chat-wrapper > form{
 	margin: 0 auto;
 	width: 80%;
 }
@@ -879,7 +871,7 @@ input.newPostTopicArea{
     text-align:left;
     margin:0 auto;
     margin-bottom:25px;
-    padding:10px;
+    /* padding:10px; */
     background:#fff;
     height:50vh;
     width:80%;

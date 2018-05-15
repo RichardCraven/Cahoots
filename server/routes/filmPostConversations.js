@@ -3,12 +3,12 @@ const router = express.Router();
 const knex = require('../db/knex')
 
 router.get('/:id', function (req, res) {
-	knex.select(['fpc.created_at', 'fpc.message', 'fpc.user_id', 'u.display_name', 'fpc.first_comment_id', 'fpc.film_post_id', 'original_post.descriptive_title', 'original_post.summary', 'u.user_pic']).from('film_post_conversations as fpc')
+	knex.select(['fpc.created_at', 'fpc.message', 'fpc.user_id', 'u.display_name', 'u.bio','fpc.first_comment_id', 'fpc.film_post_id', 'original_post.descriptive_title', 'original_post.summary', 'u.user_pic']).from('film_post_conversations as fpc')
 		.join('film_posts as original_post', 'original_post.id', '=', 'fpc.film_post_id')
 		.join('users as u', 'u.third_party_user_id', '=', 'fpc.user_id')
 		.where('original_post.user_id', req.params.id)
 		.then(function (posters_messages) {
-			knex.select(['fpc.created_at', 'fpc.message', 'fpc.user_id', 'u.display_name', 'fpc.first_comment_id', 'fpc.film_post_id', 'original_post.descriptive_title', 'original_post.summary', 'u.user_pic']).from('film_post_conversations as fpc')
+			knex.select(['fpc.created_at', 'fpc.message', 'fpc.user_id', 'u.display_name', 'u.bio','fpc.first_comment_id', 'fpc.film_post_id', 'original_post.descriptive_title', 'original_post.summary', 'u.user_pic']).from('film_post_conversations as fpc')
 				.join('film_posts as original_post', 'original_post.id', '=', 'fpc.film_post_id')
 				.join('film_post_comments as fpcom', 'fpcom.id', '=', 'fpc.first_comment_id')
 				.join('users as u', 'u.third_party_user_id', '=', 'fpc.user_id')

@@ -72,6 +72,11 @@
 			vm.longLength = '65%';
 			vm.longestLength = '100%';
 			vm.isVisible = false;
+			vm.showChatPane = false;
+			vm.chatbox_toggle_boolean = true;
+			vm.user_profile = {};
+			vm.convoWithUser = null;
+			vm.chatbox_profile_toggle_label = 'Show User Profile';
 			vm.showButtons = function(post){
 				vm.isVisible = post.id;
 			};
@@ -82,6 +87,27 @@
 				myDisplayName = res.data.display_name;
 				vm.displayName = res.data.display_name;
 			});
+			vm.chatbox_toggle = function () {
+				vm.chatbox_toggle_boolean = !vm.chatbox_toggle_boolean
+				if (vm.chatbox_toggle_boolean) {
+					vm.chatbox_profile_toggle_label = 'Show User Profile';
+					vm.showChatPane = true;
+					vm.showProfilePane = false;
+				} else {
+					vm.showChatPane = false;
+					vm.showProfilePane = true;
+					vm.chatbox_profile_toggle_label = 'Show Chatbox';
+					let profilePane = document.getElementsByClassName('user-profile-pane')[0]
+					console.log(profilePane);
+					vm.user_profile.display_name = vm.convoWithUser.user_name;
+					vm.user_profile.pic = vm.convoWithUser.user_pic;
+					if (vm.convoWithUser.user_bio == null || !vm.convoWithUser.user_bio.length){
+						vm.user_profile.bio = 'This user has not filled out a bio'
+					} else {
+						vm.user_profile.bio = vm.convoWithUser.user_bio;
+					}
+				}
+			}
 			if(facebook.test(vm.user_id)){
 				fbUserId = vm.user_id.match(numberPattern)[0];
 				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
@@ -128,12 +154,19 @@
 						newThread.latest_message = '';
 						newThread.last_modified = '';
 						newThread.latest_user = '';
+						newThread.conversation_with = {};
 						newThread.history = [];
 						newThread.history.push(messages[i]);
 						vm.codingThreads[thread_id] = newThread
 					} else {
 						vm.codingThreads[thread_id].history.push(messages[i])
-					}
+					};
+					if (messages[i].user_id !== vm.user_id) {
+						vm.codingThreads[thread_id].conversation_with.id = messages[i].user_id;
+						vm.codingThreads[thread_id].conversation_with.user_pic = messages[i].user_pic;
+						vm.codingThreads[thread_id].conversation_with.user_bio = messages[i].bio;
+						vm.codingThreads[thread_id].conversation_with.user_name = messages[i].display_name;
+					};
 				};
 			};
 			//commentors messages
@@ -151,12 +184,19 @@
 						newThread.latest_message = '';
 						newThread.last_modified = '';
 						newThread.latest_user = '';
+						newThread.conversation_with = {};
 						newThread.history = [];
 						newThread.history.push(messages[i]);
 						vm.codingThreads[thread_id] = newThread
 					} else{
 						vm.codingThreads[thread_id].history.push(messages[i])
-					}
+					};
+					if (messages[i].user_id !== vm.user_id) {
+						vm.codingThreads[thread_id].conversation_with.id = messages[i].user_id;
+						vm.codingThreads[thread_id].conversation_with.user_pic = messages[i].user_pic;
+						vm.codingThreads[thread_id].conversation_with.user_bio = messages[i].bio;
+						vm.codingThreads[thread_id].conversation_with.user_name = messages[i].display_name;
+					};
 				};
 			};
 			//push threads to convos
@@ -171,6 +211,7 @@
 			// posters messages
 			if (musicConvos.data.posters_messages.length) {
 				let messages = musicConvos.data.posters_messages;
+				console.log(messages);
 				for (var i = 0; i < messages.length; i++) {
 					let thread_id = messages[i].first_comment_id;
 					if (facebook.test(messages[i].user_id)) {
@@ -183,17 +224,26 @@
 						newThread.latest_message = '';
 						newThread.last_modified = '';
 						newThread.latest_user = '';
+						newThread.conversation_with = {};
 						newThread.history = [];
 						newThread.history.push(messages[i]);
 						vm.musicThreads[thread_id] = newThread
 					} else {
 						vm.musicThreads[thread_id].history.push(messages[i])
-					}
+					};
+					if (messages[i].user_id !== vm.user_id) {
+						vm.musicThreads[thread_id].conversation_with.id = messages[i].user_id;
+						vm.musicThreads[thread_id].conversation_with.user_pic = messages[i].user_pic;
+						vm.musicThreads[thread_id].conversation_with.user_bio = messages[i].bio;
+						vm.musicThreads[thread_id].conversation_with.user_name = messages[i].display_name;
+					};
 				};
 			};
 			//commentors messages
 			if (musicConvos.data.commentors_messages.length) {
 				let messages = musicConvos.data.commentors_messages;
+				console.log(messages);
+				
 				for (var i = 0; i < messages.length; i++) {
 					let thread_id = messages[i].first_comment_id;
 					if (facebook.test(messages[i].user_id)) {
@@ -206,12 +256,19 @@
 						newThread.latest_message = '';
 						newThread.last_modified = '';
 						newThread.latest_user = '';
+						newThread.conversation_with = {};
 						newThread.history = [];
 						newThread.history.push(messages[i]);
 						vm.musicThreads[thread_id] = newThread
 					} else {
 						vm.musicThreads[thread_id].history.push(messages[i])
-					}
+					};
+					if (messages[i].user_id !== vm.user_id) {
+						vm.musicThreads[thread_id].conversation_with.id = messages[i].user_id;
+						vm.musicThreads[thread_id].conversation_with.user_pic = messages[i].user_pic;
+						vm.musicThreads[thread_id].conversation_with.user_bio = messages[i].bio;
+						vm.musicThreads[thread_id].conversation_with.user_name = messages[i].display_name;
+					};
 				};
 			};
 			//push threads to convos
@@ -239,12 +296,19 @@
 						newThread.latest_message = '';
 						newThread.last_modified = '';
 						newThread.latest_user = '';
+						newThread.conversation_with = {};
 						newThread.history = [];
 						newThread.history.push(messages[i]);
 						vm.filmThreads[thread_id] = newThread
 					} else {
 						vm.filmThreads[thread_id].history.push(messages[i])
-					}
+					};
+					if (messages[i].user_id !== vm.user_id) {
+						vm.filmThreads[thread_id].conversation_with.id = messages[i].user_id;
+						vm.filmThreads[thread_id].conversation_with.user_pic = messages[i].user_pic;
+						vm.filmThreads[thread_id].conversation_with.user_bio = messages[i].bio;
+						vm.filmThreads[thread_id].conversation_with.user_name = messages[i].display_name;
+					};
 				};
 			};
 			//commentors messages
@@ -252,25 +316,34 @@
 				let messages = filmConvos.data.commentors_messages;
 				for (var i = 0; i < messages.length; i++) {
 					let thread_id = messages[i].first_comment_id;
-					if (facebook.test(messages[i].user_id)) {
+					if(facebook.test(messages[i].user_id)) {
 						fbUserId = messages[i].user_id.match(numberPattern)[0];
 						messages[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
 					};
+					if (messages[i].user_id !== vm.user_id){
+						
+					}
 					messages[i].category = 'film';
 					if (!vm.filmThreads[thread_id]) {
 						let newThread = {};
 						newThread.latest_message = '';
 						newThread.last_modified = '';
 						newThread.latest_user = '';
+						newThread.conversation_with = {};
 						newThread.history = [];
 						newThread.history.push(messages[i]);
 						vm.filmThreads[thread_id] = newThread
 					} else {
 						vm.filmThreads[thread_id].history.push(messages[i])
 					}
+					if (messages[i].user_id !== vm.user_id) {
+						vm.filmThreads[thread_id].conversation_with.id = messages[i].user_id;
+						vm.filmThreads[thread_id].conversation_with.user_pic = messages[i].user_pic;
+						vm.filmThreads[thread_id].conversation_with.user_bio = messages[i].bio;
+						vm.filmThreads[thread_id].conversation_with.user_name = messages[i].display_name;
+					}
 				};
 			};
-			//push threads to convos
 			for (var c in vm.filmThreads) {
 				vm.filmThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
 				vm.filmThreads[c].latest_message = vm.filmThreads[c].history[0].message;
@@ -279,65 +352,6 @@
 				vm.filmThreads[c].latest_user_pic = vm.filmThreads[c].history[0].user_pic;
 				vm.filmConvos.push(vm.filmThreads[c]);
 			};
-			///////
-			// for (var i = 0; i < musicConvos.data.length; i++) {
-			// 	let thread_id = musicConvos.data[i].first_comment_id;
-			// 	if (facebook.test(musicConvos.data[i].user_id)) {
-			// 		fbUserId = musicConvos.data[i].user_id.match(numberPattern)[0];
-			// 		musicConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
-			// 	};
-			// 	musicConvos.data[i].category = 'music';
-			// 	if (!vm.musicThreads[thread_id]) {
-			// 		let newThread = {};
-			// 		newThread.latest_message = '';
-			// 		newThread.last_modified = '';
-			// 		newThread.latest_user = '';
-			// 		newThread.history = [];
-			// 		newThread.history.push(musicConvos.data[i]);
-			// 		vm.musicThreads[thread_id] = newThread
-			// 	} else {
-			// 		vm.musicThreads[thread_id].history.push(musicConvos.data[i])
-			// 	}
-			// };
-			// for (var c in vm.musicThreads) {
-			// 	vm.musicThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
-			// 	vm.musicThreads[c].latest_message = vm.musicThreads[c].history[0].message;
-			// 	vm.musicThreads[c].last_modified = vm.musicThreads[c].history[0].created_at;
-			// 	vm.musicThreads[c].latest_user = vm.musicThreads[c].history[0].display_name;
-			// 	vm.musicThreads[c].latest_user_pic = vm.musicThreads[c].history[0].user_pic;
-			// 	vm.musicConvos.push(vm.musicThreads[c])
-			// }
-
-			
-			// for (var i = 0; i < filmConvos.data.length; i++) {
-			// 	let thread_id = filmConvos.data[i].first_comment_id;
-			// 	if (facebook.test(filmConvos.data[i].user_id)) {
-			// 		fbUserId = filmConvos.data[i].user_id.match(numberPattern)[0];
-			// 		filmConvos.data[i].user_pic = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
-			// 	};
-			// 	filmConvos.data[i].category = 'film';
-			// 	if (!vm.filmThreads[thread_id]) {
-			// 		let newThread = {};
-			// 		newThread.latest_message = '';
-			// 		newThread.last_modified = '';
-			// 		newThread.latest_user = '';
-			// 		newThread.history = [];
-			// 		newThread.history.push(filmConvos.data[i]);
-			// 		vm.filmThreads[thread_id] = newThread
-			// 	} else {
-			// 		vm.filmThreads[thread_id].history.push(filmConvos.data[i])
-			// 	}
-			// };
-			// for (var c in vm.filmThreads) {
-			// 	vm.filmThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
-			// 	vm.filmThreads[c].latest_message = vm.filmThreads[c].history[0].message;
-			// 	vm.filmThreads[c].last_modified = vm.filmThreads[c].history[0].created_at;
-			// 	vm.filmThreads[c].latest_user = vm.filmThreads[c].history[0].display_name;
-			// 	vm.filmThreads[c].latest_user_pic = vm.filmThreads[c].history[0].user_pic;
-			// 	vm.filmConvos.push(vm.filmThreads[c])
-			// };
-
-			
 			let addToActives = function (obj) {
 				Object.keys(obj).map(function (key, index) {
 					vm.activeConvos.push(obj[key])
@@ -554,7 +568,11 @@
 				};
 			};
 			let highlightables = document.getElementsByClassName('highlightable');
+			
 			vm.activateConvo = function(idx, convoPost, $event){
+				vm.showChatPane = true;
+				vm.convoWithUser = convoPost.conversation_with;
+				vm.chatbox_profile_toggle_label = 'Show User Profile';
 				for(let i = 0; i < highlightables.length; i++){
 					highlightables[i].style.backgroundColor = 'white';
 				};

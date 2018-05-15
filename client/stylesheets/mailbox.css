@@ -121,14 +121,80 @@ div md-content.ng-scope{
 	height: 100%;
 	background: white;
 }
+#chat-wrapper, #profile-pane-wrapper{
+    margin:0 auto;
+	padding-bottom:25px;
+	padding-top: 25px;
+    background:#EBF4FB;
+    border:1px solid #ACD8F0; 
+}
+#chat-wrapper > form{
+	margin: 0 auto;
+	width: 80%;
+}
+.profile-pane-wrapper{
+    border: none; 
+}
+.chatbox {
+    text-align:left;
+    margin:0 auto;
+    margin-bottom:25px;
+    background:#fff;
+    height:50vh;
+    width:80%;
+	border:1px solid #ACD8F0;
+	border-radius: 5px;
+	overflow:auto; 
+}
+.user-profile-pane {
+    text-align:left;
+    margin:0 auto;
+    margin-bottom:25px;
+    background:#fff;
+    height:55vh;
+    width:80%;
+	border:1px solid #ACD8F0;
+	border-radius: 5px;
+	overflow:auto; 
+}
+.user-profile-main{
+	padding: 15px 15px 0px 15px;
+}
+.user-profile-top-row{
+	border-bottom: 1px solid #ACD8F0
+}
 .mailboxRightCol md-content, #wrapper{
 	height: 100%;
+	background-color: #EBF4FB;
+	border:1px solid #ACD8F0; 
 }
 .mailbox-main-content-row{
 	height: 68vh;
 }
 .highlightable p{
 	margin:	0;
+}
+.chatbox-button-row{
+	width: 80%;
+    height: 48px;
+    margin: 0 auto;
+}
+.chatbox-button-row button{
+	/* margin: 0 auto; */
+}
+.chatbox-button{
+	/* margin: 0 auto; */
+	margin: 5px;
+    width: 165px;
+    height: 35px;
+    color: black;
+    border: 1px solid black;
+	text-align: center;
+	line-height: 33px;
+}
+.chatbox-button:hover, .chatbox-button label:hover{
+	cursor: pointer;
+	background-color: lightGreen;
 }
  /* md-tabs{
 	 height: 100%;
