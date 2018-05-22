@@ -425,6 +425,8 @@
 					console.log("*** Target node not found!");
 			}
 			vm.acceptConversation = function(post){
+				console.log('post is ', post);
+				
 				let msg = {};
 				msg.user_id = post.user_id;
 				msg.first_comment_id = post.id;
@@ -495,7 +497,7 @@
 							};
 							post.message = post.comment;
 							post.first_comment_id = post.id;
-							post.coding_post_id = post.post_id;
+							post.music_post_id = post.post_id;
 							let newThread = {};
 							newThread.latest_message = post.comment;
 							newThread.last_modified = res.data[0].created_at;
@@ -536,7 +538,7 @@
 							};
 							post.message = post.comment;
 							post.first_comment_id = post.id;
-							post.coding_post_id = post.post_id;
+							post.film_post_id = post.post_id;
 
 							let newThread = {};
 							newThread.latest_message = post.comment;
@@ -904,15 +906,17 @@
 			vm.user_id = JSON.parse(localStorage.profile).user_id;
 			vm.navpicture = JSON.parse(localStorage.profile).picture;
 			vm.name = JSON.parse(localStorage.profile).given_name;
-
+			// vm.user.zip_code = ' ';
+			console.log(vm.user);
+			
 			if(vm.user.display_name==null||vm.user.display_name==undefined){
-				vm.user.display_name = '';
+				vm.user.display_name = ' ';
 			};
 			if(vm.user.zip_code==null){
-				vm.user.zip_code = '';
+				vm.user.zip_code = ' ';
 			};
 			if(vm.user.bio===null){
-				vm.user.bio = '';
+				vm.user.bio = ' ';
 			};
 			if(facebook.test(vm.user_id)){
 				fbUserId = vm.user_id.match(numberPattern)[0];
