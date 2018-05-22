@@ -171,8 +171,16 @@ div md-content.ng-scope{
 .mailbox-main-content-row{
 	height: 68vh;
 }
+.crimson{
+	color: rgb(100, 13, 30);
+}
 .highlightable p{
 	margin:	0;
+}
+.highlightable hr{
+	padding: 0; 
+	margin: 0;
+	border-top: 1px dotted #e7e6e6;
 }
 .chatbox-button-row{
 	width: 80%;

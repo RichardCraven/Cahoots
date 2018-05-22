@@ -229,7 +229,6 @@
 			this.getUser = function(id){
 				return $http.get(BASE_URL + '/' + id)
 			}
-
 			this.deleteUser = function(id){
 				return $http.delete(BASE_URL + '/' + id)
 			}

@@ -77,15 +77,31 @@
 			vm.user_profile = {};
 			vm.convoWithUser = null;
 			vm.chatbox_profile_toggle_label = 'Show User Profile';
+			vm.codingThreads = {};
+			vm.musicThreads = {};
+			vm.filmThreads = {};
 			vm.showButtons = function(post){
 				vm.isVisible = post.id;
 			};
+			
 			vm.hideButtons = function(post){vm.isVisible = false}
 			var myDisplayName, post_id, fbUserId, facebook = /^(facebook)/,
 			numberPattern = /\d+/g;
+			if(facebook.test(vm.user_id)){
+				fbUserId = vm.user_id.match(numberPattern)[0];
+				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
+			};
 			UsersService.getUser(vm.user_id).then(function(res){
 				myDisplayName = res.data.display_name;
 				vm.displayName = res.data.display_name;
+				console.log('in here? display name is ', vm.displayName, res.data.display_name);
+				
+
+
+
+
+
+
 			});
 			vm.chatbox_toggle = function () {
 				vm.chatbox_toggle_boolean = !vm.chatbox_toggle_boolean
@@ -98,7 +114,7 @@
 					vm.showProfilePane = true;
 					vm.chatbox_profile_toggle_label = 'Show Chatbox';
 					let profilePane = document.getElementsByClassName('user-profile-pane')[0]
-					console.log(profilePane);
+					console.log('in profile pane', vm.convoWithUser);
 					vm.user_profile.display_name = vm.convoWithUser.user_name;
 					vm.user_profile.pic = vm.convoWithUser.user_pic;
 					if (vm.convoWithUser.user_bio == null || !vm.convoWithUser.user_bio.length){
@@ -108,10 +124,6 @@
 					}
 				}
 			}
-			if(facebook.test(vm.user_id)){
-				fbUserId = vm.user_id.match(numberPattern)[0];
-				vm.navpicture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large'
-			};
 			for(var i = 0; i<filmMail.data.length; i++){
 				if (filmMail.data[i].is_accepted !== null) continue
 				if (facebook.test(filmMail.data[i].user_id)) {
@@ -136,9 +148,7 @@
 				};
 				vm.codingPostComments.push(codingMail.data[i])
 			};
-			vm.codingThreads = {};
-			vm.musicThreads = {};
-			vm.filmThreads = {};
+			
 			// posters messages
 			if(codingConvos.data.posters_messages.length){
 				let messages = codingConvos.data.posters_messages;
@@ -202,16 +212,20 @@
 			//push threads to convos
 			for (var c in vm.codingThreads) {
 				vm.codingThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
-				vm.codingThreads[c].latest_message = vm.codingThreads[c].history[0].message;
-				vm.codingThreads[c].last_modified = vm.codingThreads[c].history[vm.codingThreads[c].history.length-1].created_at;
-				vm.codingThreads[c].latest_user = vm.codingThreads[c].history[0].display_name;
-				vm.codingThreads[c].latest_user_pic = vm.codingThreads[c].history[0].user_pic;
+				let latestMessage = vm.codingThreads[c].history[vm.codingThreads[c].history.length - 1];
+				vm.codingThreads[c].latest_message = latestMessage.message;
+				vm.codingThreads[c].last_modified = latestMessage.created_at;
+				if (latestMessage.user_id === JSON.parse(localStorage.profile).user_id) {
+					vm.codingThreads[c].latest_user = 'You';
+				} else {
+					vm.codingThreads[c].latest_user = 'They';
+				};
+				vm.codingThreads[c].latest_user_pic = vm.codingThreads[c].conversation_with.user_pic;
 				vm.codingConvos.push(vm.codingThreads[c]);
 			};
 			// posters messages
 			if (musicConvos.data.posters_messages.length) {
 				let messages = musicConvos.data.posters_messages;
-				console.log(messages);
 				for (var i = 0; i < messages.length; i++) {
 					let thread_id = messages[i].first_comment_id;
 					if (facebook.test(messages[i].user_id)) {
@@ -274,10 +288,16 @@
 			//push threads to convos
 			for (var c in vm.musicThreads) {
 				vm.musicThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
-				vm.musicThreads[c].latest_message = vm.musicThreads[c].history[0].message;
-				vm.musicThreads[c].last_modified = vm.musicThreads[c].history[vm.musicThreads[c].history.length-1].created_at;
-				vm.musicThreads[c].latest_user = vm.musicThreads[c].history[0].display_name;
-				vm.musicThreads[c].latest_user_pic = vm.musicThreads[c].history[0].user_pic;
+				let latestMessage = vm.musicThreads[c].history[vm.musicThreads[c].history.length - 1];
+				vm.musicThreads[c].latest_message = latestMessage.message;
+				vm.musicThreads[c].last_modified = latestMessage.created_at;
+				if (latestMessage.user_id === JSON.parse(localStorage.profile).user_id) {
+					vm.musicThreads[c].latest_user = 'You'
+				} else {
+					vm.musicThreads[c].latest_user = 'They';
+					// latestMessage.display_name
+				};
+				vm.musicThreads[c].latest_user_pic = latestMessage.user_pic;
 				vm.musicConvos.push(vm.musicThreads[c]);
 			};
 
@@ -346,10 +366,15 @@
 			};
 			for (var c in vm.filmThreads) {
 				vm.filmThreads[c].history.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
-				vm.filmThreads[c].latest_message = vm.filmThreads[c].history[0].message;
-				vm.filmThreads[c].last_modified = vm.filmThreads[c].history[vm.filmThreads[c].history.length-1].created_at;
-				vm.filmThreads[c].latest_user = vm.filmThreads[c].history[0].display_name;
-				vm.filmThreads[c].latest_user_pic = vm.filmThreads[c].history[0].user_pic;
+				let latestMessage = vm.filmThreads[c].history[vm.filmThreads[c].history.length - 1];
+				vm.filmThreads[c].latest_message = latestMessage.message;
+				vm.filmThreads[c].last_modified = latestMessage.created_at;
+				if (latestMessage.user_id === JSON.parse(localStorage.profile).user_id){
+					vm.filmThreads[c].latest_user = 'You'
+				}else{
+					vm.filmThreads[c].latest_user = 'They';
+				};
+				vm.filmThreads[c].latest_user_pic = latestMessage.user_pic;
 				vm.filmConvos.push(vm.filmThreads[c]);
 			};
 			let addToActives = function (obj) {
@@ -362,6 +387,8 @@
 			addToActives(vm.filmConvos);
 			
 			vm.activeConvos.sort((a, b) => Date.parse(b.last_modified) - Date.parse(a.last_modified));
+			console.log(vm.activeConvos);
+			
 			vm.logout = function(){
 				store.remove('profile');
 				store.remove('token');
@@ -440,7 +467,21 @@
 							newThread.latest_user = post.display_name;
 							newThread.latest_user_pic = post.user_pic;
 							newThread.history = [];
+
+							newThread.conversation_with = {
+								id: post.user_id,
+								user_pic: post.user_pic,
+								user_bio: post.bio,
+								user_name : post.display_name
+							}
+							// newThread.conversation_with.id = post.user_id;
+							// newThread.conversation_with.user_pic = post.user_pic;
+							// newThread.conversation_with.user_bio = post.bio;
+							// newThread.conversation_with.user_name = post.display_name;
+
 							newThread.history.push(post);
+
+							
 
 							vm.activeConvos.unshift(newThread);	
 							req = {post: {
@@ -475,7 +516,15 @@
 							newThread.latest_user_pic = post.user_pic;
 							newThread.history = [];
 							newThread.history.push(post);
-							vm.activeConvos.unshift(post);	
+							newThread.conversation_with = {
+								id: post.user_id,
+								user_pic: post.user_pic,
+								user_bio: post.bio,
+								user_name: post.display_name
+							}
+							vm.activeConvos.unshift(newThread);	
+							console.log(vm.activeConvos);
+							
 							req = {
 								post: {
 									id: post.id,
@@ -511,7 +560,13 @@
 							newThread.latest_user_pic = post.user_pic;
 							newThread.history = [];
 							newThread.history.push(post);
-							vm.activeConvos.unshift(post);	
+							newThread.conversation_with = {
+								id: post.user_id,
+								user_pic: post.user_pic,
+								user_bio: post.bio,
+								user_name: post.display_name
+							}
+							vm.activeConvos.unshift(newThread);	
 							req = {
 								post: {
 									id: post.id,
@@ -581,8 +636,9 @@
 				let chatbox = document.getElementsByClassName('chatboxText')[0];
 				let firstLi = document.createElement('li');
 				chatbox.innerHTML = '';
+				//vm.activeConvos[idx].history[0] undefined??
 				firstLi.innerHTML = 'Responding to:  &nbsp;' + vm.activeConvos[idx].history[0].descriptive_title;
-				firstLi.style.backgroundColor = 'beige';
+				firstLi.style.backgroundColor = 'white';
 				firstLi.style.paddingLeft = '15px';
 				firstLi.style.paddingRight = '15px';
 				firstLi.style.textAlign = 'center';
@@ -595,11 +651,11 @@
 					if (current.display_name === vm.displayName){
 						newLi.innerHTML = 'You:  &nbsp;' + msg;
 						newLi.style.backgroundColor = 'lightBlue';
-						newLi.style.textAlign = 'left';
+						newLi.style.textAlign = 'right';
 					} else {
 						newLi.innerHTML = current.display_name + ':  &nbsp;' + msg;
 						newLi.style.backgroundColor = '#d9ecfb';
-						newLi.style.textAlign = 'right';
+						newLi.style.textAlign = 'left';
 					}
 					newLi.style.paddingLeft = '15px';
 					newLi.style.paddingRight = '15px';
@@ -632,7 +688,7 @@
 							newLi.style.paddingLeft = '15px';
 							newLi.style.paddingRight = '15px';
 							newLi.style.backgroundColor = 'lightBlue';
-							newLi.style.textAlign = 'left';
+							newLi.style.textAlign = 'right';
 							chatbox.appendChild(newLi);
 							vm.convoMessage = '';
 							if(otherPersonsId){

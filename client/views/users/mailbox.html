@@ -106,7 +106,9 @@
                                 </div>
                                 <div ng-style="{'width' : vm.longestLength}" class='highlightable' layout-padding>
                                   <!-- <p>Responding to: {{convo.descriptive_title}} </p> -->
-                                  <p>{{convo.latest_user}} says: {{convo.latest_message}}</p>
+                                  <p class='crimson'>{{convo.conversation_with.user_name}}</p>
+                                  <hr style='padding: 0; margin: 0'>
+                                  <p>{{convo.latest_user}} said: {{convo.latest_message}}</p>
                                 </div>
                               </div>
                             </div>

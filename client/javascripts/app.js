@@ -332,6 +332,9 @@
 	function getUserById(UsersService,$route){
 		return UsersService.getUser($route.current.params.id);
 	};
+	function getUserByThirdPartyId(UsersService) {
+		return UsersService.getUser(JSON.parse(localStorage.profile).user_id);
+	};
 	function getUserAtHomePage(UsersService){
 		if (localStorage.profile) { 
 			return UsersService.getUser(JSON.parse(localStorage.profile).user_id);
@@ -355,6 +358,7 @@
 	getAllMusicPosts.$inject = ['MusicPostService']
 	getMusicPostById.$inject = ['MusicPostService','$route']
 
+	getUserByThirdPartyId.$inject = ['UsersService']
 	getUserById.$inject = ['UsersService','$route']
 
 	getUserAtHomePage.$inject = ['UsersService']
