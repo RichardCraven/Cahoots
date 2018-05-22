@@ -11,7 +11,7 @@ knex('music_post_comments').where('user_id',req.body)
 });
 
 router.get('/:id', function(req,res){
-	knex.select(['c.comment', 'c.post_id', 'c.is_accepted', 'mp.descriptive_title', 'u.user_pic', 'u.display_name', 'c.category', 'c.id', 'c.user_id']).from('music_posts as mp')
+	knex.select(['c.comment', 'c.post_id', 'c.is_accepted', 'mp.descriptive_title', 'u.user_pic', 'u.display_name', 'u.bio', 'c.category', 'c.id', 'c.user_id']).from('music_posts as mp')
 	.join('music_post_comments as c', 'c.post_id', '=', 'mp.id')
 	.join('users as u', 'u.third_party_user_id','=','c.user_id')
 	.where('mp.user_id',req.params.id)

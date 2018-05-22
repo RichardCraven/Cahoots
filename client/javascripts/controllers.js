@@ -94,14 +94,6 @@
 			UsersService.getUser(vm.user_id).then(function(res){
 				myDisplayName = res.data.display_name;
 				vm.displayName = res.data.display_name;
-				console.log('in here? display name is ', vm.displayName, res.data.display_name);
-				
-
-
-
-
-
-
 			});
 			vm.chatbox_toggle = function () {
 				vm.chatbox_toggle_boolean = !vm.chatbox_toggle_boolean
@@ -113,8 +105,7 @@
 					vm.showChatPane = false;
 					vm.showProfilePane = true;
 					vm.chatbox_profile_toggle_label = 'Show Chatbox';
-					let profilePane = document.getElementsByClassName('user-profile-pane')[0]
-					console.log('in profile pane', vm.convoWithUser);
+					let profilePane = document.getElementsByClassName('user-profile-pane')[0];
 					vm.user_profile.display_name = vm.convoWithUser.user_name;
 					vm.user_profile.pic = vm.convoWithUser.user_pic;
 					if (vm.convoWithUser.user_bio == null || !vm.convoWithUser.user_bio.length){
@@ -256,8 +247,6 @@
 			//commentors messages
 			if (musicConvos.data.commentors_messages.length) {
 				let messages = musicConvos.data.commentors_messages;
-				console.log(messages);
-				
 				for (var i = 0; i < messages.length; i++) {
 					let thread_id = messages[i].first_comment_id;
 					if (facebook.test(messages[i].user_id)) {
@@ -387,8 +376,6 @@
 			addToActives(vm.filmConvos);
 			
 			vm.activeConvos.sort((a, b) => Date.parse(b.last_modified) - Date.parse(a.last_modified));
-			console.log(vm.activeConvos);
-			
 			vm.logout = function(){
 				store.remove('profile');
 				store.remove('token');
@@ -523,8 +510,6 @@
 								user_name: post.display_name
 							}
 							vm.activeConvos.unshift(newThread);	
-							console.log(vm.activeConvos);
-							
 							req = {
 								post: {
 									id: post.id,
@@ -650,8 +635,8 @@
 
 					if (current.display_name === vm.displayName){
 						newLi.innerHTML = 'You:  &nbsp;' + msg;
-						newLi.style.backgroundColor = 'lightBlue';
-						newLi.style.textAlign = 'right';
+						newLi.style.backgroundColor = '#dce2e4';
+						newLi.style.textAlign = 'left';
 					} else {
 						newLi.innerHTML = current.display_name + ':  &nbsp;' + msg;
 						newLi.style.backgroundColor = '#d9ecfb';
@@ -662,6 +647,7 @@
 						chatbox.appendChild(newLi);
 				};
 				vm.selectedConvo = vm.activeConvos[idx];
+				vm.selectedConvo.masterIndex = idx;
 			};
 			vm.newMessage = function(msg){
 				let chatbox = document.getElementsByClassName('chatboxText')[0];
@@ -681,14 +667,20 @@
 					case 'film':
 						post.film_post_id = vm.selectedConvo.history[0].film_post_id;
 						req.post = post;
+						vm.activeConvos[vm.selectedConvo.masterIndex].history.push({
+							display_name : vm.displayName,
+							message : msg
+						})
+						//could also try to do vm.activeConvos indexof (vm.selectedConvo) see if that holds the reference
+						// message and display_name
 						FilmPostConversationsService.createMessage(req).then(function(res){
 							let name = vm.displayName;
 							let newLi = document.createElement('li');
 							newLi.innerHTML = 'You :  &nbsp;' + msg;
 							newLi.style.paddingLeft = '15px';
 							newLi.style.paddingRight = '15px';
-							newLi.style.backgroundColor = 'lightBlue';
-							newLi.style.textAlign = 'right';
+							newLi.style.backgroundColor = '#dce2e4';
+							newLi.style.textAlign = 'left';
 							chatbox.appendChild(newLi);
 							vm.convoMessage = '';
 							if(otherPersonsId){
@@ -705,13 +697,17 @@
 					case 'music':
 						post.music_post_id = vm.selectedConvo.history[0].music_post_id;
 						req.post = post;
+						vm.activeConvos[vm.selectedConvo.masterIndex].history.push({
+							display_name: vm.displayName,
+							message: msg
+						})
 						MusicPostConversationsService.createMessage(req).then(function (res) {
 							let name = vm.displayName;
 							let newLi = document.createElement('li');
 							newLi.innerHTML = 'You :  &nbsp;' + msg;
 							newLi.style.paddingLeft = '15px';
 							newLi.style.paddingRight = '15px';
-							newLi.style.backgroundColor = 'lightBlue';
+							newLi.style.backgroundColor = '#dce2e4';
 							newLi.style.textAlign = 'left';
 							chatbox.appendChild(newLi);
 							vm.convoMessage = '';
@@ -729,13 +725,17 @@
 					case 'coding':
 						post.coding_post_id = vm.selectedConvo.history[0].coding_post_id;
 						req.post = post;
+						vm.activeConvos[vm.selectedConvo.masterIndex].history.push({
+							display_name: vm.displayName,
+							message: msg
+						})
 						CodingPostConversationsService.createMessage(req).then(function (res) {
 							let name = vm.displayName;
 							let newLi = document.createElement('li');
 							newLi.innerHTML = 'You :  &nbsp;' + msg;
 							newLi.style.paddingLeft = '15px';
 							newLi.style.paddingRight = '15px';
-							newLi.style.backgroundColor = 'lightBlue';
+							newLi.style.backgroundColor = '#dce2e4';
 							newLi.style.textAlign = 'left';
 							chatbox.appendChild(newLi);
 							vm.convoMessage = '';

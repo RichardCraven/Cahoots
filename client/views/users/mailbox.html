@@ -102,7 +102,7 @@
                             <div class="md-list-item-text">
                               <div layout='row' ng-click='vm.activateConvo($index, convo,$event)'>
                                 <div ng-style="{'width' : vm.littleLength}">
-                                  <img class='userPic' ng-src="{{convo.latest_user_pic}}" alt="">
+                                  <img class='userPic' ng-src="{{convo.conversation_with.user_pic}}" alt="">
                                 </div>
                                 <div ng-style="{'width' : vm.longestLength}" class='highlightable' layout-padding>
                                   <!-- <p>Responding to: {{convo.descriptive_title}} </p> -->
