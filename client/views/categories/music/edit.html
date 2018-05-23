@@ -1,45 +1,56 @@
-<!-- HEADER -->
-<div layout-gt-sm="row" >
-  <div flex-gt-sm="50" style='overflow: scroll' >
+<div layout-gt-sm="row">
+  <div flex-gt-sm="50">
     <md-toolbar layout="row" class="md-hue-3">
       <div class="md-toolbar-tools">
-        <a href="/" class="goHome">
-          <span class="glyphicon glyphicon-home"></span>
-        </a>
-        <a href="/musicPosts" class="goHome">
-          <span style='margin-left:30px' class="glyphicon glyphicon-arrow-left"></span>
+        <a ng-click="vm.goBackToCodingIndex()" class="backArrow">
+          <span style='margin-left:10px' class="glyphicon glyphicon-arrow-left"></span>
         </a>
       </div>
     </md-toolbar>
     <md-content>
-      <md-list flex >
-        <md-subheader style='font-size:2em' class="md-no-sticky text-center">Edit the {{vm.post.genre}} Project</md-subheader> 
+      <md-list flex>
+        <md-subheader id='new-project-subheader' class="md-no-sticky text-center">EDIT PROJECT PROPOSAL</md-subheader>
       </md-list>
-    </md-content>
+      <div flex layout-gt-sm="column">
+        <div flex-gt-sm="100">
+          <md-content class='height100'>
+            <form name="newCodingProject" ng-submit="vm.updatePost(vm.post)">
+              <div layout="column" class='height100'>
+                <div flex>
+                  <md-input-container class='width70'>
+                    <label id='descriptive-title-label' class='arial'>Descriptive Title</label>
+                    <input autocomplete="off" class='newPostTopicArea' ng-model="vm.post.descriptive_title" autofocus='true' required>
+                  </md-input-container>
+                </div>
+                <div flex>
+                  <md-input-container class='width70'>
+                    <label class='arial'>Genre (optional)</label>
+                    <input autocomplete="off" class='newPostTopicArea' md-no-asterisk ng-model="vm.post.genre" autofocus='true'>
+                  </md-input-container>
+                </div>
+                <div flex>
+                  <md-input-container class='width70'>
+                    <label class='arial'>Project Summary</label>
+                    <input autocomplete="off" class='newPostTopicArea' ng-model="vm.post.summary" autofocus required>
+                  </md-input-container>
+                </div>
+                <div flex>
+                  <div class='submitButtonContainer'>
+                    <label for='submit-form'> Submit</label>
+                  </div>
+                  <button type="submit" class="btn btn-7 btn-7h hidden" id="submit-form">
+                    <i class="material-icons md-48">add</i> Create Post</button>
+                </div>
+              </div>
+            </form>
+          </md-content>
+        </div>
+      </div>
+  </div>
+  </md-content>
+  <div flex-gt-sm="50">
+    <video id="owlVid2" muted autoplay>
+      <source src="images/NewOwl666.mp4" type="video/mp4">
+    </video>
   </div>
 </div>
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~still need to figure out who changing the topic field changes the subheader~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<form class='formText NEWmargin' name="newMusic" ng-submit="vm.updatePost(vm.post)" >
-<div layout="column" >
-  <div class="NEWspacer"></div>
-  <div flex>
-    <md-input-container>
-      <label>Genre</label>
-      <input name="genre" md-no-asterisk ng-model="vm.post.genre"   required >
-    </md-input-container>
-  </div>
-  <div flex>
-    <md-input-container md-no-float >
-      <label>Brief Description</label>
-      <textarea  name="description" md-no-asterisk ng-model="vm.post.description" placeholder=" " required ></textarea>
-    </md-input-container>
-  </div>
-  <div flex>
-    <md-input-container>
-       <label>Roles Needed</label>
-       <textarea name="runtime" md-no-asterisk ng-model="vm.post.roles_needed" placeholder=" "  ></textarea>
-    </md-input-container> 
-  </div>
-</div>
-  <button type="submit" class="btn btn-success NEWmargin" >Edit Post</button>
-</form>
