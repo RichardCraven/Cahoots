@@ -1296,13 +1296,8 @@
 			}
 		}
 	function EditCodingPostController($scope,$timeout,CodingPostService, post, $location){ //$routeParams is  Angular's version of req.params in express
-		console.log('post is ', post);
-		$timeout(function () {
-			$scope.$apply();
-		}, 0, false);
 			
 			var vm = this;
-			vm.piechart = 'pornhub'
 				vm.post = post.data
 				if(!vm.post) {$location.path('/codingPosts')}
 			vm.goBackToCodingIndex = function () {
@@ -1684,7 +1679,9 @@
 			var vm = this;
 				vm.post = post.data
 				if(!vm.post) {$location.path('/musicPosts')}
-
+			vm.goBackToMusicIndex = function () {
+				$location.path('/musicPosts')
+			}
 			vm.updatePost = function(post){
 				var req = {post: post}
 				MusicPostService.updatePost(req).then(function(res){					
@@ -2048,7 +2045,9 @@
 				if(!vm.post) {
 					$location.path('/filmPosts')
 				}
-
+			vm.goBackToFilmIndex = function () {
+				$location.path('/filmPosts')
+			}
 			vm.updatePost = function(post){
 				var req = {post: post}
 				FilmPostService.updatePost(req).then(function(res){					
