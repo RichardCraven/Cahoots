@@ -24,7 +24,7 @@
                   <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                 </div>
                 <div class='postContentContainer' layout-padding>
-                  <a href="/filmPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
+                  <a href="/musicPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
                     <span class="glyphicon glyphicon-pencil "></span>
                   </a>
                   <a href="javascript:void(0)" ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
@@ -37,7 +37,7 @@
                       <span class='topic'>Title: </span>
                       <span class='topicText'>{{post.descriptive_title}}</span>
                     </h3>
-                    <p>{{post.genre}}</p>
+                    <p><span class='post-date-label'>{{post.displayDate}}</span> {{post.genre}}</p>
                   </div>
                 </div>
               </div>

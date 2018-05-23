@@ -190,6 +190,12 @@ img{
 	text-shadow: 5px 1px #cbdd86;
 	margin-left: 10px;
 }
+#descriptive-title-label{
+	position: static;
+}
+#new-project-subheader{
+	font-size: 1.6em;
+}
 .btn-xlg {
     padding: 18px 28px;
     font-size: 22px; 
@@ -259,7 +265,6 @@ img{
 	width: 100px;
 }
 .postContentContainer{
-	overflow: scroll;
 	margin-left: 15px;
 	width: 100%;
 	max-height: 100px;
@@ -268,7 +273,11 @@ img{
 	height: 80px;
 	margin-bottom: 1px;
 }
-
+.post-date-label{
+	margin-right: 2%;
+	/* color: mediumslateblue; */
+	color: grey;
+}
 .panel{
 	max-height: 650px;
 }

@@ -1,5 +1,5 @@
 <div layout-gt-sm="row" >
-  <div flex-gt-sm="50" style='overflow: hidden; height: 100vh; object-fit: inherit'>
+  <div flex-gt-sm="50" >
     <md-toolbar layout="row" class="md-hue-3">
       <div class="md-toolbar-tools">
         <a ng-click="vm.goBackToCodingIndex()" class="backArrow">
@@ -7,33 +7,33 @@
         </a>
       </div>
     </md-toolbar>
-    <md-content style='height:100%;'>
+    <md-content>
       <md-list flex >
-        <md-subheader style='font-size:2em' class="md-no-sticky text-center">PROPOSE A CODING PROJECT</md-subheader> 
+        <md-subheader id='new-project-subheader' class="md-no-sticky text-center">PROPOSE A CODING PROJECT</md-subheader> 
       </md-list>
-      <div flex layout-gt-sm="column" style='height:83%'>
+      <div flex layout-gt-sm="column">
         <div flex-gt-sm="100">
           <md-content class='height100'>
-            <form  name="newCodingProject" ng-submit="vm.addCodingPost(vm.post)" style='height: 100%' >
+            <form  name="newCodingProject" ng-submit="vm.addCodingPost(vm.post)">
               <div layout="column" class='height100'>
-                <div flex style='margin-bottom: 40px;'>
+                <div flex>
                   <md-input-container class='width70'>
-                    <label style='position: static' class='arial'>Descriptive Title</label>
+                    <label id='descriptive-title-label' class='arial'>Descriptive Title</label>
                     <input autocomplete="off" name="topic" class='newPostTopicArea' ng-model="vm.post.descriptive_title" placeholder=" "
-                      autofocus='true' required style="height: 50px">
+                      autofocus='true' required>
                   </md-input-container>
                 </div>
-                <div flex style='margin-bottom: 40px;'>
+                <div flex>
                   <md-input-container class='width70'>
-                    <label style='position: static' class='arial'>Framework (optional)</label>
-                    <input autocomplete="off" name="topic" class= 'newPostTopicArea' md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus='true' style="height: 50px">
+                    <label class='arial'>Framework (optional)</label>
+                    <input autocomplete="off" name="topic" class= 'newPostTopicArea' md-no-asterisk ng-model="vm.post.framework" placeholder=" " autofocus='true'>
                   </md-input-container>
                 </div>
                 <div flex >
                   <md-input-container class='width70'>
-                    <label style='color:black' class='arial'>Project Summary</label>
+                    <label class='arial'>Project Summary</label>
                     <input autocomplete="off" name="topic" class='newPostTopicArea' ng-model="vm.post.summary" placeholder=" "
-                      autofocus required style="height: 50px">
+                      autofocus required>
                   </md-input-container>
                 </div>
                 <div flex >

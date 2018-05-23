@@ -15,7 +15,7 @@
     </md-toolbar>
     <md-content>
       <md-list>
-        <md-list-item ng-repeat="post in vm.posts track by $index" class="md-2-line item-text-wrap" ng-class-odd="'odd animated bounceInRight'"
+        <md-list-item ng-repeat="post in vm.posts" class="md-2-line item-text-wrap" ng-class-odd="'odd animated bounceInRight'"
           ng-class-even="'even animated bounceInLeft'">
           <div layout='row' class="md-list-item-text">
             <div flex-gt-sm="{{vm.postWidth}}" layout='column'>
@@ -24,7 +24,7 @@
                   <img class='userPic' ng-src="{{post.user_pic}}" alt="">
                 </div>
                 <div class='postContentContainer' layout-padding>
-                  <a href="/filmPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
+                  <a href="/codingPosts/{{post.id}}/edit" ng-show='vm.checkId(post)' class='pull-right'>
                     <span class="glyphicon glyphicon-pencil "></span>
                   </a>
                   <a href="javascript:void(0)" ng-show='vm.checkId(post)' class='pull-right' ng-click="vm.removePost(post.id)">
@@ -37,7 +37,7 @@
                       <span class='topic'>Title: </span>
                       <span class='topicText'>{{post.descriptive_title}}</span>
                     </h3>
-                    <p>{{post.framework}}</p>
+                    <p><span class='post-date-label'>{{post.displayDate}}</span> {{post.framework}} </p>
                   </div>
                 </div>
               </div>

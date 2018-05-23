@@ -946,7 +946,7 @@
 			vm.convoArea = false;
 			vm.tempIndex = false;
 			vm.tempResponseIndex = false;
-			vm.posts = posts.data;
+			
 			vm.backButton = 'home'
 			vm.leftPanel = 'CONNECT'
 			vm.responses; 
@@ -956,6 +956,22 @@
 			vm.showResponse = null;
 			vm.pendingResponseText = null;
 			vm.showActiveConvos = false;
+			posts.data.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
+			vm.posts = posts.data;
+			for (let i = 0; i < vm.posts.length; i++) {
+				const e = vm.posts[i];
+				var dateString = Date.parse(e.created_at)
+				var dx = new Date(parseInt(dateString));;
+
+				var dd = dx.getDate();
+				
+				var mm = dx.getMonth() + 1;
+				var yy = dx.getFullYear();
+
+				var displayDate = mm + "." + dd + "." + yy;
+				e.displayDate = displayDate
+			};
+
 			if($(window).width() < 1200){
 				vm.leftWidth = 100;
 				vm.showOwl = false;
@@ -1279,10 +1295,19 @@
 				})
 			}
 		}
-		function EditCodingPostController(CodingPostService, post, $location){ //$routeParams is  Angular's version of req.params in express
+	function EditCodingPostController($scope,$timeout,CodingPostService, post, $location){ //$routeParams is  Angular's version of req.params in express
+		console.log('post is ', post);
+		$timeout(function () {
+			$scope.$apply();
+		}, 0, false);
+			
 			var vm = this;
+			vm.piechart = 'pornhub'
 				vm.post = post.data
 				if(!vm.post) {$location.path('/codingPosts')}
+			vm.goBackToCodingIndex = function () {
+				$location.path('/codingPosts')
+			}
 			vm.updatePost = function(post){
 				var req = {post: post}
 				CodingPostService.updatePost(req).then(function(res){					
@@ -1302,7 +1327,6 @@
 			vm.convoArea = false;
 			vm.tempIndex = false;
 			vm.tempResponseIndex = false;
-			vm.posts = posts.data;
 			vm.backButton = 'home'
 			vm.leftPanel = 'CONNECT'
 			vm.responses;
@@ -1312,6 +1336,21 @@
 			vm.showResponse = null;
 			vm.pendingResponseText = null;
 			vm.showActiveConvos = false;
+			posts.data.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
+			vm.posts = posts.data;
+			for (let i = 0; i < vm.posts.length; i++) {
+				const e = vm.posts[i];
+				var dateString = Date.parse(e.created_at)
+				var dx = new Date(parseInt(dateString));;
+
+				var dd = dx.getDate();
+
+				var mm = dx.getMonth() + 1;
+				var yy = dx.getFullYear();
+
+				var displayDate = mm + "." + dd + "." + yy;
+				e.displayDate = displayDate
+			};
 			if ($(window).width() < 1200) {
 				vm.leftWidth = 100;
 				vm.showOwl = false;
@@ -1665,7 +1704,6 @@
 		vm.convoArea = false;
 		vm.tempIndex = false;
 		vm.tempResponseIndex = false;
-		vm.posts = posts.data;
 		vm.backButton = 'home'
 		vm.leftPanel = 'CONNECT'
 		vm.responses;
@@ -1675,6 +1713,21 @@
 		vm.showResponse = null;
 		vm.pendingResponseText = null;
 		vm.showActiveConvos = false;
+		posts.data.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
+		vm.posts = posts.data;
+		for (let i = 0; i < vm.posts.length; i++) {
+			const e = vm.posts[i];
+			var dateString = Date.parse(e.created_at)
+			var dx = new Date(parseInt(dateString));;
+
+			var dd = dx.getDate();
+
+			var mm = dx.getMonth() + 1;
+			var yy = dx.getFullYear();
+
+			var displayDate = mm + "." + dd + "." + yy;
+			e.displayDate = displayDate
+		};
 		if ($(window).width() < 1200) {
 			vm.leftWidth = 100;
 			vm.showOwl = false;
@@ -2005,7 +2058,7 @@
 		}
 		CodingPostsController.$inject = ['$scope','CodingPostService','CodingPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'codingMail', 'codingHistory', '$timeout', '$scope','CodingPostConversationsService'];
 		NewCodingPostController.$inject = ['CodingPostService','UsersService','$location','store'] 
-		EditCodingPostController.$inject = ['CodingPostService', 'post', '$location']
+	EditCodingPostController.$inject = ['$scope','$timeout','CodingPostService', 'post', '$location']
 
 	FilmPostsController.$inject = ['$scope','FilmPostService','FilmPostCommentsService','UsersService','posts','$location','$route', 'NgMap', 'filmMail','filmHistory', '$timeout', '$scope','FilmPostConversationsService'];
 		NewFilmPostController.$inject = ['FilmPostService','UsersService','$location','store'] 
