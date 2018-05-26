@@ -52,6 +52,130 @@
 	  			var fadeOut = $timeout(fadeOut,6900)
 	  		};
 		};
+		function HomeCtrl($location, auth, store, $timeout, $rootScope, UsersService) {
+			var vm = this;
+			localStorage.clear()
+			if (localStorage.profile) {
+				location.href = '/loggedinHome';
+			} else {
+				localStorage.clear();
+			};
+			vm.go = function (path) {
+				location.href = path;
+			};
+			vm.login = function () {
+				auth.signin({ popup: true }, function (profile, token) {
+				});
+			}
+			vm.logout = function () {
+				store.remove('profile');
+				store.remove('token');
+				localStorage.clear();
+			}
+		};
+		function MiscCtrl($location) {
+			var vm = this;
+			vm.goBack = function () {
+				if (localStorage.length === 0) {
+					$location.path('/home');
+				} else if (localStorage.length > 0) {
+					$location.path('/loggedinHome');
+				};
+			};
+		};
+		function LoginHomeCtrl($location, auth, store, $timeout, $rootScope, UsersService, $mdDialog) {
+			var vm = this,
+				facebook = /^(facebook)/,
+				numberPattern = /\d+/g,
+				fbUserId, userName;
+			vm.hasMail = false;
+			vm.showLoginButton = false;
+			vm.user_id = JSON.parse(localStorage.profile).user_id;
+			vm.go = function (path) {
+				$location.path(path);
+			};
+			vm.picture = JSON.parse(localStorage.profile).picture
+
+			if (facebook.test(JSON.parse(localStorage.profile).user_id)) {
+				fbUserId = JSON.parse(localStorage.profile).user_id.match(numberPattern)[0];
+				vm.picture = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+			}
+			UsersService.getUser(vm.user_id).then(function (user) {
+				console.log('USER IS ', user);
+				if(user.data.first_time){
+					var confirm = $mdDialog.confirm()
+						.title('This app will require your geolocation')
+						.textContent('In order to find local collaborators, Cahoots will use your location. We do not share your data with anyone. Please see our term sheet in the settings menu (gear icon) for more information')
+						.ariaLabel('Lucky day')
+						// .targetEvent(ev)
+						.ok('Got it!')
+						.cancel('No thanks');
+
+					$mdDialog.show(confirm).then(function () {
+						console.log('You decided to get rid of your debt.');
+						if (navigator.geolocation) {
+							navigator.geolocation.getCurrentPosition(function(position){
+								var lat = position.coords.latitude;
+								var long = position.coords.longitude;
+								var point = new google.maps.LatLng(lat, long);
+								new google.maps.Geocoder().geocode(
+									{ 'latLng': point },
+									function (res, status) {
+										console.log(res);
+										
+										var zip = res[0].formatted_address.match(/,\s\w{2}\s(\d{5})/);
+										console.log('zip is ', zip);
+									}
+								);
+							});
+
+							// function getLocation() {
+							// 	if (navigator.geolocation) {
+							// 		navigator.geolocation.getCurrentPosition(showPosition);
+							// 	} else {
+							// 		x.innerHTML = "Geolocation is not supported by this browser.";
+							// 	}
+							// }
+							function showPosition(position) {
+								// console.log('POSITION Is ', position);
+								
+								// x.innerHTML = "Latitude: " + position.coords.latitude +
+								// 	"<br>Longitude: " + position.coords.longitude;
+							}
+						}
+					}, function () {
+						console.log('You decided to keep your debt.');
+					});
+				}
+
+				if (!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null) {
+					vm.welcome = 'Welcome'
+				} else {
+					userName = user.data.display_name
+					vm.welcome = ('Welcome ' + user.data.display_name + '!')
+				};
+				if (user.data.has_mail) {
+					vm.hasMail = true;
+				}
+				vm.name = user.data.display_name || JSON.parse(localStorage.profile).given_name;
+				vm.picture = user.data.user_pic;
+				if (facebook.test(vm.user_id)) {
+					fbUserId = user.data.third_party_user_id.match(numberPattern)[0];
+					vm.picture = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large';
+				};
+			}, vm);
+			if (localStorage.length > 0) {
+				var user = JSON.parse(localStorage.profile)
+			}
+			vm.goToMail = function () {
+				location.href = '/mailbox'
+			}
+
+			vm.logout = function () {
+				localStorage.clear()
+				location.href = '/home';
+			}
+		}
 		function MailCtrl($scope, filmMail, musicMail, codingMail, filmConvos, musicConvos, codingConvos, $location, auth, store, $timeout, $rootScope, UsersService, FilmPostCommentsService, FilmPostService, ConvoRepoService, CodingPostConversationsService, CodingPostCommentsService, FilmPostConversationsService, FilmPostCommentsService, MusicPostConversationsService, MusicPostCommentsService){
 			var vm=this;
 			vm.name = JSON.parse(localStorage.profile).given_name;
@@ -471,6 +595,7 @@
 							newThread.history.push(post);
 
 							
+							
 
 							vm.activeConvos.unshift(newThread);	
 							req = {post: {
@@ -809,83 +934,6 @@
 			};
 		};
 
-		function HomeCtrl($location,auth, store,$timeout,$rootScope, UsersService){
-			var vm=this;
-			localStorage.clear()
-			if(localStorage.profile){
-					location.href = '/loggedinHome';
-		  	} else {
-		  		localStorage.clear();
-		  	};
-		  	vm.go = function ( path ) {
-				location.href = path;
-			};
-			vm.login = function (){
-				auth.signin({popup: true}, function(profile,token){
-				});
-			}
-			vm.logout = function(){
-				store.remove('profile');
-				store.remove('token');
-				localStorage.clear();
-			}
-		};
-		function MiscCtrl($location){
-			var vm=this;
-			vm.goBack = function(){
-				if(localStorage.length === 0){
-					$location.path('/home');
-				} else if (localStorage.length>0){
-					$location.path('/loggedinHome');	
-				};
-			};
-		};
-		function LoginHomeCtrl($location,auth,store,$timeout,$rootScope,UsersService){
-			var vm=this,
-				facebook = /^(facebook)/,
-				numberPattern = /\d+/g,
-				fbUserId, userName;
-			vm.hasMail = false;
-			vm.showLoginButton = false;
-			vm.user_id = JSON.parse(localStorage.profile).user_id;
-			vm.go = function ( path ) {
-			    $location.path( path );
-			};
-			vm.picture = JSON.parse(localStorage.profile).picture
-
-			if (facebook.test(JSON.parse(localStorage.profile).user_id)) {
-				fbUserId = JSON.parse(localStorage.profile).user_id.match(numberPattern)[0];
-				vm.picture = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
-			}
-			UsersService.getUser(vm.user_id).then(function(user){
-				if(!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null){
-					vm.welcome = 'Welcome'
-				} else {
-					userName = user.data.display_name
-					vm.welcome = ('Welcome '+user.data.display_name+'!')
-				};
-				if(user.data.has_mail){
-					vm.hasMail = true;
-				}
-				vm.name = user.data.display_name || JSON.parse(localStorage.profile).given_name;
-				vm.picture = user.data.user_pic;
-				if(facebook.test(vm.user_id)){
-					fbUserId = user.data.third_party_user_id.match(numberPattern)[0];
-					vm.picture = 'http://graph.facebook.com/'+ fbUserId +'/picture?type=large';
-				};
-			}, vm);
-			if(localStorage.length>0){
-				var user = JSON.parse(localStorage.profile)
-			}
-			vm.goToMail = function(){
-				location.href = '/mailbox'
-			}
-
-			vm.logout = function(){
-				localStorage.clear()
-				location.href = '/home';
-			}
-		}
 //~~~~~~USERS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		function UsersController(UsersService,posts,$location,$route, NgMap){
 			var vm = this;
@@ -2073,7 +2121,7 @@
 		MiscCtrl.$inject = ['$location']
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
-		LoginHomeCtrl.$inject = ['$location','auth','store','$timeout','$rootScope','UsersService']
+	LoginHomeCtrl.$inject = ['$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService','$mdDialog']
 	MailCtrl.$inject = ['$scope','filmMail', 'musicMail', 'codingMail', 'filmConvos', 'musicConvos', 'codingConvos', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'CodingPostCommentsService', 'FilmPostConversationsService', 'FilmPostCommentsService', 'MusicPostConversationsService','MusicPostCommentsService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
