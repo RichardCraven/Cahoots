@@ -112,40 +112,65 @@
 						.cancel('No thanks');
 
 					$mdDialog.show(confirm).then(function () {
-						console.log('You decided to get rid of your debt.');
 						if (navigator.geolocation) {
 							navigator.geolocation.getCurrentPosition(function(position){
 								var lat = position.coords.latitude;
 								var long = position.coords.longitude;
 								var point = new google.maps.LatLng(lat, long);
+								var latlong = position.coords.latitude + "," + position.coords.longitude;
+								user.data.latlong = latlong;
 								new google.maps.Geocoder().geocode(
 									{ 'latLng': point },
 									function (res, status) {
-										console.log(res);
-										
 										var zip = res[0].formatted_address.match(/,\s\w{2}\s(\d{5})/);
-										console.log('zip is ', zip);
+										user.data.zip_code = zip[1];
+										user.data.first_time = false;
+										var req = { user: user.data };
+										UsersService.updateUser(req).then(function (res) {
+											console.log('res is ', res);
+										})
 									}
 								);
 							});
-
-							// function getLocation() {
-							// 	if (navigator.geolocation) {
-							// 		navigator.geolocation.getCurrentPosition(showPosition);
-							// 	} else {
-							// 		x.innerHTML = "Geolocation is not supported by this browser.";
-							// 	}
-							// }
-							function showPosition(position) {
-								// console.log('POSITION Is ', position);
-								
-								// x.innerHTML = "Latitude: " + position.coords.latitude +
-								// 	"<br>Longitude: " + position.coords.longitude;
-							}
 						}
 					}, function () {
 						console.log('You decided to keep your debt.');
 					});
+
+					// function EditUserController(UsersService, $location, auth, store, user) {
+					// 	var vm = this, fbUserId, facebook = /^(facebook)/, numberPattern = /\d+/g;
+					// 	vm.user = user.data;
+					// 	vm.user_id = JSON.parse(localStorage.profile).user_id;
+					// 	vm.navpicture = JSON.parse(localStorage.profile).picture;
+					// 	vm.name = JSON.parse(localStorage.profile).given_name;
+					// 	// vm.user.zip_code = ' ';
+					// 	console.log(vm.user);
+
+					// 	if (vm.user.display_name == null || vm.user.display_name == undefined) {
+					// 		vm.user.display_name = ' ';
+					// 	};
+					// 	if (vm.user.zip_code == null) {
+					// 		vm.user.zip_code = ' ';
+					// 	};
+					// 	if (vm.user.bio === null) {
+					// 		vm.user.bio = ' ';
+					// 	};
+					// 	if (facebook.test(vm.user_id)) {
+					// 		fbUserId = vm.user_id.match(numberPattern)[0];
+					// 		vm.navpicture = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
+					// 	};
+					// 	vm.logout = function () {
+					// 		store.remove('profile')
+					// 		store.remove('token')
+					// 		$location.path('/home')
+					// 	}
+					// 	vm.updateUser = function (user) {
+					// 		var req = { user: user };
+					// 		UsersService.updateUser(req).then(function (res) {
+					// 			$location.path('/loggedinHome');
+					// 		})
+					// 	};
+					// };
 				}
 
 				if (!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null) {
@@ -494,7 +519,7 @@
 				Object.keys(obj).map(function (key, index) {
 					vm.activeConvos.push(obj[key])
 				});
-			}
+			};
 			addToActives(vm.codingConvos);
 			addToActives(vm.musicConvos);
 			addToActives(vm.filmConvos);
@@ -983,6 +1008,7 @@
 			};
 		};
 //~~~~~~CODING POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//codingBookmark
 		function CodingPostsController($scope, CodingPostService,CodingPostCommentsService,UsersService,posts,$location,$route, NgMap, codingMail, codingHistory, $timeout, $rootScope, CodingPostConversationsService){
 			var vm = this, span, area, cursor;
 			vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
@@ -1244,14 +1270,29 @@
   		 		  	if(vm.showChat){
   		 		  		return
   		 		  	}
-	  		 		vm.showMap = true;
+					vm.showMap = true;
+					var coordinates = vm.posts[idx].latlong.split(',');
+					var gMap = new google.maps.Map(document.getElementById('map'));
+					gMap.setZoom(13);     
+					gMap.setCenter(new google.maps.LatLng(coordinates[0], coordinates[1]));
+					var circleOptions = {
+						id : 'circle',
+						strokeColor : '#FF0000',
+						strokeOpacity : "0.8",
+						strokeWeight : "1",
+						center: new google.maps.LatLng(coordinates[0], coordinates[1]),
+						radius: 2000,
+						map: gMap,
+						editable: false
+					};
+					var circle = new google.maps.Circle(circleOptions);
 	  		 		myArrayFromNodeList = Array.from(document.querySelectorAll('md-input-container'))
 	  		 		myArrayFromNodeList.forEach(function (e){
 	  		 			e.classList.remove('md-input-invalid')
 	  		 			e.classList.remove('md-input-focused')
 	  		 			e.classList.remove('md-input-has-value')
 	  		 		});
-	  		 	  }, 50);
+	  		 	  }, 0);
 				};        
 				if(vm.toggleView === false){
 					//BACK TO MAIN INDEX PAGE
@@ -1312,9 +1353,11 @@
 	  		  return localStorage.length > 0 && post.third_party_user_id === JSON.parse(localStorage.profile).user_id ? true : false
 		  	}
 
-		  	var map;
-		  	vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
-		  	x = NgMap.getMap('map');
+		  	// var map;
+		  	// vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";	
+			//   x = NgMap.getMap('map')
+			  
+			  ;
 		  	vm.comment = {};
 		  	vm.addCodingPostComment = function(id,newCodingPostComment){
 		  		vm.comment.user_id = JSON.parse(localStorage.profile).user_id
@@ -1359,6 +1402,7 @@
 			}
 		}
 	//~~~~~~MUSIC POSTS CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//musicBookmark
 		function MusicPostsController($scope, MusicPostService, MusicPostCommentsService, UsersService, posts, $location, $route, NgMap, musicMail, musicHistory, $timeout, $rootScope, MusicPostConversationsService) {
 			var vm = this, span, area, cursor;
 			vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
@@ -1430,6 +1474,7 @@
 				var selected = Array.from(document.querySelectorAll('md-list-item')).filter((v, i) => i == idx),
 					others = Array.from(document.querySelectorAll('md-list-item')).filter((v, i) => i !== idx);
 				if (vm.toggleView === true) {
+					
 					if (localStorage.length) {
 						vm.showLoginToRespond = false;
 					} else {
@@ -1618,17 +1663,30 @@
 							return
 						}
 						vm.showMap = true;
+						var coordinates = vm.posts[idx].latlong.split(',');
+						var gMap = new google.maps.Map(document.getElementById('map'));
+						gMap.setZoom(13);
+						gMap.setCenter(new google.maps.LatLng(coordinates[0], coordinates[1]));
+						var circleOptions = {
+							id: 'circle',
+							strokeColor: '#FF0000',
+							strokeOpacity: "0.8",
+							strokeWeight: "1",
+							center: new google.maps.LatLng(coordinates[0], coordinates[1]),
+							radius: 2000,
+							map: gMap,
+							editable: false
+						};
+						var circle = new google.maps.Circle(circleOptions);
 						myArrayFromNodeList = Array.from(document.querySelectorAll('md-input-container'))
 						myArrayFromNodeList.forEach(function (e) {
 							e.classList.remove('md-input-invalid')
 							e.classList.remove('md-input-focused')
 							e.classList.remove('md-input-has-value')
 						});
-					}, 50);
+					}, 0);
 				};
 				if (vm.toggleView === false) {
-					//BACK TO MAIN INDEX PAGE
-					// vm.convoArea = false;
 					vm.tempResponseIndex = false;
 					vm.showCommentInput = true;
 					vm.theyResponded = vm.waitingResponse =
@@ -1685,9 +1743,7 @@
 				return localStorage.length > 0 && post.third_party_user_id === JSON.parse(localStorage.profile).user_id ? true : false
 			}
 
-			var map;
-			vm.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBtNoaazwyeqMuiXN9zNkWAW8y-WdCGp40&v=3&";
-			x = NgMap.getMap('map');
+			
 		};
 		function NewMusicPostController(MusicPostService,UsersService,$location,store){
 			var vm = this;
@@ -1738,6 +1794,7 @@
 			}
 		}
 //~~~~~~FILMposts controller~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
+//filmBookmark
 	function FilmPostsController($scope, FilmPostService, FilmPostCommentsService, UsersService, posts, $location, $route, NgMap, filmMail, filmHistory, $timeout, $rootScope, FilmPostConversationsService) {
 		var vm = this, span, area, cursor;
 		vm.showVid = vm.showCommentInput = vm.convoBegun = vm.showOwl = true;
@@ -1780,7 +1837,6 @@
 		if (localStorage.length > 0) {
 			vm.loggedIn = true
 		};
-		// vm.myTrackingFunction = function(post){ some code to put the logged-in user's posts at the top  };
 		posts.data.length && posts.data.forEach(function (i) {
 			var facebook = /^(facebook)/,
 				numberPattern = /\d+/g,
@@ -1996,13 +2052,29 @@
 						return
 					}
 					vm.showMap = true;
+					var coordinates = vm.posts[idx].latlong.split(',');
+
+					var gMap = new google.maps.Map(document.getElementById('map'));
+					gMap.setZoom(13);
+					gMap.setCenter(new google.maps.LatLng(coordinates[0], coordinates[1]));
+					var circleOptions = {
+						id: 'circle',
+						strokeColor: '#FF0000',
+						strokeOpacity: "0.8",
+						strokeWeight: "1",
+						center: new google.maps.LatLng(coordinates[0], coordinates[1]),
+						radius: 2000,
+						map: gMap,
+						editable: false
+					};
+					var circle = new google.maps.Circle(circleOptions);
 					myArrayFromNodeList = Array.from(document.querySelectorAll('md-input-container'))
 					myArrayFromNodeList.forEach(function (e) {
 						e.classList.remove('md-input-invalid')
 						e.classList.remove('md-input-focused')
 						e.classList.remove('md-input-has-value')
 					});
-				}, 50);
+				}, 0);
 			};
 			if (vm.toggleView === false) {
 				//BACK TO MAIN INDEX PAGE

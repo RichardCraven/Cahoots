@@ -5,7 +5,7 @@ const knex = require('../db/knex')
 router.get('/', function (req,res){
 	console.log('in router get coding points');
 	
-	knex.select(['u.display_name', 'u.user_pic', 'u.third_party_user_id', 'c.id', 'descriptive_title', 'summary', 'framework', 'created_at']).from('coding_posts as c')
+	knex.select(['u.display_name', 'u.user_pic', 'u.third_party_user_id', 'u.latlong', 'c.id', 'descriptive_title', 'summary', 'framework', 'created_at']).from('coding_posts as c')
 	.join('users as u', 'u.third_party_user_id', '=', 'c.user_id')
 		.then(function(codingPosts){
 			console.log('posts are ', codingPosts);

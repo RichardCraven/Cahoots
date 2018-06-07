@@ -144,11 +144,7 @@
             </div>
             <div flex-gt-sm="{{vm.postWidth}}" ng-show='vm.showText' layout='column'>
               <div ng-show='vm.showMap' id='mapContainer' class='postChatRight animated slideInRight'>
-                <div class='mapContainer'>
-                  <ng-map default-style="false" ng-if='vm.showMap' id='map' center="37.7749,-122.4194" zoom="15">
-                    <marker position="37.7749,-122.4194" title="Hello World!"></marker>
-                  </ng-map>
-                </div>
+                  <ng-map default-style="false"  id='map' center="" zoom="13" ></ng-map>
               </div>
               <div ng-show='' id="wrapper">
                 <div class="chatbox">

@@ -406,8 +406,8 @@ img{
 	margin-left:140px;
 }
 #map{
-	height: 100vh;
-    overflow:visible;
+	height: 93vh;
+    /* overflow:visible; */
 }
 .cahoots{
 	font-size:8em;
