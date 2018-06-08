@@ -1257,13 +1257,15 @@
 						}) 
 					};
   		 		  $timeout(function() {
+						 //codingMap
   		 		  	if(vm.showChat){
   		 		  		return
   		 		  	}
 					vm.showMap = true;
 					// var coordinates = vm.posts[idx].latlong.split(',');
 					var coordinates = [37.75, -122.394]
-					var gMap = new google.maps.Map(document.getElementById('map'));
+					// var gMap = new google.maps.Map(document.getElementById('map'));
+					var gMap = new google.maps.Map(document.getElementsByClassName('mapContainer')[idx].children[0]);
 					gMap.setZoom(13);     
 					gMap.setCenter(new google.maps.LatLng(coordinates[0], coordinates[1]));
 					var circleOptions = {
@@ -1657,7 +1659,8 @@
 						vm.showMap = true;
 						// var coordinates = vm.posts[idx].latlong.split(',');
 						var coordinates = [37.75, -122.394]
-						var gMap = new google.maps.Map(document.getElementById('map'));
+						// var gMap = new google.maps.Map(document.getElementById('map'));
+						var gMap = new google.maps.Map(document.getElementsByClassName('mapContainer')[idx].children[0]);
 						gMap.setZoom(13);
 						// console.log('COORDS', coordinates);
 						
@@ -2051,7 +2054,9 @@
 					vm.showMap = true;
 					// var coordinates = vm.posts[idx].latlong.split(',');
 					var coordinates = [37.75, -122.394]
-					var gMap = new google.maps.Map(document.getElementById('map'));
+					var gMap = new google.maps.Map(document.getElementsByClassName('mapContainer')[idx].children[0]);
+					console.log(document.getElementsByClassName('mapContainer')[idx].children[0]);
+					
 					gMap.setZoom(13);
 					gMap.setCenter(new google.maps.LatLng(coordinates[0], coordinates[1]));
 					var circleOptions = {
