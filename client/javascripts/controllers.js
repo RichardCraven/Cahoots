@@ -83,7 +83,7 @@
 				};
 			};
 		};
-		function LoginHomeCtrl($location, auth, store, $timeout, $rootScope, UsersService, $mdDialog) {
+		function LoginHomeCtrl($location, auth, store, $timeout, $rootScope, UsersService, $mdDialog, $http) {
 			var vm = this,
 				facebook = /^(facebook)/,
 				numberPattern = /\d+/g,
@@ -101,8 +101,24 @@
 				vm.picture = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
 			}
 			UsersService.getUser(vm.user_id).then(function (user) {
-				console.log('USER IS ', user);
+				// console.log('USER IS ', user);
+
+				// $http.get("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU")
+				// 	.then(function (response) {
+				// 		console.log('oh shit it worked', response);
+						
+				// 	});
+
+				// jQuery.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU", function (success) {
+				// 	apiGeolocationSuccess({ coords: { latitude: success.location.lat, longitude: success.location.lng } });
+				// })
+				// 	.fail(function (err) {
+				// 		alert("API Geolocation error! \n\n" + err);
+				// 	});
+
+
 				if(user.data.first_time){
+					return
 					var confirm = $mdDialog.confirm()
 						.title('This app will require your geolocation')
 						.textContent('In order to find local collaborators, Cahoots will use your location. We do not share your data with anyone. Please see our term sheet in the settings menu (gear icon) for more information')
@@ -112,6 +128,15 @@
 						.cancel('No thanks');
 
 					$mdDialog.show(confirm).then(function () {
+
+						jQuery.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU", function (success) {
+							apiGeolocationSuccess({ coords: { latitude: success.location.lat, longitude: success.location.lng } });
+						})
+							.fail(function (err) {
+								alert("API Geolocation error! \n\n" + err);
+							});
+
+
 						if (navigator.geolocation) {
 							navigator.geolocation.getCurrentPosition(function(position){
 								var lat = position.coords.latitude;
@@ -1271,7 +1296,8 @@
   		 		  		return
   		 		  	}
 					vm.showMap = true;
-					var coordinates = vm.posts[idx].latlong.split(',');
+					// var coordinates = vm.posts[idx].latlong.split(',');
+					var coordinates = [37.75, -122.394]
 					var gMap = new google.maps.Map(document.getElementById('map'));
 					gMap.setZoom(13);     
 					gMap.setCenter(new google.maps.LatLng(coordinates[0], coordinates[1]));
@@ -1659,14 +1685,19 @@
 						})
 					};
 					$timeout(function () {
+						//musicMap
 						if (vm.showChat) {
 							return
 						}
 						vm.showMap = true;
-						var coordinates = vm.posts[idx].latlong.split(',');
+						// var coordinates = vm.posts[idx].latlong.split(',');
+						var coordinates = [37.75, -122.394]
 						var gMap = new google.maps.Map(document.getElementById('map'));
 						gMap.setZoom(13);
+						// console.log('COORDS', coordinates);
+						
 						gMap.setCenter(new google.maps.LatLng(coordinates[0], coordinates[1]));
+						// gMap.setCenter(new google.maps.LatLng(37.7, -122.4));
 						var circleOptions = {
 							id: 'circle',
 							strokeColor: '#FF0000',
@@ -2048,12 +2079,13 @@
 					})
 				};
 				$timeout(function () {
+					//filmMap
 					if (vm.showChat) {
 						return
 					}
 					vm.showMap = true;
-					var coordinates = vm.posts[idx].latlong.split(',');
-
+					// var coordinates = vm.posts[idx].latlong.split(',');
+					var coordinates = [37.75, -122.394]
 					var gMap = new google.maps.Map(document.getElementById('map'));
 					gMap.setZoom(13);
 					gMap.setCenter(new google.maps.LatLng(coordinates[0], coordinates[1]));
@@ -2193,7 +2225,7 @@
 		MiscCtrl.$inject = ['$location']
 
 		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
-	LoginHomeCtrl.$inject = ['$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService','$mdDialog']
+	LoginHomeCtrl.$inject = ['$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService','$mdDialog', '$http']
 	MailCtrl.$inject = ['$scope','filmMail', 'musicMail', 'codingMail', 'filmConvos', 'musicConvos', 'codingConvos', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'CodingPostCommentsService', 'FilmPostConversationsService', 'FilmPostCommentsService', 'MusicPostConversationsService','MusicPostCommentsService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
 		EditUserController.$inject = ['UsersService', '$location','auth','store','user']
