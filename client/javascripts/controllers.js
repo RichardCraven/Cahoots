@@ -204,6 +204,8 @@
 					userName = user.data.display_name
 					vm.welcome = ('Welcome ' + user.data.display_name + '!')
 				};
+				console.log('vm.welcome is ', vm.welcome);
+				
 				if (user.data.has_mail) {
 					vm.hasMail = true;
 				}
