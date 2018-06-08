@@ -117,86 +117,49 @@
 				// 	});
 
 
-				if(user.data.first_time){
-					return
-					var confirm = $mdDialog.confirm()
-						.title('This app will require your geolocation')
-						.textContent('In order to find local collaborators, Cahoots will use your location. We do not share your data with anyone. Please see our term sheet in the settings menu (gear icon) for more information')
-						.ariaLabel('Lucky day')
-						// .targetEvent(ev)
-						.ok('Got it!')
-						.cancel('No thanks');
+				// if(user.data.first_time){
+				// 	var confirm = $mdDialog.confirm()
+				// 		.title('This app will require your geolocation')
+				// 		.textContent('In order to find local collaborators, Cahoots will use your location. We do not share your data with anyone. Please see our term sheet in the settings menu (gear icon) for more information')
+				// 		.ariaLabel('Lucky day')
+				// 		.ok('Got it!')
+				// 		.cancel('No thanks');
 
-					$mdDialog.show(confirm).then(function () {
+				// 	$mdDialog.show(confirm).then(function () {
 
-						jQuery.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU", function (success) {
-							apiGeolocationSuccess({ coords: { latitude: success.location.lat, longitude: success.location.lng } });
-						})
-							.fail(function (err) {
-								alert("API Geolocation error! \n\n" + err);
-							});
+				// 		jQuery.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU", function (success) {
+				// 			apiGeolocationSuccess({ coords: { latitude: success.location.lat, longitude: success.location.lng } });
+				// 		})
+				// 			.fail(function (err) {
+				// 				alert("API Geolocation error! \n\n" + err);
+				// 			});
 
 
-						if (navigator.geolocation) {
-							navigator.geolocation.getCurrentPosition(function(position){
-								var lat = position.coords.latitude;
-								var long = position.coords.longitude;
-								var point = new google.maps.LatLng(lat, long);
-								var latlong = position.coords.latitude + "," + position.coords.longitude;
-								user.data.latlong = latlong;
-								new google.maps.Geocoder().geocode(
-									{ 'latLng': point },
-									function (res, status) {
-										var zip = res[0].formatted_address.match(/,\s\w{2}\s(\d{5})/);
-										user.data.zip_code = zip[1];
-										user.data.first_time = false;
-										var req = { user: user.data };
-										UsersService.updateUser(req).then(function (res) {
-											console.log('res is ', res);
-										})
-									}
-								);
-							});
-						}
-					}, function () {
-						console.log('You decided to keep your debt.');
-					});
-
-					// function EditUserController(UsersService, $location, auth, store, user) {
-					// 	var vm = this, fbUserId, facebook = /^(facebook)/, numberPattern = /\d+/g;
-					// 	vm.user = user.data;
-					// 	vm.user_id = JSON.parse(localStorage.profile).user_id;
-					// 	vm.navpicture = JSON.parse(localStorage.profile).picture;
-					// 	vm.name = JSON.parse(localStorage.profile).given_name;
-					// 	// vm.user.zip_code = ' ';
-					// 	console.log(vm.user);
-
-					// 	if (vm.user.display_name == null || vm.user.display_name == undefined) {
-					// 		vm.user.display_name = ' ';
-					// 	};
-					// 	if (vm.user.zip_code == null) {
-					// 		vm.user.zip_code = ' ';
-					// 	};
-					// 	if (vm.user.bio === null) {
-					// 		vm.user.bio = ' ';
-					// 	};
-					// 	if (facebook.test(vm.user_id)) {
-					// 		fbUserId = vm.user_id.match(numberPattern)[0];
-					// 		vm.navpicture = 'http://graph.facebook.com/' + fbUserId + '/picture?type=large'
-					// 	};
-					// 	vm.logout = function () {
-					// 		store.remove('profile')
-					// 		store.remove('token')
-					// 		$location.path('/home')
-					// 	}
-					// 	vm.updateUser = function (user) {
-					// 		var req = { user: user };
-					// 		UsersService.updateUser(req).then(function (res) {
-					// 			$location.path('/loggedinHome');
-					// 		})
-					// 	};
-					// };
-				}
+				// 		if (navigator.geolocation) {
+				// 			navigator.geolocation.getCurrentPosition(function(position){
+				// 				var lat = position.coords.latitude;
+				// 				var long = position.coords.longitude;
+				// 				var point = new google.maps.LatLng(lat, long);
+				// 				var latlong = position.coords.latitude + "," + position.coords.longitude;
+				// 				user.data.latlong = latlong;
+				// 				new google.maps.Geocoder().geocode(
+				// 					{ 'latLng': point },
+				// 					function (res, status) {
+				// 						var zip = res[0].formatted_address.match(/,\s\w{2}\s(\d{5})/);
+				// 						user.data.zip_code = zip[1];
+				// 						user.data.first_time = false;
+				// 						var req = { user: user.data };
+				// 						UsersService.updateUser(req).then(function (res) {
+				// 							console.log('res is ', res);
+				// 						})
+				// 					}
+				// 				);
+				// 			});
+				// 		}
+				// 	}, function () {
+				// 		console.log('You decided to keep your debt.');
+				// 	});
+				// }
 
 				if (!user.data.display_name || user.data.display_name == undefined || user.data.display_name == null) {
 					vm.welcome = 'Welcome'
