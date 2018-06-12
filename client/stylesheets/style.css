@@ -669,8 +669,10 @@ footer ul{
 	margin-top: 30px; 
 	list-style-type: none;
 	font-size: 0.8em;
+	margin-left: 15px;
+	float: left;
 }
-li {
+footer li {
 	margin-left: 15px;
 	float: left;
 }
@@ -681,11 +683,6 @@ footer a:hover{
 	color: rgb(255,64,129);
 	text-decoration: none;
 }
-/* footer a:visited{
-	color: yellow;
-	text-decoration: none;
-} */
-
 .container-fluid {
     padding-right: 45px;
     padding-left: 45px;
