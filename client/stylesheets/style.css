@@ -208,6 +208,12 @@ img{
 	margin-top: 1.5%;
 	margin-left: 33px;
 }
+.navbar-brand.overview-button{
+	margin-top: 1.5%;
+	margin-right: 80px;
+	float: right;
+}
+
 .spacer{
 	height: 20px;
 }
@@ -392,8 +398,91 @@ img{
 .H100px{
 	height: 100px;
 }
-/* ng-map {width:100%; height:100%;position: absolute;} */
+/* panel-css */
+#panel-anchor{
+	position: fixed;
+	/* height: 500px; */
+	/* width: 500px; */
+	top: 7.5%;
+	right: 5%;
+	z-index: 100;
+}
 
+.demo-md-panel {
+  min-height: 500px;
+}
+
+.overview-panel {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+      0 13px 19px 2px rgba(0, 0, 0, 0.14),
+      0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  width: 550px;
+  height: 380px;
+  /* position: fixed; */
+  z-index: 110;
+}
+
+.demo-dialog-content {
+  padding: 0 15px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.demo-dialog-content img {
+  height: 300px;
+  margin: auto;
+}
+
+.demo-dialog-button {
+  width: 100%;
+}
+
+.demo-menu-example {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+      0 13px 19px 2px rgba(0, 0, 0, 0.14),
+      0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  width: 256px;
+}
+
+.demo-menu-item {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 48px;
+  padding: 0 16px;
+  position: relative;
+  transition: background 0.15s linear;
+  width: auto;
+}
+
+.demo-menu-item:hover,
+.demo-menu-item:focus {
+  background-color: rgb(238, 238, 238);
+}
+
+.demo-menu-item.selected {
+  color: rgb(16, 108, 200);
+}
+
+/* ng-map {width:100%; height:100%;position: absolute;} */
+.floatingPanel{
+	    position: relative !important;
+    float: right !important;
+    margin-bottom: -60px !important;
+	margin-top: 44px !important;
+	margin-right: 32px;
+    /* margin-right: 100px !important; */
+    z-index: 40 !important;
+}
+.floatingInner{
+	    background-color: #f8f8f9 !important;
+    border-top: 8px solid #f1f1f1 !important;
+    width: 400px !important;
+}
 
 .formText{
 	margin-top: 16%;

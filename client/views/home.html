@@ -6,16 +6,20 @@
             <div>
                 <a class="navbar-brand login-button" ng-click="vm.login()" href="javascript:;" >Sign in / Sign up</a>
             </div>
+            <div>
+                <a class="navbar-brand overview-button" ng-click="vm.whatIsPanel($event)" href="javascript:;">What is Cahoots?</a>
+            </div>
         <!-- </div> -->
     </nav>
     <div class="container-fluid">
-        <header class="jumbotron hero-spacer">
+        <header class="jumbotron hero-spacer" id='main-panel'>
             <h1 id='header-main' class='text-center'>Welcome to Cahoots!</h1>
             <p class='text-center' id='header-description'>The creative collaboration network for the modernist.</p>
-            <div class='text-center owlButton '> <hr> <a href="/" style='color:yellow'><span><img src="images/owl_clipped.png" alt=""></span></a>
+            <div class='text-center owlButton '> <hr> <span><img  src="images/owl_clipped.png" alt="" ></span>
             </div>
         </header>
         <hr>
+        <div id='panel-anchor'></div>
         <div class="row text-center">
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="revisedThumbnail" ng-click="vm.go('/filmPosts')">

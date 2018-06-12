@@ -18,6 +18,7 @@
 		.controller('EditUserController', EditUserController)
 		
 		.controller('MiscCtrl',MiscCtrl)
+		.controller('PanelDialogCtrl', PanelDialogCtrl)
 		.controller('HomeCtrl', HomeCtrl)
 		.controller('LoginHomeCtrl', LoginHomeCtrl)
 		.controller('MailCtrl', MailCtrl)
@@ -52,8 +53,63 @@
 	  			var fadeOut = $timeout(fadeOut,6900)
 	  		};
 		};
-		function HomeCtrl($location, auth, store, $timeout, $rootScope, UsersService) {
+	function PanelDialogCtrl(mdPanelRef) {
+		this._mdPanelRef = mdPanelRef;
+
+		this.closeDialog = function () {
+			var panelRef = this._mdPanelRef;
+			// console.log('oanel ref is ', panelRef);
+			
+			panelRef && panelRef.close().then(function () {
+				angular.element(document.querySelector('.demo-dialog-open-button')).focus();
+				panelRef.destroy();
+			});
+		};
+	}	
+	function HomeCtrl($location, auth, store, $timeout, $rootScope, UsersService, $mdPanel) {
+			// console.log('panel is', $mdPanel);
+			
 			var vm = this;
+			vm._mdPanel = $mdPanel;
+			vm.isOpen = false;
+			vm.openFrom = 'button';
+			vm.closeTo = 'button';
+			vm.animationType = 'scale';
+			vm.duration = 300;
+			vm.separateDurations = {
+				open: vm.duration,
+				close: vm.duration
+			};
+			var position = this._mdPanel.newPanelPosition()
+			.absolute()
+				.top('50%')
+				.left('50%');
+			var animation = vm._mdPanel.newPanelAnimation();
+			// var origin = document.getElementById('header-main');
+
+			var config = {
+				id : 'panelOne',
+				attachTo: angular.element(document.getElementById('panel-anchor')),
+				// controller: PanelDialogCtrl,
+				// controllerAs: 'vm',
+				// templateUrl: 'landing.html',
+				panelClass: 'overview-panel',
+				templateUrl: '../views/panels/whatIs.html',
+				controller: 'PanelDialogCtrl',
+				controllerAs: 'vm',
+				position: position,
+				trapFocus: true,
+				// zIndex: 150,
+				clickOutsideToClose: true,
+				clickEscapeToClose: true,
+				hasBackdrop: true,
+				onCloseSuccess: function(panelRef){
+					console.log('YOAHGH! panel ref is ', panelRef, 'this is ', this );
+					vm.isOpen = false;
+				}.bind(this)
+			};
+			// console.log(vm._mdPanel, config);
+			
 			localStorage.clear()
 			if (localStorage.profile) {
 				location.href = '/loggedinHome';
@@ -62,6 +118,21 @@
 			};
 			vm.go = function (path) {
 				location.href = path;
+			};
+			vm.whatIsPanel = function(){
+				if(!vm.isOpen){
+					vm._mdPanel.open(config);
+					vm.isOpen = true;
+				} else {
+					// vm._mdPanel._closeFirstOpenedPanel();
+				}
+				console.log('WHAT IS PANEL???');
+
+				setTimeout(function () {
+					// vm._mdPanel.close()
+					console.log("Hello", vm._mdPanel);
+				}, 1000);
+				
 			};
 			vm.login = function () {
 				auth.signin({ popup: true }, function (profile, token) {
@@ -88,6 +159,8 @@
 				facebook = /^(facebook)/,
 				numberPattern = /\d+/g,
 				fbUserId, userName;
+				console.log($mdDialog);
+				
 			vm.hasMail = false;
 			vm.showLoginButton = false;
 			vm.user_id = JSON.parse(localStorage.profile).user_id;
@@ -2194,7 +2267,7 @@
 
 		MiscCtrl.$inject = ['$location']
 
-		HomeCtrl.$inject = ['$location', 'auth', 'store','$timeout','$rootScope','UsersService']
+	HomeCtrl.$inject = ['$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', '$mdPanel']
 	LoginHomeCtrl.$inject = ['$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService','$mdDialog', '$http']
 	MailCtrl.$inject = ['$scope','filmMail', 'musicMail', 'codingMail', 'filmConvos', 'musicConvos', 'codingConvos', '$location', 'auth', 'store', '$timeout', '$rootScope', 'UsersService', 'FilmPostCommentsService', 'FilmPostService', 'ConvoRepoService', 'CodingPostConversationsService', 'CodingPostCommentsService', 'FilmPostConversationsService', 'FilmPostCommentsService', 'MusicPostConversationsService','MusicPostCommentsService']
 		// SettingsCtrl.$inject = ['$location','auth', 'store']
