@@ -660,13 +660,19 @@ footer a{
 }
 footer .row{
 	margin:0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 footer ul{
-	margin-left: 2.5%; 
-	margin-top: 5px; 
+	/* margin-left: 35.5%;  */
+	margin-top: 30px; 
 	list-style-type: none;
-	text-align: left;
 	font-size: 0.8em;
+}
+li {
+	margin-left: 15px;
+	float: left;
 }
 footer .copyright{
 	top: 50px;
@@ -675,6 +681,10 @@ footer a:hover{
 	color: rgb(255,64,129);
 	text-decoration: none;
 }
+/* footer a:visited{
+	color: yellow;
+	text-decoration: none;
+} */
 
 .container-fluid {
     padding-right: 45px;
