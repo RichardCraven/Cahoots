@@ -595,7 +595,9 @@ header p{
 	font-family: 'Open Sans';
 	font-weight: 200;
 	font-size:20px;
-
+}
+.caption{
+	max-height:75px;
 }
 div .mailButton{
 	height: 60px;
@@ -666,7 +668,7 @@ footer .row{
 }
 footer ul{
 	/* margin-left: 35.5%;  */
-	margin-top: 30px; 
+	margin-top: 17px; 
 	list-style-type: none;
 	font-size: 0.8em;
 	margin-left: 15px;
@@ -684,6 +686,7 @@ footer a:hover{
 	text-decoration: none;
 }
 .container-fluid {
+	padding-top: 20px;
     padding-right: 45px;
     padding-left: 45px;
     margin-right: auto;
