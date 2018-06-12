@@ -54,6 +54,8 @@
 	  		};
 		};
 	function PanelDialogCtrl(mdPanelRef) {
+		console.log('new shit');
+		
 		this._mdPanelRef = mdPanelRef;
 
 		this.closeDialog = function () {
@@ -72,43 +74,6 @@
 			var vm = this;
 			vm._mdPanel = $mdPanel;
 			vm.isOpen = false;
-			vm.openFrom = 'button';
-			vm.closeTo = 'button';
-			vm.animationType = 'scale';
-			vm.duration = 300;
-			vm.separateDurations = {
-				open: vm.duration,
-				close: vm.duration
-			};
-			var position = this._mdPanel.newPanelPosition()
-			.absolute()
-				.top('50%')
-				.left('50%');
-			var animation = vm._mdPanel.newPanelAnimation();
-			// var origin = document.getElementById('header-main');
-
-			var config = {
-				id : 'panelOne',
-				attachTo: angular.element(document.getElementById('panel-anchor')),
-				// controller: PanelDialogCtrl,
-				// controllerAs: 'vm',
-				// templateUrl: 'landing.html',
-				panelClass: 'overview-panel',
-				templateUrl: '../views/panels/whatIs.html',
-				controller: 'PanelDialogCtrl',
-				controllerAs: 'vm',
-				position: position,
-				trapFocus: true,
-				// zIndex: 150,
-				clickOutsideToClose: true,
-				clickEscapeToClose: true,
-				hasBackdrop: true,
-				onCloseSuccess: function(panelRef){
-					console.log('YOAHGH! panel ref is ', panelRef, 'this is ', this );
-					vm.isOpen = false;
-				}.bind(this)
-			};
-			// console.log(vm._mdPanel, config);
 			
 			localStorage.clear()
 			if (localStorage.profile) {
@@ -121,18 +86,35 @@
 			};
 			vm.whatIsPanel = function(){
 				if(!vm.isOpen){
+					vm.animationType = 'scale';
+					vm.duration = 300;
+					vm.separateDurations = {
+						open: vm.duration,
+						close: vm.duration
+					};
+					var position = this._mdPanel.newPanelPosition()
+						.absolute()
+						.top('50%')
+						.left('50%');
+					var animation = vm._mdPanel.newPanelAnimation();
+					var config = {
+						attachTo: angular.element(document.getElementById('panel-anchor')),
+						panelClass: 'overview-panel',
+						templateUrl: '../views/panels/whatIs.html',
+						controller: 'PanelDialogCtrl',
+						controllerAs: 'vm',
+						position: position,
+						trapFocus: false,
+						clickOutsideToClose: true,
+						clickEscapeToClose: true,
+						hasBackdrop: true,
+						onCloseSuccess: function (panelRef) {
+							vm.isOpen = false;
+						}.bind(this)
+					};
 					vm._mdPanel.open(config);
 					vm.isOpen = true;
-				} else {
-					// vm._mdPanel._closeFirstOpenedPanel();
 				}
-				console.log('WHAT IS PANEL???');
-
-				setTimeout(function () {
-					// vm._mdPanel.close()
-					console.log("Hello", vm._mdPanel);
-				}, 1000);
-				
 			};
 			vm.login = function () {
 				auth.signin({ popup: true }, function (profile, token) {
