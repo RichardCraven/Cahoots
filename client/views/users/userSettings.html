@@ -8,13 +8,13 @@
           </div>
         </div>
     </nav>
-    <div class="container-fluid"  style='display:inline-block;' style='overflow:scroll'>
+    <div class="container-fluid"   style='overflow:scroll'>
       <header class="jumbotron hero-spacer settingsJumbo">
         <a href="/loggedinHome" class="backArrow">
           <span style='margin-left:10px' class="glyphicon glyphicon-arrow-left"></span>
         </a>
-        <h1 id='header-main-settings' class='text-left'>User Settings</h1>
-        <form  name="newFilm" class='setText SETmargin' ng-submit="vm.updateUser(vm.user)">
+        <div id='header-main-settings'>  User Settings</div>
+        <form  name="newFilm"  ng-submit="vm.updateUser(vm.user)">
           <div layout='row' layout-sm="column">
             <div style='flex-grow: 1'>
               <div >
@@ -30,48 +30,13 @@
                 </md-input-container> 
               </div>
               <div class='settingsBio'>
-                <!-- <md-input-container   md-no-float >
-                  <label >Bio </label>
-                  <textarea  class='settingsBio' name="bio"  ng-model="vm.user.bio" placeholder=" "  ></textarea>
-                </md-input-container> -->
                 <div class="mdl-textfield mdl-js-textfield">
                   <label for="sample5">Bio</label>
                   <textarea ng-model="vm.user.bio" class="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea>
                 </div>
               </div>
-
-<!--                  <form action="#">
-                  <div class="mdl-textfield mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea>
-                    <label class="mdl-textfield__label" for="sample5">Text lines...</label>
-                  </div>
-                </form> -->
-
-<!--               <form action="#">
-                <div class="mdl-textfield mdl-js-textfield">
-                  <textarea class="mdl-textfield__input" type="text" rows= "1" id="sample5" ></textarea>
-                  <label class="mdl-textfield__label" for="sample5">Text lines...</label>
-                </div>
-              </form> -->
-
-     <!--          <form action="#">
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                  <label class="mdl-button mdl-js-button mdl-button--icon" for="sample6">
-                    <i class="material-icons">search</i>
-                  </label>
-                  <div class="mdl-textfield__expandable-holder">
-                    <input class="mdl-textfield__input" type="text" id="sample6">
-                    <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
-                  </div>
-                </div>
-              </form> -->
-
             </div>
-              <!-- <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" id="search-expandable" />
-                        <label class="mdl-textfield__label" for="search-expandable">Search text</label>
-              </div> -->
-            <div style='flex-grow: 3; margin-top:-11px;'>
+            <div style='flex-grow: 3'>
               <div class='settingsCheckboxes'>
                 <div class="row">
                   <div class=" col-sm-8 col-md-offset-0 col-sm-offset-0" id='chckbx1'>Available for collaboration</div>
@@ -81,14 +46,14 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class=" col-sm-8 col-md-offset-0 col-sm-offset-0" id='chckbx2'>Location-based profiling</div>
+                  <div class=" col-sm-8 col-md-offset-0 col-sm-offset-0" id='chckbx2'>Email notifications</div>
                   <div class='col-md-3 checkbox2'>
                     <input type="checkbox" id="checkBox2" checked name="subscribe" value="1">
                     <label for="checkBox2"></label>
                   </div>
                 </div>
                 <div class="row">
-                  <div class=" col-sm-8 col-md-offset-0 col-sm-offset-0" id='chckbx3'>Automatic updates</div>
+                  <div class=" col-sm-8 col-md-offset-0 col-sm-offset-0" id='chckbx3'>Location-based profiling</div>
                   <div class='col-md-3 checkbox3'>
                     <input type="checkbox" id="checkBox3" name="subscribe" value="1">
                     <label for="checkBox3"></label>
@@ -101,18 +66,8 @@
                 </div>
               </div>
             </div>
-           <!--  <div class="dataShareMessageContainer">
-              <div id='dataShareMessage'>
-                WE WONT SHARE YOUR DATA WITH ANYONE except comcast
-              </div>
-            </div> -->
           </div>
           <button type="submit" class="btn btn-7 btn-7h hidden" id="submit-form"> <i class="material-icons md-48" >add</i></button>
         </form>
       </header>
-      <!-- <div class='settingsOwlContainer' >
-        <video id="settingsOwlVid"  muted autoplay >
-          <source src="images/NewOwl666.mp4" type="video/mp4">
-        </video>
-      </div> -->
     </div>

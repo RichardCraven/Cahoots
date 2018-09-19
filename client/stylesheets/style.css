@@ -240,9 +240,9 @@ img{
 }
 .backArrow{
 	color:white !important;
-	font-size:2.3em;
 	transition: 1s all;
 	cursor: pointer;
+	text-decoration: none !important;
 }
 .backArrow:hover {
 	color:#35fc2a !important;

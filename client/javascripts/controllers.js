@@ -1025,7 +1025,9 @@
 			vm.navpicture = JSON.parse(localStorage.profile).picture;
 			vm.name = JSON.parse(localStorage.profile).given_name;
 			// vm.user.zip_code = ' ';
-			console.log(vm.user);
+
+			
+			console.log('in USERS 	controller ', vm.user);
 			
 			if(vm.user.display_name==null||vm.user.display_name==undefined){
 				vm.user.display_name = ' ';
