@@ -70,7 +70,7 @@
 	}	
 	function HomeCtrl($location, auth, store, $timeout, $rootScope, UsersService, $mdPanel) {
 			// console.log('panel is', $mdPanel);
-			
+			console.log('hi')
 			var vm = this;
 			vm._mdPanel = $mdPanel;
 			vm.isOpen = false;
